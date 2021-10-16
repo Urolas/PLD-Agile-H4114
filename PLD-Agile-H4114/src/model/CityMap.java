@@ -13,7 +13,7 @@ public class CityMap extends Observable {
     public CityMap() {
     }
     private Set<Road> roads;
-    private Set<Intersection> intersections;
+    private HashMap<Integer,Intersection> intersections;
     public Distribution distribution;
     public Tour tour;
     private Double width,height;
@@ -35,4 +35,16 @@ public class CityMap extends Observable {
         this.height=height;
     }
 
+    public void addIntersection(Intersection intersection) {
+        this.intersections.put(intersection.id,intersection);
+    }
+
+    public void addRoad(Road road, int id1, int id2) {
+        Intersection origin = this.intersections.get(id1);
+        Intersection destination = this.intersections.get(id2);
+        if(origin!=null && destination!=null){
+            road.addRoads(origin,destination);
+            this.roads.add(road);
+        }
+    }
 }
