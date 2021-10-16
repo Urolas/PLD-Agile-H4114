@@ -4,7 +4,6 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.String;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,24 +67,29 @@ public class XMLDeserializer {
      * @return
      */
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws XMLException, NumberFormatException {
-        int height = Integer.parseInt(rootDOMNode.getAttribute("height"));
+        Double height = Double.parseDouble(rootDOMNode.getAttribute("height"));
         if (height <= 0)
             throw new XMLException("Error when reading file: The plan height must be positive");
-        int width = Integer.parseInt(rootDOMNode.getAttribute("width"));
+        Double width = Double.parseDouble(rootDOMNode.getAttribute("width"));
         if (width <= 0)
             throw new XMLException("Error when reading file: The plan width must be positive");
         cityMap.reset(width,height);
 
         NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
         for (int i = 0; i < intersectionList.getLength(); i++) {
-            cityMap.add(createIntersection((Element) intersectionList.item(i)));
+            cityMap.addIntersection(createIntersection((Element) intersectionList.item(i)));
         }
 
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
-            cityMap.add(createRoad((Element) roadList.item(i)));
+            Element elt= (Element) roadList.item(i);
+            int id1 = Integer.parseInt(elt.getAttribute("origin"));
+            int id2 = Integer.parseInt(elt.getAttribute("destination"));
+            cityMap.addRoad(createRoad(elt),id1,id2);
         }
     }
+
+
 
     /**
      * @param rootDOMNode 
@@ -113,12 +117,11 @@ public class XMLDeserializer {
      * @return
      */
     private static Road createRoad(Element elt) {
-        int id1 = Integer.parseInt(elt.getAttribute("origin"));
-        int id2 = Integer.parseInt(elt.getAttribute("destination"));
+
         String name = elt.getAttribute("name");
         double length = Double.parseDouble(elt.getAttribute("length"));
 
-        return new Road(id1,id2,name,length);
+        return new Road(name,length);
     }
 
     /**

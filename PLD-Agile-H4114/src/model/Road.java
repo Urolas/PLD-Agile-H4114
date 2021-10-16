@@ -9,8 +9,8 @@ public class Road {
 
     private Double length;
     private String name;
-    private Integer origin;
-    private Integer destination;
+    private Intersection origin;
+    private Intersection destination;
 
     /**
      * Default constructor
@@ -20,11 +20,15 @@ public class Road {
 
     }
 
-    public Road(Integer myInter1,Integer myInter2,String myName,Double myLength){
+    public Road(String myName, double myLength) {
         this.length = myLength;
         this.name = myName;
-        this.origin = myInter1;
-        this.destination = myInter2;
+    }
+
+
+    public void addRoads(Intersection myOrigin,Intersection myDestination){
+        this.origin=myOrigin;
+        this.destination=myDestination;
     }
 
     /**
