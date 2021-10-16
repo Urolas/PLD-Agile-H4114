@@ -7,25 +7,26 @@ import java.util.*;
  */
 public class Intersection {
 
+    protected Integer id;
+    protected Double latitude;
+    protected Double longitude;
+
+
     /**
      * Default constructor
      */
     public Intersection() {
     }
 
-    /**
-     * 
-     */
-    protected Integer id;
+    public Intersection(Integer myId,Double myLatitude,Double myLongitude){
+        this.id = myId;
+        this.latitude = myLatitude;
+        this.longitude = myLongitude;
+    }
 
     /**
      * 
      */
-    protected Double latitude;
 
-    /**
-     * 
-     */
-    protected Double longitude;
 
 }

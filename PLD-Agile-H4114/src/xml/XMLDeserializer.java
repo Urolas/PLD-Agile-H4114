@@ -102,8 +102,8 @@ public class XMLDeserializer {
      */
     private static Intersection createIntersection(Element elt) {
         int id = Integer.parseInt(elt.getAttribute("id"));
-        int latitude = Integer.parseInt(elt.getAttribute("latitude"));
-        int longitude = Integer.parseInt(elt.getAttribute("longitude"));
+        double latitude = Double.parseDouble(elt.getAttribute("latitude"));
+        double longitude = Double.parseDouble(elt.getAttribute("longitude"));
 
         return new Intersection(id,latitude,longitude);
     }
@@ -116,7 +116,7 @@ public class XMLDeserializer {
         int id1 = Integer.parseInt(elt.getAttribute("origin"));
         int id2 = Integer.parseInt(elt.getAttribute("destination"));
         String name = elt.getAttribute("name");
-        int length = Integer.parseInt(elt.getAttribute("length"));
+        double length = Double.parseDouble(elt.getAttribute("length"));
 
         return new Road(id1,id2,name,length);
     }
