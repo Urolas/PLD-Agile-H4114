@@ -47,4 +47,7 @@ public class CityMap extends Observable {
             this.roads.add(road);
         }
     }
+    public HashMap<String,Intersection>getIntersections(){
+        return this.intersections;
+    }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.*;
-
 /**
  * @author 4IF-4114
  */
@@ -14,13 +12,15 @@ public class Request {
     }
 
     /**
-     * 
+     *
      */
-    private PickupAdress pickup;
+    private PickupAddress pickup;
 
-    /**
-     * 
-     */
-    private DeliveryAdress delivery;
+
+    private DeliveryAddress delivery;
+    public Request(PickupAddress pickupAddress,DeliveryAddress deliveryAddress){
+        this.pickup=pickupAddress;
+        this.delivery=deliveryAddress;
+    }
 
 }

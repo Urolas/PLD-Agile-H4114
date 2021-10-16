@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
-public class PointOfInterest extends Intersection {
+public class PointOfInterest {
 
     /**
      * Default constructor
@@ -17,5 +17,9 @@ public class PointOfInterest extends Intersection {
      * 
      */
     protected Integer duration;
+    protected Intersection intersection;
 
+    public PointOfInterest(Intersection i) {
+        this.intersection=i;
+    }
 }

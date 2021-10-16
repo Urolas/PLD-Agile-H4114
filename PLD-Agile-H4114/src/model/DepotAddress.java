@@ -17,8 +17,11 @@ public class DepotAddress extends PointOfInterest {
     /**
      * 
      */
-    private LocalTime departureTime;
+    private String departureTime;  // TODO change String to a Time format
 
 
-
+    public DepotAddress(Intersection i, String departureTime) {
+        super(i);
+        this.departureTime=departureTime;
+    }
 }
