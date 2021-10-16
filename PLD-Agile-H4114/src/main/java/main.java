@@ -1,8 +1,8 @@
-import src.xml.*;
+import xml.*;
 public class main {
 
     public static void main(String[] args) {
-        XMLFileOpener = new XMLFileOpener();
+        xml.XMLFileOpener alo = new XMLFileOpener();
 
         System.out.println("Hello world");
     }
