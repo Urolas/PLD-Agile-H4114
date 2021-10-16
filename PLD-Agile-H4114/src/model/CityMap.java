@@ -12,27 +12,11 @@ public class CityMap extends Observable {
      */
     public CityMap() {
     }
-
-    /**
-     * 
-     */
     private Set<Road> roads;
-
-    /**
-     * 
-     */
     private Set<Intersection> intersections;
-
-    /**
-     * 
-     */
     public Distribution distribution;
-
-    /**
-     * 
-     */
     public Tour tour;
-
+    private Double width,height;
     /**
      * @param intersection1 
      * @param intersection2 
@@ -40,7 +24,15 @@ public class CityMap extends Observable {
      */
     public void computeTour(Intersection intersection1, Intersection intersection2) {
         // TODO implement here
-        return null;
+    }
+
+    public void reset(Double width,Double height){
+        this.distribution = new Distribution();
+        this.tour = new Tour();
+        this.intersections.clear();
+        this.roads.clear();
+        this.width=width;
+        this.height=height;
     }
 
 }

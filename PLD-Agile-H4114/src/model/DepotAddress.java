@@ -19,4 +19,6 @@ public class DepotAddress extends PointOfInterest {
      */
     private LocalTime departureTime;
 
+
+
 }

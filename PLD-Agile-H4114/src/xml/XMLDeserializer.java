@@ -68,10 +68,10 @@ public class XMLDeserializer {
      * @return
      */
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws XMLException, NumberFormatException {
-        int height = Integer.parseInt(rootDOMNode.getAttribute("height"));
+        Double height = Double.parseDouble(rootDOMNode.getAttribute("height"));
         if (height <= 0)
             throw new XMLException("Error when reading file: The plan height must be positive");
-        int width = Integer.parseInt(rootDOMNode.getAttribute("width"));
+        Double width = Double.parseDouble(rootDOMNode.getAttribute("width"));
         if (width <= 0)
             throw new XMLException("Error when reading file: The plan width must be positive");
         cityMap.reset(width,height);
