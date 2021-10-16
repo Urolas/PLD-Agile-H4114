@@ -37,20 +37,20 @@ public class XMLDeserializer {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @throws ExceptionXML
+     * @throws XMLException
      * @param cityMap 
      * @return
      */
-    public static void loadCityMap(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, ExceptionXML {
-        File xml = XMLfileOpener.getInstance().open(true);
+    public static void loadCityMap(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
+        File xml = XMLFileOpener.getInstance().open(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
-        if (root.getNodeName().equals("plan")) {
-            buildFromDOMXML(root, cityMap);
+        if (root.getNodeName().equals("citymap")) { //unsure
+            buildCityMapFromDOMXML(root, cityMap);
         }
         else {
-            throw new ExceptionXML("Wrong format");
+            throw new XMLException("Wrong format");
         }
     }
 
@@ -67,13 +67,13 @@ public class XMLDeserializer {
      * @param cityMap 
      * @return
      */
-    private static void buildCityMapFromDOMXML(void rootDOMNode, CityMap cityMap) throws ExceptionXML, NumberFormatException {
+    private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws XMLException, NumberFormatException {
         int height = Integer.parseInt(rootDOMNode.getAttribute("height"));
         if (height <= 0)
-            throw new ExceptionXML("Error when reading file: The plan height must be positive");
+            throw new XMLException("Error when reading file: The plan height must be positive");
         int width = Integer.parseInt(rootDOMNode.getAttribute("width"));
         if (width <= 0)
-            throw new ExceptionXML("Error when reading file: The plan width must be positive");
+            throw new XMLException("Error when reading file: The plan width must be positive");
         cityMap.reset(width,height);
 
         NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
