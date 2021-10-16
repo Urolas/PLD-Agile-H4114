@@ -7,30 +7,29 @@ import java.util.*;
  */
 public class Road {
 
+    private Double length;
+    private String name;
+    private Integer origin;
+    private Integer destination;
+
     /**
      * Default constructor
      */
     public Road() {
+
+
+    }
+
+    public Road(Integer myInter1,Integer myInter2,String myName,Double myLength){
+        this.length = myLength;
+        this.name = myName;
+        this.origin = myInter1;
+        this.destination = myInter2;
     }
 
     /**
      * 
      */
-    private Double length;
 
-    /**
-     * 
-     */
-    private String name;
-
-    /**
-     * 
-     */
-    private Intersection origin;
-
-    /**
-     * 
-     */
-    private Intersection destination;
 
 }
