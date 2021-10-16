@@ -36,7 +36,6 @@ public class Controller {
      */
     public void undo() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -44,7 +43,6 @@ public class Controller {
      */
     public void redo() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -53,7 +51,6 @@ public class Controller {
      */
     public void add(Command command) {
         // TODO implement here
-        return null;
     }
 
 }

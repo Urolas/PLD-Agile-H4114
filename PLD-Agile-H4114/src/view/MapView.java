@@ -20,7 +20,6 @@ public class MapView implements Observer {
      */
     public void update(Observable observed, Object object) {
         // TODO implement here
-        return null;
     }
 
 }

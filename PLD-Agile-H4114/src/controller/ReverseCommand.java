@@ -18,7 +18,6 @@ public class ReverseCommand implements Command {
      */
     public void doCommand() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -26,7 +25,6 @@ public class ReverseCommand implements Command {
      */
     public void undoCommand() {
         // TODO implement here
-        return null;
     }
 
 }

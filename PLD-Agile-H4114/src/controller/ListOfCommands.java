@@ -31,7 +31,6 @@ public class ListOfCommands {
      */
     public void add(Command command) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -39,7 +38,6 @@ public class ListOfCommands {
      */
     public void undo() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -47,7 +45,6 @@ public class ListOfCommands {
      */
     public void redo() {
         // TODO implement here
-        return null;
     }
 
 }

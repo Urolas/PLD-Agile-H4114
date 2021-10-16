@@ -16,24 +16,15 @@ public class Delivelo {
     /**
      * 
      */
-    private static final int initialScale;
-
-    /**
-     * 
-     */
-    private static final int planHeight;
-
-    /**
-     * 
-     */
-    private static final int planWidth;
+    private static int initialScale;
+    private static int planHeight;
+    private static int planWidth;
 
     /**
      * @return
      */
     public static void main() {
         // TODO implement here
-        return null;
     }
 
 }
