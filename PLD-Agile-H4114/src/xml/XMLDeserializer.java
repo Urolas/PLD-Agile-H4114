@@ -1,4 +1,4 @@
-package src.xml;
+package xml;
 
 import java.util.*;
 import java.io.File;
