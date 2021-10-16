@@ -45,7 +45,7 @@ public class XMLDeserializer {
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
-        if (root.getNodeName().equals("citymap")) { //unsure
+        if (root.getNodeName().equals("map")) { //unsure
             buildCityMapFromDOMXML(root, cityMap);
         }
         else {
@@ -67,13 +67,8 @@ public class XMLDeserializer {
      * @return
      */
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws XMLException, NumberFormatException {
-        Double height = Double.parseDouble(rootDOMNode.getAttribute("height"));
-        if (height <= 0)
-            throw new XMLException("Error when reading file: The plan height must be positive");
-        Double width = Double.parseDouble(rootDOMNode.getAttribute("width"));
-        if (width <= 0)
-            throw new XMLException("Error when reading file: The plan width must be positive");
-        cityMap.reset(width,height);
+
+        cityMap.reset();
 
         NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
         for (int i = 0; i < intersectionList.getLength(); i++) {
@@ -83,8 +78,8 @@ public class XMLDeserializer {
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
             Element elt= (Element) roadList.item(i);
-            int id1 = Integer.parseInt(elt.getAttribute("origin"));
-            int id2 = Integer.parseInt(elt.getAttribute("destination"));
+            String id1 = elt.getAttribute("origin");
+            String id2 = elt.getAttribute("destination");
             cityMap.addRoad(createRoad(elt),id1,id2);
         }
     }
@@ -105,9 +100,9 @@ public class XMLDeserializer {
      * @return
      */
     private static Intersection createIntersection(Element elt) {
-        int id = Integer.parseInt(elt.getAttribute("id"));
-        double latitude = Double.parseDouble(elt.getAttribute("latitude"));
-        double longitude = Double.parseDouble(elt.getAttribute("longitude"));
+        String id = elt.getAttribute("id");
+        Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
+        Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
 
         return new Intersection(id,latitude,longitude);
     }
@@ -119,7 +114,7 @@ public class XMLDeserializer {
     private static Road createRoad(Element elt) {
 
         String name = elt.getAttribute("name");
-        double length = Double.parseDouble(elt.getAttribute("length"));
+        Double length = Double.parseDouble(elt.getAttribute("length"));
 
         return new Road(name,length);
     }

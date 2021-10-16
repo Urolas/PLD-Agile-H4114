@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class Intersection {
 
-    protected Integer id;
+    protected String id;
     protected Double latitude;
     protected Double longitude;
 
@@ -18,7 +18,7 @@ public class Intersection {
     public Intersection() {
     }
 
-    public Intersection(Integer myId,Double myLatitude,Double myLongitude){
+    public Intersection(String myId,Double myLatitude,Double myLongitude){
         this.id = myId;
         this.latitude = myLatitude;
         this.longitude = myLongitude;

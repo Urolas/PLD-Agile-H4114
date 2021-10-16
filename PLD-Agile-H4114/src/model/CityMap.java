@@ -11,9 +11,11 @@ public class CityMap extends Observable {
      * Default constructor
      */
     public CityMap() {
+        this.intersections= new HashMap<String,Intersection>();
+        this.roads= new HashSet<Road>();
     }
     private Set<Road> roads;
-    private HashMap<Integer,Intersection> intersections;
+    private HashMap<String,Intersection> intersections;
     public Distribution distribution;
     public Tour tour;
     private Double width,height;
@@ -26,20 +28,18 @@ public class CityMap extends Observable {
         // TODO implement here
     }
 
-    public void reset(Double width,Double height){
+    public void reset(){
         this.distribution = new Distribution();
         this.tour = new Tour();
         this.intersections.clear();
         this.roads.clear();
-        this.width=width;
-        this.height=height;
     }
 
     public void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.id,intersection);
     }
 
-    public void addRoad(Road road, int id1, int id2) {
+    public void addRoad(Road road, String id1, String id2) {
         Intersection origin = this.intersections.get(id1);
         Intersection destination = this.intersections.get(id2);
         if(origin!=null && destination!=null){
