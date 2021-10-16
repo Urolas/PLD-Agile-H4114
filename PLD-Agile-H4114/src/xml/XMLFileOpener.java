@@ -1,76 +1,56 @@
-package xml;
+package src.xml;
 
-import java.util.*;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  * @author 4IF-4114
  */
-public class XMLFileOpener {
+public class XMLFileOpener extends FileFilter {
 
-    /**
-     * Default constructor
-     */
-    public XMLFileOpener() {
-    }
-
-    /**
-     * 
-     */
     private static XMLFileOpener instance = null;
-
-    /**
-     * 
-     */
-    private XMLFileOpener instance;
-
-    /**
-     * 
-     */
-    private void XMLFileOpener() {
-        // TODO implement here
+    private void XMLfileOpener(){}
+    protected static XMLFileOpener getInstance(){
+        if (instance == null) instance = new XMLFileOpener();
+        return instance;
     }
 
-    /**
-     * @return
-     */
-    protected static XMLFileOpener getInstance() {
-        // TODO implement here
-        return null;
+    public File open(boolean read) throws XMLException{
+        int returnVal;
+        JFileChooser jFileChooserXML = new JFileChooser();
+        jFileChooserXML.setFileFilter(this);
+        jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        if (read)
+            returnVal = jFileChooserXML.showOpenDialog(null);
+        else
+            returnVal = jFileChooserXML.showSaveDialog(null);
+        if (returnVal != JFileChooser.APPROVE_OPTION)
+            throw new XMLException("Problem when opening file");
+        return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
     }
 
-    /**
-     * @param read 
-     * @return
-     */
-    public File open(boolean read) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param f 
-     * @return
-     */
+    @Override
     public boolean accept(File f) {
-        // TODO implement here
-        return false;
+        if (f == null) return false;
+        if (f.isDirectory()) return true;
+        String extension = getExtension(f);
+        if (extension == null) return false;
+        return extension.contentEquals("xml");
     }
 
-    /**
-     * @return
-     */
+
+
+    @Override
     public String getDescription() {
-        // TODO implement here
-        return "";
+        return "XML file";
     }
 
-    /**
-     * @param f 
-     * @return
-     */
     private String getExtension(File f) {
-        // TODO implement here
-        return "";
+        String filename = f.getName();
+        int i = filename.lastIndexOf('.');
+        if (i>0 && i<filename.length()-1)
+            return filename.substring(i+1).toLowerCase();
+        return null;
     }
-
 }
