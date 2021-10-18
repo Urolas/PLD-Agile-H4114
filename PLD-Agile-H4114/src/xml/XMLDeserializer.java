@@ -57,13 +57,13 @@ public class XMLDeserializer {
      * @param distribution
      * @return
      */
-    public static void loadDistribution(Distribution distribution) throws ParserConfigurationException, SAXException, IOException, XMLException {
+    public static void loadDistribution(Distribution distribution, CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
         File xml = XMLFileOpener.getInstance().open(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
         if (root.getNodeName().equals("planningRequest")) {
-            buildDistributionFromDOMXML(root, distribution);
+            buildDistributionFromDOMXML(root, distribution, cityMap);
         } else {
             throw new XMLException("Wrong format");
         }
@@ -92,20 +92,27 @@ public class XMLDeserializer {
         }
     }
 
-    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution) throws NumberFormatException {
+    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException {
 
         distribution.reset();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
-        distribution.addDepot(depot.getAttribute("address"),depot.getAttribute("departureTime"));
+        String address =depot.getAttribute("address");
+        Intersection intersec =cityMap.getIntersections().get(address);
+        distribution.addDepot(intersec,depot.getAttribute("departureTime"));
         NodeList requestList = rootDOMNode.getElementsByTagName("request");
         for (int i = 0; i < requestList.getLength(); i++) {
             Element elt = (Element) requestList.item(i);
-            String id1 = elt.getAttribute("pickupAddress");
-            String id2 = elt.getAttribute("deliveryAddress");
+
+            String pickupAddress =elt.getAttribute("pickupAddress");
+            String deliveryAddress =elt.getAttribute("deliveryAddress");
+            Intersection intersecpickup =cityMap.getIntersections().get(pickupAddress);
+            Intersection intersecdelivery =cityMap.getIntersections().get(deliveryAddress);
+
+
             Integer pickupDuration = Integer.parseInt(elt.getAttribute("pickupDuration"));
             Integer deliveryDuration = Integer.parseInt(elt.getAttribute("deliveryDuration"));
 
-            distribution.addRequest(pickupDuration,deliveryDuration,id1,id2);
+            distribution.addRequest(pickupDuration,deliveryDuration,intersecpickup,intersecdelivery);
         }
 
 

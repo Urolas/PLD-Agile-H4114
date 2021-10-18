@@ -1,3 +1,4 @@
+import model.Distribution;
 import org.xml.sax.SAXException;
 import xml.*;
 import model.CityMap;
@@ -11,6 +12,8 @@ public class main {
         xml.XMLDeserializer alo = new XMLDeserializer();
         CityMap c=new CityMap();
         alo.loadCityMap(c);
+        Distribution d = new Distribution();
+        alo.loadDistribution(d,c);
         System.out.println("Hello world");
     }
 

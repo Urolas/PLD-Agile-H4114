@@ -16,7 +16,6 @@ public class Distribution {
     }
 
     private DepotAddress depot;
-    private CityMap cityMap;  // TODO a enlever(surement)
     private Set<Request> requests;
 
     public void reset() {
@@ -24,14 +23,11 @@ public class Distribution {
         this.depot = new DepotAddress();
     }
 
-    public void addDepot(String address, String departureTime) {
-        Intersection i = cityMap.getIntersections().get(address);
+    public void addDepot(Intersection i, String departureTime) {
         this.depot = new DepotAddress(i, departureTime);
     }
 
-    public void addRequest(Integer pickupDuration, Integer deliveryDuration, String id1, String id2) {
-        Intersection pintersection = cityMap.getIntersections().get(id1);
-        Intersection dintersection = cityMap.getIntersections().get(id2);
+    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection) {
         PickupAddress paddress = new PickupAddress(pintersection, pickupDuration);
         DeliveryAddress daddress = new DeliveryAddress(dintersection, deliveryDuration);
         this.requests.add(new Request(paddress,daddress));
