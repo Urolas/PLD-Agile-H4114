@@ -1,19 +1,16 @@
 package controller;
 
 import java.util.*;
-import view.Window;
 
 /**
  * @author 4IF-4114
  */
 public class Controller {
-    private Window window;
+
     /**
      * Default constructor
      */
     public Controller() {
-        window = new Window();
-
     }
 
 

@@ -1,16 +1,14 @@
-
-import controller.Controller;
 import model.Distribution;
 import org.xml.sax.SAXException;
 import xml.*;
 import model.CityMap;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        new Controller();
         CityMap c=new CityMap();
         XMLDeserializer.loadCityMap(c);
         Distribution d = new Distribution();
