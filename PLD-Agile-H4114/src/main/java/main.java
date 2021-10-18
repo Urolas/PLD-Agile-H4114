@@ -9,11 +9,11 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        xml.XMLDeserializer alo = new XMLDeserializer();
+        xml.XMLDeserializer deserialiseur = new XMLDeserializer();
         CityMap c=new CityMap();
-        alo.loadCityMap(c);
+        deserialiseur.loadCityMap(c);
         Distribution d = new Distribution();
-        alo.loadDistribution(d,c);
+        deserialiseur.loadDistribution(d,c);
         System.out.println("Hello world");
     }
 
