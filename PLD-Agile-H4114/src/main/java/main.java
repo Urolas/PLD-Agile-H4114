@@ -8,9 +8,8 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        xml.XMLDeserializer alo = new XMLDeserializer();
         CityMap c=new CityMap();
-        alo.loadCityMap(c);
+        XMLDeserializer.loadCityMap(c);
         System.out.println("Hello world");
     }
 
