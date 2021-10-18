@@ -7,6 +7,9 @@ import java.util.*;
  */
 public class Distribution {
 
+    private DepotAddress depot;
+    private Set<Request> requests;
+
     /**
      * Default constructor
      */
@@ -14,9 +17,6 @@ public class Distribution {
         this.requests = new HashSet<Request>();
         this.depot = new DepotAddress();
     }
-
-    private DepotAddress depot;
-    private Set<Request> requests;
 
     public void reset() {
         this.requests.clear();

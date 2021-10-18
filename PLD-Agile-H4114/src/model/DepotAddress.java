@@ -8,16 +8,14 @@ import java.util.*;
  */
 public class DepotAddress extends PointOfInterest {
 
+
+    private LocalTime  departureTime;
+
     /**
      * Default constructor
      */
     public DepotAddress() {
     }
-
-    /**
-     * 
-     */
-    private LocalTime  departureTime;
 
 
     public DepotAddress(Intersection i, String departureTime) {

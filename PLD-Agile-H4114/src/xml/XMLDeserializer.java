@@ -92,6 +92,9 @@ public class XMLDeserializer {
         }
     }
 
+    /**
+     * Citymap mis en argument pour pouvoir recuperer les intersections, qu'on va ensuite ratacher aux points d'interet
+     * */
     private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException,XMLException {
 
         distribution.reset();

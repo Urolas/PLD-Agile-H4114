@@ -13,9 +13,6 @@ public class Path {
     public Path() {
     }
 
-    /**
-     * 
-     */
     private Set<Road> roads;
 
 }
