@@ -28,9 +28,9 @@ public class Distribution {
     }
 
     public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection) {
-        PickupAddress paddress = new PickupAddress(pintersection, pickupDuration);
-        DeliveryAddress daddress = new DeliveryAddress(dintersection, deliveryDuration);
-        this.requests.add(new Request(paddress,daddress));
+        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration);
+        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration);
+        this.requests.add(new Request(pAddress,dAddress));
 
     }
 

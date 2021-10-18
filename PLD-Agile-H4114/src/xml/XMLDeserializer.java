@@ -92,12 +92,15 @@ public class XMLDeserializer {
         }
     }
 
-    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException {
+    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException,XMLException {
 
         distribution.reset();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
         Intersection intersec =cityMap.getIntersections().get(address);
+        if ( intersec==null){
+            throw new XMLException("Wrong File used : depot point is not valid");
+        }
         distribution.addDepot(intersec,depot.getAttribute("departureTime"));
         NodeList requestList = rootDOMNode.getElementsByTagName("request");
         for (int i = 0; i < requestList.getLength(); i++) {
@@ -105,14 +108,16 @@ public class XMLDeserializer {
 
             String pickupAddress =elt.getAttribute("pickupAddress");
             String deliveryAddress =elt.getAttribute("deliveryAddress");
-            Intersection intersecpickup =cityMap.getIntersections().get(pickupAddress);
-            Intersection intersecdelivery =cityMap.getIntersections().get(deliveryAddress);
-
+            Intersection intersecPickup =cityMap.getIntersections().get(pickupAddress);
+            Intersection intersecDelivery =cityMap.getIntersections().get(deliveryAddress);
+            if ( intersecPickup==null || intersecDelivery==null){
+                throw new XMLException("Wrong File used : request is not valid");
+            }
 
             Integer pickupDuration = Integer.parseInt(elt.getAttribute("pickupDuration"));
             Integer deliveryDuration = Integer.parseInt(elt.getAttribute("deliveryDuration"));
 
-            distribution.addRequest(pickupDuration,deliveryDuration,intersecpickup,intersecdelivery);
+            distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
         }
 
 
