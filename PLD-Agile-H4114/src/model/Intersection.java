@@ -12,9 +12,6 @@ public class Intersection {
     protected Double longitude;
 
 
-    /**
-     * Default constructor
-     */
     public Intersection() {
     }
 
@@ -24,9 +21,6 @@ public class Intersection {
         this.longitude = myLongitude;
     }
 
-    /**
-     * 
-     */
 
 
 }
