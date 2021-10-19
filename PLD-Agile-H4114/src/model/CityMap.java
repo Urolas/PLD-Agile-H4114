@@ -1,5 +1,7 @@
 package model;
 
+import view.MapView;
+
 import java.util.*;
 
 /**
@@ -49,6 +51,9 @@ public class CityMap extends Observable {
     }
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
+    }
+
+    public void addObserver(MapView mapView) {
     }
 
     public Distribution getDistribution() {

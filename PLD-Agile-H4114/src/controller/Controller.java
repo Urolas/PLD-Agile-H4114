@@ -4,6 +4,7 @@ import model.*;
 import java.io.IOException;
 import java.util.*;
 
+import model.CityMap;
 import org.xml.sax.SAXException;
 import view.Window;
 import xml.XMLException;
@@ -15,37 +16,46 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class Controller {
 
-    private CityMap citymap;
-    public ListOfCommands listOfCommands;
-    public State currentState;
+    private CityMap cityMap;
     private Window window;
+    private ListOfCommands listOfCommands;
+    private State currentState;
 
+    /**
+     * Default constructor
+     */
+    public Controller(CityMap cityMap, int scale) {
+        this.cityMap = cityMap;
+        listOfCommands = new ListOfCommands();
+//        currentState = initialState;
+        window = new Window(cityMap, scale, this);
     // Instances associated with each possible state of the controller
-    protected final InitialState initialState = new InitialState();
-    protected final CityMapState1 citymapState1 = new CityMapState1();
-    protected final CityMapState2 citymapState2 = new CityMapState2();
-    protected final DistributionState1 distributionState1 = new DistributionState1();
-    protected final DistributionState2 distributionState2 = new DistributionState2();
-    protected final TourState tourState = new TourState();
+    final InitialState initialState = new InitialState();
+    final CityMapState1 citymapState1 = new CityMapState1();
+    final CityMapState2 citymapState2 = new CityMapState2();
+    final DistributionState1 distributionState1 = new DistributionState1();
+    final DistributionState2 distributionState2 = new DistributionState2();
+    final TourState tourState = new TourState();
 
-    public Controller(CityMap city) {
-        this.citymap = city;
-        this.listOfCommands = new ListOfCommands();
-        this.currentState = initialState;
-        this.window = new Window(this);
+//    public Controller(CityMap city) {
+//        this.citymap = city;
+//        this.listOfCommands = new ListOfCommands();
+//        this.currentState = initialState;
+//        this.window = new Window(this);
     }
+
 
     protected void setCurrentState(State state){
         this.currentState = state;
     }
 
-    public void loadMap() throws XMLException, ParserConfigurationException, IOException, SAXException {
-        this.currentState.loadMap(this, window);
-    }
-
-    public void loadDistribution() throws XMLException, ParserConfigurationException, IOException, SAXException {
-        this.currentState.loadDistribution(this,window);
-    }
+//    public void loadMap() throws XMLException, ParserConfigurationException, IOException, SAXException {
+//        this.currentState.loadMap(this, window);
+//    }
+//
+//    public void loadDistribution() throws XMLException, ParserConfigurationException, IOException, SAXException {
+//        this.currentState.loadDistribution(this,window);
+//    }
 
 
     /**
@@ -70,7 +80,17 @@ public class Controller {
         // TODO implement here
     }
 
+    public void loadCityMap() {
+    }
+
+    public void loadDistribution() {
+    }
+
+    public void keystroke(int keyCode) {
+
+    }
+
     public CityMap getCitymap() {
-        return citymap;
+        return cityMap;
     }
 }
