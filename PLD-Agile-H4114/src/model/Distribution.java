@@ -33,6 +33,8 @@ public class Distribution {
         this.requests.add(new Request(pAddress,dAddress));
 
     }
+
+    //return the Id of each point of interest, the first one is always the depot point
     public List<String> GetAllPoints(){
         List<String> points = new ArrayList<>();
         points.add(this.depot.intersection.id);
@@ -43,4 +45,12 @@ public class Distribution {
         return points;
     }
 
+    public List<AbstractMap.SimpleEntry<String, String>> GetConstraints() {
+        List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
+        for (Request request: this.requests) {
+            result.add(new AbstractMap.SimpleEntry<>(request.getPickup().intersection.id,request.getDelivery().intersection.id));
+        }
+
+        return result;
+    }
 }

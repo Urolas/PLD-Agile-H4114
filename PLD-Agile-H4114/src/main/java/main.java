@@ -12,8 +12,10 @@ public class main {
         CityMap c=new CityMap();
         XMLDeserializer.loadCityMap(c);
         XMLDeserializer.loadDistribution(c);
-        System.out.println("Hello world");
         c.computeTour();
+        System.out.println("Hello world");
+
+
     }
 
     public static String returnString(){

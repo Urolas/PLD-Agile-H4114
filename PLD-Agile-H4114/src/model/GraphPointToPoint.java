@@ -7,11 +7,15 @@ import java.util.Map;
 
 public class GraphPointToPoint {
     private int nbVertices;
+    private List<String> Vertices;
     private HashMap<String, HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>>> cost;
-    public GraphPointToPoint(HashMap<String, HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra) {
-        nbVertices=resultsDijkstra.size();
-        this.cost=resultsDijkstra;
+    private List<AbstractMap.SimpleEntry<String,String>> constraints;
 
+    public GraphPointToPoint(HashMap<String, HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra,List<String> points,List<AbstractMap.SimpleEntry<String,String>> constraints) {
+        this.nbVertices=resultsDijkstra.size();
+        this.cost=resultsDijkstra;
+        this.Vertices=points;
+        this.constraints=constraints;
     }
 
     public int getNbVertices() {
@@ -23,4 +27,7 @@ public class GraphPointToPoint {
         return this.cost.get(i1).get(i2).getKey();
     }
 
+    public List<String> getVertices() {
+        return Vertices;
+    }
 }

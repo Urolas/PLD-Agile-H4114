@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import tsp.TSP;
+import tsp.TSP1;
 /**
  * @author 4IF-4114
  */
@@ -25,33 +27,41 @@ public class CityMap extends Observable {
 
     }
 
-    /**
-     * @param intersection1 
-     * @param intersection2 
-     * @return
-     */
-    public void computePath(Intersection intersection1, Intersection intersection2) {
-        // TODO implement here
-    }
+    //compute les meilleurs chemins entre chaque points d'interet, appelle le TSP pour trouver le meilleurs tour, créé le tour
     public void computeTour() {
         List<String> points = this.distribution.GetAllPoints();
+        List<AbstractMap.SimpleEntry<String,String>> constraints = this.distribution.GetConstraints();
+        //TODO si possible changer HashMap<String,HashMap<String,AbstractMap.SimpleEntry<Double,List<String>>>> par une formule digeste, au moins pour la lecture
         HashMap<String,HashMap<String,AbstractMap.SimpleEntry<Double,List<String>>>> ResultsDijkstra = new HashMap<>();
-        for (String wantedIntersection : points){
-            ResultsDijkstra.put(wantedIntersection,Dijkstra(wantedIntersection,points));
+        for (String source : points){
+            HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>> distanceToOtherPoints = new HashMap<>();
+            for (String target : points){
+                if (!Objects.equals(target, source)) {
+                    distanceToOtherPoints.put(target,this.computePath(source,target));
+                }
+            }
+            ResultsDijkstra.put(source,distanceToOtherPoints);
         }
-        GraphPointToPoint graph =new GraphPointToPoint(ResultsDijkstra);
-        graph.getNbVertices();
+        GraphPointToPoint graph =new GraphPointToPoint(ResultsDijkstra,points,constraints);
+        /** TODO Impossible a faire sans un dijkstra censé, a debugé apres
+        TSP tsp = new TSP1();
+        tsp.searchSolution(2000,graph);
+        List<String> shortestTour = new ArrayList<>();
+        shortestTour.add(points.get(0));
+        List<String> shortestPath = new ArrayList<>();
+        for (int i=1;i<tsp.getSolutionCost();i++) {
+            shortestTour.add(tsp.getSolution(i));
+            shortestPath.addAll(ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getValue());
+        }
+        TODO create tour with shortestPath and shortestTour : how to use the path object ?
+         **/
+    }
+    //computePath execute l'algorithme de dijkstra et cherche le meilleur chemin entre deux intersections, il renvoit le chemin et sa longueur
+    public AbstractMap.SimpleEntry<Double,List<String>> computePath(String intersection1, String intersection2) {
+        //TODO faire le dijkstra
+        return new AbstractMap.SimpleEntry<>(1.0,new ArrayList<>());
     }
 
-    private HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>> Dijkstra(String source, List<String> points) {
-        HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>> result = new HashMap<>();
-        for (String intersection : points){
-            if (intersection!=source) {
-                result.put(intersection, new AbstractMap.SimpleEntry<>(1.0,new ArrayList<>()));
-            }
-        }
-        return result;
-    }
 
     public void reset(){
         this.distribution = new Distribution();
