@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,6 +15,8 @@ public class Tour {
      * Default constructor
      */
     public Tour() {
+        paths = new HashSet<>();
+        pointOfInterests = new HashSet<>();
     }
 
     @Override
@@ -24,11 +27,11 @@ public class Tour {
             return false;
         }
         //Meme path
-        if (!paths.equals(((Tour) o).paths)) {
+        if (!this.paths.equals(((Tour) o).paths)) {
             return false;
         }
         //Meme pointOfInterests
-        if (!pointOfInterests.equals(((Tour) o).pointOfInterests)) {
+        if (!this.pointOfInterests.equals(((Tour) o).pointOfInterests)) {
             return false;
         }
         return true;
