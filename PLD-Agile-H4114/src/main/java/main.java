@@ -13,8 +13,7 @@ public class main {
         new Controller();
         CityMap c=new CityMap();
         XMLDeserializer.loadCityMap(c);
-        Distribution d = new Distribution();
-        XMLDeserializer.loadDistribution(d,c);
+        XMLDeserializer.loadDistribution(c);
         System.out.println("Hello world");
     }
 
