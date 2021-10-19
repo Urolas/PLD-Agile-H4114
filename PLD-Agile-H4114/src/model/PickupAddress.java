@@ -23,7 +23,7 @@ public class PickupAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(PickupAddress.class!=obj.getClass()){
+        if(Integer.compare(duration,((PickupAddress) obj).duration)!=0){
             return false;
         }
         return true;

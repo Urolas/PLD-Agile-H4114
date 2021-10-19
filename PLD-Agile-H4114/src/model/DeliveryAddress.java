@@ -13,8 +13,8 @@ public class DeliveryAddress extends PointOfInterest {
     public DeliveryAddress() {
     }
 
-    public DeliveryAddress(Intersection dintersection, Integer deliveryDuration) {
-        super(dintersection);
+    public DeliveryAddress(Intersection dIntersection, Integer deliveryDuration) {
+        super(dIntersection);
         this.duration=deliveryDuration;
     }
 
@@ -23,7 +23,7 @@ public class DeliveryAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(DeliveryAddress.class!=obj.getClass()){
+        if(Integer.compare(duration,((DeliveryAddress) obj).duration)!=0){
             return false;
         }
         return true;

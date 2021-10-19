@@ -25,13 +25,13 @@ public class PointOfInterest {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj.getClass()!=PointOfInterest.class){
+        if(obj.getClass()!=this.getClass()){
             return false;
         }
         if(!intersection.equals(((PointOfInterest) obj).intersection)){
             return false;
         }
-        if(duration!=((PointOfInterest) obj).duration){
+        if(Integer.compare(duration,((PointOfInterest) obj).duration)!=0){
             return false;
         }
         return true;
