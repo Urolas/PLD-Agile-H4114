@@ -11,12 +11,24 @@ public class CityMap extends Observable {
     public Distribution distribution;
     public Tour tour;
     private Double width,height,nordPoint,westPoint;
+
+    @Override
+    public String toString() {
+        return "CityMap{" +
+                "roads=" + roads+
+                '}';
+    }
+
     /**
      * Default constructor
      */
     public CityMap() {
         this.intersections= new HashMap<String,Intersection>();
         this.roads= new HashSet<Road>();
+        this.width = 0.;
+        this.height = 0.;
+        this.nordPoint = 0.;
+        this.westPoint = 0.;
      }
 
     /**
