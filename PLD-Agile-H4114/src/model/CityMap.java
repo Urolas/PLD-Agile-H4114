@@ -55,4 +55,8 @@ public class CityMap extends Observable {
 
     public void addObserver(MapView mapView) {
     }
+
+    public Distribution getDistribution() {
+        return distribution;
+    }
 }

@@ -5,29 +5,21 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
+
 public class ListOfCommands {
 
+    private Set<Command> commands;
+    private int currentIndex;
     /**
      * Default constructor
      */
     public ListOfCommands() {
+        currentIndex = -1;
+        commands = new HashSet<Command>();
     }
 
     /**
      * 
-     */
-    private Set<Command> commands;
-
-    /**
-     * 
-     */
-    public void ListOfCommands() {
-        // TODO implement here
-    }
-
-    /**
-     * @param command 
-     * @return
      */
     public void add(Command command) {
         // TODO implement here
