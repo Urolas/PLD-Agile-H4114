@@ -17,4 +17,15 @@ public class DeliveryAddress extends PointOfInterest {
         super(dintersection);
         this.duration=deliveryDuration;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!super.equals(obj)) {
+            return false;
+        }
+        if(DeliveryAddress.class!=obj.getClass()){
+            return false;
+        }
+        return true;
+    }
 }
