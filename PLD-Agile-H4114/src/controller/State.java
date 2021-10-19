@@ -26,7 +26,7 @@ public class State {
      * @param w the window
      */
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
+//        XMLDeserializer.loadCityMap(c.getCitymap());
     }
 
     /**
@@ -35,7 +35,7 @@ public class State {
      * @param w the window
      */
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{
-        XMLDeserializer.loadDistribution(c.getCitymap().getDistribution(),c.getCitymap());
+//        XMLDeserializer.loadDistribution(c.getCitymap().getDistribution(),c.getCitymap());
     }
 
 }
