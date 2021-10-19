@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * @author 4IF-4114
@@ -16,5 +16,19 @@ public class Tour {
     public Tour() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass() != Tour.class) {
+            return false;
+        }
+        if (!paths.equals(((Tour) o).paths)) {
+            return false;
+        }
+        if (!pointOfInterests.equals(((Tour) o).pointOfInterests)) {
+            return false;
+        }
+        return true;
 
+
+    }
 }
