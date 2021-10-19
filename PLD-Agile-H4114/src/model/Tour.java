@@ -17,13 +17,17 @@ public class Tour {
     }
 
     @Override
+    //Methode d'egalité entre les Tours
     public boolean equals(Object o) {
+        //Meme class
         if (o.getClass() != Tour.class) {
             return false;
         }
+        //Meme path
         if (!paths.equals(((Tour) o).paths)) {
             return false;
         }
+        //Meme pointOfInterests
         if (!pointOfInterests.equals(((Tour) o).pointOfInterests)) {
             return false;
         }
