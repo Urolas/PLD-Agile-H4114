@@ -10,12 +10,14 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        new Controller();
         CityMap c=new CityMap();
         XMLDeserializer.loadCityMap(c);
         Distribution d = new Distribution();
         XMLDeserializer.loadDistribution(d,c);
         System.out.println("Hello world");
+
+        new Controller(c, 1);
+
     }
 
     public static String returnString(){

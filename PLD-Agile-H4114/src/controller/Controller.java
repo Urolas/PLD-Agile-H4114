@@ -1,18 +1,28 @@
 package controller;
 
 import java.util.*;
+
+import model.CityMap;
 import view.Window;
 
 /**
  * @author 4IF-4114
  */
 public class Controller {
+
+    private CityMap cityMap;
     private Window window;
+    private ListOfCommands listOfCommands;
+    private State currentState;
+
     /**
      * Default constructor
      */
-    public Controller() {
-        window = new Window();
+    public Controller(CityMap cityMap, int scale) {
+        this.cityMap = cityMap;
+        listOfCommands = new ListOfCommands();
+//        currentState = initialState;
+        window = new Window(cityMap, scale, this);
 
     }
 
@@ -20,12 +30,10 @@ public class Controller {
     /**
      * 
      */
-    public ListOfCommands listOfCommands;
 
     /**
      * 
      */
-    public State currentState;
 
     /**
      * 
@@ -56,4 +64,12 @@ public class Controller {
         // TODO implement here
     }
 
+    public void loadCityMap() {
+    }
+
+    public void loadDistribution() {
+    }
+
+    public void keystroke(int keyCode) {
+    }
 }
