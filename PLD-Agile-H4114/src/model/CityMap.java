@@ -10,7 +10,7 @@ public class CityMap extends Observable {
     private HashMap<String,Intersection> intersections;
     public Distribution distribution;
     public Tour tour;
-    private Double width,height;
+    private Double width,height,nordPoint,westPoint;
     /**
      * Default constructor
      */
@@ -61,5 +61,13 @@ public class CityMap extends Observable {
 
     public void setWidth(Double width) {
         this.width = width;
+    }
+
+    public void setNordPoint(Double nordPoint) {
+        this.nordPoint = nordPoint;
+    }
+
+    public void setWestPoint(Double westPoint) {
+        this.westPoint = westPoint;
     }
 }
