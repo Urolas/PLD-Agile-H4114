@@ -71,19 +71,15 @@ public class Controller {
         }catch(Exception e){
 
         }
-
     }
 
     public void loadDistribution(){
-
         try{
             this.currentState.loadDistribution(this,window);
         }catch(Exception e){
 
         }
     }
-
-
 
     public void keystroke(int keyCode) {
 

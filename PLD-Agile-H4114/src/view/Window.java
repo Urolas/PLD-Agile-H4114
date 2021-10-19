@@ -14,9 +14,6 @@ import model.CityMap;
  */
 public class Window extends JFrame {
 
-    private final int WIN_WIDTH = 1000;
-    private final int WIN_HEIGHT = 1000;
-
     // Titles of window buttons
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";

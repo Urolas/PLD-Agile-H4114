@@ -2,12 +2,10 @@ package view;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.util.*;
 import javax.swing.JPanel;
 import model.CityMap;
 import model.Road;
 
-import model.CityMap;
 import observer.Observable;
 import observer.Observer;
 
@@ -50,14 +48,6 @@ public class MapView extends JPanel implements Observer {
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
 
-        g.setColor(Color.BLACK);
-        for (Road r : cityMap.getRoads()){
-            displayRoad(r);
-        }
-//        if (arg != null){ // arg is a shape that has been added to plan
-//            Shape s = (Shape)arg;
-////            s.addObserver(this);  // this observes s
-//        }
         repaint();
     }
 
@@ -80,7 +70,6 @@ public class MapView extends JPanel implements Observer {
         }
     }
 
-
     /**
      *  Method called by
      * @param r
@@ -91,12 +80,8 @@ public class MapView extends JPanel implements Observer {
         int x2 = (int)((r.getDestination().getLongitude()- originLong) * scaleWidth);
         int y2 = -(int)((r.getDestination().getLatitude()- originLat) * scaleHeight);
         g.setColor(Color.white);
-//        System.out.println("x1=  ("+r.getOrigin().getLongitude()+" - "+originLong+") "+scaleWidth);
-//        System.out.println(x1+" "+y1+" "+x2+" "+y2);
         g2.setStroke(new BasicStroke(1));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
-//        g.drawLine(x1, y1, x2, y2);
 
     }
-
 }
