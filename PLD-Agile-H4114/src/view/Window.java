@@ -8,6 +8,7 @@ import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
+import model.CityMap;
 /**
  * @author 4IF-4114
  */
@@ -29,6 +30,7 @@ public class Window extends JFrame {
     private RoadmapView roadmapView;
     private ArrayList<JButton> buttons;
 
+    private MapView mapView;
     private ButtonListener buttonListener;
     private MouseListener mouseListener;
     private KeyboardListener keyboardListener;
@@ -40,6 +42,7 @@ public class Window extends JFrame {
      * Default constructor
      */
     public Window(CityMap cityMap, int s, Controller controller) {
+    public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
         createButtons(controller);
 
@@ -54,6 +57,7 @@ public class Window extends JFrame {
         setVisible(true);
 
         mapView = new MapView(cityMap, s, this);
+        mapView = new MapView(cityMap, this);
         setSize(WIN_WIDTH,WIN_HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);

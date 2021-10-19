@@ -12,6 +12,24 @@ public class Road {
     private Intersection origin;
     private Intersection destination;
 
+    @Override
+    public String toString() {
+        return "Road{" +
+                "length=" + length +
+                ", name='" + name + '\'' +
+                ", origin=" + origin +
+                ", destination=" + destination +
+                '}';
+    }
+
+    public Intersection getOrigin() {
+        return origin;
+    }
+
+    public Intersection getDestination() {
+        return destination;
+    }
+
     /**
      * Default constructor
      */

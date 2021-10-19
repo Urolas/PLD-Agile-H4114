@@ -54,16 +54,16 @@ public class XMLDeserializer {
     }
 
     /**
-     * @param distribution
+     * @param cityMap
      * @return
      */
-    public static void loadDistribution(Distribution distribution, CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
+    public static void loadDistribution(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
         File xml = XMLFileOpener.getInstance().open(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
         if (root.getNodeName().equals("planningRequest")) {
-            buildDistributionFromDOMXML(root, distribution, cityMap);
+            buildDistributionFromDOMXML(root, cityMap);
         } else {
             throw new XMLException("Wrong format");
         }
@@ -77,12 +77,35 @@ public class XMLDeserializer {
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException {
 
         cityMap.reset();
+        Double maxLatitude = null;
+        Double minLatitude = null;
+        Double maxLongitude = null;
+        Double minLongitude = null;
 
         NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
         for (int i = 0; i < intersectionList.getLength(); i++) {
-            cityMap.addIntersection(createIntersection((Element) intersectionList.item(i)));
+            Element elt = (Element) intersectionList.item(i);
+            String id = elt.getAttribute("id");
+            Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
+            Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
+            if (maxLatitude == null || maxLatitude < latitude) {
+                maxLatitude = latitude;
+            }
+            if (minLatitude == null || minLatitude > latitude) {
+                minLatitude = latitude;
+            }
+            if (maxLongitude == null || maxLongitude < longitude) {
+                maxLongitude = longitude;
+            }
+            if (minLongitude == null || minLongitude > longitude) {
+                minLongitude = longitude;
+            }
+            cityMap.addIntersection(new Intersection(id, latitude, longitude));
         }
-
+        cityMap.setHeight(maxLatitude-minLatitude);
+        cityMap.setWidth(maxLongitude-minLongitude);
+        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
             Element elt = (Element) roadList.item(i);
@@ -95,16 +118,16 @@ public class XMLDeserializer {
     /**
      * Citymap mis en argument pour pouvoir recuperer les intersections, qu'on va ensuite ratacher aux points d'interet
      * */
-    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException,XMLException {
+    private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
-        distribution.reset();
+        cityMap.distribution.reset();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
         Intersection intersec =cityMap.getIntersections().get(address);
         if ( intersec==null){
             throw new XMLException("Wrong File used : depot point is not valid");
         }
-        distribution.addDepot(intersec,depot.getAttribute("departureTime"));
+        cityMap.distribution.addDepot(intersec,depot.getAttribute("departureTime"));
         NodeList requestList = rootDOMNode.getElementsByTagName("request");
         for (int i = 0; i < requestList.getLength(); i++) {
             Element elt = (Element) requestList.item(i);
@@ -120,7 +143,7 @@ public class XMLDeserializer {
             Integer pickupDuration = Integer.parseInt(elt.getAttribute("pickupDuration"));
             Integer deliveryDuration = Integer.parseInt(elt.getAttribute("deliveryDuration"));
 
-            distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
+            cityMap.distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
         }
 
 
@@ -129,17 +152,6 @@ public class XMLDeserializer {
 
 
 
-    /**
-     * @param elt
-     * @return
-     */
-    private static Intersection createIntersection(Element elt) {
-        String id = elt.getAttribute("id");
-        Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
-        Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
-
-        return new Intersection(id, latitude, longitude);
-    }
 
     /**
      * @param elt

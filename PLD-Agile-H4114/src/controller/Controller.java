@@ -36,6 +36,13 @@ public class Controller {
     final DistributionState1 distributionState1 = new DistributionState1();
     final DistributionState2 distributionState2 = new DistributionState2();
     final TourState tourState = new TourState();
+    private CityMap cityMap;
+    /**
+     * Default constructor
+     */
+    public Controller(CityMap cityMap) {
+        this.cityMap = cityMap;
+        window = new Window(cityMap,this);
 
 //    public Controller(CityMap city) {
 //        this.citymap = city;

@@ -19,6 +19,10 @@ public class main {
 
         new Controller(c, 1);
 
+        XMLDeserializer.loadCityMap(c);
+        new Controller(c);
+        //XMLDeserializer.loadDistribution(c);
+        System.out.println("Hello world");
     }
 
     public static String returnString(){

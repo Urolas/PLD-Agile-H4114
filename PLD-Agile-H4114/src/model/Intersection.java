@@ -22,5 +22,20 @@ public class Intersection {
     }
 
 
+    public Double getLatitude() {
+        return latitude;
+    }
 
+    @Override
+    public String toString() {
+        return "Intersection{" +
+                "id='" + id + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
 }
