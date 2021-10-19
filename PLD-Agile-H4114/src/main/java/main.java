@@ -15,7 +15,7 @@ public class main {
         XMLDeserializer.loadCityMap(c);
         Distribution d = new Distribution();
         XMLDeserializer.loadDistribution(d,c);
-        System.out.println("Hello world");
+        System.out.println("Hello world");*/
     }
 
     public static String returnString(){
