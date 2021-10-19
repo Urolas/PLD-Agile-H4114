@@ -10,8 +10,9 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        new Controller();
+
         CityMap c=new CityMap();
+        new Controller(c);
         XMLDeserializer.loadCityMap(c);
         XMLDeserializer.loadDistribution(c);
         System.out.println("Hello world");

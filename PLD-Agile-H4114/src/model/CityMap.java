@@ -17,7 +17,7 @@ public class CityMap extends Observable {
     public CityMap() {
         this.intersections= new HashMap<String,Intersection>();
         this.roads= new HashSet<Road>();
-    }
+     }
 
     /**
      * @param intersection1 
@@ -70,4 +70,6 @@ public class CityMap extends Observable {
     public void setWestPoint(Double westPoint) {
         this.westPoint = westPoint;
     }
+
+    
 }

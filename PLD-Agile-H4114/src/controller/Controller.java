@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.*;
+import model.CityMap;
 import view.Window;
 
 /**
@@ -8,11 +9,13 @@ import view.Window;
  */
 public class Controller {
     private Window window;
+    private CityMap cityMap;
     /**
      * Default constructor
      */
-    public Controller() {
-        window = new Window();
+    public Controller(CityMap cityMap) {
+        this.cityMap = cityMap;
+        window = new Window(cityMap,this);
 
     }
 
