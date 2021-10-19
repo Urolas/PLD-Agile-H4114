@@ -37,17 +37,17 @@ public class Road {
             return false;
         }
         //Meme path
-        if (Double.compare(length,((Road) obj).length)!=0) {
+        if (Double.compare(this.length,((Road) obj).length)!=0) {
             return false;
         }
         //Meme pointOfInterests
-        if (name!=((Road) obj).name) {
+        if (this.name!=((Road) obj).name) {
             return false;
         }
-        if (!origin.equals(((Road) obj).origin)) {
+        if (!this.origin.equals(((Road) obj).origin)) {
             return false;
         }
-        if (!destination.equals(((Road) obj).destination)) {
+        if (!this.destination.equals(((Road) obj).destination)) {
             return false;
         }
         return true;

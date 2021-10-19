@@ -23,7 +23,7 @@ public class DeliveryAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(Integer.compare(duration,((DeliveryAddress) obj).duration)!=0){
+        if(Integer.compare(this.duration,((DeliveryAddress) obj).duration)!=0){
             return false;
         }
         return true;

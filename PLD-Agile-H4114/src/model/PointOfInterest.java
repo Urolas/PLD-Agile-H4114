@@ -28,10 +28,10 @@ public class PointOfInterest {
         if(obj.getClass()!=this.getClass()){
             return false;
         }
-        if(!intersection.equals(((PointOfInterest) obj).intersection)){
+        if(!this.intersection.equals(((PointOfInterest) obj).intersection)){
             return false;
         }
-        if(Integer.compare(duration,((PointOfInterest) obj).duration)!=0){
+        if(Integer.compare(this.duration,((PointOfInterest) obj).duration)!=0){
             return false;
         }
         return true;

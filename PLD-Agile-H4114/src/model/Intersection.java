@@ -28,15 +28,15 @@ public class Intersection {
             return false;
         }
         //Meme id
-        if(id != ((Intersection) o).id){
+        if(this.id != ((Intersection) o).id){
             return false;
         }
         //Meme latitude
-        if(Double.compare(latitude,((Intersection) o).latitude)!=0){
+        if(Double.compare(this.latitude,((Intersection) o).latitude)!=0){
             return false;
         }
         //Meme longitude
-        if(Double.compare(longitude,((Intersection) o).longitude)!=0){
+        if(Double.compare(this.longitude,((Intersection) o).longitude)!=0){
             return false;
         }
         return true;
