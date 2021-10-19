@@ -30,7 +30,6 @@ public class Window extends JFrame {
     private RoadmapView roadmapView;
     private ArrayList<JButton> buttons;
 
-    private MapView mapView;
     private ButtonListener buttonListener;
     private MouseListener mouseListener;
     private KeyboardListener keyboardListener;
@@ -41,12 +40,11 @@ public class Window extends JFrame {
     /**
      * Default constructor
      */
-    public Window(CityMap cityMap, int s, Controller controller) {
+
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
         createButtons(controller);
-
-        mapView = new MapView(cityMap, s, this);
+        mapView = new MapView(cityMap, this);
         roadmapView = new RoadmapView(cityMap, this);
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
@@ -54,11 +52,6 @@ public class Window extends JFrame {
         addMouseMotionListener((MouseMotionListener) mouseListener);
         addKeyListener(keyboardListener);
         setWindowSize();
-        setVisible(true);
-
-        mapView = new MapView(cityMap, s, this);
-        mapView = new MapView(cityMap, this);
-        setSize(WIN_WIDTH,WIN_HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -91,9 +84,4 @@ public class Window extends JFrame {
             getContentPane().add(button);
         }
     }
-
-
-
-
-
 }

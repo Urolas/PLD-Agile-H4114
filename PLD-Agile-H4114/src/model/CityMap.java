@@ -69,6 +69,7 @@ public class CityMap extends Observable {
     }
 
     public void addObserver(MapView mapView) {
+        super.addObserver(mapView);
     }
 
     public Distribution getDistribution() {
