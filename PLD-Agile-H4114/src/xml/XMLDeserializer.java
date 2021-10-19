@@ -100,7 +100,7 @@ public class XMLDeserializer {
             if (minLongitude == null || minLongitude > longitude) {
                 minLongitude = longitude;
             }
-            cityMap.addIntersection(createIntersection(id, latitude, longitude));
+            cityMap.addIntersection(new Intersection(id, latitude, longitude));
         }
         cityMap.setHeight(maxLongitude-minLongitude);
         cityMap.setWidth(maxLatitude-minLatitude);
@@ -152,13 +152,6 @@ public class XMLDeserializer {
 
 
 
-    /**
-     * @param id,latitude,longitude
-     * @return
-     */
-    private static Intersection createIntersection(String id, Double latitude,Double longitude) {
-        return new Intersection(id, latitude, longitude);
-    }
 
     /**
      * @param elt
