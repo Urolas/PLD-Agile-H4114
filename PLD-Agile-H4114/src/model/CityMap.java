@@ -50,4 +50,9 @@ public class CityMap extends Observable {
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
     }
+
+    public Set<Road> getRoads() {
+        return roads;
+    }
+
 }

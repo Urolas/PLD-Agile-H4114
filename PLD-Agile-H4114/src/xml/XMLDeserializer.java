@@ -57,13 +57,13 @@ public class XMLDeserializer {
      * @param distribution
      * @return
      */
-    public static void loadDistribution(Distribution distribution, CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
+    public static void loadDistribution(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
         File xml = XMLFileOpener.getInstance().open(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
         if (root.getNodeName().equals("planningRequest")) {
-            buildDistributionFromDOMXML(root, distribution, cityMap);
+            buildDistributionFromDOMXML(root, cityMap);
         } else {
             throw new XMLException("Wrong format");
         }
@@ -95,16 +95,16 @@ public class XMLDeserializer {
     /**
      * Citymap mis en argument pour pouvoir recuperer les intersections, qu'on va ensuite ratacher aux points d'interet
      * */
-    private static void buildDistributionFromDOMXML(Element rootDOMNode, Distribution distribution, CityMap cityMap) throws NumberFormatException,XMLException {
+    private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
-        distribution.reset();
+        cityMap.distribution.reset();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
         Intersection intersec =cityMap.getIntersections().get(address);
         if ( intersec==null){
             throw new XMLException("Wrong File used : depot point is not valid");
         }
-        distribution.addDepot(intersec,depot.getAttribute("departureTime"));
+        cityMap.distribution.addDepot(intersec,depot.getAttribute("departureTime"));
         NodeList requestList = rootDOMNode.getElementsByTagName("request");
         for (int i = 0; i < requestList.getLength(); i++) {
             Element elt = (Element) requestList.item(i);
@@ -120,7 +120,7 @@ public class XMLDeserializer {
             Integer pickupDuration = Integer.parseInt(elt.getAttribute("pickupDuration"));
             Integer deliveryDuration = Integer.parseInt(elt.getAttribute("deliveryDuration"));
 
-            distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
+            cityMap.distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
         }
 
 
