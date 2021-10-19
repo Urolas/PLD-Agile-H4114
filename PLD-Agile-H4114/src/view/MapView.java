@@ -12,28 +12,27 @@ import model.Road;
  */
 public class MapView extends JPanel implements Observer {
     private Graphics g;
-    private Graphics2D g2 =(Graphics2D) g;
+    private Graphics2D g2 ;
     private CityMap cityMap;
     private double scaleWidth;
     private double scaleHeight;
     private double originLat;
     private double originLong;
-    private final int viewHeight = 800;
-    private final int viewWidth = 800;
+    private final int VIEW_HEIGHT = 800;
+    private final int VIEW_WIDTH = 800;
     /**
      * Default constructor
      */
     public MapView(CityMap cityMap, Window window) {
         super();
         this.cityMap = cityMap;
-        scaleWidth = viewWidth/cityMap.getWidth();
-        scaleHeight = viewHeight/cityMap.getHeight();
-        originLong = cityMap.getNordPoint();
-        originLat = cityMap.getWestPoint();
-        System.out.println(originLat + " " +originLong);
+        scaleWidth = VIEW_WIDTH/cityMap.getWidth();
+        scaleHeight = VIEW_HEIGHT/cityMap.getHeight();
+        originLong = cityMap.getWestPoint();
+        originLat = cityMap.getNordPoint();
         setLayout(null);
         setBackground(Color.GRAY);
-        setSize(viewWidth,viewHeight);
+        setSize(VIEW_WIDTH,VIEW_HEIGHT);
         window.getContentPane().add(this);
     }
 
@@ -41,42 +40,37 @@ public class MapView extends JPanel implements Observer {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         this.g = g;
+        this.g2 = (Graphics2D) g;
         g.setColor(Color.BLACK);
-
-            for (Road r : cityMap.getRoads()){
-//                System.out.println(r);
-                displayRoad(r);
-            }
-            g.drawLine(0,0,50,50);
-            //g2.setStroke(new BasicStroke(10));
-            //g2.draw(new Line2D.Float(30, 20, 80, 90));
-
-
-
+        for (Road r : cityMap.getRoads()){
+            displayRoad(r);
+        }
     }
 
     /**
-     * @param observed 
-     * @param object 
+     * @param observed
+     * @param object
      * @return
      */
     public void update(Observable observed, Object object) {
         // TODO implement here
     }
 
+    /**
+     *  Method called by
+     * @param r
+     */
     public void displayRoad(Road r){
-        double x1 = (r.getOrigin().getLatitude()-originLat) * scaleWidth;
-//       System.out.println("x1 = ("+ r.getOrigin().getLatitude()+" - "+originLong + ") *"+scaleWidth+" = "+ (int)x1);
-        double y1 = (r.getOrigin().getLongitude()-originLong) * scaleHeight;
-//            System.out.println("y1 = ("+ r.getOrigin().getLongitude()+" - "+originLat + ") *"+scaleHeight+" = "+ (int)y1);
-        double x2 = (r.getDestination().getLatitude()-originLat) * scaleWidth;
-        double y2 = (r.getDestination().getLongitude()-originLong) * scaleHeight;
-//        System.out.println(x2+" "+y1+" "+y2);
-//        System.out.println(y2);
+        int x1 = (int)((r.getOrigin().getLongitude()- originLong) * scaleWidth);
+        int y1 = -(int)((r.getOrigin().getLatitude()- originLat) * scaleHeight); /* Le repère de latitude est inversé */
+        int x2 = (int)((r.getDestination().getLongitude()- originLong) * scaleWidth);
+        int y2 = -(int)((r.getDestination().getLatitude()- originLat) * scaleHeight);
         g.setColor(Color.RED);
-        g.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-        //g2.setStroke(new BasicStroke(10));
-        //g2.draw(new Line2D.Float(30, 20, 80, 90));
+
+        g2.setStroke(new BasicStroke(1));
+        g2.draw(new Line2D.Float(x1, y1, x2, y2));
+//        g.drawLine(x1, y1, x2, y2);
+
     }
 
 }

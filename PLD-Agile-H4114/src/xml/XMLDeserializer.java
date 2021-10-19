@@ -102,10 +102,10 @@ public class XMLDeserializer {
             }
             cityMap.addIntersection(new Intersection(id, latitude, longitude));
         }
-        cityMap.setHeight(maxLongitude-minLongitude);
-        cityMap.setWidth(maxLatitude-minLatitude);
-        cityMap.setNordPoint(maxLatitude);
-        cityMap.setWestPoint(minLatitude);
+        cityMap.setHeight(maxLatitude-minLatitude);
+        cityMap.setWidth(maxLongitude-minLongitude);
+        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
             Element elt = (Element) roadList.item(i);
