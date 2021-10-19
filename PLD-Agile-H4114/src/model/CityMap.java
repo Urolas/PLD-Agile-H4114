@@ -70,4 +70,20 @@ public class CityMap extends Observable {
     public void setWestPoint(Double westPoint) {
         this.westPoint = westPoint;
     }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public Double getNordPoint() {
+        return nordPoint;
+    }
+
+    public Double getWestPoint() {
+        return westPoint;
+    }   
 }
