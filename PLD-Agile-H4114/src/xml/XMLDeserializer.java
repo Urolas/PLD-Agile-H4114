@@ -111,7 +111,10 @@ public class XMLDeserializer {
             Element elt = (Element) roadList.item(i);
             String id1 = elt.getAttribute("origin");
             String id2 = elt.getAttribute("destination");
-            cityMap.addRoad(createRoad(elt), id1, id2);
+            String name = elt.getAttribute("name");
+            Double length = Double.parseDouble(elt.getAttribute("length"));
+            cityMap.addRoad(name,length, id1, id2);
+            cityMap.completeAdjacencyList(id1, id2,length);
         }
     }
 
@@ -157,13 +160,7 @@ public class XMLDeserializer {
      * @param elt
      * @return
      */
-    private static Road createRoad(Element elt) {
 
-        String name = elt.getAttribute("name");
-        Double length = Double.parseDouble(elt.getAttribute("length"));
-
-        return new Road(name, length);
-    }
 
 
 
