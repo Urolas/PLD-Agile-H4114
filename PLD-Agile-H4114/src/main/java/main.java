@@ -1,3 +1,4 @@
+import model.Distribution;
 import org.xml.sax.SAXException;
 import xml.*;
 import model.CityMap;
@@ -8,9 +9,10 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        xml.XMLDeserializer alo = new XMLDeserializer();
         CityMap c=new CityMap();
-        alo.loadCityMap(c);
+        XMLDeserializer.loadCityMap(c);
+        Distribution d = new Distribution();
+        XMLDeserializer.loadDistribution(d,c);
         System.out.println("Hello world");
     }
 
