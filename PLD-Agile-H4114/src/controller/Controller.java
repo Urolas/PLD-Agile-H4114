@@ -24,11 +24,11 @@ public class Controller {
     /**
      * Default constructor
      */
-    public Controller(CityMap cityMap, int scale) {
+    public Controller(CityMap cityMap) {
         this.cityMap = cityMap;
         listOfCommands = new ListOfCommands();
 //        currentState = initialState;
-        window = new Window(cityMap, scale, this);
+        window = new Window(cityMap, this);
     // Instances associated with each possible state of the controller
     final InitialState initialState = new InitialState();
     final CityMapState1 citymapState1 = new CityMapState1();
