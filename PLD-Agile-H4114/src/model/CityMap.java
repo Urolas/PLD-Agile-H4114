@@ -1,7 +1,7 @@
 package model;
 
 import view.MapView;
-
+import observer.Observable;
 import java.util.*;
 
 /**
@@ -35,10 +35,12 @@ public class CityMap extends Observable {
         this.tour = new Tour();
         this.intersections.clear();
         this.roads.clear();
+        notifyObservers();
     }
 
     public void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.id,intersection);
+        notifyObservers(intersection);
     }
 
     public void addRoad(Road road, String id1, String id2) {
@@ -48,6 +50,7 @@ public class CityMap extends Observable {
             road.addRoads(origin,destination);
             this.roads.add(road);
         }
+        notifyObservers(road);
     }
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
