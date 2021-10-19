@@ -10,11 +10,16 @@ import model.CityMap;
  */
 public class MapView extends JPanel implements Observer {
     private Graphics g;
+    private CityMap cityMap;
+    private int scale;
+    private final int viewHeight = 800;
+    private final int viewWidth = 800;
     /**
      * Default constructor
      */
     public MapView(CityMap cityMap, Window window) {
         super();
+        scale =
     }
 
     @Override
