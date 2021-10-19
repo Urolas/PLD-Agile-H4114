@@ -55,4 +55,11 @@ public class CityMap extends Observable {
         return roads;
     }
 
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
 }

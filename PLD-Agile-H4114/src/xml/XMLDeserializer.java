@@ -54,7 +54,7 @@ public class XMLDeserializer {
     }
 
     /**
-     * @param distribution
+     * @param cityMap
      * @return
      */
     public static void loadDistribution(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
@@ -77,12 +77,33 @@ public class XMLDeserializer {
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException {
 
         cityMap.reset();
+        Double maxLatitude = null;
+        Double minLatitude = null;
+        Double maxLongitude = null;
+        Double minLongitude = null;
 
         NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
         for (int i = 0; i < intersectionList.getLength(); i++) {
-            cityMap.addIntersection(createIntersection((Element) intersectionList.item(i)));
+            Element elt = (Element) intersectionList.item(i);
+            String id = elt.getAttribute("id");
+            Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
+            Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
+            if (maxLatitude == null || maxLatitude < latitude) {
+                maxLatitude = latitude;
+            }
+            if (minLatitude == null || minLatitude > latitude) {
+                minLatitude = latitude;
+            }
+            if (maxLongitude == null || maxLongitude < longitude) {
+                maxLongitude = longitude;
+            }
+            if (minLongitude == null || minLongitude > longitude) {
+                minLongitude = longitude;
+            }
+            cityMap.addIntersection(createIntersection(id, latitude, longitude));
         }
-
+        cityMap.setHeight(maxLongitude-minLongitude);
+        cityMap.setWidth(maxLatitude-minLatitude);
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
             Element elt = (Element) roadList.item(i);
@@ -130,14 +151,10 @@ public class XMLDeserializer {
 
 
     /**
-     * @param elt
+     * @param id,latitude,longitude
      * @return
      */
-    private static Intersection createIntersection(Element elt) {
-        String id = elt.getAttribute("id");
-        Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
-        Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
-
+    private static Intersection createIntersection(String id, Double latitude,Double longitude) {
         return new Intersection(id, latitude, longitude);
     }
 
