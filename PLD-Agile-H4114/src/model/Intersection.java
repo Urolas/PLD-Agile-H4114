@@ -21,6 +21,27 @@ public class Intersection {
         this.longitude = myLongitude;
     }
 
+    @Override
+    public boolean equals(Object o){
+        //Meme class
+        if (o.getClass() != Intersection.class) {
+            return false;
+        }
+        //Meme id
+        if(id != ((Intersection) o).id){
+            return false;
+        }
+        //Meme latitude
+        if(latitude!=((Intersection) o).latitude){
+            return false;
+        }
+        //Meme longitude
+        if(longitude!=((Intersection) o).longitude){
+            return false;
+        }
+        return true;
+    }
+
 
 
 }
