@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import java.util.*;
 import javax.swing.JFrame;
 /**
@@ -7,15 +8,19 @@ import javax.swing.JFrame;
  */
 public class Window extends JFrame{
 
-    private final int winWidth = 1000;
-    private final int winHeight = 1000;
+    private final int WIN_WIDTH = 1000;
+    private final int WIN_HEIGHT = 1000;
+    private MapView graphicalView;
+    private ButtonListener buttonListener;
 
     /**
      * Default constructor
      */
-    public Window() {
+    public Window(Controller controller) {
         setLayout(null);
-        setSize(winWidth,winHeight);
+
+        graphicalView = new MapView();
+        setSize(WIN_WIDTH,WIN_HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
     }
