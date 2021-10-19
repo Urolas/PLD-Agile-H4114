@@ -13,6 +13,7 @@ public class main {
         XMLDeserializer.loadCityMap(c);
         XMLDeserializer.loadDistribution(c);
         System.out.println("Hello world");
+        c.computeTour();
     }
 
     public static String returnString(){

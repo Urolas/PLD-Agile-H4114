@@ -1,6 +1,5 @@
 package model;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 /**
@@ -20,9 +19,9 @@ public class CityMap extends Observable {
      * Default constructor
      */
     public CityMap() {
-        this.intersections= new HashMap<String,Intersection>();
-        this.roads= new HashSet<Road>();
-        this.adjacencyList= new HashMap<String,List<AbstractMap.Entry<String,Double>>>();
+        this.intersections= new HashMap<>();
+        this.roads= new HashSet<>();
+        this.adjacencyList= new HashMap<>();
 
     }
 
@@ -31,8 +30,27 @@ public class CityMap extends Observable {
      * @param intersection2 
      * @return
      */
-    public void computeTour(Intersection intersection1, Intersection intersection2) {
+    public void computePath(Intersection intersection1, Intersection intersection2) {
         // TODO implement here
+    }
+    public void computeTour() {
+        List<String> points = this.distribution.GetAllPoints();
+        HashMap<String,HashMap<String,AbstractMap.SimpleEntry<Double,List<String>>>> ResultsDijkstra = new HashMap<>();
+        for (String wantedIntersection : points){
+            ResultsDijkstra.put(wantedIntersection,Dijkstra(wantedIntersection,points));
+        }
+        GraphPointToPoint graph =new GraphPointToPoint(ResultsDijkstra);
+        graph.getNbVertices();
+    }
+
+    private HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>> Dijkstra(String source, List<String> points) {
+        HashMap<String, AbstractMap.SimpleEntry<Double,List<String>>> result = new HashMap<>();
+        for (String intersection : points){
+            if (intersection!=source) {
+                result.put(intersection, new AbstractMap.SimpleEntry<>(1.0,new ArrayList<>()));
+            }
+        }
+        return result;
     }
 
     public void reset(){

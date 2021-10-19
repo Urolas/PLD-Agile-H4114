@@ -33,5 +33,14 @@ public class Distribution {
         this.requests.add(new Request(pAddress,dAddress));
 
     }
+    public List<String> GetAllPoints(){
+        List<String> points = new ArrayList<>();
+        points.add(this.depot.intersection.id);
+        for (Request request: this.requests) {
+            points.add(request.getDelivery().intersection.id);
+            points.add(request.getPickup().intersection.id);
+        }
+        return points;
+    }
 
 }
