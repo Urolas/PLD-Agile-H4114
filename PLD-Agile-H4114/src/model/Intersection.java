@@ -32,11 +32,11 @@ public class Intersection {
             return false;
         }
         //Meme latitude
-        if(latitude!=((Intersection) o).latitude){
+        if(Double.compare(latitude,((Intersection) o).latitude)!=0){
             return false;
         }
         //Meme longitude
-        if(longitude!=((Intersection) o).longitude){
+        if(Double.compare(longitude,((Intersection) o).longitude)!=0){
             return false;
         }
         return true;
