@@ -17,4 +17,15 @@ public class PickupAddress extends PointOfInterest {
         super(pintersection);
         this.duration=pickupDuration;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!super.equals(obj)) {
+            return false;
+        }
+        if(PickupAddress.class!=obj.getClass()){
+            return false;
+        }
+        return true;
+    }
 }
