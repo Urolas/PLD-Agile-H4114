@@ -25,4 +25,18 @@ public class PointOfInterest {
         this.intersection=i;
 
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass()!=this.getClass()){
+            return false;
+        }
+        if(!this.intersection.equals(((PointOfInterest) obj).intersection)){
+            return false;
+        }
+        if(Integer.compare(this.duration,((PointOfInterest) obj).duration)!=0){
+            return false;
+        }
+        return true;
+    }
 }

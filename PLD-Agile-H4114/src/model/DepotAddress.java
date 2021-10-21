@@ -27,5 +27,17 @@ public class DepotAddress extends PointOfInterest {
             }
         }
         this.departureTime = LocalTime.parse(fractureddepartureTime[0]+":"+fractureddepartureTime[1]+":"+fractureddepartureTime[2]);
+        this.duration=0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!super.equals(obj)) {
+            return false;
+        }
+        if(this.departureTime!=((DepotAddress) obj).departureTime){
+            return false;
+        }
+        return true;
     }
 }

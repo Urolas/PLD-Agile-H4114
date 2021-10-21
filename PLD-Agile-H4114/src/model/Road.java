@@ -31,6 +31,28 @@ public class Road {
         this.destination=myDestination;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != Road.class) {
+            return false;
+        }
+        //Meme path
+        if (Double.compare(this.length,((Road) obj).length)!=0) {
+            return false;
+        }
+        //Meme pointOfInterests
+        if (this.name!=((Road) obj).name) {
+            return false;
+        }
+        if (!this.origin.equals(((Road) obj).origin)) {
+            return false;
+        }
+        if (!this.destination.equals(((Road) obj).destination)) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 
      */
