@@ -27,8 +27,9 @@ public class MapView extends JPanel implements Observer {
     private double scaleHeight;
     private double originLat;
     private double originLong;
-    private final int VIEW_HEIGHT = 700;
-    private final int VIEW_WIDTH = 700;
+    private final int VIEW_HEIGHT = 800;
+    private final int VIEW_WIDTH = 800;
+    private final int POINT_SIZE = 15;
 
     /**
      * Default constructor
@@ -106,9 +107,9 @@ public class MapView extends JPanel implements Observer {
         int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
         Color c = new Color((int)(Math.random() * 0x1000000));
         g.setColor(c);
-        g.fillOval(x1-5, y1-5, 10, 10);
+        g.fillOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         g.setColor(c);
-        g.fillPolygon(new int[] {x2, x2+10, x2+5}, new int[] {y2, y2, y2+10}, 3);
+        g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
         System.out.println("x1 =" +x1 + " y1= " + y1);
         System.out.println("x2 =" +x2 + " y2= " + y2);
     }
@@ -118,7 +119,7 @@ public class MapView extends JPanel implements Observer {
             int x = (int) ((cityMap.getDistribution().getDepot().getIntersection().getLongitude() - originLong) * scaleWidth);
             int y = -(int) ((cityMap.getDistribution().getDepot().getIntersection().getLatitude() - originLat) * scaleHeight);
             g.setColor(Color.black);
-            g.fillRect(x-10, y-10, 10, 10);
+            g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
             System.out.println("x ="+x + " y= " + y);
         }
     }
