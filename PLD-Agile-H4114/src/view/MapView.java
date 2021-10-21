@@ -69,17 +69,16 @@ public class MapView extends JPanel implements Observer {
         for (Road r : cityMap.getRoads()){
             displayRoad(r);
         }
-
-        if (cityMap.getDistribution()!=null) {
-
-            for (Request q : cityMap.getDistribution().getRequests()){
+        Distribution d = cityMap.getDistribution();
+        if (d!=null) {
+            for (Request q : d.getRequests()){
                 displayRequest(q);
             }
         }
 
-        g.setColor(Color.blue);
-        g2.setStroke(new BasicStroke(2));
-        g2.drawPolygon(new int[] {200, 200+10, 200-10}, new int[] {100, 100+10, 100+10}, 3);
+//        g.setColor(Color.blue);
+//        g2.setStroke(new BasicStroke(2));
+//        g2.drawPolygon(new int[] {200, 200+10, 200-10}, new int[] {100, 100+10, 100+10}, 3);
     }
 
     /**
@@ -87,10 +86,10 @@ public class MapView extends JPanel implements Observer {
      * @param r
      */
     public void displayRoad(Road r){
-        int x1 = (int)((r.getOrigin().getLongitude()- originLong) * scaleWidth);
-        int y1 = -(int)((r.getOrigin().getLatitude()- originLat) * scaleHeight); /* Le repère de latitude est inversé */
-        int x2 = (int)((r.getDestination().getLongitude()- originLong) * scaleWidth);
-        int y2 = -(int)((r.getDestination().getLatitude()- originLat) * scaleHeight);
+        int x1 = (int)((r.getOrigin().getLongitude() - originLong) * scaleWidth);
+        int y1 = -(int)((r.getOrigin().getLatitude() - originLat) * scaleHeight); /* Le repère de latitude est inversé */
+        int x2 = (int)((r.getDestination().getLongitude() - originLong) * scaleWidth);
+        int y2 = -(int)((r.getDestination().getLatitude() - originLat) * scaleHeight);
         g.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
@@ -98,14 +97,15 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void displayRequest(Request q){
+
         int x1 = (int)((q.getPickup().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);
         int x2 = (int)((q.getDelivery().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
         g.setColor(Color.red);
-        g2.drawOval(x1, y1, 10, 10);
+        g.fillOval(x1-5, y1-5, 10, 10);
         g.setColor(Color.blue);
-        g2.drawPolygon(new int[] {x2, x2+10, x2-10}, new int[] {y2, y2+10, y2+10}, 3);
+        g.fillPolygon(new int[] {x2, x2+10, x2-10}, new int[] {y2, y2+10, y2+10}, 3);
         System.out.println("x1 =" +x1 + " y1= " + y1);
         System.out.println("x2 =" +x2 + " y2= " + y2);
     }
