@@ -49,9 +49,32 @@ public class Distribution extends Observable{
         this.requests.add(r);
         notifyObservers(r);
     }
+    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
+        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration,i);
+        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration,i+1);
+        this.requests.add(new Request(pAddress,dAddress));
 
     public void addObserver(MapView mapView) {
         super.addObserver(mapView);
     }
 
+    //return the Id of each point of interest, the first one is always the depot point
+    public List<PointOfInterest> GetAllPoints(){
+        List<PointOfInterest> points = new ArrayList<>();
+        points.add(this.depot);
+        for (Request request: this.requests) {
+            points.add(request.getDelivery());
+            points.add(request.getPickup());
+        }
+        return points;
+    }
+
+    public List<AbstractMap.SimpleEntry<String, String>> GetConstraints() {
+        List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
+        for (Request request: this.requests) {
+            result.add(new AbstractMap.SimpleEntry<>(request.getPickup().intersection.id,request.getDelivery().intersection.id));
+        }
+
+        return result;
+    }
 }

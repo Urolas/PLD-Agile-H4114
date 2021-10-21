@@ -101,6 +101,7 @@ public class XMLDeserializer {
                 minLongitude = longitude;
             }
             cityMap.addIntersection(new Intersection(id, latitude, longitude));
+            cityMap.initializeAdjacencyList(id);
         }
         cityMap.setHeight(maxLatitude-minLatitude);
         cityMap.setWidth(maxLongitude-minLongitude);
@@ -111,7 +112,10 @@ public class XMLDeserializer {
             Element elt = (Element) roadList.item(i);
             String id1 = elt.getAttribute("origin");
             String id2 = elt.getAttribute("destination");
-            cityMap.addRoad(createRoad(elt), id1, id2);
+            String name = elt.getAttribute("name");
+            Double length = Double.parseDouble(elt.getAttribute("length"));
+            cityMap.addRoad(name,length, id1, id2);
+            cityMap.completeAdjacencyList(id1, id2,length);
         }
     }
 
@@ -129,8 +133,8 @@ public class XMLDeserializer {
         }
         cityMap.distribution.addDepot(intersec,depot.getAttribute("departureTime"));
         NodeList requestList = rootDOMNode.getElementsByTagName("request");
-        for (int i = 0; i < requestList.getLength(); i++) {
-            Element elt = (Element) requestList.item(i);
+        for (int i = 1; i < 1+requestList.getLength()*2; i+=2) {
+            Element elt = (Element) requestList.item((i-1)/2);
 
             String pickupAddress =elt.getAttribute("pickupAddress");
             String deliveryAddress =elt.getAttribute("deliveryAddress");
@@ -143,7 +147,7 @@ public class XMLDeserializer {
             Integer pickupDuration = Integer.parseInt(elt.getAttribute("pickupDuration"));
             Integer deliveryDuration = Integer.parseInt(elt.getAttribute("deliveryDuration"));
 
-            cityMap.distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery);
+            cityMap.distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery,i);
         }
 
 
@@ -157,13 +161,7 @@ public class XMLDeserializer {
      * @param elt
      * @return
      */
-    private static Road createRoad(Element elt) {
 
-        String name = elt.getAttribute("name");
-        Double length = Double.parseDouble(elt.getAttribute("length"));
-
-        return new Road(name, length);
-    }
 
 
 

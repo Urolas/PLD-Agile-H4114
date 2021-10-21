@@ -7,10 +7,9 @@ import java.util.Set;
  * @author 4IF-4114
  */
 public class Tour {
-    private Set<Path> paths;
-
-    public Set<PointOfInterest> pointOfInterests;
-
+    private List<Path> paths;
+    public List<PointOfInterest> pointOfInterests;
+    private Double totalLength;
     /**
      * Default constructor
      */
@@ -26,6 +25,15 @@ public class Tour {
     public Set<PointOfInterest> getPointOfInterests() {
         return pointOfInterests;
     }
+
+
+    public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
+        this.paths=paths;
+        this.pointOfInterests=shortestTour;
+        this.totalLength=solutionCost;
+    }
+
+
 
     @Override
     //Methode d'egalité entre les Tours
@@ -47,3 +55,4 @@ public class Tour {
 
     }
 }
+

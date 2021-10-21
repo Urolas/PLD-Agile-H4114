@@ -12,8 +12,10 @@ public class DeliveryAddress extends PointOfInterest {
     public DeliveryAddress() {
     }
 
-    public DeliveryAddress(Intersection dIntersection, Integer deliveryDuration) {
-        super(dIntersection);
+
+    public DeliveryAddress(Intersection dintersection, Integer deliveryDuration,Integer i) {
+        super(dintersection,i);
+
         this.duration=deliveryDuration;
     }
 
