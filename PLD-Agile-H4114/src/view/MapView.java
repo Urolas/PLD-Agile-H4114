@@ -110,7 +110,7 @@ public class MapView extends JPanel implements Observer {
         g.setColor(c);
         g.fillOval(x1-5, y1-5, 10, 10);
         g.setColor(c);
-        g.fillPolygon(new int[] {x2-10, x2, x2+10}, new int[] {y2+10, y2, y2+10}, 3);
+        g.fillPolygon(new int[] {x2, x2+10, x2+5}, new int[] {y2, y2, y2+10}, 3);
         System.out.println("x1 =" +x1 + " y1= " + y1);
         System.out.println("x2 =" +x2 + " y2= " + y2);
     }
