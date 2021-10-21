@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,8 +16,8 @@ public class Tour {
      * Default constructor
      */
     public Tour() {
-        paths = new HashSet<>();
-        pointOfInterests = new HashSet<>();
+        paths = new ArrayList<>();
+        pointOfInterests = new ArrayList<>();
     }
 
 
