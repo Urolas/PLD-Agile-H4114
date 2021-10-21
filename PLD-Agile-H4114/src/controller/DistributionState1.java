@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
-public class DistributionState1 extends State {
+public class DistributionState1 implements State {
 
     /**
      * Default constructor

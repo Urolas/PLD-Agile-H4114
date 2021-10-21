@@ -48,6 +48,7 @@ public class Window extends JFrame {
         addMouseListener((java.awt.event.MouseListener) mouseListener);
         addMouseMotionListener((MouseMotionListener) mouseListener);
         addKeyListener(keyboardListener);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowSize();
         setLocationRelativeTo(null);
         setVisible(true);

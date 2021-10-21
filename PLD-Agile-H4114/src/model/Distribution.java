@@ -18,6 +18,14 @@ public class Distribution extends Observable{
         this.depot = new DepotAddress();
     }
 
+    public DepotAddress getDepot() {
+        return depot;
+    }
+
+    public Set<Request> getRequests() {
+        return requests;
+    }
+
     public void reset() {
         this.requests.clear();
         this.depot = new DepotAddress();

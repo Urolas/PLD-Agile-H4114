@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
-public class CityMapState2 extends State {
+public class CityMapState2 implements State {
 
     /**
      * Default constructor

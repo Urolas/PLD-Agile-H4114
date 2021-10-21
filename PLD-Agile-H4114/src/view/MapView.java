@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 import model.CityMap;
+import model.Request;
 import model.Road;
 
 import observer.Observable;
@@ -64,10 +65,17 @@ public class MapView extends JPanel implements Observer {
         super.paintComponent(g);
         this.g = g;
         this.g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
         for (Road r : cityMap.getRoads()){
             displayRoad(r);
         }
+        if (cityMap.getDistribution()!=null) {
+
+            for (Request q : cityMap.getDistribution().getRequests()){
+                displayRequest(q);
+            }
+        }
+        g.setColor(Color.red);
+        g2.drawOval(220, 330, 10, 10);
     }
 
     /**
@@ -83,5 +91,18 @@ public class MapView extends JPanel implements Observer {
         g2.setStroke(new BasicStroke(1));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
+
+    }
+
+    public void displayRequest(Request q){
+        int x1 = (int)((q.getPickup().getIntersection().getLongitude()- originLong) * scaleWidth);
+
+        int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);
+        int x2 = (int)((q.getDelivery().getIntersection().getLongitude()- originLong) * scaleWidth);
+        int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
+        g.setColor(Color.red);
+        g2.drawOval(x1, y1, 10, 10);
+//        g.setColor(Color.blue);
+        System.out.println("x1 =" +x1 + " y1= " + y1);
     }
 }

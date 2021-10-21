@@ -17,4 +17,6 @@ public class PickupAddress extends PointOfInterest {
         super(pintersection);
         this.duration=pickupDuration;
     }
+
+
 }

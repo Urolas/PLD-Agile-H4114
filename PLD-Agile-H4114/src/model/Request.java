@@ -13,9 +13,15 @@ public class Request {
     public Request() {
     }
 
+    public PickupAddress getPickup() {
+        return pickup;
+    }
 
+    public DeliveryAddress getDelivery() {
+        return delivery;
+    }
 
-    public Request(PickupAddress pickupAddress,DeliveryAddress deliveryAddress){
+    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress){
         this.pickup=pickupAddress;
         this.delivery=deliveryAddress;
     }

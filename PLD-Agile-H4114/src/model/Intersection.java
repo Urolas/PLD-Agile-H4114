@@ -22,9 +22,7 @@ public class Intersection {
     }
 
 
-    public Double getLatitude() {
-        return latitude;
-    }
+
 
     @Override
     public String toString() {
@@ -37,5 +35,8 @@ public class Intersection {
 
     public Double getLongitude() {
         return longitude;
+    }
+    public Double getLatitude() {
+        return latitude;
     }
 }

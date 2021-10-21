@@ -14,6 +14,10 @@ public class PointOfInterest {
     public PointOfInterest() {
     }
 
+    public Intersection getIntersection() {
+        return intersection;
+    }
+
     /**
      * 
      */
@@ -22,4 +26,5 @@ public class PointOfInterest {
     public PointOfInterest(Intersection i) {
         this.intersection=i;
     }
+
 }

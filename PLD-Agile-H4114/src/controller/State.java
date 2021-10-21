@@ -12,30 +12,24 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
-public class State {
+public interface State {
 
-    /**
-     * Default constructor
-     */
-    public State() {
-    }
 
     /**
      * Method called by the controller after a click on the button "Load a map"
-     * @param c the controler
+     * @param c the controller
      * @param w the window
      */
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
-    }
+    public default void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
+    };
 
     /**
      * Method called by the controller after a click on the button "Load distribution"
      * @param c the controler
      * @param w the window
      */
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{
+    public default void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{
 //        XMLDeserializer.loadDistribution(c.getCitymap().getDistribution(),c.getCitymap());
-    }
+    };
 
 }
