@@ -59,7 +59,7 @@ public class Controller {
         try{
             this.currentState.loadMap(this, window);
         }catch(Exception e){
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class Controller {
         try{
             this.currentState.loadDistribution(this,window);
         }catch(Exception e){
-
+            System.out.println(e.getMessage());
         }
     }
 

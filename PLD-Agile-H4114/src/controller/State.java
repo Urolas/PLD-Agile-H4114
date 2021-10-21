@@ -17,7 +17,8 @@ public interface State {
      * @param c the controller
      * @param w the window
      */
-    public default void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
+    public default void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException,
+            IOException, SAXException {
     };
 
     /**
@@ -25,8 +26,8 @@ public interface State {
      * @param c the controler
      * @param w the window
      */
-    public default void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{
-//        XMLDeserializer.loadDistribution(c.getCitymap().getDistribution(),c.getCitymap());
+    public default void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException,
+            IOException, SAXException{
     };
 
 }

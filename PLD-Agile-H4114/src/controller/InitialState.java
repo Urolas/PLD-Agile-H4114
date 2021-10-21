@@ -25,8 +25,4 @@ public class InitialState implements State {
         c.setCurrentState(c.citymapState);
     }
 
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{
-//        XMLDeserializer.loadDistribution(c.getCitymap().getDistribution(),c.getCitymap());
-    }
-
 }
