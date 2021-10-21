@@ -64,19 +64,19 @@ public class CityMap extends Observable {
         }
         AbstractMap.SimpleEntry<String,String> pairIdIntersection;
         List<Path> paths = new LinkedList<>();
-        int j = 1;
+
 
          // creation des paths : allant de de point d'interet a point d'interet
         for (int i=1;i< shortestTour.size();i++) {
-            String currentIntersection = shortestTour.get(i).intersection.id;
             List<Road> roadsEndToEnd = new ArrayList<>();
-
-            while (j<shortestPath.size() && !Objects.equals(shortestPath.get(j), currentIntersection)){
-                pairIdIntersection= new AbstractMap.SimpleEntry<>(shortestPath.get(j-1),shortestPath.get(j));
+            List<String> intersectionsBetweenPoints = ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getValue();
+            for (int j=1;j<intersectionsBetweenPoints.size();j++){
+                pairIdIntersection= new AbstractMap.SimpleEntry<>(intersectionsBetweenPoints.get(j-1),intersectionsBetweenPoints.get(j));
                 roadsEndToEnd.add(this.roads.get(pairIdIntersection));
-                j++;
 
             }
+
+
             paths.add(new Path(roadsEndToEnd,ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getKey()));
         }
         /** TODO Impossible a faire sans un dijkstra censé, a debugé apres
@@ -132,7 +132,6 @@ public class CityMap extends Observable {
             if(currentNode.equals(idArrivee)){
                 break;
             }
-            System.out.println(currentNode);
 
             //On parcours tous les noeuds adjacents de currentNode
             for(Map.Entry<String,Double> e : this.adjacencyList.get(currentNode)){

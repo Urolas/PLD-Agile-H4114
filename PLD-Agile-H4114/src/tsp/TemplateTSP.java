@@ -28,7 +28,7 @@ public abstract class TemplateTSP implements TSP {
     }
 
     public Integer getSolution(int i){
-        if (g != null && i>=0 && i<g.getNbVertices())
+        if (g != null && i>=0 && i<g.getNbVertices()+1)
             return bestSol[i];
         return -1;
     }
