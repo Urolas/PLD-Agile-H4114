@@ -1,6 +1,7 @@
 package model;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author 4IF-4114
@@ -14,7 +15,27 @@ public class Tour {
      * Default constructor
      */
     public Tour() {
+        paths = new HashSet<>();
+        pointOfInterests = new HashSet<>();
     }
 
+    @Override
+    //Methode d'egalité entre les Tours
+    public boolean equals(Object o) {
+        //Meme class
+        if (o.getClass() != Tour.class) {
+            return false;
+        }
+        //Meme path
+        if (!this.paths.equals(((Tour) o).paths)) {
+            return false;
+        }
+        //Meme pointOfInterests
+        if (!this.pointOfInterests.equals(((Tour) o).pointOfInterests)) {
+            return false;
+        }
+        return true;
 
+
+    }
 }
