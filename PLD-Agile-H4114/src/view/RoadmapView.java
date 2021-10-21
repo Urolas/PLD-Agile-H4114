@@ -2,7 +2,8 @@ package view;
 
 import model.CityMap;
 
-import java.util.*;
+import observer.Observable;
+import observer.Observer;
 
 /**
  * @author 4IF-4114

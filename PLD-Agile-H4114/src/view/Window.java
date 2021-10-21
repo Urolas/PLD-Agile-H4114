@@ -4,11 +4,10 @@ import controller.Controller;
 import model.CityMap;
 
 import java.awt.event.MouseMotionListener;
-import java.util.*;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
-import model.CityMap;
 /**
  * @author 4IF-4114
  */

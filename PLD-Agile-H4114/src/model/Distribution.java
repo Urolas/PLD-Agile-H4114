@@ -2,7 +2,8 @@ package model;
 
 import view.MapView;
 
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
 import observer.Observable;
 
 /**

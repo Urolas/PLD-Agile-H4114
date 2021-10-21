@@ -1,6 +1,5 @@
 
 import controller.Controller;
-import model.Distribution;
 import org.xml.sax.SAXException;
 import xml.*;
 import model.CityMap;

@@ -1,13 +1,16 @@
 package view;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.geom.Line2D;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
 import javax.swing.JPanel;
+
 import model.CityMap;
 import model.Distribution;
 import model.Request;
 import model.Road;
-import model.DepotAddress;
 
 import observer.Observable;
 import observer.Observer;

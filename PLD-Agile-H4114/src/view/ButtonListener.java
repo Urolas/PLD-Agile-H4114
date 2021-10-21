@@ -1,15 +1,9 @@
 package view;
 
-import java.io.IOException;
-import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.Controller;
-import org.xml.sax.SAXException;
-import xml.XMLException;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * @author 4IF-4114
