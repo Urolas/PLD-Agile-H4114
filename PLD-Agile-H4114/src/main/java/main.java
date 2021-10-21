@@ -11,12 +11,7 @@ public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
         CityMap c=new CityMap();
-
-//        Distribution d = new Distribution();
-//        XMLDeserializer.loadCityMap(c);
         new Controller(c);
-        //XMLDeserializer.loadDistribution(c);
-        System.out.println("Hello world");
     }
 
     public static String returnString(){

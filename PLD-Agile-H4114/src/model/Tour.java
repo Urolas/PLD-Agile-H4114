@@ -19,6 +19,14 @@ public class Tour {
         pointOfInterests = new HashSet<>();
     }
 
+    public Set<Path> getPaths() {
+        return paths;
+    }
+
+    public Set<PointOfInterest> getPointOfInterests() {
+        return pointOfInterests;
+    }
+
     @Override
     //Methode d'egalité entre les Tours
     public boolean equals(Object o) {

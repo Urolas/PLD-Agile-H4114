@@ -69,7 +69,7 @@ public class MapView extends JPanel implements Observer {
         this.g = g;
         this.g2 = (Graphics2D) g;
         for (Road r : cityMap.getRoads()){
-            displayRoad(r);
+            displayRoad(r,Color.white, 1);
         }
         Distribution d = cityMap.getDistribution();
         if (d!=null) {
@@ -79,24 +79,19 @@ public class MapView extends JPanel implements Observer {
                 displayRequest(q);
             }
         }
-
-
-//        g.setColor(Color.blue);
-//        g2.setStroke(new BasicStroke(2));
-//        g2.drawPolygon(new int[] {200, 200+10, 200-10}, new int[] {100, 100+10, 100+10}, 3);
     }
 
     /**
      *  Method called by
      * @param r
      */
-    public void displayRoad(Road r){
+    public void displayRoad(Road r, Color c, int thickness){
         int x1 = (int)((r.getOrigin().getLongitude() - originLong) * scaleWidth);
         int y1 = -(int)((r.getOrigin().getLatitude() - originLat) * scaleHeight); /* Le repère de latitude est inversé */
         int x2 = (int)((r.getDestination().getLongitude() - originLong) * scaleWidth);
         int y2 = -(int)((r.getDestination().getLatitude() - originLat) * scaleHeight);
-        g.setColor(Color.white);
-        g2.setStroke(new BasicStroke(1));
+        g.setColor(c);
+        g2.setStroke(new BasicStroke(thickness));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
