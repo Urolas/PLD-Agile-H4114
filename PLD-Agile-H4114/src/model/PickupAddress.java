@@ -19,4 +19,14 @@ public class PickupAddress extends PointOfInterest {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!super.equals(obj)) {
+            return false;
+        }
+        if(Integer.compare(this.duration,((PickupAddress) obj).duration)!=0){
+            return false;
+        }
+        return true;
+    }
 }

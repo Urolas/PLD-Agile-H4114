@@ -120,7 +120,6 @@ public class MapView extends JPanel implements Observer {
             int x = (int) ((cityMap.getDistribution().getDepot().getIntersection().getLongitude() - originLong) * scaleWidth);
             int y = -(int) ((cityMap.getDistribution().getDepot().getIntersection().getLatitude() - originLat) * scaleHeight);
             g.setColor(Color.black);
-//            g.fillPolygon(new int[]{x-10, x - 10, x + 10, x + 10}, new int[]{y-10, y + 10, y - 10, y + 10}, 4);
             g.fillRect(x-10, y-10, 10, 10);
             System.out.println("x ="+x + " y= " + y);
         }
