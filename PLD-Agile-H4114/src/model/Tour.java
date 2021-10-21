@@ -18,6 +18,14 @@ public class Tour {
         pointOfInterests = new HashSet<>();
     }
 
+    public Set<Path> getPaths() {
+        return paths;
+    }
+
+    public Set<PointOfInterest> getPointOfInterests() {
+        return pointOfInterests;
+    }
+
 
     public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
         this.paths=paths;
