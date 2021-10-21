@@ -1,27 +1,17 @@
 package controller;
-import model.*;
-
-import java.io.IOException;
-import java.util.*;
 
 import model.CityMap;
-import org.xml.sax.SAXException;
 import view.Window;
-import xml.XMLException;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * @author 4IF-4114
  */
 public class Controller {
     // Instances associated with each possible state of the controller
-    final InitialState initialState = new InitialState();
-    final CityMapState1 citymapState1 = new CityMapState1();
-    final CityMapState2 citymapState2 = new CityMapState2();
-    final DistributionState1 distributionState1 = new DistributionState1();
-    final DistributionState2 distributionState2 = new DistributionState2();
-    final TourState tourState = new TourState();
+    protected final InitialState initialState = new InitialState();
+    protected final CityMapState citymapState = new CityMapState();
+    protected final DistributionState distributionState = new DistributionState();
+    protected final TourState tourState = new TourState();
 
     private CityMap cityMap;
     private Window window;

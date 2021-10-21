@@ -22,7 +22,7 @@ public class InitialState implements State {
 
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
-        c.setCurrentState(c.citymapState1);
+        c.setCurrentState(c.citymapState);
     }
 
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException{

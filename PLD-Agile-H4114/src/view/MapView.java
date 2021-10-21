@@ -7,6 +7,7 @@ import model.CityMap;
 import model.Distribution;
 import model.Request;
 import model.Road;
+import model.DepotAddress;
 
 import observer.Observable;
 import observer.Observer;
@@ -32,7 +33,8 @@ public class MapView extends JPanel implements Observer {
     public MapView(CityMap cityMap, Window window) {
         super();
         this.cityMap = cityMap;
-        cityMap.addObserver(this); // this observes plan
+        cityMap.addObserver(this); // this observes cityMap
+        cityMap.getDistribution().addObserver(this); // this observes distribution
         scaleWidth = 1;
         scaleHeight = 1;
         originLong = 0;
@@ -71,10 +73,13 @@ public class MapView extends JPanel implements Observer {
         }
         Distribution d = cityMap.getDistribution();
         if (d!=null) {
+            System.out.println();
+            displayDepot();
             for (Request q : d.getRequests()){
                 displayRequest(q);
             }
         }
+
 
 //        g.setColor(Color.blue);
 //        g2.setStroke(new BasicStroke(2));
@@ -97,16 +102,27 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void displayRequest(Request q){
-
         int x1 = (int)((q.getPickup().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);
         int x2 = (int)((q.getDelivery().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
-        g.setColor(Color.red);
+        Color c = new Color((int)(Math.random() * 0x1000000));
+        g.setColor(c);
         g.fillOval(x1-5, y1-5, 10, 10);
-        g.setColor(Color.blue);
-        g.fillPolygon(new int[] {x2, x2+10, x2-10}, new int[] {y2, y2+10, y2+10}, 3);
+        g.setColor(c);
+        g.fillPolygon(new int[] {x2-10, x2, x2+10}, new int[] {y2+10, y2, y2+10}, 3);
         System.out.println("x1 =" +x1 + " y1= " + y1);
         System.out.println("x2 =" +x2 + " y2= " + y2);
+    }
+
+    public void displayDepot(){
+        if (cityMap.getDistribution().getDepot().getIntersection() != null) {
+            int x = (int) ((cityMap.getDistribution().getDepot().getIntersection().getLongitude() - originLong) * scaleWidth);
+            int y = -(int) ((cityMap.getDistribution().getDepot().getIntersection().getLatitude() - originLat) * scaleHeight);
+            g.setColor(Color.black);
+//            g.fillPolygon(new int[]{x-10, x - 10, x + 10, x + 10}, new int[]{y-10, y + 10, y - 10, y + 10}, 4);
+            g.fillRect(x-10, y-10, 10, 10);
+            System.out.println("x ="+x + " y= " + y);
+        }
     }
 }

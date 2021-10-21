@@ -12,7 +12,7 @@ public class CityMap extends Observable {
     private HashMap<String,Intersection> intersections;
     public Distribution distribution;
     public Tour tour;
-    private Double width,height,nordPoint,westPoint;
+    private Double width, height, nordPoint, westPoint;
 
     @Override
     public String toString() {
@@ -27,6 +27,7 @@ public class CityMap extends Observable {
     public CityMap() {
         this.intersections= new HashMap<String,Intersection>();
         this.roads= new HashSet<Road>();
+        this.distribution = new Distribution();
         this.width = 0.;
         this.height = 0.;
         this.nordPoint = 0.;
@@ -42,8 +43,8 @@ public class CityMap extends Observable {
         // TODO implement here
     }
 
-    public void reset(){
-        this.distribution = new Distribution();
+    public void reset() {
+        this.distribution.reset();
         this.tour = new Tour();
         this.intersections.clear();
         this.roads.clear();
@@ -64,6 +65,7 @@ public class CityMap extends Observable {
         }
         notifyObservers(road);
     }
+
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
     }
@@ -75,6 +77,7 @@ public class CityMap extends Observable {
     public Distribution getDistribution() {
         return distribution;
     }
+
     public Set<Road> getRoads() {
         return roads;
     }
@@ -95,7 +98,6 @@ public class CityMap extends Observable {
         this.westPoint = westPoint;
     }
 
-    
     public Double getWidth() {
         return width;
     }

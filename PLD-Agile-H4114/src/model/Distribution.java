@@ -1,6 +1,9 @@
 package model;
 
+import view.MapView;
+
 import java.util.*;
+import observer.Observable;
 
 /**
  * @author 4IF-4114
@@ -44,6 +47,10 @@ public class Distribution extends Observable{
         Request r = new Request(pAddress,dAddress);
         this.requests.add(r);
         notifyObservers(r);
+    }
+
+    public void addObserver(MapView mapView) {
+        super.addObserver(mapView);
     }
 
 }

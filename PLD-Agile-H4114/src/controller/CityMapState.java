@@ -13,17 +13,17 @@ import java.util.*;
 /**
  * @author 4IF-4114
  */
-public class CityMapState1 implements State {
+public class CityMapState implements State {
 
     /**
      * Default constructor
      */
-    public CityMapState1() {
+    public CityMapState() {
     }
 
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
-        c.setCurrentState(c.citymapState2);
+        c.setCurrentState(c.distributionState);
     }
 
 }
