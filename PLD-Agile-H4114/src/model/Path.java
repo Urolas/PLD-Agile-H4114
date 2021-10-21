@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,5 +19,9 @@ public class Path {
     public Path(List<Road> roadsEndToEnd, Double key) {
         this.roads= roadsEndToEnd;
         this.length=key;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
     }
 }

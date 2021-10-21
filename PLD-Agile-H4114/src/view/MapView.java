@@ -5,12 +5,12 @@ import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JPanel;
 
-import model.CityMap;
-import model.Distribution;
-import model.Request;
-import model.Road;
+import model.*;
 
 import observer.Observable;
 import observer.Observer;
@@ -39,6 +39,7 @@ public class MapView extends JPanel implements Observer {
         this.cityMap = cityMap;
         cityMap.addObserver(this); // this observes cityMap
         cityMap.getDistribution().addObserver(this); // this observes distribution
+        cityMap.getTour().addObserver(this);
         scaleWidth = 1;
         scaleHeight = 1;
         originLong = 0;
@@ -72,9 +73,10 @@ public class MapView extends JPanel implements Observer {
         super.paintComponent(g);
         this.g = g;
         this.g2 = (Graphics2D) g;
-        for (Road r : cityMap.getRoads()){
-            displayRoad(r,Color.white, 1);
+        for(Map.Entry<AbstractMap.SimpleEntry<String,String>,Road> road : cityMap.getRoads().entrySet()){
+            displayRoad(road.getValue(),Color.white, 1,false);
         }
+
         Distribution d = cityMap.getDistribution();
         if (d!=null) {
             System.out.println();
@@ -83,23 +85,46 @@ public class MapView extends JPanel implements Observer {
                 displayRequest(q);
             }
         }
+        Tour t = cityMap.getTour();
+        if (t!=null) {
+            System.out.println();
+            for (Path p : t.getPaths()){
+                displayPath(p);
+            }
+        }
     }
 
     /**
      *  Method called by
      * @param r
      */
-    public void displayRoad(Road r, Color c, int thickness){
+    public void displayRoad(Road r, Color c , int thickness, boolean displayTour){
         int x1 = (int)((r.getOrigin().getLongitude() - originLong) * scaleWidth);
         int y1 = -(int)((r.getOrigin().getLatitude() - originLat) * scaleHeight); /* Le repère de latitude est inversé */
         int x2 = (int)((r.getDestination().getLongitude() - originLong) * scaleWidth);
         int y2 = -(int)((r.getDestination().getLatitude() - originLat) * scaleHeight);
+        if (!displayTour){
+            if (r.getName().contains("Boulevard") || r.getName().contains("Avenue") || r.getName().contains("Cours") ){
+                thickness=1;
+                c=Color.BLACK;
+            } else if (r.getName().contains("Impasse") ){
+                thickness=1;
+                c=Color.BLACK;
+            }else {
+                thickness=1;
+                c=Color.BLACK;
+            }
+        }
         g.setColor(c);
         g2.setStroke(new BasicStroke(thickness));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
-
+    public void displayPath(Path p){
+        for (Road r : p.getRoads()){
+            displayRoad(r,Color.red,3,true);
+        }
+    }
     public void displayRequest(Request q){
         int x1 = (int)((q.getPickup().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);

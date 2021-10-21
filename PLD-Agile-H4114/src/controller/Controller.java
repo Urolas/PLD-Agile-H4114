@@ -78,4 +78,12 @@ public class Controller {
     public CityMap getCitymap() {
         return cityMap;
     }
+
+    public void computeTour() {
+        try{
+            this.currentState.computeTour(this, window);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }

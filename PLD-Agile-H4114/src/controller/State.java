@@ -30,4 +30,6 @@ public interface State {
             IOException, SAXException{
     };
 
+    default void computeTour(Controller controller, Window window){};
+
 }

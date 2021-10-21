@@ -2,8 +2,8 @@ package model;
 
 import view.MapView;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
+
 import observer.Observable;
 
 /**
@@ -31,6 +31,7 @@ public class Distribution extends Observable{
     }
 
     public void reset() {
+
         this.requests.clear();
         this.depot = new DepotAddress();
         notifyObservers();
@@ -42,17 +43,13 @@ public class Distribution extends Observable{
         notifyObservers(i);
     }
 
-    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection) {
-        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration);
-        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration);
+    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection,Integer i) {
+        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration,i);
+        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration,i+1);
         Request r = new Request(pAddress,dAddress);
         this.requests.add(r);
         notifyObservers(r);
     }
-    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
-        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration,i);
-        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration,i+1);
-        this.requests.add(new Request(pAddress,dAddress));
 
     public void addObserver(MapView mapView) {
         super.addObserver(mapView);

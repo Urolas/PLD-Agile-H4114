@@ -37,6 +37,10 @@ public class Road {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Road(String myName, double myLength) {
         this.length = myLength;
         this.name = myName;

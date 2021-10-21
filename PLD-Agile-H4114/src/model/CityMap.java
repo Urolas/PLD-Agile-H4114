@@ -2,9 +2,8 @@ package model;
 
 import view.MapView;
 import observer.Observable;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Set;
+
+import java.util.*;
 
 
 import tsp.TSP;
@@ -26,8 +25,7 @@ public class CityMap extends Observable {
                 "roads=" + roads+
                 '}';
     }
-    private Double width,height,nordPoint,westPoint;
-    private HashMap<String,List<AbstractMap.Entry<String,Double>>> adjacencyList;
+    private HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyList;
 
 
     /**
@@ -35,13 +33,13 @@ public class CityMap extends Observable {
      */
     public CityMap() {
         this.intersections= new HashMap<String,Intersection>();
-        this.roads= new HashSet<Road>();
+        this.roads= new HashMap<>();
         this.distribution = new Distribution();
         this.width = 0.;
         this.height = 0.;
         this.nordPoint = 0.;
         this.westPoint = 0.;
-     }
+        this.tour = new Tour();
         this.intersections= new HashMap<>();
         this.roads=  new HashMap<>();
         this.adjacencyList= new HashMap<>();
@@ -99,10 +97,10 @@ public class CityMap extends Observable {
 
             paths.add(new Path(roadsEndToEnd,ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getKey()));
         }
-        /** TODO Impossible a faire sans un dijkstra censé, a debugé apres
-         **/
-        this.tour= new Tour(paths,shortestTour,tsp.getSolutionCost());
-
+        this.tour.setPaths(paths);
+        this.tour.setTotalLength(tsp.getSolutionCost());
+        this.tour.setPointOfInterests(shortestTour);
+        notifyObservers(this.tour);
 
 
     }
@@ -183,7 +181,7 @@ public class CityMap extends Observable {
 
     public void reset() {
         this.distribution.reset();
-        this.tour = new Tour();
+        this.tour.resetTour();
         this.intersections.clear();
         this.roads.clear();
         notifyObservers();
@@ -217,6 +215,10 @@ public class CityMap extends Observable {
 
     }
 
+    public Tour getTour() {
+        return tour;
+    }
+
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
     }
@@ -229,7 +231,6 @@ public class CityMap extends Observable {
         return distribution;
     }
 
-    public Set<Road> getRoads() {
     public HashMap<AbstractMap.SimpleEntry<String, String>, Road> getRoads() {
         return roads;
     }

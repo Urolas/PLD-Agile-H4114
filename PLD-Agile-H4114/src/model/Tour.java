@@ -1,14 +1,14 @@
 package model;
 
+import observer.Observable;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 4IF-4114
  */
-public class Tour {
+public class Tour extends Observable {
     private List<Path> paths;
     public List<PointOfInterest> pointOfInterests;
     private Double totalLength;
@@ -20,14 +20,18 @@ public class Tour {
         pointOfInterests = new ArrayList<>();
     }
 
-    public Set<Path> getPaths() {
+    public void resetTour(){
+        paths = new ArrayList<>();
+        pointOfInterests = new ArrayList<>();
+    }
+
+    public List<Path> getPaths() {
         return paths;
     }
 
-    public Set<PointOfInterest> getPointOfInterests() {
+    public List<PointOfInterest> getPointOfInterests() {
         return pointOfInterests;
     }
-
 
     public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
         this.paths=paths;
@@ -35,7 +39,17 @@ public class Tour {
         this.totalLength=solutionCost;
     }
 
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
+    }
 
+    public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
+        this.pointOfInterests = pointOfInterests;
+    }
+
+    public void setTotalLength(Double totalLength) {
+        this.totalLength = totalLength;
+    }
 
     @Override
     //Methode d'egalité entre les Tours
