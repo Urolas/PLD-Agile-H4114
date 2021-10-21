@@ -7,12 +7,12 @@ import java.util.Iterator;
 
 public class TSP1 extends TemplateTSP {
     @Override
-    protected int bound(String currentVertex, Collection<String> unvisited) {
+    protected int bound(Integer currentVertex, Collection<Integer> unvisited) {
         return 0;
     }
 
     @Override
-    protected Iterator<String> iterator(String currentVertex, Collection<String> unvisited, GraphPointToPoint g) {
+    protected Iterator<Integer> iterator(Integer currentVertex, Collection<Integer> unvisited, GraphPointToPoint g) {
         return new SeqIter(unvisited, currentVertex, g);
     }
 

@@ -13,6 +13,10 @@ public class Path {
     public Path() {
     }
 
-    private Set<Road> roads;
-
+    private List<Road> roads;
+    private Double length;
+    public Path(List<Road> roadsEndToEnd, Double key) {
+        this.roads= roadsEndToEnd;
+        this.length=key;
+    }
 }

@@ -8,6 +8,7 @@ import java.util.*;
 public class PointOfInterest {
     protected Integer duration;
     protected Intersection intersection;
+    protected Integer idPointOfInterest;
     /**
      * Default constructor
      */
@@ -19,7 +20,9 @@ public class PointOfInterest {
      */
 
 
-    public PointOfInterest(Intersection i) {
+    public PointOfInterest(Intersection i,Integer idPoint) {
+        this.idPointOfInterest=idPoint;
         this.intersection=i;
+
     }
 }

@@ -5,8 +5,8 @@ import model.GraphPointToPoint;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class SeqIter implements Iterator<String> {
-    private String[] candidates;
+public class SeqIter implements Iterator<Integer> {
+    private Integer[] candidates;
     private int nbCandidates;
 
     /**
@@ -17,9 +17,9 @@ public class SeqIter implements Iterator<String> {
      * @param currentVertex
      * @param g
      */
-    public SeqIter(Collection<String> unvisited, String currentVertex, GraphPointToPoint g){
-        this.candidates = new String[unvisited.size()];
-        for (String s : unvisited){
+    public SeqIter(Collection<Integer> unvisited, Integer currentVertex, GraphPointToPoint g){
+        this.candidates = new Integer[unvisited.size()];
+        for (Integer s : unvisited){
 
             candidates[nbCandidates++] = s;
         }
@@ -31,7 +31,7 @@ public class SeqIter implements Iterator<String> {
     }
 
     @Override
-    public String next() {
+    public Integer next() {
         nbCandidates--;
         return candidates[nbCandidates];
     }
