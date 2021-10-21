@@ -19,7 +19,7 @@ public class DepotAddress extends PointOfInterest {
 
 
     public DepotAddress(Intersection i, String departureTime) {
-        super(i);
+        super(i,0);
         String[] fractureddepartureTime= departureTime.split(":");
         for(int j=0;j<3;j++){
             if (Integer.parseInt(fractureddepartureTime[j])<10){

@@ -20,4 +20,11 @@ public class Request {
         this.delivery=deliveryAddress;
     }
 
+    public DeliveryAddress getDelivery() {
+        return delivery;
+    }
+
+    public PickupAddress getPickup() {
+        return pickup;
+    }
 }

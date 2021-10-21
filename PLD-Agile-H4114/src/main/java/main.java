@@ -1,10 +1,14 @@
 import model.Distribution;
+import model.Intersection;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import xml.*;
 import model.CityMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class main {
 
@@ -12,7 +16,11 @@ public class main {
         CityMap c=new CityMap();
         XMLDeserializer.loadCityMap(c);
         XMLDeserializer.loadDistribution(c);
-        System.out.println("Hello world");
+        c.computeTour();
+        System.out.println("Hello");
+
+
+
     }
 
     public static String returnString(){

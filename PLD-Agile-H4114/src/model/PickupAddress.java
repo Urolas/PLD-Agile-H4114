@@ -13,8 +13,8 @@ public class PickupAddress extends PointOfInterest {
     public PickupAddress() {
     }
 
-    public PickupAddress(Intersection pintersection, Integer pickupDuration) {
-        super(pintersection);
+    public PickupAddress(Intersection pintersection, Integer pickupDuration,Integer i) {
+        super(pintersection,i);
         this.duration=pickupDuration;
     }
 
