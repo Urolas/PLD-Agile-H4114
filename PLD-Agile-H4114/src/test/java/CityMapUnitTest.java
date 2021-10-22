@@ -37,12 +37,29 @@ public class CityMapUnitTest {
     public void structNotNullTest(){
         assertNotNull(cm);
         assertNotNull(cm.getIntersections());
+        assertNotNull(cm.getRoads());
+        assertNotNull(cm.getDistribution());
+        assertNotNull(cm.getTour());
+        assertNotNull(cm.getWidth());
+        assertNotNull(cm.getHeight());
+        assertNotNull(cm.getNordPoint());
+        assertNotNull(cm.getWestPoint());
+        assertNotNull(cm.getAdjacencyList());
     }
 
     @Test
     public void emptyAfterResetTest(){
         cm.reset();
-        assertEquals(cm.getIntersections().size(),0);
+        CityMap cm2 = new CityMap();
+        assertEquals(cm.getIntersections(),cm2.getIntersections());
+        assertEquals(cm.getRoads(),cm2.getRoads());
+        assertTrue(cm.getDistribution().equals(cm2.getDistribution()));
+        assertEquals(cm.getTour(),cm2.getTour());
+        assertEquals(cm.getWidth(),cm2.getWidth());
+        assertEquals(cm.getHeight(),cm2.getHeight());
+        assertEquals(cm.getNordPoint(),cm2.getNordPoint());
+        assertEquals(cm.getWestPoint(),cm2.getWestPoint());
+        assertEquals(cm.getAdjacencyList(),cm2.getAdjacencyList());
     }
 
     @Test
