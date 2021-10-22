@@ -124,7 +124,8 @@ public class XMLDeserializer {
      * */
     private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
-
+        cityMap.distribution.reset();
+        cityMap.tour.resetTour();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
         Intersection intersec =cityMap.getIntersections().get(address);
@@ -149,7 +150,6 @@ public class XMLDeserializer {
 
             cityMap.distribution.addRequest(pickupDuration,deliveryDuration,intersecPickup,intersecDelivery,i);
         }
-
 
 
     }
