@@ -105,14 +105,14 @@ public class MapView extends JPanel implements Observer {
         int y2 = -(int)((r.getDestination().getLatitude() - originLat) * scaleHeight);
         if (!displayTour){
             if (r.getName().contains("Boulevard") || r.getName().contains("Avenue") || r.getName().contains("Cours") ){
-                thickness=1;
-                c=Color.BLACK;
+                thickness=2;
+                c=Color.WHITE;
             } else if (r.getName().contains("Impasse") ){
                 thickness=1;
-                c=Color.BLACK;
+                c=Color.WHITE;
             }else {
                 thickness=1;
-                c=Color.BLACK;
+                c=Color.WHITE;
             }
         }
         g.setColor(c);
@@ -130,10 +130,10 @@ public class MapView extends JPanel implements Observer {
         int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);
         int x2 = (int)((q.getDelivery().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
-        Color c = new Color((int)(Math.random() * 0x1000000));
-        g.setColor(c);
+
+        g.setColor(q.color);
         g.fillOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
-        g.setColor(c);
+        g.setColor(q.color);
         g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
         System.out.println("x1 =" +x1 + " y1= " + y1);
         System.out.println("x2 =" +x2 + " y2= " + y2);
