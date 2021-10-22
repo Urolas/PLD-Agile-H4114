@@ -13,6 +13,9 @@ public class PointOfInterest {
      * Default constructor
      */
     public PointOfInterest() {
+        this.duration=-1;
+        this.intersection=new Intersection();
+        this.idPointOfInterest=-1;
     }
 
     public Intersection getIntersection() {
