@@ -5,8 +5,7 @@ import model.CityMap;
 
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.*;
 
 /**
  * @author 4IF-4114
@@ -42,6 +41,7 @@ public class Window extends JFrame {
         createButtons(controller);
         mapView = new MapView(cityMap, this);
         roadmapView = new RoadmapView(cityMap, this);
+//        LogView
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
@@ -81,5 +81,10 @@ public class Window extends JFrame {
             button.addActionListener(buttonListener);
             getContentPane().add(button);
         }
+    }
+
+    public void parsingError(String message) {
+        final JPanel panel = new JPanel();
+        JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
