@@ -45,7 +45,7 @@ public class MapView extends JPanel implements Observer {
         originLong = 0;
         originLat = 0;
         setLayout(null);
-        setBackground(new Color(200,200,200));
+        setBackground(new Color(180,180,180));
         setSize(VIEW_WIDTH,VIEW_HEIGHT);
         window.getContentPane().add(this);
     }
