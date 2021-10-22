@@ -18,9 +18,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +35,7 @@ public class CityMapUnitTest {
     @Before
     public void initialisation(){
         try{
-            loadCityMap(cm);
+            loadCityMap(cm,"src/test/testRessources/RouffiacCityMap.xml");
         }catch (Exception e){
             System.err.println("Erreur lors de la lecture du fichier");
         }
@@ -78,26 +76,25 @@ public class CityMapUnitTest {
     }
 
     @Test
-    public void intersectionNotNullTest() {
+    public void strucNotEmptyTest() {
         assertNotEquals(cm.getIntersections().size(),0);
+        assertNotEquals(cm.getAdjacencyList().size(),0);
+        assertNotEquals(cm.getRoads().size(), 0);
     }
 
     @Test
     public void containsKeyTest() {
         //Verification de l'exitence de la clé
-        assertTrue(cm.getIntersections().containsKey("123456"));
+        Set<String> keySet= new HashSet<>();
+        for (int i = 0;i<14;i++){
+            keySet.add("81150" + i);
+        }
+        assertEquals(cm.getIntersections().keySet(),keySet);
     }
 
-    @Test
-    public void keySetEqualityTest(){
-        Set<String> setTest = new HashSet<>();
-        setTest.add("123456");
-        assertEquals(cm.getIntersections().keySet(), setTest);
-    }
+    public static void loadCityMap(CityMap cityMap, String path) throws ParserConfigurationException, SAXException, IOException, XMLException {
 
-    public static void loadCityMap(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
-
-        File xml = new File("src/test/testRessources/RouffiacCityMap.xml");
+        File xml = new File(path);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
