@@ -17,8 +17,8 @@ public class Request {
     }
 
 
-    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress){
-        this.color = new Color((int)(Math.random() * 0x1000000));
+    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress,Color c){
+        this.color = c;
         this.pickup=pickupAddress;
         this.delivery=deliveryAddress;
     }
