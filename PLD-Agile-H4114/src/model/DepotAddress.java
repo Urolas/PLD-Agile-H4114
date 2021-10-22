@@ -14,6 +14,8 @@ public class DepotAddress extends PointOfInterest {
      * Default constructor
      */
     public DepotAddress() {
+        super();
+        departureTime = LocalTime.parse("00:00:00");
     }
 
 

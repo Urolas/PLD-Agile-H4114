@@ -13,6 +13,9 @@ public class Intersection {
 
 
     public Intersection() {
+        this.id="-1";
+        this.longitude=0.0;
+        this.latitude=0.0;
     }
 
     public Intersection(String myId,Double myLatitude,Double myLongitude){
