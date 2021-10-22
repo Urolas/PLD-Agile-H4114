@@ -17,11 +17,10 @@ public class Window extends JFrame {
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
-    protected static final String REDO = "Redo";
-    protected static final String UNDO = "Undo";
+//    protected static final String REDO = "Redo";
+//    protected static final String UNDO = "Undo";
 
-    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR,
-            UNDO, REDO};
+    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR};
 
     private MapView mapView;
     private RoadmapView roadmapView;
