@@ -18,6 +18,7 @@ public class CityMap extends Observable {
     public Distribution distribution;
     public Tour tour;
     private Double width, height, nordPoint, westPoint;
+    private HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyList;
 
     @Override
     public String toString() {
@@ -25,7 +26,7 @@ public class CityMap extends Observable {
                 "roads=" + roads+
                 '}';
     }
-    private HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyList;
+
 
 
     /**
@@ -40,8 +41,6 @@ public class CityMap extends Observable {
         this.nordPoint = 0.;
         this.westPoint = 0.;
         this.tour = new Tour();
-        this.intersections= new HashMap<>();
-        this.roads=  new HashMap<>();
         this.adjacencyList= new HashMap<>();
 
 
@@ -267,5 +266,8 @@ public class CityMap extends Observable {
         return westPoint;
     }
 
+    public HashMap<String, List<AbstractMap.Entry<String, Double>>> getAdjacencyList() {
+        return adjacencyList;
+    }
 }
 

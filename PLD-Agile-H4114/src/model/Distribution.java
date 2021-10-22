@@ -74,4 +74,18 @@ public class Distribution extends Observable{
 
         return result;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o.getClass()!=this.getClass()){
+            return false;
+        }
+        if(!this.depot.equals(((Distribution) o).depot)){
+            return false;
+        }
+        if(!this.requests.equals(((Distribution) o).requests)){
+            return false;
+        }
+        return true;
+    }
 }
