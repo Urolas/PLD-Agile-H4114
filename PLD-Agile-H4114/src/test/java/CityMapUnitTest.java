@@ -76,7 +76,7 @@ public class CityMapUnitTest {
     }
 
     @Test
-    public void strucNotEmptyTest() {
+    public void structNotEmptyTest() {
         assertNotEquals(cm.getIntersections().size(),0);
         assertNotEquals(cm.getAdjacencyList().size(),0);
         assertNotEquals(cm.getRoads().size(), 0);
@@ -90,6 +90,12 @@ public class CityMapUnitTest {
             keySet.add("81150" + i);
         }
         assertEquals(cm.getIntersections().keySet(),keySet);
+    }
+
+    @Test
+    public void containsRoadTest(){
+
+        
     }
 
     public static void loadCityMap(CityMap cityMap, String path) throws ParserConfigurationException, SAXException, IOException, XMLException {
