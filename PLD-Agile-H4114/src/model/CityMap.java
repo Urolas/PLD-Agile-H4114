@@ -1,6 +1,10 @@
 package model;
 
+import view.MapView;
+import observer.Observable;
+
 import java.util.*;
+
 
 import tsp.TSP;
 import tsp.TSPplaceholder;
@@ -13,17 +17,30 @@ public class CityMap extends Observable {
     private HashMap<String,Intersection> intersections;
     public Distribution distribution;
     public Tour tour;
-    private Double width,height,nordPoint,westPoint;
-    private HashMap<String,List<AbstractMap.Entry<String,Double>>> adjacencyList;
+    private Double width, height, nordPoint, westPoint;
+    private HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyList;
+
+    @Override
+    public String toString() {
+        return "CityMap{" +
+                "roads=" + roads+
+                '}';
+    }
+
 
 
     /**
-     *
      * Default constructor
      */
     public CityMap() {
-        this.intersections= new HashMap<>();
-        this.roads=  new HashMap<>();
+        this.intersections= new HashMap<String,Intersection>();
+        this.roads= new HashMap<>();
+        this.distribution = new Distribution();
+        this.width = 0.;
+        this.height = 0.;
+        this.nordPoint = 0.;
+        this.westPoint = 0.;
+        this.tour = new Tour();
         this.adjacencyList= new HashMap<>();
 
 
@@ -79,10 +96,10 @@ public class CityMap extends Observable {
 
             paths.add(new Path(roadsEndToEnd,ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getKey()));
         }
-        /** TODO Impossible a faire sans un dijkstra censé, a debugé apres
-         **/
-        this.tour= new Tour(paths,shortestTour,tsp.getSolutionCost());
-
+        this.tour.setPaths(paths);
+        this.tour.setTotalLength(tsp.getSolutionCost());
+        this.tour.setPointOfInterests(shortestTour);
+        notifyObservers(this.tour);
 
 
     }
@@ -161,15 +178,17 @@ public class CityMap extends Observable {
     }
 
 
-    public void reset(){
-        this.distribution = new Distribution();
-        this.tour = new Tour();
+    public void reset() {
+        this.distribution.reset();
+        this.tour.resetTour();
         this.intersections.clear();
         this.roads.clear();
+        notifyObservers();
     }
 
     public void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.id,intersection);
+        notifyObservers(intersection);
     }
 
     public void addRoad(String name, Double length, String id1, String id2) {
@@ -180,7 +199,9 @@ public class CityMap extends Observable {
             road.addRoads(origin,destination);
             this.roads.put(new AbstractMap.SimpleEntry<>(origin.id,destination.id),road);
         }
+        notifyObservers(road);
     }
+
 
     public void completeAdjacencyList(String id1, String id2, Double length) {
 
@@ -194,8 +215,20 @@ public class CityMap extends Observable {
 
     }
 
+    public Tour getTour() {
+        return tour;
+    }
+
     public HashMap<String,Intersection>getIntersections(){
         return this.intersections;
+    }
+
+    public void addObserver(MapView mapView) {
+        super.addObserver(mapView);
+    }
+
+    public Distribution getDistribution() {
+        return distribution;
     }
 
     public HashMap<AbstractMap.SimpleEntry<String, String>, Road> getRoads() {
@@ -234,5 +267,8 @@ public class CityMap extends Observable {
         return westPoint;
     }
 
+    public HashMap<String, List<AbstractMap.Entry<String, Double>>> getAdjacencyList() {
+        return adjacencyList;
+    }
 }
 

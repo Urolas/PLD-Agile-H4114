@@ -1,6 +1,9 @@
 package view;
 
-import java.util.*;
+import model.CityMap;
+
+import observer.Observable;
+import observer.Observer;
 
 /**
  * @author 4IF-4114
@@ -9,8 +12,10 @@ public class RoadmapView implements Observer {
 
     /**
      * Default constructor
+     * @param cityMap
+     * @param window
      */
-    public RoadmapView() {
+    public RoadmapView(CityMap cityMap, Window window) {
     }
 
     /**

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map>
+<intersection id="811500" latitude="46.110" longitude="110.213"/>
+<intersection id="811501" latitude="45.731" longitude="109.993"/>
+<intersection id="811502" latitude="45.713" longitude="110.398"/>
+<intersection id="811503" latitude="45.647" longitude="110.623"/>
+<intersection id="811504" latitude="45.510" longitude="111.008"/>
+<intersection id="811505" latitude="45.342" longitude="112.012"/>
+<intersection id="811506" latitude="45.628" longitude="110.988"/>
+<intersection id="811507" latitude="45.289" longitude="110.401"/>
+<intersection id="811508" latitude="44.927" longitude="110.993"/>
+<intersection id="811509" latitude="45.449" longitude="110.703"/>
+<intersection id="8115010" latitude="45.503" longitude="110.453"/>
+<intersection id="8115011" latitude="45.340" longitude="109.523"/>
+<intersection id="8115012" latitude="45.462" longitude="110.199"/>
+<intersection id="8115013" latitude="45.502" longitude="110.523"/>
+<segment destination="811500" length="3.142" name="Rue des souris" origin="811501"/>
+<segment destination="811501" length="4.562" name="Rue des bains" origin="8115010"/>
+<segment destination="8115010" length="0.887" name="Rue des rats" origin="8115012"/>
+<segment destination="8115012" length="1.023" name="Rue des rats" origin="8115011"/>
+<segment destination="8115012" length="1.224" name="Impasse de la fontaine" origin="811507"/>
+<segment destination="8115011" length="8.542" name="Avenue du soleil" origin="811508"/>
+<segment destination="811508" length="6.777" name="Chemin des poules" origin="811504"/>
+<segment destination="811508" length="10.138" name="Avenue du soleil" origin="811505"/>
+<segment destination="811505" length="11.005" name="Rue des bains" origin="811504"/>
+<segment destination="811504" length="2.138" name="Rue des bains" origin="811509"/>
+<segment destination="8115010" length="0.728" name="Rue des bains" origin="811509"/>
+<segment destination="811509" length="2.913" name="Impasse des tombes" origin="811506"/>
+<segment destination="811509" length="0.248" name="Chemin de l'église" origin="8115013"/>
+<segment destination="8115013" length="1.689" name="Impasse des géants" origin="811503"/>
+<segment destination="8115013" length="0.548" name="Chemin de l'église" origin="811502"/>
+<segment destination="811502" length="1.121" name="Allée des saucisses" origin="8115010"/>
+<segment destination="811502" length="4.321" name="Chemin de l'église" origin="811500"/>
+<segment destination="811501" length="3.142" name="Rue des souris" origin="811500"/>
+<segment destination="8115010" length="4.562" name="Rue des bains" origin="811501"/>
+<segment destination="8115012" length="0.887" name="Rue des rats" origin="8115010"/>
+<segment destination="8115011" length="1.023" name="Rue des rats" origin="8115012"/>
+<segment destination="811507" length="1.224" name="Impasse de la fontaine" origin="8115012"/>
+<segment destination="811508" length="8.542" name="Avenue du soleil" origin="8115011"/>
+<segment destination="811504" length="6.777" name="Chemin des poules" origin="811508"/>
+<segment destination="811505" length="10.138" name="Avenue du soleil" origin="811508"/>
+<segment destination="811504" length="11.005" name="Rue des bains" origin="811505"/>
+<segment destination="811509" length="2.138" name="Rue des bains" origin="811504"/>
+<segment destination="811509" length="0.728" name="Rue des bains" origin="8115010"/>
+<segment destination="811506" length="2.913" name="Impasse des tombes" origin="811509"/>
+<segment destination="8115013" length="0.248" name="Chemin de l'église" origin="811509"/>
+<segment destination="811503" length="1.689" name="Impasse des géants" origin="8115013"/>
+<segment destination="811502" length="0.548" name="Chemin de l'église" origin="8115013"/>
+<segment destination="8115010" length="1.121" name="Allée des saucisses" origin="811502"/>
+<segment destination="811500" length="4.321" name="Chemin de l'église" origin="811502"/>
+</map>

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+
 
 /**
  * @author 4IF-4114
@@ -13,6 +13,9 @@ public class Intersection {
 
 
     public Intersection() {
+        this.id="-1";
+        this.longitude=0.0;
+        this.latitude=0.0;
     }
 
     public Intersection(String myId,Double myLatitude,Double myLongitude){
@@ -44,4 +47,20 @@ public class Intersection {
 
 
 
+
+    @Override
+    public String toString() {
+        return "Intersection{" +
+                "id='" + id + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+    public Double getLatitude() {
+        return latitude;
+    }
 }

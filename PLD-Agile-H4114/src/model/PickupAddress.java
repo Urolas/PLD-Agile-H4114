@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+
 
 /**
  * @author 4IF-4114
@@ -17,6 +17,7 @@ public class PickupAddress extends PointOfInterest {
         super(pintersection,i);
         this.duration=pickupDuration;
     }
+
 
     @Override
     public boolean equals(Object obj) {

@@ -103,10 +103,10 @@ public class XMLDeserializer {
             cityMap.addIntersection(new Intersection(id, latitude, longitude));
             cityMap.initializeAdjacencyList(id);
         }
-        cityMap.setHeight(maxLongitude-minLongitude);
-        cityMap.setWidth(maxLatitude-minLatitude);
-        cityMap.setNordPoint(maxLatitude);
-        cityMap.setWestPoint(minLatitude);
+        cityMap.setHeight(maxLatitude-minLatitude);
+        cityMap.setWidth(maxLongitude-minLongitude);
+        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
             Element elt = (Element) roadList.item(i);
@@ -125,6 +125,7 @@ public class XMLDeserializer {
     private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
         cityMap.distribution.reset();
+        cityMap.tour.resetTour();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
         Intersection intersec =cityMap.getIntersections().get(address);

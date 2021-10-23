@@ -1,6 +1,7 @@
 package model;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author 4IF-4114
@@ -18,5 +19,9 @@ public class Path {
     public Path(List<Road> roadsEndToEnd, Double key) {
         this.roads= roadsEndToEnd;
         this.length=key;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
     }
 }

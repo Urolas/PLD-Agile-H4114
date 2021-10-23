@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+
 
 /**
  * @author 4IF-4114
@@ -13,6 +13,13 @@ public class PointOfInterest {
      * Default constructor
      */
     public PointOfInterest() {
+        this.duration=-1;
+        this.intersection=new Intersection();
+        this.idPointOfInterest=-1;
+    }
+
+    public Intersection getIntersection() {
+        return intersection;
     }
 
     /**
