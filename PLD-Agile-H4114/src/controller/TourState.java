@@ -28,4 +28,18 @@ public class TourState implements State {
         c.setCurrentState(c.distributionState);
     }
 
+    public void zoomIn(Controller c, Window w){
+        //TODO
+        w.getMapView().modifyZoom(2);
+    }
+    public void zoomOut(Controller c, Window w){
+        //TODO
+        w.getMapView().modifyZoom(0.5);
+    }
+    public void recenter(Controller c, Window w){
+        //TODO
+        w.getMapView().modifyZoom(0);
+
+    }
+
 }

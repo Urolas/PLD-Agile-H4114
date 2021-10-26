@@ -18,8 +18,13 @@ public class Window extends JFrame {
     protected static final String COMPUTE_TOUR = "Compute a tour";
 //    protected static final String REDO = "Redo";
 //    protected static final String UNDO = "Undo";
+    protected static final String ZOOM_IN = "+";
+    protected static final String ZOOM_OUT = "-";
+    protected static final String RECENTER = "=";
 
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR};
+    private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
+
 
     private MapView mapView;
     private RoadmapView roadmapView;
@@ -39,6 +44,7 @@ public class Window extends JFrame {
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
         createButtons(controller);
+
         mapView = new MapView(cityMap, this);
         roadmapView = new RoadmapView(cityMap, this);
 //        LogView
@@ -79,8 +85,25 @@ public class Window extends JFrame {
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);
+
             getContentPane().add(button);
         }
+        for ( int i=0; i<buttonTextsZoom.length; i++ ){
+            JButton button = new JButton(buttonTextsZoom[i]);
+            buttons.add(button);
+            button.setSize(50,50);
+            button.setLocation(20 + buttonWidth + i * 60 ,20);
+            button.setFocusable(false);
+            button.setFocusPainted(false);
+            button.addActionListener(buttonListener);
+            getContentPane().add(button);
+        }
+        System.out.println(buttons.size());
+
+    }
+
+    public MapView getMapView() {
+        return mapView;
     }
 
     public void parsingError(String message) {

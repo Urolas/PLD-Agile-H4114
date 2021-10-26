@@ -100,4 +100,31 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
+
+    public void zoomIn() {
+        try{
+            this.currentState.zoomIn(this, window);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void zoomOut() {
+        try{
+            this.currentState.zoomOut(this,window);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+    }
+
+    public void recenter() {
+        try{
+            this.currentState.recenter(this,window);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+    }
+
 }

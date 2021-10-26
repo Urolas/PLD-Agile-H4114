@@ -30,6 +30,7 @@ public class MapView extends JPanel implements Observer {
     private final int VIEW_HEIGHT = 800;
     private final int VIEW_WIDTH = 800;
     private final int POINT_SIZE = 15;
+    private double scaleZoom = 1;
 
     /**
      * Default constructor
@@ -50,10 +51,23 @@ public class MapView extends JPanel implements Observer {
         window.getContentPane().add(this);
     }
 
+    public void modifyZoom(double zoom){
+        if (zoom == 0){
+            scaleZoom = 1;
+        }else{
+            scaleZoom = scaleZoom * zoom;
+        }
+        scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
+        scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
+        System.out.println(scaleWidth);
+        repaint();
+
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-        scaleWidth = VIEW_WIDTH/cityMap.getWidth();
-        scaleHeight = VIEW_HEIGHT/cityMap.getHeight();
+        scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
+        scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
 
