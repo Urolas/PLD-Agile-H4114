@@ -38,7 +38,7 @@ public class CityMapState implements State {
     }
     public void recenter(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(0);
+        w.getMapView().modifyZoom(1);
 
     }
 

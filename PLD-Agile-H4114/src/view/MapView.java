@@ -52,9 +52,9 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void modifyZoom(double zoom){
-        if (zoom == 0){
+        if (zoom == 1){
             scaleZoom = 1;
-        }else{
+        }else if (!(zoom == 0.5 && scaleZoom == 1) && !(zoom == 2 && scaleZoom == 16)){// not ( si on dézoome et qu'on est déja au maximum de dezoom )
             scaleZoom = scaleZoom * zoom;
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
