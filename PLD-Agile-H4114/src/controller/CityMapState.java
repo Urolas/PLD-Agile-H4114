@@ -30,11 +30,11 @@ public class CityMapState implements State {
 
     public void zoomIn(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(2);
+        w.getMapView().modifyZoom(1.5);
     }
     public void zoomOut(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(0.5);
+        w.getMapView().modifyZoom(1/1.5);
     }
     public void recenter(Controller c, Window w){
         //TODO

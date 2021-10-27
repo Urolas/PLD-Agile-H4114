@@ -31,6 +31,8 @@ public class MapView extends JPanel implements Observer {
     private final int VIEW_WIDTH = 800;
     private final int POINT_SIZE = 15;
     private double scaleZoom = 1;
+    private double mapWidth;
+    private double mapHeight;
 
     /**
      * Default constructor
@@ -41,6 +43,8 @@ public class MapView extends JPanel implements Observer {
         cityMap.addObserver(this); // this observes cityMap
         cityMap.getDistribution().addObserver(this); // this observes distribution
         cityMap.getTour().addObserver(this);
+        mapWidth = cityMap.getWidth();
+        mapHeight = cityMap.getHeight();
         scaleWidth = 1;
         scaleHeight = 1;
         originLong = 0;
@@ -54,11 +58,31 @@ public class MapView extends JPanel implements Observer {
     public void modifyZoom(double zoom){
         if (zoom == 1){
             scaleZoom = 1;
-        }else if (!(zoom == 0.5 && scaleZoom == 1) && !(zoom == 2 && scaleZoom == 16)){// not ( si on dézoome et qu'on est déja au maximum de dezoom )
+            mapWidth = cityMap.getWidth();
+            mapHeight = cityMap.getHeight();
+            originLong = cityMap.getWestPoint();
+            originLat = cityMap.getNordPoint();
+        }else if (!(zoom < 1 && scaleZoom <= 1) && !(zoom > 1 && scaleZoom >= 16)){// not ( si on dézoome et qu'on est déja au maximum de dezoom )
             scaleZoom = scaleZoom * zoom;
+            Double lastMapWidth = mapWidth;
+            Double lastMapHeight = mapHeight;
+            mapWidth = mapWidth/zoom;
+            mapHeight = mapHeight/zoom;
+
+            if (zoom < 1){
+                zoom = 1/zoom;
+                originLong = originLong - mapWidth/2 + lastMapWidth/2;
+                originLat = originLat + mapHeight/2 - lastMapHeight/2;
+            } else if (zoom > 1) {
+                originLong = originLong - mapWidth/2 + lastMapWidth/2;
+                originLat = originLat + mapHeight/2 - lastMapHeight/2;
+            }
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
+
+
+
         System.out.println(scaleWidth);
         repaint();
 
@@ -66,8 +90,11 @@ public class MapView extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
-        scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
+        mapWidth = cityMap.getWidth();
+        mapHeight = cityMap.getHeight();
+
+        scaleWidth = VIEW_WIDTH/mapWidth*scaleZoom;
+        scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
 
