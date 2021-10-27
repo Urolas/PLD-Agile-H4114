@@ -24,6 +24,10 @@ public class DistributionState implements State {
         controller.getCitymap().computeTour();
         controller.setCurrentState(controller.tourState);
     }
+    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
+        XMLDeserializer.loadDistribution(c.getCitymap());
+        c.setCurrentState(c.distributionState);
+    }
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
         c.setCurrentState(c.citymapState);

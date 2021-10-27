@@ -2,7 +2,9 @@ package model;
 
 import view.MapView;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import observer.Observable;
 
@@ -13,6 +15,7 @@ public class Distribution extends Observable{
 
     private DepotAddress depot;
     private Set<Request> requests;
+    private List<String> requestColors = new ArrayList<>();
 
     /**
      * Default constructor
@@ -20,6 +23,13 @@ public class Distribution extends Observable{
     public Distribution() {
         this.requests = new HashSet<Request>();
         this.depot = new DepotAddress();
+        this.requestColors.add("#1FBED6");
+        this.requestColors.add("#97C30A");
+        this.requestColors.add("#FF717E");
+        this.requestColors.add("#FFDE00");
+        this.requestColors.add("#006666");
+        this.requestColors.add("#FFFFFF");
+
     }
 
     public DepotAddress getDepot() {
@@ -46,7 +56,15 @@ public class Distribution extends Observable{
     public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection,Integer i) {
         PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration,i);
         DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration,i+1);
-        Request r = new Request(pAddress,dAddress);
+        System.out.println(i);
+        Request r;
+        if((i-1)/2<this.requestColors.size()){
+            r = new Request(pAddress,dAddress,Color.decode(this.requestColors.get((i-1)/2)));
+        } else {
+
+            r = new Request(pAddress,dAddress,new Color((int) (Math.random() * 0x1000000)));
+
+        }
         this.requests.add(r);
         notifyObservers(r);
     }

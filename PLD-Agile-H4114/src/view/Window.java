@@ -5,8 +5,7 @@ import model.CityMap;
 
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.*;
 
 /**
  * @author 4IF-4114
@@ -17,11 +16,10 @@ public class Window extends JFrame {
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
-    protected static final String REDO = "Redo";
-    protected static final String UNDO = "Undo";
+//    protected static final String REDO = "Redo";
+//    protected static final String UNDO = "Undo";
 
-    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR,
-            UNDO, REDO};
+    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR};
 
     private MapView mapView;
     private RoadmapView roadmapView;
@@ -43,6 +41,7 @@ public class Window extends JFrame {
         createButtons(controller);
         mapView = new MapView(cityMap, this);
         roadmapView = new RoadmapView(cityMap, this);
+//        LogView
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
@@ -82,5 +81,10 @@ public class Window extends JFrame {
             button.addActionListener(buttonListener);
             getContentPane().add(button);
         }
+    }
+
+    public void parsingError(String message) {
+        final JPanel panel = new JPanel();
+        JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

@@ -1,7 +1,12 @@
 package controller;
 
 import model.CityMap;
+import org.xml.sax.SAXException;
 import view.Window;
+import xml.XMLException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 /**
  * @author 4IF-4114
@@ -58,7 +63,11 @@ public class Controller {
     public void loadCityMap()  {
         try{
             this.currentState.loadMap(this, window);
-        }catch(Exception e){
+        }catch(XMLException e){
+            cityMap.reset();
+            this.currentState=this.initialState;
+            window.parsingError(e.getMessage());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -66,7 +75,12 @@ public class Controller {
     public void loadDistribution(){
         try{
             this.currentState.loadDistribution(this,window);
-        }catch(Exception e){
+        }catch(XMLException e){
+            cityMap.getDistribution().reset();
+            cityMap.getTour().resetTour();
+            this.currentState=this.citymapState;
+            window.parsingError(e.getMessage());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

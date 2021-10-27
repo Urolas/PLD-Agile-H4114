@@ -45,7 +45,7 @@ public class MapView extends JPanel implements Observer {
         originLong = 0;
         originLat = 0;
         setLayout(null);
-        setBackground(Color.LIGHT_GRAY);
+        setBackground(new Color(180,180,180));
         setSize(VIEW_WIDTH,VIEW_HEIGHT);
         window.getContentPane().add(this);
     }
@@ -76,20 +76,23 @@ public class MapView extends JPanel implements Observer {
         for(Map.Entry<AbstractMap.SimpleEntry<String,String>,Road> road : cityMap.getRoads().entrySet()){
             displayRoad(road.getValue(),Color.white, 1,false);
         }
+        Color outline = Color.BLACK;
+        Tour t = cityMap.getTour();
+        if (t!=null) {
+            if (t.getPaths().size() != 0){
+                outline = Color.RED;
+            }
+            for (Path p : t.getPaths()){
+                displayPath(p);
+            }
 
+        }
         Distribution d = cityMap.getDistribution();
         if (d!=null) {
             System.out.println();
             displayDepot();
             for (Request q : d.getRequests()){
-                displayRequest(q);
-            }
-        }
-        Tour t = cityMap.getTour();
-        if (t!=null) {
-            System.out.println();
-            for (Path p : t.getPaths()){
-                displayPath(p);
+                displayRequest(q,outline);
             }
         }
     }
@@ -105,14 +108,14 @@ public class MapView extends JPanel implements Observer {
         int y2 = -(int)((r.getDestination().getLatitude() - originLat) * scaleHeight);
         if (!displayTour){
             if (r.getName().contains("Boulevard") || r.getName().contains("Avenue") || r.getName().contains("Cours") ){
-                thickness=1;
-                c=Color.BLACK;
+                thickness=2;
+                c=Color.decode("#FFF889");
             } else if (r.getName().contains("Impasse") ){
                 thickness=1;
-                c=Color.BLACK;
+                c=Color.WHITE;
             }else {
                 thickness=1;
-                c=Color.BLACK;
+                c=Color.WHITE;
             }
         }
         g.setColor(c);
@@ -125,18 +128,24 @@ public class MapView extends JPanel implements Observer {
             displayRoad(r,Color.red,3,true);
         }
     }
-    public void displayRequest(Request q){
+    public void displayRequest(Request q,Color outline){
         int x1 = (int)((q.getPickup().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y1 = -(int)((q.getPickup().getIntersection().getLatitude()- originLat) * scaleHeight);
         int x2 = (int)((q.getDelivery().getIntersection().getLongitude()- originLong) * scaleWidth);
         int y2 = -(int)((q.getDelivery().getIntersection().getLatitude()- originLat) * scaleHeight);
-        Color c = new Color((int)(Math.random() * 0x1000000));
-        g.setColor(c);
+
+        g.setColor(q.color);
         g.fillOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
-        g.setColor(c);
+        g.setColor(outline);
+        g2.setStroke(new BasicStroke(2));
+        g2.drawOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
+        g.setColor(q.color);
         g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
-        System.out.println("x1 =" +x1 + " y1= " + y1);
-        System.out.println("x2 =" +x2 + " y2= " + y2);
+
+        g.setColor(outline);
+        g2.setStroke(new BasicStroke(2));
+        g.drawPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
+
     }
 
     public void displayDepot(){
@@ -145,7 +154,6 @@ public class MapView extends JPanel implements Observer {
             int y = -(int) ((cityMap.getDistribution().getDepot().getIntersection().getLatitude() - originLat) * scaleHeight);
             g.setColor(Color.black);
             g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
-            System.out.println("x ="+x + " y= " + y);
         }
     }
 }

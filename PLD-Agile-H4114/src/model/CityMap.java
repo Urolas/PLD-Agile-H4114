@@ -202,6 +202,7 @@ public class CityMap extends Observable {
         notifyObservers(road);
     }
 
+
     public void completeAdjacencyList(String id1, String id2, Double length) {
 
         this.adjacencyList.get(id1).add(new AbstractMap.SimpleEntry<>(id2,length));
