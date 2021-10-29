@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 
 import controller.Controller;
 
@@ -25,8 +26,25 @@ public class MouseListener extends MouseAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent evt) {
-
+    public void mousePressed(MouseEvent evt) {
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        if (e.getX() >= 0){
+            mapView.setMouseClickedX(e.getX());
+            mapView.setMouseClickedY(e.getY());
+            mapView.fixOrigin();
+        }
+        System.out.println(e.getX());
     }
+
+    @Override
+    public void mouseDragged(MouseEvent evt){
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        if (e.getX() >= 0){
+            mapView.dragMap(e.getX(),e.getY());
+        }
+        System.out.println(e.getX());
+    }
+
+
 
 }

@@ -51,6 +51,7 @@ public class Window extends JFrame {
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
+
         addMouseMotionListener((MouseMotionListener) mouseListener);
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
