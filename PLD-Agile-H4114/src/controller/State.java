@@ -1,5 +1,6 @@
 package controller;
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLException;
 
@@ -38,5 +39,5 @@ public interface State {
 
     public default void recenter(Controller controller, Window window){};
 
-
+    public default void keyStroke(MapView mapView, int keyCode){};
 }

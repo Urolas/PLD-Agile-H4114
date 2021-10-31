@@ -62,7 +62,7 @@ public class MapView extends JPanel implements Observer {
         window.getContentPane().add(this);
     }
 
-    public void modifyZoom(double zoom){
+    public void modifyZoom(double zoom, int centerX, int centerY){
         if (zoom == 1){
             scaleZoom = 1;
             smallRoadThickness = 1;
@@ -79,25 +79,27 @@ public class MapView extends JPanel implements Observer {
             greatRoadThickness = greatRoadThickness*zoom;
             mapWidth = mapWidth/zoom;
             mapHeight = mapHeight/zoom;
-            if (originLong - mapWidth/2 + lastMapWidth/2 < cityMap.getWestPoint()){
+            if (originLong - mapWidth/2 + centerX/scaleWidth < cityMap.getWestPoint()){
                 originLong = cityMap.getWestPoint();
-            }else if(originLong - mapWidth/2 + lastMapWidth/2 + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
+            }else if(originLong - mapWidth/2 + centerX/scaleWidth + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
                 originLong = cityMap.getWestPoint() + cityMap.getWidth() - mapWidth;
             }else{
-                originLong = originLong - mapWidth/2 + lastMapWidth/2;
+                originLong = originLong - mapWidth/2 + centerX/scaleWidth;
             }
-            if (originLat + mapHeight/2 - lastMapHeight/2 > cityMap.getNordPoint()){
+            if (originLat + mapHeight/2 - centerY/scaleHeight > cityMap.getNordPoint()){
                 originLat = cityMap.getNordPoint();
-            }else if (originLat + mapHeight/2 - lastMapHeight/2 + mapHeight< cityMap.getNordPoint() + cityMap.getHeight()){
+            }else if (originLat + mapHeight/2 - centerY/scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
                 originLat = cityMap.getNordPoint() - cityMap.getHeight() + mapHeight;
             }else{
-                originLat = originLat + mapHeight/2 - lastMapHeight/2;
+                originLat = originLat + mapHeight/2 - centerY/scaleHeight;
             }
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
         repaint();
     }
+
+
 
     public void dragMap(int mouseX, int mouseY){
         System.out.println((mouseX - mouseClickedX)/scaleWidth);
@@ -111,11 +113,45 @@ public class MapView extends JPanel implements Observer {
         }
         repaint();
     }
+
+    public void moveMapView(int keyCode){
+        int horizontal = 0;
+        int vertical = 0;
+        if (keyCode == 37){
+            horizontal = -1;
+        }
+        if (keyCode == 38){
+            vertical = -1;
+        }
+        if (keyCode == 39){
+            horizontal = 1;
+        }
+        if (keyCode == 40){
+            vertical = 1;
+        }
+        int speed = 3;
+        originLong = originLong + horizontal*speed/scaleWidth;
+        if (originLong < cityMap.getWestPoint()){
+            originLong = cityMap.getWestPoint();
+        } else if( originLong + mapWidth > cityMap.getWestPoint() + cityMap.getWidth()){
+            originLong = cityMap.getWestPoint() + cityMap.getWidth() - mapWidth;
+        }
+        originLat = originLat - vertical*speed/ scaleHeight;
+        if (originLat > cityMap.getNordPoint()) { //TODO change "Nord" to "North"
+            originLat = cityMap.getNordPoint();
+        } else if(originLat - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
+            originLat = cityMap.getNordPoint() - cityMap.getHeight() + mapHeight;
+        }
+        repaint();
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         mapWidth = cityMap.getWidth();
         mapHeight = cityMap.getHeight();
-
+        scaleZoom = 1;
+        smallRoadThickness = 1;
+        greatRoadThickness = 2;
         scaleWidth = VIEW_WIDTH/mapWidth*scaleZoom;
         scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
@@ -139,11 +175,23 @@ public class MapView extends JPanel implements Observer {
     public void setMouseClickedY(int mouseClickedY) {
         this.mouseClickedY = mouseClickedY;
     }
+
+
+
     public void fixOrigin(){
         this.originLatClicked = originLat;
         this.originLongClicked = originLong;
 
     }
+
+    public int getVIEW_HEIGHT() {
+        return VIEW_HEIGHT;
+    }
+
+    public int getVIEW_WIDTH() {
+        return VIEW_WIDTH;
+    }
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

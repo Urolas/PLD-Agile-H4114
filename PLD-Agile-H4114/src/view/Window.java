@@ -4,6 +4,7 @@ import controller.Controller;
 import model.CityMap;
 
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -43,16 +44,18 @@ public class Window extends JFrame {
 
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
-        createButtons(controller);
+
 
         mapView = new MapView(cityMap, this);
+        createButtons(controller);
         roadmapView = new RoadmapView(cityMap, this);
 //        LogView
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
-
+        addMouseWheelListener((MouseWheelListener) mouseListener);
         addMouseMotionListener((MouseMotionListener) mouseListener);
+
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowSize();
@@ -93,11 +96,11 @@ public class Window extends JFrame {
             JButton button = new JButton(buttonTextsZoom[i]);
             buttons.add(button);
             button.setSize(50,50);
-            button.setLocation(20 + buttonWidth + i * 60 ,20);
+            button.setLocation( mapView.getVIEW_WIDTH() - 190 + i * 60, mapView.getVIEW_HEIGHT() - 100);
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);
-            getContentPane().add(button);
+            mapView.add(button);
         }
         System.out.println(buttons.size());
 

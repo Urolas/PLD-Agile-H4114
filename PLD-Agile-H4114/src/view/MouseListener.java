@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import javax.swing.SwingUtilities;
 
 import controller.Controller;
@@ -43,6 +44,20 @@ public class MouseListener extends MouseAdapter {
             mapView.dragMap(e.getX(),e.getY());
         }
         System.out.println(e.getX());
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e){
+        System.out.println("MouseWheelMoved");
+        int scrollDirection = e.getWheelRotation();
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        if (scrollDirection > 0){
+            mapView.modifyZoom(1/1.2,mapView.getViewWidth()/2, mapView.getViewHeight()/2);
+        } else if (scrollDirection < 0){
+            mapView.modifyZoom(1.2, mouseX, mouseY);
+        }
+
     }
 
 

@@ -2,6 +2,7 @@ package controller;
 
 
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLDeserializer;
 import xml.XMLException;
@@ -30,15 +31,18 @@ public class TourState implements State {
 
     public void zoomIn(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1.5);
+        w.getMapView().modifyZoom(1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
     }
     public void zoomOut(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1/1.5);
+        w.getMapView().modifyZoom(1/1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
     }
     public void recenter(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1);
+        w.getMapView().modifyZoom(1,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
     }
+    public void keyStroke(MapView mapView, int keyCode){
 
+
+    }
 }

@@ -2,6 +2,7 @@ package controller;
 
 
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLDeserializer;
 import xml.XMLException;
@@ -35,15 +36,32 @@ public class DistributionState implements State {
 
     public void zoomIn(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1.5);
+        w.getMapView().modifyZoom(1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
     }
     public void zoomOut(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1/1.5);
+        w.getMapView().modifyZoom(1/1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
     }
     public void recenter(Controller c, Window w){
         //TODO
-        w.getMapView().modifyZoom(1);
+        w.getMapView().modifyZoom(1,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
+
+    }
+
+    public void keyStroke(MapView mapView, int keyCode){
+
+        if (keyCode == 37){
+            System.out.println("Touche appuyée gauche");
+        }
+        if (keyCode == 38){
+            System.out.println("Touche appuyée haut");
+        }
+        if (keyCode == 39){
+            System.out.println("Touche appuyée droite");
+        }
+        if (keyCode == 40){
+            System.out.println("Touche appuyée bas");
+        }
 
     }
 

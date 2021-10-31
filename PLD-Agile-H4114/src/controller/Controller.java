@@ -86,7 +86,7 @@ public class Controller {
     }
 
     public void keystroke(int keyCode) {
-
+        currentState.keyStroke(window.getMapView(), keyCode);
     }
 
     public CityMap getCitymap() {
