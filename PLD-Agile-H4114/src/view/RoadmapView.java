@@ -35,12 +35,12 @@ public class RoadmapView extends JPanel implements Observer {
 
         this.setBorder(BorderFactory.createTitledBorder("Roadmap"));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(Color.RED);
+        this.setBackground(Color.GRAY);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
         this.roadmap = new JPanel();
         this.roadmap.setLayout(new BoxLayout(this.roadmap, BoxLayout.Y_AXIS));
-        this.roadmap.setBackground(Color.GREEN);
+        this.roadmap.setBackground(Color.LIGHT_GRAY);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -82,14 +82,14 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
             subPanel.setBackground(Color.YELLOW);
             if (poi.getIdPointOfInterest() == 0) { // Depot
-                subPanel.setBorder(BorderFactory.createTitledBorder("Border"));
+                subPanel.setBorder(BorderFactory.createTitledBorder("START"));
             } else {
                 subPanel.setBorder(BorderFactory.createTitledBorder("Point of Interest #" + poi.getIdPointOfInterest()));
             }
 
             subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
             subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-            subPanel.add(new JLabel("    Duration: " + poi.getDuration()));
+            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " .s"));
 
             this.roadmap.add(subPanel);
 
@@ -100,9 +100,8 @@ public class RoadmapView extends JPanel implements Observer {
                 subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
                 subPanel2.setBackground(Color.PINK);
 
-                subPanel2.add(new JLabel("    Name: " + road.getName()));
-                subPanel2.add(new JLabel("    Length: " + road.getLength()));
-                subPanel2.add(new JLabel("    Intersection: " + road.getDestination().getId()));
+                subPanel2.add(new JLabel(" via " + road.getName()));
+                subPanel2.add(new JLabel(" for " + road.getLength()+ " meters"));
 
                 this.roadmap.add(subPanel2);
             }
