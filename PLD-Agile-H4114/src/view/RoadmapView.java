@@ -7,6 +7,8 @@ import observer.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.Duration;
+import  java.util.*;
 
 /**
  * @author 4IF-4114
@@ -94,16 +96,41 @@ public class RoadmapView extends JPanel implements Observer {
             this.roadmap.add(subPanel);
 
             Path path = this.tour.getPaths().get(i);
-            for (Road road : path.getRoads()) {
+            int duration = 0;
+            double length = 0;
+            String name;
+            int nbIntersection = 0;
+
+//            for (Road road : path.getRoads()) {
+            for (int j = 0; j < path.getRoads().size(); ++j) {
+                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
+                length += path.getRoads().get(j).getLength();
+                name = path.getRoads().get(j).getName();
+                nbIntersection += 1;
+
+                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
+                    continue;
+                }
 
                 JPanel subPanel2 = new JPanel();
                 subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
                 subPanel2.setBackground(Color.PINK);
 
-                subPanel2.add(new JLabel(" via " + road.getName()));
-                subPanel2.add(new JLabel(" for " + road.getLength()+ " meters"));
+                subPanel2.add(new JLabel(" via " + name));
+                int minutes = (duration / 60);
+                int seconds = (duration % 60);
+                if (minutes > 0) {
+                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                }
+                else {
+                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                }
 
                 this.roadmap.add(subPanel2);
+
+                duration = 0;
+                length = 0;
+                nbIntersection = 0;
             }
 
             i += 1;
