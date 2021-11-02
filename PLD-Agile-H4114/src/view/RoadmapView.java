@@ -81,6 +81,8 @@ public class RoadmapView extends JPanel implements Observer {
             JPanel subPanel = new JPanel();
             subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
             subPanel.setBackground(Color.YELLOW);
+            subPanel.setLayout(new GridLayout(0, 1));
+
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 subPanel.setBorder(BorderFactory.createTitledBorder("START"));
             } else {
@@ -103,6 +105,8 @@ public class RoadmapView extends JPanel implements Observer {
                 JPanel subPanel2 = new JPanel();
                 subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
                 subPanel2.setBackground(Color.PINK);
+                subPanel2.setLayout(new GridLayout(0, 1));
+                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
 
                 subPanel2.add(new JLabel(" via " + road.getName()));
                 subPanel2.add(new JLabel(" for " + road.getLength()+ " meters"));
