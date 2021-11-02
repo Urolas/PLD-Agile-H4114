@@ -84,12 +84,16 @@ public class RoadmapView extends JPanel implements Observer {
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 subPanel.setBorder(BorderFactory.createTitledBorder("START"));
             } else {
-                subPanel.setBorder(BorderFactory.createTitledBorder("Point of Interest #" + poi.getIdPointOfInterest()));
+                if (poi instanceof DeliveryAddress){
+                    subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
+                }else if (poi instanceof PickupAddress) {
+                    subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
+                }
             }
 
             subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
             subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " .s"));
+            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
 
             this.roadmap.add(subPanel);
 
