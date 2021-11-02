@@ -24,6 +24,7 @@ public class RoadmapView extends JPanel implements Observer {
     private final int BUTTON_HEIGHT = 30;
     private final int BUTTON_WIDTH = 100;
     private JPanel roadmap;
+    private boolean start = true;
 
     /**
      * Default constructor
@@ -77,8 +78,8 @@ public class RoadmapView extends JPanel implements Observer {
         System.out.println(this.tour.getPaths().size());
         System.out.println(this.distribution.getRequests().size());
 
+        this.start = true;
         int i = 0;
-        boolean start = true;
 
         this.roadmap.removeAll();
 
@@ -86,89 +87,16 @@ public class RoadmapView extends JPanel implements Observer {
             for (Request request : this.distribution.getRequests()) {
                 System.out.println(request);
 
-                JPanel subPanel = new JPanel();
-                subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-                subPanel.setBackground(Color.YELLOW);
-                subPanel.setLayout(new GridLayout(0, 1));
-
-                subPanel.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
-                subPanel.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
-                subPanel.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
-                subPanel.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
-
-                this.roadmap.add(subPanel);
+                addRequestToRoadmap(request);
             }
         }
         else {
             for (PointOfInterest poi : this.tour.getPointOfInterests()) {
                 System.out.println(poi.toString());
 
-                JPanel subPanel = new JPanel();
-                subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-                subPanel.setBackground(Color.YELLOW);
-                subPanel.setLayout(new GridLayout(0, 1));
+                addPointOfInterestToRoadMap(poi);
 
-                if (poi.getIdPointOfInterest() == 0) { // Depot
-                    if (start) {
-                        subPanel.setBorder(BorderFactory.createTitledBorder("START"));
-                    } else {
-                        subPanel.setBorder(BorderFactory.createTitledBorder("END"));
-                    }
-                } else {
-                    if (poi instanceof DeliveryAddress) {
-                        subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
-                    } else if (poi instanceof PickupAddress) {
-                        subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
-                    }
-                }
 
-                subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
-                subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-                subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
-
-                this.roadmap.add(subPanel);
-
-                //            Path path = this.tour.getPaths().get(i);
-                //            int duration = 0;
-                //            double length = 0;
-                //            String name;
-                //            int nbIntersection = 0;
-                //
-                //
-                //            for (int j = 0; j < path.getRoads().size(); ++j) {
-                //                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
-                //                length += path.getRoads().get(j).getLength();
-                //                name = path.getRoads().get(j).getName();
-                //                nbIntersection += 1;
-                //
-                //                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
-                //                    continue;
-                //                }
-                //
-                //                JPanel subPanel2 = new JPanel();
-                //                subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-                //                subPanel2.setBackground(Color.PINK);
-                //                subPanel2.setLayout(new GridLayout(0, 1));
-                //                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
-                //
-                //                subPanel2.add(new JLabel(" via " + name));
-                //                int minutes = (duration / 60);
-                //                int seconds = (duration % 60);
-                //                if (minutes > 0) {
-                //                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-                //                }
-                //                else {
-                //                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-                //                }
-                //
-                //                this.roadmap.add(subPanel2);
-                //
-                //                duration = 0;
-                //                length = 0;
-                //                nbIntersection = 0;
-                //            }
-                //
-                //            i += 1;
             }
         }
 
@@ -183,5 +111,104 @@ public class RoadmapView extends JPanel implements Observer {
     public int getViewWidth() {
         return VIEW_WIDTH;
     }
+
+    public void addRequestToRoadmap(Request request){ //Add Request to roadmap in order
+        JPanel subPanel1 = new JPanel();
+        subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
+        subPanel1.setBackground(Color.YELLOW);
+        subPanel1.setLayout(new GridLayout(0, 1));
+        subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point" ));
+
+        JPanel subPanel2 = new JPanel();
+        subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+        subPanel2.setBackground(Color.YELLOW);
+        subPanel2.setLayout(new GridLayout(0, 1));
+        subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point"));
+
+        subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
+        subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+        subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
+        subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+
+        this.roadmap.add(subPanel1);
+        this.roadmap.add(subPanel2);
+    }
+
+    public void addPointOfInterestToRoadMap(PointOfInterest poi){
+
+        JPanel subPanel = new JPanel();
+        subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
+        subPanel.setBackground(Color.YELLOW);
+        subPanel.setLayout(new GridLayout(0, 1));
+
+        if (poi.getIdPointOfInterest() == 0) { // Depot
+            if (this.start) {
+                subPanel.setBorder(BorderFactory.createTitledBorder("START"));
+                this.start = false;
+            } else {
+                subPanel.setBorder(BorderFactory.createTitledBorder("END"));
+            }
+        } else {
+            if (poi instanceof DeliveryAddress) {
+                subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
+            } else if (poi instanceof PickupAddress) {
+                subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
+            }
+        }
+
+        subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
+        subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
+        subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
+
+        this.roadmap.add(subPanel);
+
+        //Add roads
+        //            Path path = this.tour.getPaths().get(i);
+        //            int duration = 0;
+        //            double length = 0;
+        //            String name;
+        //            int nbIntersection = 0;
+        //
+        //
+        //            for (int j = 0; j < path.getRoads().size(); ++j) {
+        //                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
+        //                length += path.getRoads().get(j).getLength();
+        //                name = path.getRoads().get(j).getName();
+        //                nbIntersection += 1;
+        //
+        //                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
+        //                    continue;
+        //                }
+        //
+        //                JPanel subPanel2 = new JPanel();
+        //                subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+        //                subPanel2.setBackground(Color.PINK);
+        //                subPanel2.setLayout(new GridLayout(0, 1));
+        //                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
+        //
+        //                subPanel2.add(new JLabel(" via " + name));
+        //                int minutes = (duration / 60);
+        //                int seconds = (duration % 60);
+        //                if (minutes > 0) {
+        //                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+        //                }
+        //                else {
+        //                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+        //                }
+        //
+        //                this.roadmap.add(subPanel2);
+        //
+        //                duration = 0;
+        //                length = 0;
+        //                nbIntersection = 0;
+        //            }
+        //
+        //            i += 1;
+
+
+
+
+    }
+
 
 }
