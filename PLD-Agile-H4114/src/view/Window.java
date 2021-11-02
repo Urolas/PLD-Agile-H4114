@@ -48,8 +48,7 @@ public class Window extends JFrame {
 
         mapView = new MapView(cityMap, this);
         createButtons(controller);
-//        LogView
-        roadmapView = new RoadmapView(cityMap.getTour(), this);
+        roadmapView = new RoadmapView(cityMap.getTour(), cityMap.getDistribution(), this);
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);

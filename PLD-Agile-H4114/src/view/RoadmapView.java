@@ -16,6 +16,7 @@ import  java.util.*;
 public class RoadmapView extends JPanel implements Observer {
 
     private Tour tour;
+    private Distribution distribution;
     private final int VIEW_HEIGHT = 770;
     private final int VIEW_WIDTH = 300;
     private final JButton addButton = new JButton("Add");
@@ -29,11 +30,13 @@ public class RoadmapView extends JPanel implements Observer {
      * @param tour
      * @param window
      */
-    public RoadmapView(Tour tour, Window window) {
+    public RoadmapView(Tour tour, Distribution distribution, Window window) {
         super();
 
         this.tour = tour;
         this.tour.addObserver(this); // this observes tour
+        this.distribution = distribution;
+        this.distribution.addObserver(this); // this observes distribution
 
         this.setBorder(BorderFactory.createTitledBorder("Roadmap"));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -72,76 +75,101 @@ public class RoadmapView extends JPanel implements Observer {
         System.out.println("Roadmap/update");
         System.out.println(this.tour.getPointOfInterests().size());
         System.out.println(this.tour.getPaths().size());
+        System.out.println(this.distribution.getRequests().size());
 
         int i = 0;
+        boolean start = true;
 
         this.roadmap.removeAll();
 
-        for (PointOfInterest poi : this.tour.getPointOfInterests()) {
-            System.out.println(poi.toString());
+        if (this.tour.getPointOfInterests().size() == 0) {
+            for (Request request : this.distribution.getRequests()) {
+                System.out.println(request);
 
-            JPanel subPanel = new JPanel();
-            subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-            subPanel.setBackground(Color.YELLOW);
-            subPanel.setLayout(new GridLayout(0, 1));
+                JPanel subPanel = new JPanel();
+                subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
+                subPanel.setBackground(Color.YELLOW);
+                subPanel.setLayout(new GridLayout(0, 1));
 
-            if (poi.getIdPointOfInterest() == 0) { // Depot
-                subPanel.setBorder(BorderFactory.createTitledBorder("START"));
-            } else {
-                if (poi instanceof DeliveryAddress){
-                    subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
-                }else if (poi instanceof PickupAddress) {
-                    subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
-                }
+                subPanel.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
+                subPanel.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+                subPanel.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
+                subPanel.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+
+                this.roadmap.add(subPanel);
             }
+        }
+        else {
+            for (PointOfInterest poi : this.tour.getPointOfInterests()) {
+                System.out.println(poi.toString());
 
-            subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
-            subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
+                JPanel subPanel = new JPanel();
+                subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
+                subPanel.setBackground(Color.YELLOW);
+                subPanel.setLayout(new GridLayout(0, 1));
 
-            this.roadmap.add(subPanel);
-
-            Path path = this.tour.getPaths().get(i);
-            int duration = 0;
-            double length = 0;
-            String name;
-            int nbIntersection = 0;
-
-
-            for (int j = 0; j < path.getRoads().size(); ++j) {
-                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
-                length += path.getRoads().get(j).getLength();
-                name = path.getRoads().get(j).getName();
-                nbIntersection += 1;
-
-                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
-                    continue;
+                if (poi.getIdPointOfInterest() == 0) { // Depot
+                    if (start) {
+                        subPanel.setBorder(BorderFactory.createTitledBorder("START"));
+                    } else {
+                        subPanel.setBorder(BorderFactory.createTitledBorder("END"));
+                    }
+                } else {
+                    if (poi instanceof DeliveryAddress) {
+                        subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
+                    } else if (poi instanceof PickupAddress) {
+                        subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
+                    }
                 }
 
-                JPanel subPanel2 = new JPanel();
-                subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-                subPanel2.setBackground(Color.PINK);
-                subPanel2.setLayout(new GridLayout(0, 1));
-                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
+                subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
+                subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
+                subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
 
-                subPanel2.add(new JLabel(" via " + name));
-                int minutes = (duration / 60);
-                int seconds = (duration % 60);
-                if (minutes > 0) {
-                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-                }
-                else {
-                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-                }
+                this.roadmap.add(subPanel);
 
-                this.roadmap.add(subPanel2);
-
-                duration = 0;
-                length = 0;
-                nbIntersection = 0;
+                //            Path path = this.tour.getPaths().get(i);
+                //            int duration = 0;
+                //            double length = 0;
+                //            String name;
+                //            int nbIntersection = 0;
+                //
+                //
+                //            for (int j = 0; j < path.getRoads().size(); ++j) {
+                //                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
+                //                length += path.getRoads().get(j).getLength();
+                //                name = path.getRoads().get(j).getName();
+                //                nbIntersection += 1;
+                //
+                //                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
+                //                    continue;
+                //                }
+                //
+                //                JPanel subPanel2 = new JPanel();
+                //                subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+                //                subPanel2.setBackground(Color.PINK);
+                //                subPanel2.setLayout(new GridLayout(0, 1));
+                //                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
+                //
+                //                subPanel2.add(new JLabel(" via " + name));
+                //                int minutes = (duration / 60);
+                //                int seconds = (duration % 60);
+                //                if (minutes > 0) {
+                //                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                //                }
+                //                else {
+                //                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                //                }
+                //
+                //                this.roadmap.add(subPanel2);
+                //
+                //                duration = 0;
+                //                length = 0;
+                //                nbIntersection = 0;
+                //            }
+                //
+                //            i += 1;
             }
-
-            i += 1;
         }
 
         this.revalidate();
