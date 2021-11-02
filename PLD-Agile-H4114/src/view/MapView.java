@@ -183,14 +183,6 @@ public class MapView extends JPanel implements Observer {
         this.originLongClicked = originLong;
     }
 
-    public int getVIEW_HEIGHT() {
-        return VIEW_HEIGHT;
-    }
-
-    public int getVIEW_WIDTH() {
-        return VIEW_WIDTH;
-    }
-
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
