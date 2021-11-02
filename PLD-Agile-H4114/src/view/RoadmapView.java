@@ -20,8 +20,8 @@ public class RoadmapView extends JPanel implements Observer {
     private final int VIEW_WIDTH = 300;
     private final JButton addButton = new JButton("Add");
     private final JButton delButton = new JButton("Remove");
-    private final int buttonHeight = 30;
-    private final int buttonWidth = 100;
+    private final int BUTTON_HEIGHT = 30;
+    private final int BUTTON_WIDTH = 100;
     private JPanel roadmap;
 
     /**
@@ -48,7 +48,7 @@ public class RoadmapView extends JPanel implements Observer {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(scrollPanel);
         scrollPanel.setBackground(Color.BLACK);
-        scrollPanel.setSize(0, VIEW_HEIGHT - this.buttonHeight);
+        scrollPanel.setSize(0, VIEW_HEIGHT - this.BUTTON_HEIGHT);
 
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel);
@@ -107,7 +107,7 @@ public class RoadmapView extends JPanel implements Observer {
             String name;
             int nbIntersection = 0;
 
-//            for (Road road : path.getRoads()) {
+
             for (int j = 0; j < path.getRoads().size(); ++j) {
                 duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
                 length += path.getRoads().get(j).getLength();
