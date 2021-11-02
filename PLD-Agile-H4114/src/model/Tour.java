@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Tour extends Observable {
     private List<Path> paths;
-    public List<PointOfInterest> pointOfInterests;
+    private List<PointOfInterest> pointOfInterests;
     private Double totalLength;
     /**
      * Default constructor
@@ -23,6 +23,7 @@ public class Tour extends Observable {
     public void resetTour(){
         paths = new ArrayList<>();
         pointOfInterests = new ArrayList<>();
+        this.notifyObservers();
     }
 
     public List<Path> getPaths() {
@@ -34,21 +35,25 @@ public class Tour extends Observable {
     }
 
     public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
-        this.paths=paths;
-        this.pointOfInterests=shortestTour;
-        this.totalLength=solutionCost;
+        this.paths = paths;
+        this.pointOfInterests = shortestTour;
+        this.totalLength = solutionCost;
+        this.notifyObservers();
     }
 
     public void setPaths(List<Path> paths) {
         this.paths = paths;
+        this.notifyObservers(paths);
     }
 
     public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
         this.pointOfInterests = pointOfInterests;
+        this.notifyObservers(pointOfInterests);
     }
 
     public void setTotalLength(Double totalLength) {
         this.totalLength = totalLength;
+        this.notifyObservers(totalLength);
     }
 
     @Override

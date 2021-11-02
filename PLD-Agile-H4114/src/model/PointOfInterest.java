@@ -6,9 +6,11 @@ package model;
  * @author 4IF-4114
  */
 public class PointOfInterest {
+
     protected Integer duration;
     protected Intersection intersection;
     protected Integer idPointOfInterest;
+
     /**
      * Default constructor
      */
@@ -33,6 +35,14 @@ public class PointOfInterest {
 
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Integer getIdPointOfInterest() {
+        return idPointOfInterest;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj.getClass()!=this.getClass()){
@@ -45,5 +55,14 @@ public class PointOfInterest {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "PointOfInterest{" +
+                "duration=" + duration +
+                ", intersection=" + intersection +
+                ", idPointOfInterest=" + idPointOfInterest +
+                '}';
     }
 }
