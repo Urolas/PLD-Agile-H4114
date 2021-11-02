@@ -50,6 +50,7 @@ public class Window extends JFrame {
         createButtons(controller);
         roadmapView = new RoadmapView(cityMap, this);
 //        LogView
+        roadmapView = new RoadmapView(cityMap.getTour(), this);
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
@@ -65,13 +66,12 @@ public class Window extends JFrame {
     }
 
     private void setWindowSize() {
-        int allButtonHeight = buttonHeight*buttonTexts.length;
+        int allButtonHeight = buttonHeight * buttonTexts.length;
         int windowHeight = Math.max(mapView.getViewHeight(),allButtonHeight);
-        int windowWidth = mapView.getViewWidth()+buttonWidth+10;
+        int windowWidth = mapView.getViewWidth() + buttonWidth + roadmapView.getViewWidth();
         setSize(windowWidth, windowHeight);
         mapView.setLocation(buttonWidth, 0);
-//        roadmapView.setSize(textualViewWidth,windowHeight-messageFrameHeight);
-//        roadmapView.setLocation(10+graphicalView.getViewWidth()+buttonWidth,0);
+        roadmapView.setLocation(mapView.getViewWidth() + buttonWidth,0);
     }
 
     /**

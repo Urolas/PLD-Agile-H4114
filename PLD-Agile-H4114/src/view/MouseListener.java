@@ -46,10 +46,12 @@ public class MouseListener extends MouseAdapter {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e){
-        System.out.println("MouseWheelMoved");
         int scrollDirection = e.getWheelRotation();
-        int mouseX = e.getX();
-        int mouseY = e.getY();
+        MouseEvent ev = SwingUtilities.convertMouseEvent(window, e, mapView);
+        System.out.println("MouseWheelMoved");
+
+        int mouseX = ev.getX();
+        int mouseY = ev.getY(); 
         if (scrollDirection > 0){
             mapView.modifyZoom(1/1.2,mapView.getViewWidth()/2, mapView.getViewHeight()/2);
         } else if (scrollDirection < 0){

@@ -78,5 +78,7 @@ public class Road {
      * 
      */
 
-
+    public Double getLength() {
+        return length;
+    }
 }
