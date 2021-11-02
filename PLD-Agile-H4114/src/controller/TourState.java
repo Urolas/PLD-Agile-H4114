@@ -2,6 +2,7 @@ package controller;
 
 
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLDeserializer;
 import xml.XMLException;
@@ -27,5 +28,8 @@ public class TourState implements State {
         XMLDeserializer.loadDistribution(c.getCitymap());
         c.setCurrentState(c.distributionState);
     }
+    public void keyStroke(MapView mapView, int keyCode){
 
+
+    }
 }

@@ -1,5 +1,6 @@
 package controller;
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLException;
 
@@ -32,4 +33,5 @@ public interface State {
 
     default void computeTour(Controller controller, Window window){};
 
+    public default void keyStroke(MapView mapView, int keyCode){};
 }

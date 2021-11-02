@@ -4,6 +4,7 @@ import controller.Controller;
 import model.CityMap;
 
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -18,8 +19,13 @@ public class Window extends JFrame {
     protected static final String COMPUTE_TOUR = "Compute a tour";
 //    protected static final String REDO = "Redo";
 //    protected static final String UNDO = "Undo";
+    protected static final String ZOOM_IN = "+";
+    protected static final String ZOOM_OUT = "-";
+    protected static final String RECENTER = "=";
 
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR};
+    private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
+
 
     private MapView mapView;
     private RoadmapView roadmapView;
@@ -38,13 +44,18 @@ public class Window extends JFrame {
 
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
-        createButtons(controller);
+
+
         mapView = new MapView(cityMap, this);
+        createButtons(controller);
+//        LogView
         roadmapView = new RoadmapView(cityMap.getTour(), this);
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
+        addMouseWheelListener((MouseWheelListener) mouseListener);
         addMouseMotionListener((MouseMotionListener) mouseListener);
+
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowSize();
@@ -77,8 +88,25 @@ public class Window extends JFrame {
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);
+
             getContentPane().add(button);
         }
+        for ( int i=0; i<buttonTextsZoom.length; i++ ){
+            JButton button = new JButton(buttonTextsZoom[i]);
+            buttons.add(button);
+            button.setSize(50,50);
+            button.setLocation( mapView.getVIEW_WIDTH() - 190 + i * 60, mapView.getVIEW_HEIGHT() - 100);
+            button.setFocusable(false);
+            button.setFocusPainted(false);
+            button.addActionListener(buttonListener);
+            mapView.add(button);
+        }
+        System.out.println(buttons.size());
+
+    }
+
+    public MapView getMapView() {
+        return mapView;
     }
 
     public void parsingError(String message) {

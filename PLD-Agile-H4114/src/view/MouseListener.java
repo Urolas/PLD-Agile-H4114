@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import javax.swing.SwingUtilities;
 
 import controller.Controller;
 
@@ -25,8 +27,39 @@ public class MouseListener extends MouseAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent evt) {
+    public void mousePressed(MouseEvent evt) {
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        if (e.getX() >= 0){
+            mapView.setMouseClickedX(e.getX());
+            mapView.setMouseClickedY(e.getY());
+            mapView.fixOrigin();
+        }
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent evt){
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        if (e.getX() >= 0){
+            mapView.dragMap(e.getX(),e.getY());
+        }
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e){
+        int scrollDirection = e.getWheelRotation();
+        MouseEvent ev = SwingUtilities.convertMouseEvent(window, e, mapView);
+        System.out.println("MouseWheelMoved");
+
+        int mouseX = ev.getX();
+        int mouseY = ev.getY();
+        if (scrollDirection > 0){
+            mapView.modifyZoom(1/1.2,mapView.getViewWidth()/2, mapView.getViewHeight()/2);
+        } else if (scrollDirection < 0){
+            mapView.modifyZoom(1.2, mouseX, mouseY);
+        }
 
     }
+
+
 
 }
