@@ -33,11 +33,5 @@ public interface State {
 
     default void computeTour(Controller controller, Window window){};
 
-    public default void zoomIn(Controller controller, Window window){};
-
-    public default void zoomOut(Controller controller, Window window){};
-
-    public default void recenter(Controller controller, Window window){};
-
     public default void keyStroke(MapView mapView, int keyCode){};
 }

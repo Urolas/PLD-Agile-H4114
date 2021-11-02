@@ -2,6 +2,7 @@ package controller;
 
 import model.CityMap;
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLException;
 
@@ -103,7 +104,8 @@ public class Controller {
 
     public void zoomIn() {
         try{
-            this.currentState.zoomIn(this, window);
+            window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -111,7 +113,8 @@ public class Controller {
 
     public void zoomOut() {
         try{
-            this.currentState.zoomOut(this,window);
+            window.getMapView().modifyZoom(1/1.5, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
         }catch(Exception e){
             System.out.println(e.getMessage());
 
@@ -120,7 +123,8 @@ public class Controller {
 
     public void recenter() {
         try{
-            this.currentState.recenter(this,window);
+            window.getMapView().modifyZoom(1, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
         }catch(Exception e){
             System.out.println(e.getMessage());
 

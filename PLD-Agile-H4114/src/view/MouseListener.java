@@ -34,7 +34,6 @@ public class MouseListener extends MouseAdapter {
             mapView.setMouseClickedY(e.getY());
             mapView.fixOrigin();
         }
-        System.out.println(e.getX());
     }
 
     @Override
@@ -43,7 +42,6 @@ public class MouseListener extends MouseAdapter {
         if (e.getX() >= 0){
             mapView.dragMap(e.getX(),e.getY());
         }
-        System.out.println(e.getX());
     }
 
     @Override

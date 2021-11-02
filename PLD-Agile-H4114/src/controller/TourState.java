@@ -28,19 +28,6 @@ public class TourState implements State {
         XMLDeserializer.loadDistribution(c.getCitymap());
         c.setCurrentState(c.distributionState);
     }
-
-    public void zoomIn(Controller c, Window w){
-        //TODO
-        w.getMapView().modifyZoom(1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
-    }
-    public void zoomOut(Controller c, Window w){
-        //TODO
-        w.getMapView().modifyZoom(1/1.5,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
-    }
-    public void recenter(Controller c, Window w){
-        //TODO
-        w.getMapView().modifyZoom(1,w.getMapView().getViewWidth()/2, w.getMapView().getViewHeight()/2);
-    }
     public void keyStroke(MapView mapView, int keyCode){
 
 
