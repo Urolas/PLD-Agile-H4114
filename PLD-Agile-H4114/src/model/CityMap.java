@@ -1,5 +1,6 @@
 package model;
 
+import tsp.TSP1;
 import tsp.TSPDoubleInsertion;
 import view.MapView;
 import observer.Observable;
@@ -70,13 +71,13 @@ public class CityMap extends Observable {
             correspondanceTable.put(point.idPointOfInterest,point);
         }
         //appel du TSP
-        TSP tsp = new TSPDoubleInsertion();
-        tsp.searchSolution(2000,graph);
+        TSP tsp = new TSP1();
+        tsp.searchSolution(10000,graph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));
         List<String> shortestPath = new LinkedList<>();
         //traduction du resultat du TSP en données utilisables
-        for (int i=1;i<tsp.getSolutionCost();i++) {
+        for (int i=1;i<tsp.getBestSolLength();i++) {
             shortestTour.add(correspondanceTable.get(tsp.getSolution(i)));
             shortestPath.addAll(ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getValue());
         }
