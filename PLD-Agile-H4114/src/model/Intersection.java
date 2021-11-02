@@ -63,4 +63,5 @@ public class Intersection {
     public Double getLatitude() {
         return latitude;
     }
+    public String getId() {return id;}
 }

@@ -107,7 +107,18 @@ public class RoadmapView extends JPanel implements Observer {
                     subPanel.add(new JLabel("    Length: " + road.getLength()));
 
                     this.roadmap.add(subPanel, i);
+
+                    i+=1;
+
+                    JPanel subPanel2 = new JPanel();
+                    subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+                    subPanel2.setBackground(Color.BLUE);
+                    subPanel2.add(new JLabel("    Intersection: " + road.getDestination().getId()));
+
+                    this.roadmap.add(subPanel2,i);
+
                     i += 1;
+
                 }
             }
         }
