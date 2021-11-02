@@ -73,8 +73,6 @@ public class MapView extends JPanel implements Observer {
             originLat = cityMap.getNordPoint();
         }else if (!(zoom < 1 && scaleZoom <= 1) && !(zoom > 1 && scaleZoom >= 16)){
             scaleZoom = scaleZoom * zoom;
-            Double lastMapWidth = mapWidth;
-            Double lastMapHeight = mapHeight;
             smallRoadThickness = smallRoadThickness*zoom;
             greatRoadThickness = greatRoadThickness*zoom;
             mapWidth = mapWidth/zoom;
@@ -114,6 +112,10 @@ public class MapView extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     *  Method called when the users uses directional keys to move in a zoomed map
+     * @param keyCode the code of the pressed key
+     */
     public void moveMapView(int keyCode){
         int horizontal = 0;
         int vertical = 0;
@@ -176,12 +178,9 @@ public class MapView extends JPanel implements Observer {
         this.mouseClickedY = mouseClickedY;
     }
 
-
-
     public void fixOrigin(){
         this.originLatClicked = originLat;
         this.originLongClicked = originLong;
-
     }
 
     public int getVIEW_HEIGHT() {
