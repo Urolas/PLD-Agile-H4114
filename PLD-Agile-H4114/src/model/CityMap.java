@@ -1,5 +1,6 @@
 package model;
 
+import tsp.TSPDoubleInsertion;
 import view.MapView;
 import observer.Observable;
 
@@ -50,7 +51,7 @@ public class CityMap extends Observable {
     public void computeTour() {
         //recuperaton des points d'interets
         List<PointOfInterest> points = this.distribution.GetAllPoints();
-        List<AbstractMap.SimpleEntry<String,String>> constraints = this.distribution.GetConstraints();
+        HashMap<Integer,Integer> constraints = this.distribution.GetConstraints();
         HashMap<PointOfInterest,HashMap<PointOfInterest,AbstractMap.SimpleEntry<Double,List<String>>>> ResultsDijkstra = new HashMap<>();
         //appel du dijkstra pour chaque point d'intert vers chaque point d'interet
         for (PointOfInterest source : points){
@@ -69,7 +70,7 @@ public class CityMap extends Observable {
             correspondanceTable.put(point.idPointOfInterest,point);
         }
         //appel du TSP
-        TSP tsp = new TSPplaceholder();
+        TSP tsp = new TSPDoubleInsertion();
         tsp.searchSolution(2000,graph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));
