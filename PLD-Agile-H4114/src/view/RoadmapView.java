@@ -25,6 +25,7 @@ public class RoadmapView extends JPanel implements Observer {
     private final int BUTTON_WIDTH = 100;
     private JPanel roadmap;
     private boolean start = true;
+    private int arrivalTime;
 
     /**
      * Default constructor
@@ -80,6 +81,7 @@ public class RoadmapView extends JPanel implements Observer {
 
         this.start = true;
         int i = 0;
+        this.arrivalTime = 0;
 
         this.roadmap.removeAll();
 
@@ -95,8 +97,6 @@ public class RoadmapView extends JPanel implements Observer {
                 System.out.println(poi.toString());
 
                 addPointOfInterestToRoadMap(poi);
-
-
             }
         }
 
@@ -134,7 +134,7 @@ public class RoadmapView extends JPanel implements Observer {
         this.roadmap.add(subPanel2);
     }
 
-    public void addPointOfInterestToRoadMap(PointOfInterest poi){
+    public void addPointOfInterestToRoadMap(PointOfInterest poi) {
 
         JPanel subPanel = new JPanel();
         subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
@@ -156,9 +156,12 @@ public class RoadmapView extends JPanel implements Observer {
             }
         }
 
+        arrivalTime += poi.getDuration();
+
         subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
         subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
         subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
+        subPanel.add(new JLabel("    Arrival Time: " + arrivalTime + " seconds"));
 
         this.roadmap.add(subPanel);
 
