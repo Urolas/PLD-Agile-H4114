@@ -109,19 +109,19 @@ public class RoadmapView extends JPanel implements Observer {
     public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
-
+        int number = 1;
         for (Request request : requestList) {
             System.out.println(request);
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
             subPanel1.setBackground(Color.WHITE);
-            subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point" ));
+            subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point #"+ number ));
 
             JPanel subPanel2 = new JPanel();
             subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
             subPanel2.setBackground(Color.WHITE);
-            subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point"));
+            subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point #"+ number ));
 
             subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
             subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
@@ -130,7 +130,7 @@ public class RoadmapView extends JPanel implements Observer {
 
             panel.add(subPanel1);
             panel.add(subPanel2);
-
+            number++;
         }
         this.roadmap.add(panel,BorderLayout.NORTH);
 
