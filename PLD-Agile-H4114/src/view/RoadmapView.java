@@ -33,12 +33,12 @@ public class RoadmapView extends JPanel implements Observer {
      * @param tour
      * @param window
      */
-    public RoadmapView(Tour tour, Distribution distribution, Window window) {
+    public RoadmapView(CityMap citymap, Window window) {
         super();
 
-        this.tour = tour;
+        this.tour = citymap.getTour();
         this.tour.addObserver(this); // this observes tour
-        this.distribution = distribution;
+        this.distribution = citymap.getDistribution();
         this.distribution.addObserver(this); // this observes distribution
 
         this.setBorder(BorderFactory.createTitledBorder("Roadmap"));
@@ -47,7 +47,6 @@ public class RoadmapView extends JPanel implements Observer {
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
         this.roadmap = new JPanel(new BorderLayout());
-        //this.roadmap.setLayout(new BoxLayout(this.roadmap, BoxLayout.Y_AXIS));
         this.roadmap.setBackground(Color.LIGHT_GRAY);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -69,11 +68,7 @@ public class RoadmapView extends JPanel implements Observer {
         window.getContentPane().add(this);
     }
 
-    /**
-     * @param observed 
-     * @param object 
-     * @return
-     */
+
     public void update(Observable observed, Object object) {
         System.out.println("Roadmap/update");
         System.out.println(this.tour.getPointOfInterests().size());
@@ -86,13 +81,13 @@ public class RoadmapView extends JPanel implements Observer {
 
         this.roadmap.removeAll();
 
-        if (this.tour.getPointOfInterests().size() == 0) {
+        if (this.tour.getPointOfInterests().size() == 0) { // Load distribution
 
             Set<Request> requestList = this.distribution.getRequests();
             addRequestToRoadmap(requestList);
 
         }
-        else {
+        else { //Compute Tour
 
             List<PointOfInterest> pointList = this.tour.getPointOfInterests();
             addPointOfInterestToRoadMap(pointList);
@@ -179,53 +174,51 @@ public class RoadmapView extends JPanel implements Observer {
         }
         this.roadmap.add(panel,BorderLayout.NORTH);
 
-        //Add roads
-        //            Path path = this.tour.getPaths().get(i);
-        //            int duration = 0;
-        //            double length = 0;
-        //            String name;
-        //            int nbIntersection = 0;
-        //
-        //
-        //            for (int j = 0; j < path.getRoads().size(); ++j) {
-        //                duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
-        //                length += path.getRoads().get(j).getLength();
-        //                name = path.getRoads().get(j).getName();
-        //                nbIntersection += 1;
-        //
-        //                if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
-        //                    continue;
-        //                }
-        //
-        //                JPanel subPanel2 = new JPanel();
-        //                subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-        //                subPanel2.setBackground(Color.PINK);
-        //                subPanel2.setLayout(new GridLayout(0, 1));
-        //                subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
-        //
-        //                subPanel2.add(new JLabel(" via " + name));
-        //                int minutes = (duration / 60);
-        //                int seconds = (duration % 60);
-        //                if (minutes > 0) {
-        //                    subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-        //                }
-        //                else {
-        //                    subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
-        //                }
-        //
-        //                this.roadmap.add(subPanel2);
-        //
-        //                duration = 0;
-        //                length = 0;
-        //                nbIntersection = 0;
-        //            }
-        //
-        //            i += 1;
-
-
-
 
     }
 
 
 }
+
+//Below is the code we used for adding roads on the roadmap : Keeping it for future use
+
+/*                  //Add roads
+                    Path path = this.tour.getPaths().get(i);
+                    int duration = 0;
+                    double length = 0;
+                    String name;
+                    int nbIntersection = 0;
+
+                    for (int j = 0; j < path.getRoads().size(); ++j) {
+                        duration += (int) (path.getRoads().get(j).getLength() / 15000. * 3600.);
+                        length += path.getRoads().get(j).getLength();
+                        name = path.getRoads().get(j).getName();
+                        nbIntersection += 1;
+
+                        if (j+1 < path.getRoads().size() && name.equals(path.getRoads().get(j+1).getName())) {
+                            continue;
+                        }
+
+                        JPanel subPanel2 = new JPanel();
+                        subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+                        subPanel2.setBackground(Color.PINK);
+                        subPanel2.setLayout(new GridLayout(0, 1));
+                        subPanel2.setBorder(BorderFactory.createTitledBorder("\uD83D\uDEB2"));
+
+                        subPanel2.add(new JLabel(" via " + name));
+                        int minutes = (duration / 60);
+                        int seconds = (duration % 60);
+                        if (minutes > 0) {
+                            subPanel2.add(new JLabel(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                        }else {
+                            subPanel2.add(new JLabel(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"));
+                        }
+
+                        panel.add(subPanel2);
+
+                        duration = 0;
+                        length = 0;
+                        nbIntersection = 0;
+                    }
+                    i += 1;
+*/
