@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 import  java.util.*;
+import java.util.List;
 
 /**
  * @author 4IF-4114
@@ -45,8 +46,8 @@ public class RoadmapView extends JPanel implements Observer {
         this.setBackground(Color.GRAY);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
-        this.roadmap = new JPanel();
-        this.roadmap.setLayout(new BoxLayout(this.roadmap, BoxLayout.Y_AXIS));
+        this.roadmap = new JPanel(new BorderLayout());
+        //this.roadmap.setLayout(new BoxLayout(this.roadmap, BoxLayout.Y_AXIS));
         this.roadmap.setBackground(Color.LIGHT_GRAY);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -86,18 +87,16 @@ public class RoadmapView extends JPanel implements Observer {
         this.roadmap.removeAll();
 
         if (this.tour.getPointOfInterests().size() == 0) {
-            for (Request request : this.distribution.getRequests()) {
-                System.out.println(request);
 
-                addRequestToRoadmap(request);
-            }
+            Set<Request> requestList = this.distribution.getRequests();
+            addRequestToRoadmap(requestList);
+
         }
         else {
-            for (PointOfInterest poi : this.tour.getPointOfInterests()) {
-                System.out.println(poi.toString());
 
-                addPointOfInterestToRoadMap(poi);
-            }
+            List<PointOfInterest> pointList = this.tour.getPointOfInterests();
+            addPointOfInterestToRoadMap(pointList);
+
         }
 
         this.revalidate();
@@ -112,58 +111,73 @@ public class RoadmapView extends JPanel implements Observer {
         return VIEW_WIDTH;
     }
 
-    public void addRequestToRoadmap(Request request){ //Add Request to roadmap in order
-        JPanel subPanel1 = new JPanel();
-        subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
-        subPanel1.setBackground(Color.YELLOW);
-        subPanel1.setLayout(new GridLayout(0, 1));
-        subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point" ));
+    public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
 
-        JPanel subPanel2 = new JPanel();
-        subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-        subPanel2.setBackground(Color.YELLOW);
-        subPanel2.setLayout(new GridLayout(0, 1));
-        subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point"));
+        JPanel panel = new JPanel(new GridLayout(0, 1));
 
-        subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
-        subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
-        subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
-        subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+        for (Request request : requestList) {
+            System.out.println(request);
 
-        this.roadmap.add(subPanel1);
-        this.roadmap.add(subPanel2);
+            JPanel subPanel1 = new JPanel();
+            subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
+            subPanel1.setBackground(Color.WHITE);
+            subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point" ));
+
+            JPanel subPanel2 = new JPanel();
+            subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+            subPanel2.setBackground(Color.WHITE);
+            subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point"));
+
+            subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
+            subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+            subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
+            subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+
+            panel.add(subPanel1);
+            panel.add(subPanel2);
+
+        }
+        this.roadmap.add(panel,BorderLayout.NORTH);
+
     }
 
-    public void addPointOfInterestToRoadMap(PointOfInterest poi) {
+    public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
-        JPanel subPanel = new JPanel();
-        subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-        subPanel.setBackground(Color.YELLOW);
-        subPanel.setLayout(new GridLayout(0, 1));
+        JPanel panel = new JPanel(new GridLayout(0, 1));
 
-        if (poi.getIdPointOfInterest() == 0) { // Depot
-            if (this.start) {
-                subPanel.setBorder(BorderFactory.createTitledBorder("START"));
-                this.start = false;
+        for (PointOfInterest poi : pointList ) {
+            System.out.println(poi.toString());
+
+            JPanel subPanel = new JPanel();
+            subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
+            subPanel.setBackground(Color.WHITE);
+
+            if (poi.getIdPointOfInterest() == 0) { // Depot
+                if (this.start) {
+                    subPanel.setBorder(BorderFactory.createTitledBorder("START"));
+                    this.start = false;
+                } else {
+                    subPanel.setBorder(BorderFactory.createTitledBorder("END"));
+                }
             } else {
-                subPanel.setBorder(BorderFactory.createTitledBorder("END"));
+                if (poi instanceof DeliveryAddress) {
+                    subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
+                } else if (poi instanceof PickupAddress) {
+                    subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
+                }
             }
-        } else {
-            if (poi instanceof DeliveryAddress) {
-                subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
-            } else if (poi instanceof PickupAddress) {
-                subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
-            }
+
+            arrivalTime += poi.getDuration();
+
+            subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
+            subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
+            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
+            subPanel.add(new JLabel("    Arrival Time: " + arrivalTime + " seconds"));
+
+            panel.add(subPanel);
+
         }
-
-        arrivalTime += poi.getDuration();
-
-        subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
-        subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-        subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
-        subPanel.add(new JLabel("    Arrival Time: " + arrivalTime + " seconds"));
-
-        this.roadmap.add(subPanel);
+        this.roadmap.add(panel,BorderLayout.NORTH);
 
         //Add roads
         //            Path path = this.tour.getPaths().get(i);
