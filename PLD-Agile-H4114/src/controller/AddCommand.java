@@ -20,7 +20,8 @@ public class AddCommand implements Command {
      */
 
 
-    public AddCommand(Tour tour,Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest poi) {
+    public AddCommand(Tour tour,Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest p2) {
+        tour.add(i1,p1,i2,p2);
     }
 
 
