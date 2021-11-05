@@ -18,6 +18,11 @@ public class Controller {
     protected final CityMapState citymapState = new CityMapState();
     protected final DistributionState distributionState = new DistributionState();
     protected final TourState tourState = new TourState();
+    protected final AddState1 addState1 = new AddState1();
+    protected final AddState2 addState2 = new AddState2();
+    protected final AddState3 addState3 = new AddState3();
+    protected final AddState4 addState4 = new AddState4();
+
 
     private CityMap cityMap;
     private Window window;

@@ -1,4 +1,4 @@
 package controller;
 
-public class AddState4 {
+public class AddState4 implements State  {
 }
