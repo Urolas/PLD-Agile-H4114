@@ -82,8 +82,10 @@ public class PointOfInterest extends Observable {
     }
 
     public boolean contains(Point p) {
-        double long = this.intersection.getLongitude();
+        double lon = this.intersection.getLongitude();
         double lat = this.intersection.getLatitude();
+
+
 
         // TODO
         return false;
