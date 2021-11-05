@@ -11,6 +11,7 @@ public class AddState1 implements State {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Point p) {
         Intersection i = map.getClosestIntersection(p);
         c.addState2.entryAction(i);
+        c.setCurrentState(c.addState2);
 
     }
 }
