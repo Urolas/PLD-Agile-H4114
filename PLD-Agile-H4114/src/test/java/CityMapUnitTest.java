@@ -1,9 +1,6 @@
 
-import model.Distribution;
-import model.Tour;
+import model.*;
 import org.junit.*;
-import model.CityMap;
-import model.Intersection;
 import org.junit.experimental.categories.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,11 +22,17 @@ import static org.junit.Assert.*;
 
 public class CityMapUnitTest {
     public static CityMap cm;
+    public static HashMap<String,Intersection> intersectionsExpected;
+    public static HashMap<AbstractMap.SimpleEntry<String,String>,Road> roadsExpectedSet;
+    public static HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyListExpected;
 
 
     @BeforeClass
     public static void before(){
         cm = new CityMap();
+        intersectionsExpected = new HashMap<>();
+        roadsExpectedSet = new HashMap<>();
+        adjacencyListExpected = new HashMap<>();
     }
 
     @Before
@@ -77,15 +80,16 @@ public class CityMapUnitTest {
 
     @Test
     public void structNotEmptyTest() {
-        assertNotEquals(cm.getIntersections().size(),0);
-        assertNotEquals(cm.getAdjacencyList().size(),0);
-        assertNotEquals(cm.getRoads().size(), 0);
+        assertNotEquals(0,cm.getIntersections().size());
+        assertNotEquals(0,cm.getAdjacencyList().size());
+        assertNotEquals(0, cm.getRoads().size());
     }
 
     @Test
     public void containsKeyTest() {
         //Verification de l'exitence de la clé
         Set<String> keySet= new HashSet<>();
+        assertEquals(14,cm.getIntersections().size());
         for (int i = 0;i<14;i++){
             keySet.add("81150" + i);
         }
@@ -93,9 +97,39 @@ public class CityMapUnitTest {
     }
 
     @Test
-    public void containsRoadTest(){
+    public void heightTest(){
+        assertEquals(String.format("%.3f",1.183),String.format("%.3f",cm.getHeight()));
+    }
 
-        
+    @Test
+    public void widthTest(){
+        assertEquals(String.format("%.3f",2.489),String.format("%.3f",cm.getWidth()));
+    }
+
+    @Test
+    public void nordWestPointsTest(){
+        assertEquals(String.format("%.3f",46.110),String.format("%.3f",cm.getNordPoint()));
+        assertEquals(String.format("%.3f",109.523),String.format("%.3f",cm.getWestPoint()));
+    }
+
+    @Test
+    public void containsRoadTest(){
+        assertEquals(34,cm.getRoads().size());
+        for(AbstractMap.SimpleEntry<String,String> keyValue : cm.getRoads().keySet()){
+            assertEquals(roadsExpectedSet.get(keyValue),cm.getRoads().get(keyValue));
+        }
+        assertEquals(roadsExpectedSet,cm.getRoads());
+    }
+
+    @Test
+    public void containsAdjacencyListTest(){
+        assertEquals(14,cm.getAdjacencyList().size());
+        assertEquals(adjacencyListExpected,cm.getAdjacencyList());
+    }
+
+    @Test
+    public void toStringFormatTest(){
+        assertEquals("CityMap{roads="+roadsExpectedSet+"}",cm.toString());
     }
 
     public static void loadCityMap(CityMap cityMap, String path) throws ParserConfigurationException, SAXException, IOException, XMLException {
@@ -138,6 +172,8 @@ public class CityMapUnitTest {
                 minLongitude = longitude;
             }
             cityMap.addIntersection(new Intersection(id, latitude, longitude));
+            intersectionsExpected.put(id,new Intersection(id,latitude,longitude));
+            adjacencyListExpected.put(id, new LinkedList<>());
             cityMap.initializeAdjacencyList(id);
         }
         cityMap.setHeight(maxLatitude-minLatitude);
@@ -152,6 +188,10 @@ public class CityMapUnitTest {
             String name = elt.getAttribute("name");
             Double length = Double.parseDouble(elt.getAttribute("length"));
             cityMap.addRoad(name,length, id1, id2);
+            Road r = new Road(name,length);
+            r.addRoads(intersectionsExpected.get(id1),intersectionsExpected.get(id2));
+            roadsExpectedSet.put(new AbstractMap.SimpleEntry<>(id1,id2),r);
+            adjacencyListExpected.get(id1).add(new AbstractMap.SimpleEntry<>(id2,length));
             cityMap.completeAdjacencyList(id1, id2,length);
         }
     }

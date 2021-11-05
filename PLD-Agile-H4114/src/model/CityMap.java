@@ -185,6 +185,11 @@ public class CityMap extends Observable {
         this.tour.resetTour();
         this.intersections.clear();
         this.roads.clear();
+        this.width=0.0;
+        this.height=0.0;
+        this.nordPoint=0.0;
+        this.westPoint=0.0;
+        this.adjacencyList = new HashMap<>();
         notifyObservers();
     }
 
