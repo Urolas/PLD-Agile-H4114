@@ -15,13 +15,14 @@ public class ListOfCommands {
      * Add command c to this
      * @param c the command to add
      */
-    public void add(Command c){
+    public void add(Command c) throws Exception {
         int i = currentIndex+1;
         while(i<list.size()){
             list.remove(i);
         }
         currentIndex++;
         list.add(currentIndex, c);
+
         c.doCommand();
     }
 

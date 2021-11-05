@@ -205,6 +205,55 @@ public class CityMap extends Observable {
     }
 
 
+    public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
+        List<PointOfInterest> newpoints = tour.getPointOfInterests();
+        List<Path> newpaths = tour.getPaths();
+        boolean pickupinserted=false;
+        boolean deliveryinserted=false;
+
+        for(int i =0;i<newpoints.size();i++){
+            if(newpoints.get(i)==preP){
+                newpoints.add(i+1,poiP);
+                AbstractMap.SimpleEntry<Double,List<String>> newpathlasttop = computePath(preP,poiP);
+                AbstractMap.SimpleEntry<Double,List<String>> newpathptonext = computePath(poiP,tour.getPointOfInterests().get(tour.getPointOfInterests().indexOf(preP)+1));
+                Path pathlasttop = new Path(djikstraToRoads(newpathlasttop),newpathlasttop.getKey());
+                Path pathptonext = new Path(djikstraToRoads(newpathptonext),newpathptonext.getKey());
+                newpaths.remove(i);
+                newpaths.add(i,pathlasttop);
+                newpaths.add(i+1,pathptonext);
+                pickupinserted=true;
+            }
+            if (pickupinserted && newpoints.get(i)==preD){
+                newpoints.add(i+1,poiD);
+                AbstractMap.SimpleEntry<Double,List<String>> newpathlasttod = computePath(preD,poiD);
+                AbstractMap.SimpleEntry<Double,List<String>> newpathdtonext = computePath(poiD,tour.getPointOfInterests().get(tour.getPointOfInterests().indexOf(preD)+1));
+                Path pathlasttod = new Path(djikstraToRoads(newpathlasttod),newpathlasttod.getKey());
+                Path pathdtonext = new Path(djikstraToRoads(newpathdtonext),newpathdtonext.getKey());
+                newpaths.remove(i);
+                newpaths.add(i,pathlasttod);
+                newpaths.add(i+1,pathdtonext);
+                deliveryinserted=true;
+            }
+        }
+        if(!deliveryinserted){
+            throw new Exception("Erreur : le delivery a été mis avant le pickup");
+        }
+        tour.setPointOfInterests(newpoints);
+
+    }
+
+    public List<Road> djikstraToRoads(AbstractMap.SimpleEntry<Double,List<String>> path){
+        List<String> intersectionsBetweenPoints = path.getValue();
+        List<Road> roadsEndToEnd = new ArrayList<>();
+        AbstractMap.SimpleEntry<String,String> pairIdIntersection;
+        for (int j=1;j<intersectionsBetweenPoints.size();j++){
+            pairIdIntersection= new AbstractMap.SimpleEntry<>(intersectionsBetweenPoints.get(j-1),intersectionsBetweenPoints.get(j));
+            roadsEndToEnd.add(this.roads.get(pairIdIntersection));
+
+        }
+        return roadsEndToEnd;
+    }
+
     public void completeAdjacencyList(String id1, String id2, Double length) {
 
         this.adjacencyList.get(id1).add(new AbstractMap.SimpleEntry<>(id2,length));
@@ -272,5 +321,6 @@ public class CityMap extends Observable {
     public HashMap<String, List<AbstractMap.Entry<String, Double>>> getAdjacencyList() {
         return adjacencyList;
     }
+
 }
 

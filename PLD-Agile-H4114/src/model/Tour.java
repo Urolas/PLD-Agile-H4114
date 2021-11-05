@@ -89,8 +89,6 @@ public class Tour extends Observable {
 
     }
 
-    public void add(Intersection poiP, PointOfInterest preP, Intersection poiD, PointOfInterest preD) {
 
-    }
 }
 

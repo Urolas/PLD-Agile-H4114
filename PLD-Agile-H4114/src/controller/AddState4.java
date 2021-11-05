@@ -13,7 +13,11 @@ public class AddState4 implements State  {
     private Intersection i2;
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Point p) {
         PointOfInterest poi = map.getClosestPOI(p);
-        listOfCommands.add(new AddCommand(map.getTour(),this.i1,this.p1,this.i2,poi);
+        try {
+            listOfCommands.add(new AddCommand(map, this.i1, this.p1, this.i2, poi));
+        } catch (Exception e ){
+            System.out.println(e);
+        }
         c.setCurrentState(c.tourState);
     }
     public void entryAction(Intersection i1, PointOfInterest p,Intersection i2) {
