@@ -34,4 +34,16 @@ public interface State {
     default void computeTour(Controller controller, Window window){};
 
     public default void keyStroke(MapView mapView, int keyCode){};
+
+    /**
+     * Method called by the controller after a click on the button "Undo"
+     * @param l the current list of commands
+     */
+    public default void undo(ListOfCommands l) {};
+
+    /**
+     * Method called by the controller after a click on the button "Redo"
+     * @param l the current list of commands
+     */
+    public default void redo(ListOfCommands l) {};
 }

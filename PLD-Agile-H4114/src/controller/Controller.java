@@ -40,17 +40,17 @@ public class Controller {
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Undo"
      */
-    public void undo() {
-        // TODO implement here
+    public void undo(){
+        currentState.undo(listOfCommands);
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Redo"
      */
-    public void redo() {
-        // TODO implement here
+    public void redo(){
+        currentState.redo(listOfCommands);
     }
 
     /**
@@ -130,5 +130,6 @@ public class Controller {
 
         }
     }
+
 
 }

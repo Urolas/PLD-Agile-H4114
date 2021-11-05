@@ -2,6 +2,7 @@ package model;
 
 import observer.Observable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,18 @@ public class Tour extends Observable {
         }
         return true;
 
+
+    }
+
+    public PointOfInterest searchPointOfInterest(Point p){
+        // TODO
+        for (PointOfInterest i : pointOfInterests){
+            if (i.contains(p)) return i;
+        }
+        return null;
+    }
+
+    public void remove(PointOfInterest poi) {
 
     }
 }
