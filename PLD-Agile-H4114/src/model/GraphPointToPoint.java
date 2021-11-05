@@ -1,17 +1,14 @@
 package model;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GraphPointToPoint {
     private int nbVertices;
     private HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> cost;
-    private List<AbstractMap.SimpleEntry<String,String>> constraints;
+    private HashMap<Integer,Integer> constraints;
 
 
-    public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra, List<AbstractMap.SimpleEntry<String,String>> constraints) {
+    public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra, HashMap<Integer,Integer> constraints) {
         this.nbVertices=resultsDijkstra.size();
         this.constraints=constraints;
         this.cost= new HashMap<>();
@@ -32,6 +29,16 @@ public class GraphPointToPoint {
     public Double getCost(Integer i1, Integer i2) {
 
         return this.cost.get(i1).get(i2).getKey();
+    }
+
+    public Integer getDelivery(Integer pickup){
+
+        return constraints.get(pickup);
+    }
+
+    public Set<Integer> getPickupSet(){
+
+        return constraints.keySet();
     }
 
 }
