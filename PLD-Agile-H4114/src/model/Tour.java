@@ -77,11 +77,8 @@ public class Tour extends Observable {
 
     }
 
-    public PointOfInterest searchPointOfInterest(Point p) {
-        // TODO
-        for (PointOfInterest i : pointOfInterests){
-            if (i.contains(p)) return i;
-        }
+    public PointOfInterest searchPointOfInterest(double clong, double clat) {
+
         return null;
     }
 
@@ -89,8 +86,6 @@ public class Tour extends Observable {
 
     }
 
-    public void add(Intersection poiP, PointOfInterest preP, Intersection poiD, PointOfInterest preD) {
 
-    }
 }
 
