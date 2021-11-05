@@ -17,13 +17,14 @@ public class Window extends JFrame {
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
+    protected static final String GENERATE_ROADMAP = "Download a roadmap";
 //    protected static final String REDO = "Redo";
 //    protected static final String UNDO = "Undo";
     protected static final String ZOOM_IN = "+";
     protected static final String ZOOM_OUT = "-";
     protected static final String RECENTER = "=";
 
-    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR};
+    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, GENERATE_ROADMAP};
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
 

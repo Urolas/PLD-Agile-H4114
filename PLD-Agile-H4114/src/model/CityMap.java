@@ -204,6 +204,10 @@ public class CityMap extends Observable {
         notifyObservers(road);
     }
 
+    public void generateRoadmap(){
+        System.out.println("click!!");
+    }
+
 
     public void completeAdjacencyList(String id1, String id2, Double length) {
 

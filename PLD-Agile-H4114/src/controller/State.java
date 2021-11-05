@@ -31,6 +31,8 @@ public interface State {
             IOException, SAXException{
     };
 
+    public default void generateRoadmap(Controller c, Window w){};
+
     default void computeTour(Controller controller, Window window){};
 
     public default void keyStroke(MapView mapView, int keyCode){};
