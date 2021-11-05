@@ -71,7 +71,7 @@ public class CityMap extends Observable {
             correspondanceTable.put(point.idPointOfInterest,point);
         }
         //appel du TSP
-        TSP tsp = new TSP1();
+        TSP tsp = new TSPDoubleInsertion();
         tsp.searchSolution(10000,graph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));

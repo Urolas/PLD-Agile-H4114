@@ -18,6 +18,6 @@ public class TSP1 extends TemplateTSP {
 
     @Override
     public int getBestSolLength() {
-        return 0;
+        return bestSol.length;
     }
 }

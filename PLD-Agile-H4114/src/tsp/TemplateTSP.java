@@ -18,7 +18,7 @@ public abstract class TemplateTSP implements TSP {
         startTime = System.currentTimeMillis();
         this.timeLimit = timeLimit;
         this.g = g;
-        bestSol = new Integer[g.getNbVertices()];
+        bestSol = new Integer[g.getNbVertices()+1];
         Collection<Integer> unvisited = new ArrayList<Integer>(g.getPickupSet());
         Collection<Integer> visited = new ArrayList<Integer>(g.getNbVertices());
         visited.add(0); // The first visited vertex is 0
@@ -70,6 +70,7 @@ public abstract class TemplateTSP implements TSP {
 
             if (currentCost+g.getCost(currentVertex,0) < bestSolCost){
                 visited.toArray(bestSol);
+                bestSol[bestSol.length-1]=0;
                 bestSolCost = currentCost+g.getCost(currentVertex,0);
                 System.out.println("Cost = "+bestSolCost);
 
