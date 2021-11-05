@@ -1,15 +1,20 @@
 package model;
 
 
+import observer.Observable;
+
+import java.awt.*;
+import observer.Observable;
 
 /**
  * @author 4IF-4114
  */
-public class PointOfInterest {
+public class PointOfInterest extends Observable {
 
     protected Integer duration;
     protected Intersection intersection;
     protected Integer idPointOfInterest;
+    private boolean isSelected;
 
     /**
      * Default constructor
@@ -18,6 +23,16 @@ public class PointOfInterest {
         this.duration=-1;
         this.intersection=new Intersection();
         this.idPointOfInterest=-1;
+        this.isSelected = false;
+    }
+
+    public boolean getIsSelected(){
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean b) {
+        isSelected = b;
+        notifyObservers(this);
     }
 
     public Intersection getIntersection() {
@@ -64,5 +79,13 @@ public class PointOfInterest {
                 ", intersection=" + intersection +
                 ", idPointOfInterest=" + idPointOfInterest +
                 '}';
+    }
+
+    public boolean contains(Point p) {
+        double long = this.intersection.getLongitude();
+        double lat = this.intersection.getLatitude();
+
+        // TODO
+        return false;
     }
 }

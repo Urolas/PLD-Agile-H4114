@@ -7,6 +7,7 @@ import view.Window;
 import xml.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -131,5 +132,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Method called by window after a left click on a point of the graphical view
+     * Precondition : p != null
+     * @param p = coordinates of the click in the citymap
+     */
+    public void leftClick(Point p) {
+        currentState.leftClick(this, window, cityMap, listOfCommands, p);
+    }
 
 }

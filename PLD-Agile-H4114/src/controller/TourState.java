@@ -1,6 +1,8 @@
 package controller;
 
 
+import model.CityMap;
+import model.PointOfInterest;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
@@ -8,6 +10,7 @@ import xml.XMLDeserializer;
 import xml.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -18,18 +21,29 @@ public class TourState implements State {
     /**
      * Default constructor
      */
-    public TourState() {
-    }
+    public TourState() {}
+
+    @Override
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
         c.setCurrentState(c.citymapState);
     }
+
+    @Override
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
         c.setCurrentState(c.distributionState);
     }
-    public void keyStroke(MapView mapView, int keyCode){
 
+    @Override
+    public void keyStroke(MapView mapView, int keyCode) {
 
+    }
+
+    @Override
+    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Point p) {
+        PointOfInterest poi = cityMap.getTour().searchPointOfInterest(p);
+        if (poi != null)
+            l.add(new DeleteCommand(cityMap.getTour(), poi));
     }
 }
