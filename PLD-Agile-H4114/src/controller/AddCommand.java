@@ -1,6 +1,7 @@
 package controller;
 
 
+import model.Intersection;
 import model.PointOfInterest;
 import model.Tour;
 
@@ -17,10 +18,9 @@ public class AddCommand implements Command {
     /**
      * Default constructor
      */
-    public AddCommand(Tour tour, PointOfInterest poi1,PointOfInterest poi2) {
-        this.tour = tour;
-        this.poiP = poi1;
-        this.poiD = poi2;
+
+
+    public AddCommand(Tour tour,Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest poi) {
     }
 
 
