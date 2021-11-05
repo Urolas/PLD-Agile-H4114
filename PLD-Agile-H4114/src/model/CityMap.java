@@ -216,6 +216,13 @@ public class CityMap extends Observable {
         this.adjacencyList.put(id1,targets);
 
     }
+    public Intersection getClosestIntersection(double cLong, double cLat){
+        
+    }
+
+    public PointOfInterest getClosestPOI(double cLong, double cLat){
+
+    }
 
     public Tour getTour() {
         return tour;

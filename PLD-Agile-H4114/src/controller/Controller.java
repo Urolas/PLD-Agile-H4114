@@ -142,8 +142,8 @@ public class Controller {
      * Precondition : p != null
      * @param p = coordinates of the click in the citymap
      */
-    public void leftClick(Point p) {
-        currentState.leftClick(this, window, cityMap, listOfCommands, p);
+    public void leftClick(double clickLong, double clickLat) {
+        currentState.leftClick(this, window, cityMap, listOfCommands, clickLong,clickLat);
     }
 
 }
