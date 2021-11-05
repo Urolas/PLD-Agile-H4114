@@ -35,6 +35,8 @@ public interface State {
 
     default void computeTour(Controller controller, Window window){};
 
+    public default void modifyDistribution(Controller controller){};
+
     public default void keyStroke(MapView mapView, int keyCode){};
 
     /**

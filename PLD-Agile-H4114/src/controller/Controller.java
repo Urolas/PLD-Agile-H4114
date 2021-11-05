@@ -108,6 +108,14 @@ public class Controller {
         }
     }
 
+    public void modifyDistribution(){
+        try{
+            this.currentState.modifyDistribution(this);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void zoomIn() {
         try{
             window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth()/2,

@@ -36,6 +36,12 @@ public class TourState implements State {
     }
 
     @Override
+    public void modifyDistribution(Controller c){
+
+        c.setCurrentState(c.addState1);
+    };
+
+    @Override
     public void keyStroke(MapView mapView, int keyCode) {
 
     }
