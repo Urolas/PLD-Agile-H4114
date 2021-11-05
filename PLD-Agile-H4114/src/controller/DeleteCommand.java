@@ -15,7 +15,7 @@ public class DeleteCommand implements Command {
     /**
      * Default constructor
      */
-    public DeleteCommand() {
+    public DeleteCommand(Tour tour, PointOfInterest poi) {
         this.tour = tour;
         this.poi = poi;
     }

@@ -1,10 +1,12 @@
 package controller;
+import model.CityMap;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
 import xml.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -46,4 +48,15 @@ public interface State {
      * @param l the current list of commands
      */
     public default void redo(ListOfCommands l) {};
+
+    /**
+     * Method called by the controller after a left click
+     * Precondition : p != null
+     * @param c the controller
+     * @param w the window
+     * @param cityMap the citymap
+     * @param l the current list of commands
+     * @param p the coordinates of the mouse
+     */
+    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Point p) {};
 }
