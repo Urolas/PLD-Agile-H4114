@@ -208,12 +208,13 @@ public class MapView extends JPanel implements Observer {
 
         }
         Distribution d = cityMap.getDistribution();
-        if (d!=null) {
-            System.out.println();
+        if (d.getRequests().size()!=0) {
+
             displayDepot();
             for (Request q : d.getRequests()){
                 displayRequest(q,outline);
             }
+            displayLegend();
         }
     }
 
@@ -286,4 +287,24 @@ public class MapView extends JPanel implements Observer {
             g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         }
     }
+     public void displayLegend(){
+        int legendX = VIEW_WIDTH/2-150;
+        int legendY = 20;
+
+        g.setColor(Color.WHITE);
+        g.fillRect(legendX,legendY,300,30);
+        g.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke(2));
+        legendX += 20;
+        legendY += 15;
+        g.drawPolygon(new int[] {legendX+25, legendX+25+POINT_SIZE, legendX+25+POINT_SIZE/2},
+                new int[] {legendY-POINT_SIZE/2, legendY-POINT_SIZE/2, legendY+POINT_SIZE/2}, 3);
+        g.drawString("Pickup",legendX+50,legendY+5);
+
+        g2.drawOval(legendX+100-POINT_SIZE/2, legendY-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
+        g.drawString("Delivery",legendX+125,legendY+5);
+        g.fillRect(legendX+190-POINT_SIZE/2, legendY-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
+        g.drawString("Depot",legendX+215,legendY+5);
+
+     }
 }
