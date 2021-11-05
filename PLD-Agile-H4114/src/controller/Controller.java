@@ -2,6 +2,7 @@ package controller;
 
 import model.CityMap;
 import org.xml.sax.SAXException;
+import view.MapView;
 import view.Window;
 import xml.XMLException;
 
@@ -86,7 +87,7 @@ public class Controller {
     }
 
     public void keystroke(int keyCode) {
-
+        currentState.keyStroke(window.getMapView(), keyCode);
     }
 
     public CityMap getCitymap() {
@@ -100,4 +101,34 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
+
+    public void zoomIn() {
+        try{
+            window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void zoomOut() {
+        try{
+            window.getMapView().modifyZoom(1/1.5, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+    }
+
+    public void recenter() {
+        try{
+            window.getMapView().modifyZoom(1, window.getMapView().getViewWidth()/2,
+                    window.getMapView().getViewHeight()/2);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+    }
+
 }

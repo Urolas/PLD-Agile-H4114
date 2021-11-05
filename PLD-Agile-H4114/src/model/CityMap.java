@@ -1,5 +1,7 @@
 package model;
 
+import tsp.TSP1;
+import tsp.TSPDoubleInsertion;
 import view.MapView;
 import observer.Observable;
 
@@ -50,7 +52,7 @@ public class CityMap extends Observable {
     public void computeTour() {
         //recuperaton des points d'interets
         List<PointOfInterest> points = this.distribution.GetAllPoints();
-        List<AbstractMap.SimpleEntry<String,String>> constraints = this.distribution.GetConstraints();
+        HashMap<Integer,Integer> constraints = this.distribution.GetConstraints();
         HashMap<PointOfInterest,HashMap<PointOfInterest,AbstractMap.SimpleEntry<Double,List<String>>>> ResultsDijkstra = new HashMap<>();
         //appel du dijkstra pour chaque point d'intert vers chaque point d'interet
         for (PointOfInterest source : points){
@@ -69,13 +71,13 @@ public class CityMap extends Observable {
             correspondanceTable.put(point.idPointOfInterest,point);
         }
         //appel du TSP
-        TSP tsp = new TSPplaceholder();
-        tsp.searchSolution(2000,graph);
+        TSP tsp = new TSPDoubleInsertion();
+        tsp.searchSolution(10000,graph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));
         List<String> shortestPath = new LinkedList<>();
         //traduction du resultat du TSP en données utilisables
-        for (int i=1;i<tsp.getSolutionCost();i++) {
+        for (int i=1;i<tsp.getBestSolLength();i++) {
             shortestTour.add(correspondanceTable.get(tsp.getSolution(i)));
             shortestPath.addAll(ResultsDijkstra.get(shortestTour.get(i-1)).get(shortestTour.get(i)).getValue());
         }

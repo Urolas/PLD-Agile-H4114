@@ -2,6 +2,7 @@ package controller;
 
 import org.xml.sax.SAXException;
 import view.Window;
+import view.MapView;
 import xml.XMLDeserializer;
 import xml.XMLException;
 
@@ -27,5 +28,12 @@ public class CityMapState implements State {
         XMLDeserializer.loadCityMap(c.getCitymap());
         c.setCurrentState(c.citymapState);
     }
+
+    public void keyStroke(MapView mapView, int keyCode){
+
+        mapView.moveMapView(keyCode);
+
+    }
+
 
 }

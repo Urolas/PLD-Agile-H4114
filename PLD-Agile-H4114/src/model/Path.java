@@ -16,6 +16,7 @@ public class Path {
 
     private List<Road> roads;
     private Double length;
+
     public Path(List<Road> roadsEndToEnd, Double key) {
         this.roads= roadsEndToEnd;
         this.length=key;
@@ -23,5 +24,9 @@ public class Path {
 
     public List<Road> getRoads() {
         return roads;
+    }
+
+    public Double getLength() {
+        return length;
     }
 }

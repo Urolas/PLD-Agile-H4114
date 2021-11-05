@@ -30,4 +30,13 @@ public class Request {
     public PickupAddress getPickup() {
         return pickup;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "color=" + color +
+                ", pickup=" + pickup +
+                ", delivery=" + delivery +
+                '}';
+    }
 }
