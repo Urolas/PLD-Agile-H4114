@@ -28,11 +28,11 @@ public class TourState implements State {
         XMLDeserializer.loadDistribution(c.getCitymap());
         c.setCurrentState(c.distributionState);
     }
-    
+
     public void keyStroke(MapView mapView, int keyCode){
     }
 
-    public void generateRoadmap(Controller c, Window w){
+    public void generateRoadmap(Controller c, Window w) throws IOException {
         c.getCitymap().generateRoadmap();
         c.setCurrentState(c.tourState);
     }

@@ -17,7 +17,7 @@ public class Window extends JFrame {
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
-    protected static final String GENERATE_ROADMAP = "Download a roadmap";
+    protected static final String GENERATE_ROADMAP = "Generate roadmap";
 //    protected static final String REDO = "Redo";
 //    protected static final String UNDO = "Undo";
     protected static final String ZOOM_IN = "+";

@@ -87,8 +87,10 @@ public class Controller {
     }
 
     public void generateRoadmap(){
-        try{
+        try {
             this.currentState.generateRoadmap(this, window);
+        }catch( IOException e){
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
