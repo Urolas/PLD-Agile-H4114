@@ -5,6 +5,9 @@ import tsp.TSPDoubleInsertion;
 import view.MapView;
 import observer.Observable;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -185,6 +188,11 @@ public class CityMap extends Observable {
         this.tour.resetTour();
         this.intersections.clear();
         this.roads.clear();
+        this.width=0.0;
+        this.height=0.0;
+        this.nordPoint=0.0;
+        this.westPoint=0.0;
+        this.adjacencyList = new HashMap<>();
         notifyObservers();
     }
 
@@ -202,6 +210,17 @@ public class CityMap extends Observable {
             this.roads.put(new AbstractMap.SimpleEntry<>(origin.id,destination.id),road);
         }
         notifyObservers(road);
+    }
+
+    public void generateRoadmap() throws IOException {
+        System.out.println("Generating Roadmap");
+
+        /*File myObj = new File("\\roadmapFilesnewFile.txt");
+        if (myObj.createNewFile()) {
+            System.out.println("File created: " + myObj.getName());
+        } else {
+            System.out.println("File already exists.");
+        }*/
     }
 
 
