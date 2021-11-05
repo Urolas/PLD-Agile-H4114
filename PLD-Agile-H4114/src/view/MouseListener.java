@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -32,6 +33,7 @@ public class MouseListener extends MouseAdapter {
         double clickLong = mapView.xToLong(e.getX());
         double clickLat = mapView.yToLat(e.getY());
         controller.leftClick(clickLong,clickLat);
+        controller.leftClick(new Point(clickLat, clickLong));
     }
     @Override
     public void mousePressed(MouseEvent evt) {
