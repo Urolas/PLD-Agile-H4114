@@ -266,11 +266,11 @@ public class CityMap extends Observable {
 
     }
     public Intersection getClosestIntersection(double cLong, double cLat){
-        
+        return null;
     }
 
     public PointOfInterest getClosestPOI(double cLong, double cLat){
-
+        return null;
     }
 
     public Tour getTour() {

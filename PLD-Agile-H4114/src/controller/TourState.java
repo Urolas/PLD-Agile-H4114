@@ -41,9 +41,13 @@ public class TourState implements State {
     }
 
     @Override
-    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Point p) {
-        PointOfInterest poi = cityMap.getTour().searchPointOfInterest(p);
+    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, double cLong, double cLat){
+        PointOfInterest poi = cityMap.getTour().searchPointOfInterest(cLong,cLat);
         if (poi != null)
-            l.add(new DeleteCommand(cityMap.getTour(), poi));
+            try{
+                l.add(new DeleteCommand(cityMap.getTour(), poi));
+            } catch (Exception e){
+                System.out.println(e);
+            }
     }
 }
