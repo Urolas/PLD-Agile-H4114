@@ -27,6 +27,13 @@ public class MouseListener extends MouseAdapter {
     }
 
     @Override
+    public void mouseClicked(MouseEvent evt){
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        double clicLong = mapView.xToLong(e.getX());
+        double clicLat = mapView.yToLat(e.getY());
+//        controller.leftClic();
+    }
+    @Override
     public void mousePressed(MouseEvent evt) {
         MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
         if (e.getX() >= 0){
