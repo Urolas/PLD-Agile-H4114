@@ -63,7 +63,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void modifyZoom(double zoom, int centerX, int centerY){
-        if (zoom == 1){
+        if (zoom == 1 || (scaleZoom * zoom < 1)){
             scaleZoom = 1;
             smallRoadThickness = 1;
             greatRoadThickness = 2;
