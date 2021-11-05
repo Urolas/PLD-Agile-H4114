@@ -13,6 +13,7 @@ public class AddState3 implements State  {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, double cLong, double cLat) {
         Intersection i = map.getClosestIntersection(cLong,cLat);
         c.addState4.entryAction(this.i1,this.p1,i);
+        c.setCurrentState(c.addState4);
 
     }
     public void entryAction(Intersection i1, PointOfInterest p) {

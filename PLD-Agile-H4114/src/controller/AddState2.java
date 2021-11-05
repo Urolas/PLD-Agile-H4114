@@ -14,6 +14,7 @@ public class AddState2 implements State  {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, double cLong, double cLat) {
         PointOfInterest poi = map.getClosestPOI(cLong,cLat);
         c.addState3.entryAction(this.i1,poi);
+        c.setCurrentState(c.addState3);
 
     }
     protected void entryAction(Intersection i) {
