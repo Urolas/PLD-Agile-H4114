@@ -84,12 +84,11 @@ public class Distribution extends Observable{
         return points;
     }
 
-    public List<AbstractMap.SimpleEntry<String, String>> GetConstraints() {
-        List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
+    public HashMap<Integer,Integer> GetConstraints() {
+        HashMap<Integer,Integer> result = new HashMap<>();
         for (Request request: this.requests) {
-            result.add(new AbstractMap.SimpleEntry<>(request.getPickup().intersection.id,request.getDelivery().intersection.id));
+            result.put(request.getPickup().idPointOfInterest,request.getDelivery().idPointOfInterest);
         }
-
         return result;
     }
 
