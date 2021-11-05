@@ -70,7 +70,7 @@ public class Window extends JFrame {
     private void setWindowSize() {
         int allButtonHeight = buttonHeight * buttonTexts.length;
         int windowHeight = Math.max(mapView.getViewHeight(),allButtonHeight);
-        int windowWidth = mapView.getViewWidth() + buttonWidth + roadmapView.getViewWidth();
+        int windowWidth = mapView.getViewWidth() + buttonWidth + roadmapView.getViewWidth() + 15;
         setSize(windowWidth, windowHeight);
         mapView.setLocation(buttonWidth, 0);
         roadmapView.setLocation(mapView.getViewWidth() + buttonWidth,0);
