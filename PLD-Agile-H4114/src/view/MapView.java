@@ -1,10 +1,8 @@
 package view;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.Graphics2D;
-import java.awt.Graphics;
+import java.awt.geom.Point2D;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -216,6 +214,12 @@ public class MapView extends JPanel implements Observer {
             }
             displayLegend();
         }
+        GradientPaint grad = new GradientPaint(0,0,new Color(0,0,0,50),40,0,new Color(0,0,0,0),false);
+        g2.setPaint(grad);
+        g2.fillRect(0,0,50,800);
+        grad = new GradientPaint( VIEW_WIDTH,0,new Color(0,0,0,50),VIEW_WIDTH-40,0,new Color(0,0,0,0),false);
+        g2.setPaint(grad);
+        g2.fillRect(760,0,50,800);
     }
 
     /**

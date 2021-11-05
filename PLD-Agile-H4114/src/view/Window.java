@@ -3,9 +3,11 @@ package view;
 import controller.Controller;
 import model.CityMap;
 
+import java.awt.*;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
+import javax.swing.border.Border;
 import javax.swing.*;
 
 /**
@@ -35,8 +37,8 @@ public class Window extends JFrame {
     private MouseListener mouseListener;
     private KeyboardListener keyboardListener;
 
-    private final int buttonHeight = 40;
-    private final int buttonWidth = 150;
+    private final int buttonHeight = 60;
+    private final int buttonWidth = 200;
 
     /**
      * Default constructor
@@ -57,6 +59,7 @@ public class Window extends JFrame {
 
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBackground(Color.WHITE);
         setWindowSize();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -82,6 +85,10 @@ public class Window extends JFrame {
         for (String text : buttonTexts){
             JButton button = new JButton(text);
             buttons.add(button);
+            button.setBorderPainted(false);
+            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setBackground(Color.WHITE);
+            button.setOpaque(true);
             button.setSize(buttonWidth,buttonHeight);
             button.setLocation(0,(buttons.size()-1)*buttonHeight);
             button.setFocusable(false);
@@ -93,8 +100,13 @@ public class Window extends JFrame {
         for ( int i=0; i<buttonTextsZoom.length; i++ ){
             JButton button = new JButton(buttonTextsZoom[i]);
             buttons.add(button);
-            button.setSize(50,50);
-            button.setLocation( mapView.getViewWidth() - 190 + i * 60, mapView.getViewHeight() - 100);
+            button.setSize(30,30);
+            button.setMargin(new Insets(0,0,5,0));
+            button.setBorderPainted(false);
+            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setBackground(Color.WHITE);
+            button.setOpaque(true);
+            button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);

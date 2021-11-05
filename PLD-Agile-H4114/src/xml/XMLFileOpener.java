@@ -20,6 +20,7 @@ public class XMLFileOpener extends FileFilter {
         int returnVal;
         JFileChooser jFileChooserXML = new JFileChooser();
         jFileChooserXML.setFileFilter(this);
+
         jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (read)
             returnVal = jFileChooserXML.showOpenDialog(null);
