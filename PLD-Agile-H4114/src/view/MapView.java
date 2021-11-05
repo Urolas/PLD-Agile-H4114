@@ -99,7 +99,12 @@ public class MapView extends JPanel implements Observer {
         repaint();
     }
 
-
+    public double yToLat(int mouseY){
+        return mouseY/scaleHeight;
+    }
+    public double xToLong(int mouseX){
+        return mouseX/scaleWidth;
+    }
 
     public void dragMap(int mouseX, int mouseY){
         System.out.println((mouseX - mouseClickedX)/scaleWidth);
