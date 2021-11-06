@@ -53,6 +53,7 @@ public class RoadmapView extends JPanel implements Observer {
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanel.getVerticalScrollBar().setUnitIncrement(30);
         this.add(scrollPanel);
         scrollPanel.setBackground(Color.BLACK);
         scrollPanel.setSize(0, VIEW_HEIGHT - this.BUTTON_HEIGHT);
@@ -161,7 +162,7 @@ public class RoadmapView extends JPanel implements Observer {
 
             subPanel1.setBackground(Color.WHITE);
 
-            JLabel title1 = new JLabel("Pickup Point #"+ number );
+            JLabel title1 = new JLabel("Pickup Point "+ number );
             title1.setBounds(25,20,150,20);
             title1.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
@@ -184,7 +185,7 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel2.setBackground(Color.WHITE);
 
 
-            JLabel title2 = new JLabel("Delivery Point #"+ number );
+            JLabel title2 = new JLabel("Delivery Point "+ number );
             title2.setBounds(25,20,150,20);
             title2.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
