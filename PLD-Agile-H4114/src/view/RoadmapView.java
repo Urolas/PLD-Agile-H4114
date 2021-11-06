@@ -27,6 +27,7 @@ public class RoadmapView extends JPanel implements Observer {
     private JPanel roadmap;
     private boolean start = true;
     private int arrivalTime;
+    private GridBagConstraints gc;
 
     /**
      * Default constructor
@@ -45,8 +46,9 @@ public class RoadmapView extends JPanel implements Observer {
         this.setBackground(Color.WHITE);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
-        GridLayout grid = new GridLayout(0,1);
-        grid.setVgap(1);
+        GridBagLayout grid = new GridBagLayout();
+        gc = new GridBagConstraints();
+//        grid.setVgap(1);
 
         this.roadmap = new JPanel(grid);
         this.roadmap.setBackground(Color.lightGray);
@@ -150,8 +152,12 @@ public class RoadmapView extends JPanel implements Observer {
         firstPanel.add(longLabel);
 
 
+        gc.gridx = 0;
 
-        roadmap.add(firstPanel);
+        int posCard = 0;
+        gc.gridy = posCard++;
+        gc.anchor = GridBagConstraints.PAGE_START;
+        roadmap.add(firstPanel,gc);
 
         for (Request request : requestList) {
             number++;
@@ -159,6 +165,8 @@ public class RoadmapView extends JPanel implements Observer {
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(null);
+            subPanel1.setPreferredSize(new Dimension(280,100));
+
 
             subPanel1.setBackground(Color.WHITE);
 
@@ -178,11 +186,15 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel1.add(latLabel1);
             subPanel1.add(longLabel1);
 
-            roadmap.add(subPanel1);
+            gc.gridx = 0;
+            gc.gridy = posCard++;
+            roadmap.add(subPanel1,gc);
 
             JPanel subPanel2 = new JPanel();
             subPanel2.setLayout(null);
             subPanel2.setBackground(Color.WHITE);
+            subPanel2.setPreferredSize(new Dimension(280,100));
+
 
 
             JLabel title2 = new JLabel("Delivery Point "+ number );
@@ -202,7 +214,9 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel2.add(latLabel2);
             subPanel2.add(longLabel2);
 
-            roadmap.add(subPanel2);
+            gc.gridx = 0;
+            gc.gridy = posCard++;
+            roadmap.add(subPanel2,gc);
 
         }
     }
