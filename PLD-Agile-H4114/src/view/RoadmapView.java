@@ -6,7 +6,9 @@ import observer.Observable;
 import observer.Observer;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.time.Duration;
 import  java.util.*;
 import java.util.List;
@@ -45,7 +47,10 @@ public class RoadmapView extends JPanel implements Observer {
         this.setBackground(Color.WHITE);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
-        this.roadmap = new JPanel(new GridLayout(0,1));
+        GridLayout grid = new GridLayout(0,1);
+        grid.setVgap(10);
+
+        this.roadmap = new JPanel(grid);
         this.roadmap.setBackground(Color.WHITE);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -56,7 +61,7 @@ public class RoadmapView extends JPanel implements Observer {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.BLUE);
+        buttonPanel.setBackground(Color.lightGray);
         delButton = new JButton("Remove");
         addButton = new JButton("Add");
         delButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -116,7 +121,7 @@ public class RoadmapView extends JPanel implements Observer {
 
         JPanel firstPanel = new JPanel();
         firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-        firstPanel.setBackground(Color.WHITE);
+        firstPanel.setBackground(Color.lightGray);
         firstPanel.setBorder(BorderFactory.createTitledBorder("Starting point"));
 
         int hours = arrivalTime / 3600;
@@ -135,12 +140,12 @@ public class RoadmapView extends JPanel implements Observer {
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
-            subPanel1.setBackground(Color.WHITE);
+            subPanel1.setBackground(Color.LIGHT_GRAY);
             subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point #"+ number ));
 
             JPanel subPanel2 = new JPanel();
             subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-            subPanel2.setBackground(Color.WHITE);
+            subPanel2.setBackground(Color.LIGHT_GRAY);
             subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point #"+ number ));
 
             subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
