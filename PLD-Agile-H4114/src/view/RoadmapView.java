@@ -6,9 +6,7 @@ import observer.Observable;
 import observer.Observer;
 
 import javax.swing.*;
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.time.Duration;
 import  java.util.*;
 import java.util.List;
@@ -48,10 +46,10 @@ public class RoadmapView extends JPanel implements Observer {
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
         GridLayout grid = new GridLayout(0,1);
-        grid.setVgap(10);
+        grid.setVgap(1);
 
         this.roadmap = new JPanel(grid);
-        this.roadmap.setBackground(Color.WHITE);
+        this.roadmap.setBackground(Color.lightGray);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -120,17 +118,37 @@ public class RoadmapView extends JPanel implements Observer {
         int number = 0;
 
         JPanel firstPanel = new JPanel();
-        firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-        firstPanel.setBackground(Color.lightGray);
-        firstPanel.setBorder(BorderFactory.createTitledBorder("Starting point"));
+        firstPanel.setLayout(null);
+        firstPanel.setPreferredSize(new Dimension(280,100));
+        firstPanel.setBackground(Color.WHITE);
+
 
         int hours = arrivalTime / 3600;
         int minutes = (arrivalTime % 3600) / 60;
         int seconds = arrivalTime % 60;
 
-        firstPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-        firstPanel.add(new JLabel("    Latitude: "+ this.distribution.getDepot().getIntersection().getLatitude()));
-        firstPanel.add(new JLabel("    Longitude: "+ this.distribution.getDepot().getIntersection().getLongitude()));
+        JLabel title = new JLabel("Starting Point");
+        title.setBounds(25,20,150,20);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+        JLabel depTime = new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        depTime.setBounds(25,40,200,20);
+        depTime.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+        JLabel latLabel = new JLabel("Latitude: "+ this.distribution.getDepot().getIntersection().getLatitude());
+        latLabel.setBounds(20,60,110,20);
+        latLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+        JLabel longLabel = new JLabel("Longitude: "+ this.distribution.getDepot().getIntersection().getLongitude());
+        longLabel.setBounds(140,60,110,20);
+        longLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+        firstPanel.add(title);
+        firstPanel.add(depTime);
+        firstPanel.add(latLabel);
+        firstPanel.add(longLabel);
+
+
 
         roadmap.add(firstPanel);
 
@@ -140,20 +158,23 @@ public class RoadmapView extends JPanel implements Observer {
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
-            subPanel1.setBackground(Color.LIGHT_GRAY);
+            subPanel1.setBackground(Color.WHITE);
             subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point #"+ number ));
+            subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
+            subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+
+            roadmap.add(subPanel1);
 
             JPanel subPanel2 = new JPanel();
             subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-            subPanel2.setBackground(Color.LIGHT_GRAY);
+            subPanel2.setBackground(Color.WHITE);
             subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point #"+ number ));
 
-            subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
-            subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+
             subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
             subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
 
-            roadmap.add(subPanel1);
+
             roadmap.add(subPanel2);
 
         }
