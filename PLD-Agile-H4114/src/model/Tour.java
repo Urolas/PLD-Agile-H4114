@@ -77,10 +77,9 @@ public class Tour extends Observable {
 
     }
 
-    public PointOfInterest searchPointOfInterest(Point p) {
-        // TODO
+    public PointOfInterest searchPointOfInterest(double clickLong, double clickLat) {
         for (PointOfInterest i : pointOfInterests){
-            if (i.contains(p)) return i;
+            if (i.contains(clickLong, clickLat)) return i;
         }
         return null;
     }

@@ -81,13 +81,24 @@ public class PointOfInterest extends Observable {
                 '}';
     }
 
-    public boolean contains(Point p) {
+    public boolean contains(double clickLong, double clickLat) {
         double lon = this.intersection.getLongitude();
         double lat = this.intersection.getLatitude();
 
+        double x = (lat - clickLat) * Math.cos((lon + clickLong) / 2);
+        double y = lon - clickLong;
+        double z = Math.sqrt(x*x + y*y);
+        double k = 1.852 * 60;
+        double d = k * z;
 
+        System.out.println("PointOfInterest/contains:");
+        System.out.println("lon :" + lon);
+        System.out.println("lat :" + lat);
+        System.out.println("clickLong :" + clickLong);
+        System.out.println("clickLat :" + clickLat);
+        System.out.println("d :" + d);
 
-        // TODO
+        if (d < 0.001) return true;
         return false;
     }
 }

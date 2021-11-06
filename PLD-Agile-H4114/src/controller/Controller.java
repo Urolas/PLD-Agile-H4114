@@ -143,7 +143,7 @@ public class Controller {
      * @param p = coordinates of the click in the citymap
      */
     public void leftClick(double clickLong, double clickLat) {
-        currentState.leftClick(this, window, cityMap, listOfCommands, clickLong,clickLat);
+        currentState.leftClick(this, window, cityMap, listOfCommands, clickLong, clickLat);
     }
 
 }

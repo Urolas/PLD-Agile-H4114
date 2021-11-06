@@ -29,7 +29,7 @@ public class AddCommand implements Command {
      * @return
      */
     public void doCommand() {
-        tour.add(poiP,preP,poiD,preD);
+//        tour.add(poiP,preP,poiD,preD);
     }
 
     /**

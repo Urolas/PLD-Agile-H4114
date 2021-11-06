@@ -100,10 +100,10 @@ public class MapView extends JPanel implements Observer {
     }
 
     public double yToLat(int mouseY){
-        return mouseY/scaleHeight;
+        return mouseY/scaleHeight + originLat;
     }
     public double xToLong(int mouseX){
-        return mouseX/scaleWidth;
+        return mouseX/scaleWidth + originLong;
     }
 
     public void dragMap(int mouseX, int mouseY){
@@ -287,5 +287,9 @@ public class MapView extends JPanel implements Observer {
             g.setColor(Color.black);
             g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         }
+    }
+
+    public PointOfInterest getClosestPointOfInterest(int x, int y) {
+        return this.tour.searchPointOfInterest(cLong, cLat);
     }
 }
