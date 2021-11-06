@@ -18,10 +18,10 @@ public class RoadmapView extends JPanel implements Observer {
 
     private Tour tour;
     private Distribution distribution;
-    private final int VIEW_HEIGHT = 770;
+    private final int VIEW_HEIGHT = 760;
     private final int VIEW_WIDTH = 300;
-    private final JButton addButton = new JButton("Add");
-    private final JButton delButton = new JButton("Remove");
+    private JButton addButton;
+    private JButton delButton;
     private final int BUTTON_HEIGHT = 30;
     private final int BUTTON_WIDTH = 100;
     private JPanel roadmap;
@@ -41,13 +41,12 @@ public class RoadmapView extends JPanel implements Observer {
         this.distribution = citymap.getDistribution();
         this.distribution.addObserver(this); // this observes distribution
 
-        this.setBorder(BorderFactory.createTitledBorder("Roadmap"));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.WHITE);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
-        this.roadmap = new JPanel(new BorderLayout());
-        this.roadmap.setBackground(Color.LIGHT_GRAY);
+        this.roadmap = new JPanel(new GridLayout(0,1));
+        this.roadmap.setBackground(Color.WHITE);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -56,9 +55,13 @@ public class RoadmapView extends JPanel implements Observer {
         scrollPanel.setSize(0, VIEW_HEIGHT - this.BUTTON_HEIGHT);
 
         JPanel buttonPanel = new JPanel();
-        this.add(buttonPanel);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setBackground(Color.BLUE);
+        delButton = new JButton("Remove");
+        addButton = new JButton("Add");
+        delButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        addButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+
         buttonPanel.add(this.addButton);
         buttonPanel.add(this.delButton);
 
@@ -109,9 +112,6 @@ public class RoadmapView extends JPanel implements Observer {
     }
 
     public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
-
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
         int number = 0;
 
         JPanel firstPanel = new JPanel();
@@ -127,7 +127,7 @@ public class RoadmapView extends JPanel implements Observer {
         firstPanel.add(new JLabel("    Latitude: "+ this.distribution.getDepot().getIntersection().getLatitude()));
         firstPanel.add(new JLabel("    Longitude: "+ this.distribution.getDepot().getIntersection().getLongitude()));
 
-        panel.add(firstPanel);
+        roadmap.add(firstPanel);
 
         for (Request request : requestList) {
             number++;
@@ -148,18 +148,14 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
             subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
 
-            panel.add(subPanel1);
-            panel.add(subPanel2);
+            roadmap.add(subPanel1);
+            roadmap.add(subPanel2);
 
         }
-        this.roadmap.add(panel,BorderLayout.NORTH);
-
     }
 
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
         List<Path> pathList = this.tour.getPaths();
 
         for (int poiNum = 0; poiNum < pointList.size(); poiNum++) {
@@ -214,13 +210,9 @@ public class RoadmapView extends JPanel implements Observer {
 
 
             arrivalTime +=durationRoad;
-            panel.add(subPanel);
-
+            roadmap.add(subPanel);
 
         }
-        this.roadmap.add(panel,BorderLayout.NORTH);
-
-
     }
 
 
