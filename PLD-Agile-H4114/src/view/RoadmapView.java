@@ -157,23 +157,49 @@ public class RoadmapView extends JPanel implements Observer {
             System.out.println(request);
 
             JPanel subPanel1 = new JPanel();
-            subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
+            subPanel1.setLayout(null);
+
             subPanel1.setBackground(Color.WHITE);
-            subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point #"+ number ));
-            subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
-            subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
+
+            JLabel title1 = new JLabel("Pickup Point #"+ number );
+            title1.setBounds(25,20,150,20);
+            title1.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+            JLabel latLabel1 = new JLabel("Latitude: " + request.getPickup().getIntersection().getLatitude());
+            latLabel1.setBounds(20,60,110,20);
+            latLabel1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+            JLabel longLabel1 = new JLabel("Longitude: " + request.getPickup().getIntersection().getLongitude());
+            longLabel1.setBounds(140,60,110,20);
+            longLabel1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+            subPanel1.add(title1);
+            subPanel1.add(latLabel1);
+            subPanel1.add(longLabel1);
 
             roadmap.add(subPanel1);
 
             JPanel subPanel2 = new JPanel();
-            subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
+            subPanel2.setLayout(null);
             subPanel2.setBackground(Color.WHITE);
-            subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point #"+ number ));
 
 
-            subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
-            subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+            JLabel title2 = new JLabel("Delivery Point #"+ number );
+            title2.setBounds(25,20,150,20);
+            title2.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
+            JLabel latLabel2 = new JLabel("Latitude: " + request.getDelivery().getIntersection().getLatitude());
+            latLabel2.setBounds(20,60,110,20);
+            latLabel2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+            JLabel longLabel2 = new JLabel("Longitude: " + request.getDelivery().getIntersection().getLongitude());
+            longLabel2.setBounds(140,60,110,20);
+            longLabel2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+
+            subPanel2.add(title2);
+            subPanel2.add(latLabel2);
+            subPanel2.add(longLabel2);
 
             roadmap.add(subPanel2);
 
