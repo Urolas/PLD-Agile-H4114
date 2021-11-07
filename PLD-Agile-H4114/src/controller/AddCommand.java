@@ -32,8 +32,9 @@ public class AddCommand implements Command {
      * @return
      */
     public void doCommand() throws Exception {
-        map.distribution.addRequest(poiP.getDuration(),poiD.getDuration(),poiP.getIntersection(),poiD.getIntersection(),poiP.getIdPointOfInterest());
         map.addRequest(poiP,preP,poiD,preD);
+        map.distribution.addRequest(poiP.getDuration(),poiD.getDuration(),poiP.getIntersection(),poiD.getIntersection(),poiP.getIdPointOfInterest());
+
 
     }
 

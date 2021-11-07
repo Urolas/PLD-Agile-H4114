@@ -206,8 +206,8 @@ public class CityMap extends Observable {
 
 
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
-        List<PointOfInterest> newpoints = tour.getPointOfInterests();
-        List<Path> newpaths = tour.getPaths();
+        List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
+        List<Path> newpaths = new ArrayList<>(tour.getPaths());
         boolean pickupinserted=false;
         boolean deliveryinserted=false;
 
@@ -239,6 +239,7 @@ public class CityMap extends Observable {
             throw new Exception("Erreur : le delivery a été mis avant le pickup");
         }
         tour.setPointOfInterests(newpoints);
+        tour.setPaths(newpaths);
         notifyObservers(tour);
 
     }
