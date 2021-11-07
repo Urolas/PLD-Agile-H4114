@@ -62,5 +62,5 @@ public interface State {
      * @param l the current list of commands
      * @param p the coordinates of the mouse
      */
-    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection) {};
+    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection,PointOfInterest pointOfInterest) {};
 }

@@ -215,7 +215,7 @@ public class CityMap extends Observable {
             if(newpoints.get(i)==preP){
                 newpoints.add(i+1,poiP);
                 AbstractMap.SimpleEntry<Double,List<String>> newpathlasttop = computePath(preP,poiP);
-                AbstractMap.SimpleEntry<Double,List<String>> newpathptonext = computePath(poiP,tour.getPointOfInterests().get(tour.getPointOfInterests().indexOf(preP)+1));
+                AbstractMap.SimpleEntry<Double,List<String>> newpathptonext = computePath(poiP,newpoints.get(i+2));
                 Path pathlasttop = new Path(djikstraToRoads(newpathlasttop),newpathlasttop.getKey());
                 Path pathptonext = new Path(djikstraToRoads(newpathptonext),newpathptonext.getKey());
                 newpaths.remove(i);
@@ -226,7 +226,7 @@ public class CityMap extends Observable {
             if (pickupinserted && newpoints.get(i)==preD){
                 newpoints.add(i+1,poiD);
                 AbstractMap.SimpleEntry<Double,List<String>> newpathlasttod = computePath(preD,poiD);
-                AbstractMap.SimpleEntry<Double,List<String>> newpathdtonext = computePath(poiD,tour.getPointOfInterests().get(tour.getPointOfInterests().indexOf(preD)+1));
+                AbstractMap.SimpleEntry<Double,List<String>> newpathdtonext = computePath(poiD,newpoints.get(i+2));
                 Path pathlasttod = new Path(djikstraToRoads(newpathlasttod),newpathlasttod.getKey());
                 Path pathdtonext = new Path(djikstraToRoads(newpathdtonext),newpathdtonext.getKey());
                 newpaths.remove(i);
@@ -239,6 +239,7 @@ public class CityMap extends Observable {
             throw new Exception("Erreur : le delivery a été mis avant le pickup");
         }
         tour.setPointOfInterests(newpoints);
+        notifyObservers(tour);
 
     }
 

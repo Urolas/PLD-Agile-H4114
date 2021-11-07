@@ -152,8 +152,9 @@ public class Controller {
      * Precondition : p != null
      * @param p = coordinates of the click in the citymap
      */
-    public void leftClick(Intersection intersection) {
-        currentState.leftClick(this, window, cityMap, listOfCommands, intersection);
+    public void leftClick(Intersection intersection,PointOfInterest pointOfInterest) {
+        System.out.println(this.currentState);
+        currentState.leftClick(this, window, cityMap, listOfCommands, intersection,pointOfInterest);
     }
 
 }

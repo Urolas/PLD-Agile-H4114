@@ -22,8 +22,8 @@ public class AddCommand implements Command {
         this.map=map;
         this.preP=p1;
         this.preD=p2;
-        this.poiP= new PickupAddress(i1,0,1);
-        this.poiD= new DeliveryAddress(i1,0,1);
+        this.poiP= new PickupAddress(i1,0,map.tour.getPointOfInterests().size());
+        this.poiD= new DeliveryAddress(i2,0,map.tour.getPointOfInterests().size()+1);
 
     }
 
@@ -32,6 +32,7 @@ public class AddCommand implements Command {
      * @return
      */
     public void doCommand() throws Exception {
+        map.distribution.addRequest(poiP.getDuration(),poiD.getDuration(),poiP.getIntersection(),poiD.getIntersection(),poiP.getIdPointOfInterest());
         map.addRequest(poiP,preP,poiD,preD);
 
     }

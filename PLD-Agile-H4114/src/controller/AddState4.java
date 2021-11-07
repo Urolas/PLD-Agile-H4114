@@ -12,8 +12,8 @@ public class AddState4 implements State  {
     private PointOfInterest p1;
     private Intersection i2;
 	
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, double cLong, double cLat) {
-        PointOfInterest poi = map.getClosestPOI(cLong,cLat);
+    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i , PointOfInterest poi) {
+
         try {
             listOfCommands.add(new AddCommand(map, this.i1, this.p1, this.i2, poi));
         } catch (Exception e ){
