@@ -284,9 +284,9 @@ public class CityMap extends Observable {
                 newpath = computePath(newpoints.get(i - 1), newpoints.get(i + 1));
                 Path path = new Path(dijkstraToRoads(newpath), newpath.getKey());
                 newpoints.remove(i);
-                newpaths.remove(i + 1);
-                newpaths.remove(i);
-                newpaths.add(i, path);
+                newpaths.remove(i -1);
+                newpaths.remove(i-1);
+                newpaths.add(i-1, path);
             }
         }
 
