@@ -224,7 +224,7 @@ public class CityMap extends Observable {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select file path and name");
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT File","txt"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File","xml"));
+        //fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File","xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
 
 
