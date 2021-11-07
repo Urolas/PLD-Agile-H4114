@@ -157,4 +157,7 @@ public class Controller {
         currentState.leftClick(this, window, cityMap, listOfCommands, intersection,pointOfInterest);
     }
 
+    public Window getWindow() {
+        return window;
+    }
 }

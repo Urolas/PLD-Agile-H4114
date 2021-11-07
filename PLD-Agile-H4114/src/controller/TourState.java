@@ -38,7 +38,7 @@ public class TourState implements State {
 
     @Override
     public void modifyDistribution(Controller c){
-
+        c.addState1.entryAction(c.getWindow());
         c.setCurrentState(c.addState1);
     };
 
@@ -49,7 +49,7 @@ public class TourState implements State {
 
     @Override
     public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
-        c.setCurrentState(c.addState1);
+
         if (poi != null)
             try{
                 l.add(new DeleteCommand(cityMap.getTour(), poi));
