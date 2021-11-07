@@ -38,6 +38,7 @@ public class MapView extends JPanel implements Observer {
     private double greatRoadThickness;
     private int mouseClickedX;
     private int mouseClickedY;
+    private int counterInter;
 
     /**
      * Default constructor
@@ -56,6 +57,7 @@ public class MapView extends JPanel implements Observer {
         originLat = 0;
         smallRoadThickness = 1;
         greatRoadThickness = 2;
+        counterInter = 0;
         setLayout(null);
         setBackground(new Color(180,180,180));
         setSize(VIEW_WIDTH,VIEW_HEIGHT);
@@ -97,6 +99,13 @@ public class MapView extends JPanel implements Observer {
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
         repaint();
     }
+
+//    public double yToLat(int mouseY){
+//        return mouseY/scaleHeight + originLat;
+//    }
+//    public double xToLong(int mouseX){
+//        return mouseX/scaleWidth + originLong;
+//    }
 
     public void dragMap(int mouseX, int mouseY){
         System.out.println((mouseX - mouseClickedX)/scaleWidth);
@@ -182,14 +191,6 @@ public class MapView extends JPanel implements Observer {
         this.originLongClicked = originLong;
     }
 
-    public int getVIEW_HEIGHT() {
-        return VIEW_HEIGHT;
-    }
-
-    public int getVIEW_WIDTH() {
-        return VIEW_WIDTH;
-    }
-
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -247,17 +248,30 @@ public class MapView extends JPanel implements Observer {
                 thickness=smallRoadThickness;
                 c=Color.WHITE;
             }
+        }else if (counterInter++ == 10){
+            counterInter = 0;
+            double theta = Math.atan2(x1-x2,y1-y2);
+            int middleRoadX = (int)((x1 + x2)/2);
+            int middleRoadY = (int)((y1 + y2)/2);
+            int fSize = 8;
+            g2.fillPolygon(new int[] {middleRoadX,
+                    (int)(middleRoadX+fSize*(Math.cos(-theta)-Math.sin(-theta))),
+                    (int)(middleRoadX-fSize*(Math.cos(theta)-Math.sin(theta)))}, new int[] {middleRoadY,
+                    (int)(middleRoadY+fSize*(Math.sin(-theta)+Math.cos(-theta))),
+                    (int)(middleRoadY+fSize*(Math.sin(theta)+Math.cos(theta)))}, 3);
         }
         g.setColor(c);
         g2.setStroke(new BasicStroke((float)thickness));
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
+
     public void displayPath(Path p){
         for (Road r : p.getRoads()){
             displayRoad(r,Color.red,3,true);
         }
     }
+
     public void displayRequest(Request q,Color outline){
         int x1 = convertLongitudeToPixel(q.getPickup().getIntersection().getLongitude());
         int y1 = convertLatitudeToPixel(q.getPickup().getIntersection().getLatitude());
@@ -271,7 +285,6 @@ public class MapView extends JPanel implements Observer {
         g2.drawOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         g.setColor(q.color);
         g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
-
         g.setColor(outline);
         g2.setStroke(new BasicStroke(2));
         g.drawPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
@@ -285,5 +298,29 @@ public class MapView extends JPanel implements Observer {
             g.setColor(Color.black);
             g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         }
+    }
+
+    public PointOfInterest getClosestPointOfInterest(int x, int y) {
+        for (PointOfInterest poi : this.cityMap.getTour().getPointOfInterests()) {
+            int xPoi = convertLongitudeToPixel(poi.getIntersection().getLongitude());
+            int yPoi = convertLatitudeToPixel(poi.getIntersection().getLatitude());
+            if (x <= xPoi + POINT_SIZE && x >= xPoi - POINT_SIZE && // check if point is inside the shape of the specific poi
+                    y <= yPoi + POINT_SIZE && y >= yPoi - POINT_SIZE) { // for now, we just check if inside a square, to be modified...
+                return poi;
+            }
+        }
+        return null;
+    }
+
+    public Intersection getClosestIntersection(int x, int y) {
+        for (Intersection i : this.cityMap.getIntersections().values()) {
+            int xPoi = convertLongitudeToPixel(i.getLongitude());
+            int yPoi = convertLatitudeToPixel(i.getLatitude());
+            if (x <= xPoi + POINT_SIZE/2 && x >= xPoi - POINT_SIZE/2 &&
+                    y <= yPoi + POINT_SIZE/2 && y >= yPoi - POINT_SIZE/2) {
+                return i;
+            }
+        }
+        return null;
     }
 }

@@ -94,7 +94,7 @@ public class Window extends JFrame {
             JButton button = new JButton(buttonTextsZoom[i]);
             buttons.add(button);
             button.setSize(50,50);
-            button.setLocation( mapView.getVIEW_WIDTH() - 190 + i * 60, mapView.getVIEW_HEIGHT() - 100);
+            button.setLocation( mapView.getViewWidth() - 190 + i * 60, mapView.getViewHeight() - 100);
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);

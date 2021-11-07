@@ -1,12 +1,15 @@
 package controller;
 
 import model.CityMap;
+import model.Intersection;
+import model.PointOfInterest;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
 import xml.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -18,6 +21,11 @@ public class Controller {
     protected final CityMapState citymapState = new CityMapState();
     protected final DistributionState distributionState = new DistributionState();
     protected final TourState tourState = new TourState();
+    protected final AddState1 addState1 = new AddState1();
+    protected final AddState2 addState2 = new AddState2();
+    protected final AddState3 addState3 = new AddState3();
+    protected final AddState4 addState4 = new AddState4();
+
 
     private CityMap cityMap;
     private Window window;
@@ -40,17 +48,17 @@ public class Controller {
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Undo"
      */
-    public void undo() {
-        // TODO implement here
+    public void undo(){
+        currentState.undo(listOfCommands);
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Redo"
      */
-    public void redo() {
-        // TODO implement here
+    public void redo(){
+        currentState.redo(listOfCommands);
     }
 
     /**
@@ -129,6 +137,15 @@ public class Controller {
             System.out.println(e.getMessage());
 
         }
+    }
+
+    /**
+     * Method called by window after a left click on a point of the graphical view
+     * Precondition : p != null
+     * @param p = coordinates of the click in the citymap
+     */
+    public void leftClick(Intersection intersection) {
+        currentState.leftClick(this, window, cityMap, listOfCommands, intersection);
     }
 
 }

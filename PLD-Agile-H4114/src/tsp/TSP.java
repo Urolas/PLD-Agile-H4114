@@ -22,4 +22,6 @@ public interface TSP {
      * (-1 if <code>searcheSolution</code> has not been called yet).
      */
     public Double getSolutionCost();
+
+    public int getBestSolLength();
 }
