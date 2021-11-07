@@ -28,7 +28,7 @@ public interface State {
 
     /**
      * Method called by the controller after a click on the button "Load distribution"
-     * @param c the controler
+     * @param c the controller
      * @param w the window
      */
     public default void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException,
@@ -36,6 +36,10 @@ public interface State {
     };
 
     default void computeTour(Controller controller, Window window){};
+
+    public default void modifyDistribution(Controller controller){};
+
+    public default void removePointOfInterest(Controller c, Window w, CityMap map, ListOfCommands listOfCommands){};
 
     public default void keyStroke(MapView mapView, int keyCode){};
 
@@ -60,5 +64,5 @@ public interface State {
      * @param l the current list of commands
      * @param p the coordinates of the mouse
      */
-    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection) {};
+    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection,PointOfInterest pointOfInterest) {};
 }

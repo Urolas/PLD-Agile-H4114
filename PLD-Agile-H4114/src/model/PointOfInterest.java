@@ -80,5 +80,4 @@ public class PointOfInterest extends Observable {
                 ", idPointOfInterest=" + idPointOfInterest +
                 '}';
     }
-
 }

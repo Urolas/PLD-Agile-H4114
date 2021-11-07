@@ -11,7 +11,7 @@ import observer.Observable;
 /**
  * @author 4IF-4114
  */
-public class Distribution extends Observable{
+public class Distribution extends Observable {
 
     private DepotAddress depot;
     private Set<Request> requests;
@@ -53,16 +53,16 @@ public class Distribution extends Observable{
         notifyObservers(i);
     }
 
-    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection,Integer i) {
-        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration,i);
-        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration,i+1);
+    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
+        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration, i);
+        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration, i + 1);
         System.out.println(i);
         Request r;
-        if((i-1)/2<this.requestColors.size()){
-            r = new Request(pAddress,dAddress,Color.decode(this.requestColors.get((i-1)/2)));
+        if ((i - 1) / 2 < this.requestColors.size()) {
+            r = new Request(pAddress, dAddress, Color.decode(this.requestColors.get((i - 1) / 2)));
         } else {
 
-            r = new Request(pAddress,dAddress,new Color((int) (Math.random() * 0x1000000)));
+            r = new Request(pAddress, dAddress, new Color((int) (Math.random() * 0x1000000)));
 
         }
         this.requests.add(r);
@@ -74,33 +74,44 @@ public class Distribution extends Observable{
     }
 
     //return the Id of each point of interest, the first one is always the depot point
-    public List<PointOfInterest> GetAllPoints(){
+    public List<PointOfInterest> GetAllPoints() {
         List<PointOfInterest> points = new ArrayList<>();
         points.add(this.depot);
-        for (Request request: this.requests) {
+        for (Request request : this.requests) {
             points.add(request.getDelivery());
             points.add(request.getPickup());
         }
         return points;
     }
 
-    public HashMap<Integer,Integer> GetConstraints() {
-        HashMap<Integer,Integer> result = new HashMap<>();
-        for (Request request: this.requests) {
-            result.put(request.getPickup().idPointOfInterest,request.getDelivery().idPointOfInterest);
+    public HashMap<Integer, Integer> GetConstraints() {
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (Request request : this.requests) {
+            result.put(request.getPickup().idPointOfInterest, request.getDelivery().idPointOfInterest);
         }
         return result;
     }
 
+    public void removeRequest(PickupAddress pickupAddress, DeliveryAddress deliveryAddress) {
+        Request requestToRemove = null;
+        for (Request req : this.requests) {
+            if (req.getPickup().equals((pickupAddress)) &&
+                    req.getDelivery().equals(deliveryAddress)) {
+                requestToRemove = req;
+            }
+        }
+        requests.remove(requestToRemove);
+    }
+
     @Override
-    public boolean equals(Object o){
-        if(o.getClass()!=this.getClass()){
+    public boolean equals(Object o) {
+        if (o.getClass() != this.getClass()) {
             return false;
         }
-        if(!this.depot.equals(((Distribution) o).depot)){
+        if (!this.depot.equals(((Distribution) o).depot)) {
             return false;
         }
-        if(!this.requests.equals(((Distribution) o).requests)){
+        if (!this.requests.equals(((Distribution) o).requests)) {
             return false;
         }
         return true;

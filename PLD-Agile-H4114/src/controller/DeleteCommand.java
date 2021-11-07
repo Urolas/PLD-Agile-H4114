@@ -1,6 +1,8 @@
 package controller;
 
 
+import model.CityMap;
+import model.DepotAddress;
 import model.PointOfInterest;
 import model.Tour;
 
@@ -9,23 +11,23 @@ import model.Tour;
  */
 public class DeleteCommand implements Command {
 
-    private Tour tour;
+    private CityMap cityMap;
     private PointOfInterest poi;
 
     /**
      * Default constructor
      */
-    public DeleteCommand(Tour tour, PointOfInterest poi) {
-        this.tour = tour;
+    public DeleteCommand(CityMap cityMap, PointOfInterest poi) {
+        this.cityMap = cityMap;
         this.poi = poi;
     }
-
 
     /**
      * @return
      */
     public void doCommand() {
-        tour.remove(poi);
+        if (!(poi instanceof DepotAddress))
+            cityMap.removeRequest(poi);
     }
 
     /**

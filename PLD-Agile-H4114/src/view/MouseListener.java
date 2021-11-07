@@ -35,15 +35,17 @@ public class MouseListener extends MouseAdapter {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1:
                 Intersection intersection = mapView.getClosestIntersection(e.getX(), e.getY());
+                PointOfInterest pointOfInterest = mapView.getClosestPointOfInterest(e.getX(),e.getY());
                 System.out.println(intersection);
-                controller.leftClick(intersection);
+                System.out.println(pointOfInterest);
+
+                controller.leftClick(intersection,pointOfInterest);
                 break;
             case MouseEvent.BUTTON3:
 //                controller.rightClick();
                 break;
             default:
         }
-//        controller.leftClick(clickLong,clickLat);
     }
 
     @Override

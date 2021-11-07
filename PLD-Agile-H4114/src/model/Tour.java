@@ -77,19 +77,10 @@ public class Tour extends Observable {
 
     }
 
-//    public PointOfInterest searchPointOfInterest(double clickLong, double clickLat) {
-//        for (PointOfInterest i : pointOfInterests){
-//            if (i.contains(clickLong, clickLat)) return i;
-//        }
-//        return null;
-//    }
-
     public void remove(PointOfInterest poi) {
 
     }
 
-    public void add(Intersection poiP, PointOfInterest preP, Intersection poiD, PointOfInterest preD) {
 
-    }
 }
 

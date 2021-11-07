@@ -1,16 +1,14 @@
 package controller;
 
 
-import model.Intersection;
-import model.PointOfInterest;
-import model.Tour;
+import model.*;
 
 /**
  * @author 4IF-4114
  */
 public class AddCommand implements Command {
 
-    private Tour tour;
+    private CityMap map;
     private PointOfInterest poiP;
     private PointOfInterest poiD;
     private PointOfInterest preP;
@@ -20,16 +18,22 @@ public class AddCommand implements Command {
      */
 
 
-    public AddCommand(Tour tour,Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest p2) {
-        tour.add(i1,p1,i2,p2);
+    public AddCommand(CityMap map, Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest p2) {
+        this.map=map;
+        this.preP=p1;
+        this.preD=p2;
+        this.poiP= new PickupAddress(i1,0,map.tour.getPointOfInterests().size());
+        this.poiD= new DeliveryAddress(i2,0,map.tour.getPointOfInterests().size()+1);
+
     }
 
 
     /**
      * @return
      */
-    public void doCommand() {
-//        tour.add(poiP,preP,poiD,preD);
+    public void doCommand() throws Exception {
+        map.addRequest(poiP,preP,poiD,preD);
+        map.distribution.addRequest(poiP.getDuration(),poiD.getDuration(),poiP.getIntersection(),poiD.getIntersection(),poiP.getIdPointOfInterest());
     }
 
     /**

@@ -37,12 +37,25 @@ public class TourState implements State {
     }
 
     @Override
+    public void modifyDistribution(Controller c){
+        c.addState1.entryAction(c.getWindow());
+        c.setCurrentState(c.addState1);
+    };
+
+    @Override
     public void keyStroke(MapView mapView, int keyCode) {
 
     }
 
     @Override
-    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, PointOfInterest poi) {
-        l.add(new DeleteCommand(cityMap.getTour(), poi));
+    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
+        if (poi != null)
+            try{
+                c.highlightState.entryAction(poi);
+                c.setCurrentState(c.highlightState);
+
+            } catch (Exception e){
+                System.out.println(e);
+            }
     }
 }
