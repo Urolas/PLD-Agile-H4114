@@ -223,15 +223,23 @@ public class CityMap extends Observable {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select file path and name");
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("txt File","txt"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("xml File","xml"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT File","txt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File","xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
+
 
         int filePath = fileChooser.showSaveDialog(saveFrame);
 
 
         if (filePath == JFileChooser.APPROVE_OPTION) {
             File newFile = fileChooser.getSelectedFile();
+
+            if(fileChooser.getFileFilter().getDescription()=="TXT File"){
+                newFile = new File(newFile.getAbsolutePath()+".txt");
+            }else{
+                newFile = new File(newFile.getAbsolutePath()+".xml");
+            }
+
             if(newFile.exists()){
                 System.out.println("File already exist");
             }else {
@@ -265,7 +273,8 @@ public class CityMap extends Observable {
 
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 if(start) {
-                    fw.write("Start point"+System.lineSeparator());
+                    fw.write("Start point" + System.lineSeparator());
+
                 }else{
                     fw.write("to End point"+System.lineSeparator());
                 }
@@ -280,7 +289,7 @@ public class CityMap extends Observable {
 
             int duration=0;
 
-            if(poiNum<pointList.size()-1 && !start) {
+            if(poiNum<pointList.size() && !start) {
                 double length = 0;
                 String name;
                 int nbIntersection = 0;
