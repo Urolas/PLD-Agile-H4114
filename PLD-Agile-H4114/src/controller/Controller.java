@@ -86,6 +86,16 @@ public class Controller {
         }
     }
 
+    public void generateRoadmap(){
+        try {
+            this.currentState.generateRoadmap(this, window);
+        }catch( IOException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void keystroke(int keyCode) {
         currentState.keyStroke(window.getMapView(), keyCode);
     }
