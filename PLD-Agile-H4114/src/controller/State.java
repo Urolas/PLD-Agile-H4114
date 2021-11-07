@@ -1,5 +1,7 @@
 package controller;
 import model.CityMap;
+import model.Intersection;
+import model.PointOfInterest;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
@@ -60,5 +62,5 @@ public interface State {
      * @param l the current list of commands
      * @param p the coordinates of the mouse
      */
-    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, double cLong, double cLat) {};
+    public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection) {};
 }

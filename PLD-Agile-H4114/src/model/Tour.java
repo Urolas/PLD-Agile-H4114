@@ -77,10 +77,6 @@ public class Tour extends Observable {
 
     }
 
-    public PointOfInterest searchPointOfInterest(double clong, double clat) {
-
-        return null;
-    }
 
     public void remove(PointOfInterest poi) {
 

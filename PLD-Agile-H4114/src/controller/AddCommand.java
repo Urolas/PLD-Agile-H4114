@@ -33,6 +33,7 @@ public class AddCommand implements Command {
      */
     public void doCommand() throws Exception {
         map.addRequest(poiP,preP,poiD,preD);
+
     }
 
     /**

@@ -2,6 +2,7 @@ package controller;
 
 
 import model.CityMap;
+import model.Intersection;
 import model.PointOfInterest;
 import org.xml.sax.SAXException;
 import view.MapView;
@@ -55,5 +56,6 @@ public class TourState implements State {
             } catch (Exception e){
                 System.out.println(e);
             }
+
     }
 }
