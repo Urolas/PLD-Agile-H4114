@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-
+import javax.swing.JFrame;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import tsp.TSP;
 import tsp.TSPplaceholder;
@@ -215,12 +218,42 @@ public class CityMap extends Observable {
     public void generateRoadmap() throws IOException {
         System.out.println("Generating Roadmap");
 
-        /*File myObj = new File("\\roadmapFilesnewFile.txt");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
-        } else {
-            System.out.println("File already exists.");
-        }*/
+        // parent component of the dialog
+        JFrame saveFrame = new JFrame();
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select file path and name");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("txt File","txt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("xml File","xml"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        int filePath = fileChooser.showSaveDialog(saveFrame);
+
+
+        if (filePath == JFileChooser.APPROVE_OPTION) {
+            File newFile = fileChooser.getSelectedFile();
+            if(newFile.exists()){
+                System.out.println("File already exist");
+            }else {
+                System.out.println("Save as file: " + newFile.getAbsolutePath());
+                try {
+                    FileWriter fw = new FileWriter(newFile);
+                    fw.write("Hello");
+                    fw.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+
+            }
+        }else if(filePath == JFileChooser.CANCEL_OPTION){
+            System.out.println("Operation cancelled");
+        }else{
+            System.out.println("Error");
+        }
+
+
+
+
     }
 
 
