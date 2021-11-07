@@ -222,8 +222,19 @@ public class CityMap extends Observable {
                 newpaths.add(i,pathlasttop);
                 newpaths.add(i+1,pathptonext);
                 pickupinserted=true;
+                if(preD.equals(preP)){
+                    newpoints.add(i+2,poiD);
+                    AbstractMap.SimpleEntry<Double,List<String>> newpathlasttod = computePath(poiP,poiD);
+                    AbstractMap.SimpleEntry<Double,List<String>> newpathdtonext = computePath(poiD,newpoints.get(i+3));
+                    Path pathlasttod = new Path(djikstraToRoads(newpathlasttod),newpathlasttod.getKey());
+                    Path pathdtonext = new Path(djikstraToRoads(newpathdtonext),newpathdtonext.getKey());
+                    newpaths.remove(i+1);
+                    newpaths.add(i+1,pathlasttod);
+                    newpaths.add(i+2,pathdtonext);
+                    deliveryinserted=true;
+                }
             }
-            if (pickupinserted && newpoints.get(i)==preD){
+            else if (pickupinserted && newpoints.get(i)==preD){
                 newpoints.add(i+1,poiD);
                 AbstractMap.SimpleEntry<Double,List<String>> newpathlasttod = computePath(preD,poiD);
                 AbstractMap.SimpleEntry<Double,List<String>> newpathdtonext = computePath(poiD,newpoints.get(i+2));
