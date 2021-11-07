@@ -246,7 +246,7 @@ public class CityMap extends Observable {
                 System.out.println("Save as file: " + newFile.getAbsolutePath());
                 try {
                     FileWriter fw = new FileWriter(newFile);
-                    writeFile(fw, newFile.getName());
+                    writeRoadmap(fw, newFile.getName());
                     fw.close();
                 } catch (IOException e) {
                     System.out.println(e);
@@ -261,7 +261,7 @@ public class CityMap extends Observable {
 
     }
 
-    public void writeFile( FileWriter fw, String fileName) throws IOException {
+    public void writeRoadmap( FileWriter fw, String fileName) throws IOException {
 
         boolean start = true;
         List<PointOfInterest> pointList = this.tour.getPointOfInterests();
