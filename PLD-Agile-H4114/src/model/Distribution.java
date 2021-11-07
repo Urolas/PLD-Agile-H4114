@@ -40,6 +40,8 @@ public class Distribution extends Observable{
         return requests;
     }
 
+    public List<String> getColorList(){return requestColors;}
+
     public void reset() {
 
         this.requests.clear();
