@@ -6,6 +6,7 @@ import model.CityMap;
 import java.awt.*;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.Insets;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.*;
@@ -29,7 +30,6 @@ public class Window extends JFrame {
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, GENERATE_ROADMAP};
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
-
     private MapView mapView;
     private RoadmapView roadmapView;
     private ArrayList<JButton> buttons;
@@ -38,8 +38,8 @@ public class Window extends JFrame {
     private MouseListener mouseListener;
     private KeyboardListener keyboardListener;
 
-    private final int buttonHeight = 60;
-    private final int buttonWidth = 200;
+    private final int BUTTON_HEIGHT = 60;
+    private final int BUTTON_WIDTH = 200;
 
     /**
      * Default constructor
@@ -48,8 +48,13 @@ public class Window extends JFrame {
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
 
-
         mapView = new MapView(cityMap, this);
+
+        JLabel jl = new JLabel("Delivelo");
+        jl.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        jl.setBounds(20,20,180,30);
+        getContentPane().add(jl);
+
         createButtons(controller);
         roadmapView = new RoadmapView(cityMap, this);
         mouseListener = new MouseListener(controller, mapView, this);
@@ -60,7 +65,8 @@ public class Window extends JFrame {
 
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBackground(Color.WHITE);
+
+        getContentPane().setBackground(Color.WHITE);
         setWindowSize();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -68,12 +74,12 @@ public class Window extends JFrame {
     }
 
     private void setWindowSize() {
-        int allButtonHeight = buttonHeight * buttonTexts.length;
-        int windowHeight = Math.max(mapView.getViewHeight(),allButtonHeight);
-        int windowWidth = mapView.getViewWidth() + buttonWidth + roadmapView.getViewWidth() + 15;
+        int allBUTTON_HEIGHT = BUTTON_HEIGHT * buttonTexts.length;
+        int windowHeight = Math.max(mapView.getViewHeight(),allBUTTON_HEIGHT);
+        int windowWidth = mapView.getViewWidth() + BUTTON_WIDTH + roadmapView.getViewWidth() + 15;
         setSize(windowWidth, windowHeight);
-        mapView.setLocation(buttonWidth, 0);
-        roadmapView.setLocation(mapView.getViewWidth() + buttonWidth,0);
+        mapView.setLocation(BUTTON_WIDTH, 0);
+        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
     }
 
     /**
@@ -83,20 +89,18 @@ public class Window extends JFrame {
     private void createButtons(Controller controller){
         buttonListener = new ButtonListener(controller);
         buttons = new ArrayList<JButton>();
-        for (String text : buttonTexts){
-            JButton button = new JButton(text);
+        for ( int i=0; i<buttonTexts.length; i++ ) {
+            JButton button = new JButton(buttonTexts[i]);
             buttons.add(button);
-            button.setBorderPainted(false);
+//            button.setBorderPainted(false);
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-            button.setBackground(Color.WHITE);
-            button.setOpaque(true);
-            button.setSize(buttonWidth,buttonHeight);
-            button.setLocation(0,(buttons.size()-1)*buttonHeight);
-            button.setFocusable(false);
-            button.setFocusPainted(false);
+            button.setForeground(Color.BLACK);
+            button.setBackground(new Color(91, 138, 231));
+            button.setBounds(10,200+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
+//            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
-
             getContentPane().add(button);
+
         }
         for ( int i=0; i<buttonTextsZoom.length; i++ ){
             JButton button = new JButton(buttonTextsZoom[i]);
