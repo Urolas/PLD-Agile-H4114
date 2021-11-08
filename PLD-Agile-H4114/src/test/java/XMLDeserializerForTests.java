@@ -5,8 +5,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import xml.XMLException;
-import xml.XMLFileOpener;
+import filecontrol.XMLException;
+import filecontrol.XMLFileOpener;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

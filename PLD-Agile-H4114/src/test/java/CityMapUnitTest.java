@@ -129,6 +129,4 @@ public class CityMapUnitTest {
         assertEquals("CityMap{roads="+roadsExpectedSet+"}",cm.toString());
     }
 
-
-
 }
