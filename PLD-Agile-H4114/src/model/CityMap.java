@@ -281,6 +281,30 @@ public class CityMap extends Observable {
 
 
     }
+    public void changePosition(PointOfInterest poi, int i) {
+        List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
+        List<Path> newpaths = new ArrayList<>(tour.getPaths());
+        newpoints.remove(poi);
+        newpoints.add(i,poi);
+        for (int j =  newpoints.size()-2; j >=1; j--) {
+
+                AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j ));
+                AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(newpoints.get(j ), newpoints.get(j + 1));
+                Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
+                Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
+
+                newpaths.remove(j -1);
+                newpaths.remove(j-1);
+                newpaths.add(j-1, pathlasttop);
+                newpaths.add(j-1, pathptonext);
+
+        }
+        tour.setPointOfInterests(newpoints);
+        tour.setPaths(newpaths);
+
+        notifyObservers(tour);
+
+    }
 
     public List<Road> dijkstraToRoads(AbstractMap.SimpleEntry<Double, List<String>> path) {
         List<String> intersectionsBetweenPoints = path.getValue();
@@ -362,6 +386,7 @@ public class CityMap extends Observable {
     public HashMap<String, List<AbstractMap.Entry<String, Double>>> getAdjacencyList() {
         return adjacencyList;
     }
+
 
 }
 

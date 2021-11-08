@@ -22,6 +22,17 @@ public class HighlightState implements State {
         c.setCurrentState(c.tourState);
 
     }
+    @Override
+    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
+
+        if (poi == null) {
+
+            c.setCurrentState(c.tourState);
+        } else {
+            c.highlightState.entryAction(poi);
+            c.setCurrentState(c.highlightState);
+        }
+    }
 
     protected void entryAction(PointOfInterest poi) {
         this.highlightpoint=poi;
