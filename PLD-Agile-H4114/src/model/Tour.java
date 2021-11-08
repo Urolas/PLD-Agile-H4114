@@ -77,7 +77,9 @@ public class Tour extends Observable {
 
     }
 
-    public void remove(PointOfInterest poi) {
+
+    public PointOfInterest getPointBefore ( PointOfInterest pointOfInterest){
+        return this.pointOfInterests.get(this.pointOfInterests.indexOf(pointOfInterest)-1);
 
     }
 

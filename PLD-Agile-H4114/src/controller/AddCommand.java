@@ -9,8 +9,8 @@ import model.*;
 public class AddCommand implements Command {
 
     private CityMap map;
-    private PointOfInterest poiP;
-    private PointOfInterest poiD;
+    private PickupAddress poiP;
+    private DeliveryAddress poiD;
     private PointOfInterest preP;
     private PointOfInterest preD;
     /**
@@ -40,7 +40,8 @@ public class AddCommand implements Command {
      * @return
      */
     public void undoCommand() {
-        // TODO implement here
+        map.removeRequest(poiP,poiD);
+        map.distribution.removeRequest(poiP,poiD);
     }
 
 }

@@ -56,13 +56,6 @@ public class Controller {
         currentState.redo(listOfCommands);
     }
 
-    /**
-     * @param command
-     * @return
-     */
-    public void add(Command command) {
-        // TODO implement here
-    }
 
     public void loadCityMap() {
         try {

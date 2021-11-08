@@ -254,25 +254,9 @@ public class CityMap extends Observable {
 
     }
 
-    public void removeRequest(PointOfInterest pointOfInterest) {
-        PickupAddress paddress = null;
-        DeliveryAddress daddress = null;
-        Set<Request> requests = this.distribution.getRequests();
-        if (pointOfInterest instanceof PickupAddress) {
-            paddress = (PickupAddress) pointOfInterest;
-            for (Request request : requests) {
-                if (request.getPickup().equals(paddress)) {
-                    daddress = request.getDelivery();
-                }
-            }
-        } else {
-            daddress = (DeliveryAddress) pointOfInterest;
-            for (Request request : requests) {
-                if (request.getDelivery().equals(daddress)) {
-                    paddress = request.getPickup();
-                }
-            }
-        }
+    public void removeRequest(PickupAddress paddress,DeliveryAddress daddress) {
+
+
         this.distribution.removeRequest(paddress, daddress);
 
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());

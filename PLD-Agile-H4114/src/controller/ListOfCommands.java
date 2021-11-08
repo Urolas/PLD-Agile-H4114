@@ -52,11 +52,13 @@ public class ListOfCommands {
     /**
      * Reinsert the last command removed by undo
      */
-    public void redo() throws Exception {
+    public void redo(){
         if (currentIndex < list.size()-1){
             currentIndex++;
             Command cde = list.get(currentIndex);
-            cde.doCommand();
+            try {
+                cde.doCommand();
+            } catch (Exception ignored){}
         }
     }
 

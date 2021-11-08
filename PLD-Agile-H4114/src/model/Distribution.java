@@ -83,6 +83,24 @@ public class Distribution extends Observable {
         }
         return points;
     }
+    public DeliveryAddress getDelivery(PickupAddress p) {
+        for (Request request : requests) {
+            if (request.getPickup().equals(p)) {
+                return request.getDelivery();
+            }
+        }
+        return null;
+
+    }
+    public PickupAddress getPickup(DeliveryAddress d) {
+        for (Request request : requests) {
+            if (request.getDelivery().equals(d)) {
+                return request.getPickup();
+            }
+        }
+        return null;
+
+    }
 
     public HashMap<Integer, Integer> GetConstraints() {
         HashMap<Integer, Integer> result = new HashMap<>();

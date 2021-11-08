@@ -58,4 +58,13 @@ public class TourState implements State {
                 System.out.println(e);
             }
     }
+    @Override
+    public void undo(ListOfCommands listOfCdes){
+        listOfCdes.undo();
+    }
+
+    @Override
+    public void redo(ListOfCommands listOfCdes){
+        listOfCdes.redo();
+    }
 }
