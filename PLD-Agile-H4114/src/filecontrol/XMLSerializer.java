@@ -44,32 +44,17 @@ public class XMLSerializer {
     public static void save(CityMap citymap, File xml) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, XMLException{
         StreamResult result = new StreamResult(xml);
         document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        document.appendChild(createPlanElt(citymap));
+        document.appendChild(createRoadMap(citymap));
         DOMSource source = new DOMSource(document);
         Transformer xformer = TransformerFactory.newInstance().newTransformer();
         xformer.setOutputProperty(OutputKeys.INDENT, "yes");
         xformer.transform(source, result);
     }
 
-    private static Element createPlanElt(CityMap citymap) {
+
+    private static Element createRoadMap(CityMap citymap) {
         Element root = document.createElement("roadmap");
-        /*createAttribute(racine,"width",Integer.toString(plan.getWidth()));
-        Iterator<Shape> it = plan.getShapeIterator();
-        while (it.hasNext()){
-            it.next().display(this);
-            racine.appendChild(shapeRoot);
-        }*/
         return root;
     }
 
-    private void createAttribute(Element root, String name, String value){
-        Attr attribut = document.createAttribute(name);
-        root.setAttributeNode(attribut);
-        attribut.setValue(value);
-    }
-
-    public void display(PointOfInterest p) {
-        //PointRoot = document.createElement("rectangle");
-        //createAttribute(shapeRoot,"x",Integer.toString(r.getCorner().getX()));
-    }
 }
