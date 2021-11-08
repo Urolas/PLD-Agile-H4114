@@ -1,11 +1,14 @@
 package view;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import javax.swing.SwingUtilities;
 
 import controller.Controller;
+import model.Intersection;
+import model.PointOfInterest;
 
 /**
  * @author 4IF-4114
@@ -24,6 +27,25 @@ public class MouseListener extends MouseAdapter {
         this.controller = c;
         this.mapView = mapView;
         this.window = w;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent evt){
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1:
+                Intersection intersection = mapView.getClosestIntersection(e.getX(), e.getY());
+                PointOfInterest pointOfInterest = mapView.getClosestPointOfInterest(e.getX(),e.getY());
+                System.out.println(intersection);
+                System.out.println(pointOfInterest);
+
+                controller.leftClick(intersection,pointOfInterest);
+                break;
+            case MouseEvent.BUTTON3:
+//                controller.rightClick();
+                break;
+            default:
+        }
     }
 
     @Override

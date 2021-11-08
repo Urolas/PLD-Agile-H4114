@@ -2,6 +2,7 @@ package model;
 
 import observer.Observable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,5 +76,13 @@ public class Tour extends Observable {
 
 
     }
+
+
+    public PointOfInterest getPointBefore ( PointOfInterest pointOfInterest){
+        return this.pointOfInterests.get(this.pointOfInterests.indexOf(pointOfInterest)-1);
+
+    }
+
+
 }
 
