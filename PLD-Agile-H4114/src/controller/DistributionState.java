@@ -34,6 +34,8 @@ public class DistributionState implements State {
         c.setCurrentState(c.citymapState);
     }
 
+
+
     public void keyStroke(MapView mapView, int keyCode){
 
         if (keyCode == 37){

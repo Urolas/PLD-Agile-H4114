@@ -35,6 +35,8 @@ public interface State {
             IOException, SAXException{
     };
 
+    public default void generateRoadmap(Controller c, Window w) throws IOException {};
+
     default void computeTour(Controller controller, Window window){};
 
     public default void modifyDistribution(Controller controller){};

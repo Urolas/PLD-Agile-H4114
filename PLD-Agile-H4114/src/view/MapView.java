@@ -97,7 +97,9 @@ public class MapView extends JPanel implements Observer {
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
+
         repaint();
+
     }
 
     public void dragMap(int mouseX, int mouseY){
@@ -187,6 +189,7 @@ public class MapView extends JPanel implements Observer {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        counterInter = 0;
         this.g = g;
         this.g2 = (Graphics2D) g;
         for(Map.Entry<AbstractMap.SimpleEntry<String,String>,Road> road : cityMap.getRoads().entrySet()){

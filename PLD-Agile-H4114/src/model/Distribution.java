@@ -40,6 +40,8 @@ public class Distribution extends Observable {
         return requests;
     }
 
+    public List<String> getColorList(){return requestColors;}
+
     public void reset() {
 
         this.requests.clear();
@@ -57,6 +59,7 @@ public class Distribution extends Observable {
         PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration, i);
         DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration, i + 1);
         System.out.println(i);
+
         Request r;
         if ((i - 1) / 2 < this.requestColors.size()) {
             r = new Request(pAddress, dAddress, Color.decode(this.requestColors.get((i - 1) / 2)));

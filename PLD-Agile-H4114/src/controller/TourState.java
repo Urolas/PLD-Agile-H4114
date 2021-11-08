@@ -66,5 +66,10 @@ public class TourState implements State {
     @Override
     public void redo(ListOfCommands listOfCdes){
         listOfCdes.redo();
+
+    public void generateRoadmap(Controller c, Window w) throws IOException {
+        c.getCitymap().generateRoadmap();
+        c.setCurrentState(c.tourState);
+
     }
 }
