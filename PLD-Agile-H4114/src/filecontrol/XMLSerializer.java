@@ -57,4 +57,10 @@ public class XMLSerializer {
         return root;
     }
 
+    private void createAttribute(Element root, String name, String value){
+        Attr attribut = document.createAttribute(name);
+        root.setAttributeNode(attribut);
+        attribut.setValue(value);
+    }
+
 }
