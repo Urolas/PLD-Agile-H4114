@@ -1,10 +1,12 @@
 package controller;
 
 import model.CityMap;
+
 import model.Intersection;
 import model.PointOfInterest;
+
 import view.Window;
-import xml.XMLException;
+import filecontrol.XMLException;
 
 import java.io.IOException;
 

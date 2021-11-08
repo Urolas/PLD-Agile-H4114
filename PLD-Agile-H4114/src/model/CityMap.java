@@ -5,11 +5,10 @@ import tsp.TSPDoubleInsertion;
 import view.MapView;
 import observer.Observable;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
-
+import java.util.List;
 
 import tsp.TSP;
 import tsp.TSPplaceholder;

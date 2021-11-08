@@ -1,4 +1,4 @@
-package xml;
+package filecontrol;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

@@ -7,8 +7,9 @@ import model.PointOfInterest;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
-import xml.XMLDeserializer;
-import xml.XMLException;
+import filecontrol.RoadMapGenerator;
+import filecontrol.XMLDeserializer;
+import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
@@ -68,7 +69,7 @@ public class TourState implements State {
         listOfCdes.redo();
     }
     public void generateRoadmap(Controller c, Window w) throws IOException {
-        c.getCitymap().generateRoadmap();
+        RoadMapGenerator.generateRoadmap(c.getCitymap());
         c.setCurrentState(c.tourState);
 
     }

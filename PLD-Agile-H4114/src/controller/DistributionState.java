@@ -4,8 +4,8 @@ package controller;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
-import xml.XMLDeserializer;
-import xml.XMLException;
+import filecontrol.XMLDeserializer;
+import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
