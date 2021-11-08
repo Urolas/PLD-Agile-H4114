@@ -1,17 +1,12 @@
 
 import controller.Controller;
-import model.Distribution;
-import model.Intersection;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import xml.*;
+import filecontrol.*;
 import model.CityMap;
 
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class main {
 

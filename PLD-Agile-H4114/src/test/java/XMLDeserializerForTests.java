@@ -1,48 +1,38 @@
-package xml;
-
-import java.util.*;
-import java.io.File;
-import java.io.IOException;
-import java.lang.String;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import model.CityMap;
+import model.Intersection;
+import model.Road;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import filecontrol.XMLException;
+import filecontrol.XMLFileOpener;
 
-import model.CityMap;
-import model.Intersection;
-import model.Road;
-import model.Distribution;
-import model.Request;
-import model.DepotAddress;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
-/**
- * @author 4IF-4114
- */
-public class XMLDeserializer {
+public class XMLDeserializerForTests {
 
-    /**
-     * Default constructor
-     */
-    public XMLDeserializer() {
+    public static void loadCityMap(CityMap cityMap, String path, HashMap<String, Intersection> intersectionsExpected, HashMap<AbstractMap.SimpleEntry<String, String>, Road> roadsExpectedSet, HashMap<String, List<Map.Entry<String, Double>>> adjacencyListExpected) throws ParserConfigurationException, SAXException, IOException, XMLException {
+
+        File xml = new File(path);
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document document = docBuilder.parse(xml);
+        Element root = document.getDocumentElement();
+        if (root.getNodeName().equals("map")) {
+            buildCityMapFromDOMXML(root, cityMap, intersectionsExpected,roadsExpectedSet,adjacencyListExpected);
+        } else {
+            throw new XMLException("Wrong format");
+        }
     }
 
-    /**
-     * Open an XML file and create plan from this file
-     *
-     * @param cityMap
-     * @return
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
-     * @throws XMLException
-     */
-    public static void loadCityMap(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
-        File xml = XMLFileOpener.getInstance().open(true);
+    public static void loadCityMap(CityMap cityMap, String path) throws ParserConfigurationException, SAXException, IOException, XMLException {
+
+        File xml = new File(path);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
@@ -53,12 +43,8 @@ public class XMLDeserializer {
         }
     }
 
-    /**
-     * @param cityMap
-     * @return
-     */
-    public static void loadDistribution(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
-        File xml = XMLFileOpener.getInstance().open(true);
+    public static void loadDistribution(CityMap cityMap, String path) throws ParserConfigurationException, SAXException, IOException, XMLException {
+        File xml = new File(path);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element root = document.getDocumentElement();
@@ -69,12 +55,58 @@ public class XMLDeserializer {
         }
     }
 
-    /**
-     * @param rootDOMNode
-     * @param cityMap
-     * @return
-     */
-    private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException {
+    private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap, HashMap<String,Intersection> intersectionsExpected, HashMap<AbstractMap.SimpleEntry<String,String>,Road> roadsExpectedSet,HashMap<String, List<AbstractMap.Entry<String,Double>>> adjacencyListExpected) throws NumberFormatException {
+
+        cityMap.reset();
+        Double maxLatitude = null;
+        Double minLatitude = null;
+        Double maxLongitude = null;
+        Double minLongitude = null;
+
+        NodeList intersectionList = rootDOMNode.getElementsByTagName("intersection");
+        for (int i = 0; i < intersectionList.getLength(); i++) {
+            Element elt = (Element) intersectionList.item(i);
+            String id = elt.getAttribute("id");
+            Double latitude = Double.parseDouble(elt.getAttribute("latitude"));
+            Double longitude = Double.parseDouble(elt.getAttribute("longitude"));
+            if (maxLatitude == null || maxLatitude < latitude) {
+                maxLatitude = latitude;
+            }
+            if (minLatitude == null || minLatitude > latitude) {
+                minLatitude = latitude;
+            }
+            if (maxLongitude == null || maxLongitude < longitude) {
+                maxLongitude = longitude;
+            }
+            if (minLongitude == null || minLongitude > longitude) {
+                minLongitude = longitude;
+            }
+            cityMap.addIntersection(new Intersection(id, latitude, longitude));
+            intersectionsExpected.put(id,new Intersection(id,latitude,longitude));
+            adjacencyListExpected.put(id, new LinkedList<>());
+            cityMap.initializeAdjacencyList(id);
+        }
+        cityMap.setHeight(maxLatitude-minLatitude);
+        cityMap.setWidth(maxLongitude-minLongitude);
+        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
+        NodeList roadList = rootDOMNode.getElementsByTagName("segment");
+        for (int i = 0; i < roadList.getLength(); i++) {
+            Element elt = (Element) roadList.item(i);
+            String id1 = elt.getAttribute("origin");
+            String id2 = elt.getAttribute("destination");
+            String name = elt.getAttribute("name");
+            Double length = Double.parseDouble(elt.getAttribute("length"));
+            cityMap.addRoad(name,length, id1, id2);
+            Road r = new Road(name,length);
+            r.addRoads(intersectionsExpected.get(id1),intersectionsExpected.get(id2));
+            roadsExpectedSet.put(new AbstractMap.SimpleEntry<>(id1,id2),r);
+            adjacencyListExpected.get(id1).add(new AbstractMap.SimpleEntry<>(id2,length));
+            cityMap.completeAdjacencyList(id1, id2,length);
+        }
+    }
+
+    private static void buildCityMapFromDOMXML(Element rootDOMNode,CityMap cityMap) throws NumberFormatException {
 
         cityMap.reset();
         Double maxLatitude = null;
@@ -119,9 +151,6 @@ public class XMLDeserializer {
         }
     }
 
-    /**
-     * Citymap mis en argument pour pouvoir recuperer les intersections, qu'on va ensuite ratacher aux points d'interet
-     * */
     private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
         cityMap.distribution.reset();
@@ -153,17 +182,5 @@ public class XMLDeserializer {
 
 
     }
-
-
-
-
-
-    /**
-     * @param elt
-     * @return
-     */
-
-
-
 
 }

@@ -18,12 +18,12 @@ public class DepotAddress extends PointOfInterest {
         departureTime = LocalTime.parse("00:00:00");
     }
 
-
+    //departureTime
     public DepotAddress(Intersection i, String departureTime) {
         super(i,0);
         String[] fractureddepartureTime= departureTime.split(":");
         for(int j=0;j<3;j++){
-            if (Integer.parseInt(fractureddepartureTime[j])<10){
+            if (fractureddepartureTime[j].length()<2){
                 fractureddepartureTime[j]="0"+fractureddepartureTime[j];
             }
         }
@@ -36,7 +36,7 @@ public class DepotAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(this.departureTime!=((DepotAddress) obj).departureTime){
+        if(!this.departureTime.equals(((DepotAddress) obj).departureTime)){
             return false;
         }
         return true;

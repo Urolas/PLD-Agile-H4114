@@ -1,12 +1,13 @@
 package controller;
 
 import model.CityMap;
-import org.xml.sax.SAXException;
-import view.MapView;
-import view.Window;
-import xml.XMLException;
 
-import javax.xml.parsers.ParserConfigurationException;
+import model.Intersection;
+import model.PointOfInterest;
+
+import view.Window;
+import filecontrol.XMLException;
+
 import java.io.IOException;
 
 /**
@@ -18,6 +19,12 @@ public class Controller {
     protected final CityMapState citymapState = new CityMapState();
     protected final DistributionState distributionState = new DistributionState();
     protected final TourState tourState = new TourState();
+    protected final AddState1 addState1 = new AddState1();
+    protected final AddState2 addState2 = new AddState2();
+    protected final AddState3 addState3 = new AddState3();
+    protected final AddState4 addState4 = new AddState4();
+    protected final HighlightState highlightState = new HighlightState();
+
 
     private CityMap cityMap;
     private Window window;
@@ -32,39 +39,34 @@ public class Controller {
         this.cityMap = city;
         this.listOfCommands = new ListOfCommands();
         this.currentState = initialState;
-        this.window = new Window(cityMap,this);
+        this.window = new Window(cityMap, this);
     }
 
-    protected void setCurrentState(State state){
+    protected void setCurrentState(State state) {
         this.currentState = state;
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Undo"
      */
     public void undo() {
-        // TODO implement here
+        currentState.undo(listOfCommands);
     }
 
     /**
-     * @return
+     * Method called by window after a click on the button "Redo"
      */
     public void redo() {
-        // TODO implement here
+        currentState.redo(listOfCommands);
     }
 
-    /**
-     * @param command 
-     * @return
-     */
-    public void add(Command command) {
-        // TODO implement here
-    }
 
-    public void loadCityMap()  {
-        try{
+    public void loadCityMap() {
+        try {
             this.currentState.loadMap(this, window);
         }catch(XMLException e){
+            cityMap.reset();
+            this.currentState = this.initialState;
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -75,6 +77,9 @@ public class Controller {
         try{
             this.currentState.loadDistribution(this,window);
         }catch(XMLException e){
+            cityMap.getDistribution().reset();
+            cityMap.getTour().resetTour();
+            this.currentState = this.citymapState;
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -100,40 +105,70 @@ public class Controller {
     }
 
     public void computeTour() {
-        try{
+        try {
             this.currentState.computeTour(this, window);
-        }catch(Exception e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void modifyDistribution() {
+        try {
+            this.currentState.modifyDistribution(this);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void removePointOfInterest() {
+        try {
+            this.currentState.removePointOfInterest(this, this.window, this.cityMap, this.listOfCommands);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void zoomIn() {
-        try{
-            window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth()/2,
-                    window.getMapView().getViewHeight()/2);
-        }catch(Exception e){
+        try {
+            window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth() / 2,
+                    window.getMapView().getViewHeight() / 2);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void zoomOut() {
-        try{
-            window.getMapView().modifyZoom(1/1.5, window.getMapView().getViewWidth()/2,
-                    window.getMapView().getViewHeight()/2);
-        }catch(Exception e){
+        try {
+            window.getMapView().modifyZoom(1 / 1.5, window.getMapView().getViewWidth() / 2,
+                    window.getMapView().getViewHeight() / 2);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
 
         }
     }
 
     public void recenter() {
-        try{
-            window.getMapView().modifyZoom(1, window.getMapView().getViewWidth()/2,
-                    window.getMapView().getViewHeight()/2);
-        }catch(Exception e){
+        try {
+            window.getMapView().modifyZoom(1, window.getMapView().getViewWidth() / 2,
+                    window.getMapView().getViewHeight() / 2);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
 
         }
     }
 
+    /**
+     * Method called by window after a left click on a point of the graphical view
+     * Precondition : p != null
+     *
+     * @param p = coordinates of the click in the citymap
+     */
+    public void leftClick(Intersection intersection, PointOfInterest pointOfInterest) {
+        System.out.println(this.currentState);
+        currentState.leftClick(this, window, cityMap, listOfCommands, intersection, pointOfInterest);
+    }
+
+    public Window getWindow() {
+        return window;
+    }
 }
