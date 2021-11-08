@@ -9,7 +9,7 @@ public interface Command {
     /**
      * @return
      */
-    public void doCommand();
+    public void doCommand() throws Exception;
 
     /**
      * @return

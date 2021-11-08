@@ -2,6 +2,7 @@ package model;
 
 import observer.Observable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class Tour extends Observable {
     //Methode d'egalité entre les Tours
     public boolean equals(Object o) {
         //Meme class
-        if (o.getClass() != Tour.class) {
+        if (!o.getClass().equals(Tour.class)) {
             return false;
         }
         //Meme path
@@ -75,5 +76,13 @@ public class Tour extends Observable {
 
 
     }
+
+
+    public PointOfInterest getPointBefore ( PointOfInterest pointOfInterest){
+        return this.pointOfInterests.get(this.pointOfInterests.indexOf(pointOfInterest)-1);
+
+    }
+
+
 }
 

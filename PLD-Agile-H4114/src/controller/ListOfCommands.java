@@ -1,44 +1,72 @@
 package controller;
 
-import java.util.Set;
-import java.util.HashSet;
-
-
-/**
- * @author 4IF-4114
- */
+import java.util.LinkedList;
 
 public class ListOfCommands {
-
-    private Set<Command> commands;
+    private LinkedList<Command> list;
     private int currentIndex;
-    /**
-     * Default constructor
-     */
-    public ListOfCommands() {
+
+    public ListOfCommands(){
         currentIndex = -1;
-        commands = new HashSet<Command>();
+        list = new LinkedList<Command>();
     }
 
     /**
-     * 
+     * Add command c to this
+     * @param c the command to add
      */
-    public void add(Command command) {
-        // TODO implement here
+    public void add(Command c) throws Exception {
+        int i = currentIndex+1;
+        while(i<list.size()){
+            list.remove(i);
+        }
+        currentIndex++;
+        list.add(currentIndex, c);
+
+        c.doCommand();
     }
 
     /**
-     * @return
+     * Temporary remove the last added command (this command may be reinserted again with redo)
      */
-    public void undo() {
-        // TODO implement here
+    public void undo(){
+        if (currentIndex >= 0){
+            Command cde = list.get(currentIndex);
+            currentIndex--;
+            cde.undoCommand();
+        }
     }
 
     /**
-     * @return
+     * Permanently remove the last added command (this command cannot be reinserted again with redo)
      */
-    public void redo() {
-        // TODO implement here
+    public void cancel(){
+        if (currentIndex >= 0){
+            Command cde = list.get(currentIndex);
+            list.remove(currentIndex);
+            currentIndex--;
+            cde.undoCommand();
+        }
     }
 
+    /**
+     * Reinsert the last command removed by undo
+     */
+    public void redo(){
+        if (currentIndex < list.size()-1){
+            currentIndex++;
+            Command cde = list.get(currentIndex);
+            try {
+                cde.doCommand();
+            } catch (Exception ignored){}
+        }
+    }
+
+    /**
+     * Permanently remove all commands from the list
+     */
+    public void reset(){
+        currentIndex = -1;
+        list.clear();
+    }
 }
