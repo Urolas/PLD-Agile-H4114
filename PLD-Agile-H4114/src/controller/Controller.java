@@ -6,6 +6,8 @@ import model.PointOfInterest;
 import view.Window;
 import xml.XMLException;
 
+import java.io.IOException;
+
 /**
  * @author 4IF-4114
  */
