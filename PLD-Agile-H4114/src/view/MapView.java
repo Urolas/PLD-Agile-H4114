@@ -198,10 +198,10 @@ public class MapView extends JPanel implements Observer {
         Tour t = cityMap.getTour();
         if (t!=null) {
             if (t.getPaths().size() != 0){
-                outline = Color.RED;
+                outline = new Color(200,0,0);
             }
             for (Path p : t.getPaths()){
-                displayPath(p);
+                displayPath(p,outline);
             }
 
         }
@@ -258,9 +258,9 @@ public class MapView extends JPanel implements Observer {
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
-    public void displayPath(Path p){
+    public void displayPath(Path p,Color c){
         for (Road r : p.getRoads()){
-            displayRoad(r,Color.red,3,true);
+            displayRoad(r,c,3,true);
         }
     }
     public void displayRequest(Request q,Color outline){
@@ -272,12 +272,12 @@ public class MapView extends JPanel implements Observer {
         g.setColor(q.color);
         g.fillOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         g.setColor(outline);
-        g2.setStroke(new BasicStroke(2));
+        g2.setStroke(new BasicStroke(3));
         g2.drawOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         g.setColor(q.color);
         g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
         g.setColor(outline);
-        g2.setStroke(new BasicStroke(2));
+        g2.setStroke(new BasicStroke(3));
         g.drawPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
 
     }
@@ -287,7 +287,9 @@ public class MapView extends JPanel implements Observer {
             int x = (int) ((cityMap.getDistribution().getDepot().getIntersection().getLongitude() - originLong) * scaleWidth);
             int y = -(int) ((cityMap.getDistribution().getDepot().getIntersection().getLatitude() - originLat) * scaleHeight);
             g.setColor(Color.black);
-            g.fillRect(x-POINT_SIZE/2, y-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
+            g.fillRect(x-2, y-25, POINT_SIZE+1, POINT_SIZE);
+            g2.setStroke(new BasicStroke(3));
+            g2.draw(new Line2D.Float(x, y-15, x, y));
         }
     }
 }

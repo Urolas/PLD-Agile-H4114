@@ -60,19 +60,8 @@ public class RoadmapView extends JPanel implements Observer {
         scrollPanel.setBackground(Color.BLACK);
         scrollPanel.setSize(0, VIEW_HEIGHT - this.BUTTON_HEIGHT);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.lightGray);
-        delButton = new JButton("Remove");
-        addButton = new JButton("Add");
-        delButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        addButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-
-        buttonPanel.add(this.addButton);
-        buttonPanel.add(this.delButton);
-
         this.add(scrollPanel);
-        this.add(buttonPanel);
+
 
         window.getContentPane().add(this);
     }
@@ -122,7 +111,7 @@ public class RoadmapView extends JPanel implements Observer {
 
         JPanel firstPanel = new JPanel();
         firstPanel.setLayout(null);
-        firstPanel.setPreferredSize(new Dimension(260,100));
+        firstPanel.setPreferredSize(new Dimension(250,80));
         firstPanel.setBackground(new Color(196,215,254));
 
         int hours = arrivalTime / 3600;
@@ -130,11 +119,11 @@ public class RoadmapView extends JPanel implements Observer {
         int seconds = arrivalTime % 60;
 
         JLabel title = new JLabel("Starting Point");
-        title.setBounds(25,20,150,20);
+        title.setBounds(25,15,150,20);
         title.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
         JLabel depTime = new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
-        depTime.setBounds(25,40,200,20);
+        depTime.setBounds(25,35,200,20);
         depTime.setFont(new Font("Segoe UI", Font.BOLD, 13));
 
         firstPanel.add(title);
@@ -154,11 +143,11 @@ public class RoadmapView extends JPanel implements Observer {
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(null);
-            subPanel1.setPreferredSize(new Dimension(260,100));
+            subPanel1.setPreferredSize(new Dimension(250,80));
             subPanel1.setBackground(new Color(196,215,254));
 
             JLabel title1 = new JLabel("Pickup Point "+ number );
-            title1.setBounds(25,20,150,20);
+            title1.setBounds(25,15,150,20);
             title1.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
             JLabel title2 = new JLabel("Delivery Point "+ number );
@@ -203,10 +192,10 @@ public class RoadmapView extends JPanel implements Observer {
                 }
             } else {
                 if (poi instanceof DeliveryAddress) {
-                    titleLabel.setText("Delivery Point " + poi.getIdPointOfInterest());
+                    titleLabel.setText("Delivery Point " + ((poi.getIdPointOfInterest()-2)/2+1));
 
                 } else if (poi instanceof PickupAddress) {
-                    titleLabel.setText("Pickup Point " + poi.getIdPointOfInterest());
+                    titleLabel.setText("Pickup Point " + ((poi.getIdPointOfInterest()-1)/2+1));
                 }
             }
             subPanel.add(titleLabel);
