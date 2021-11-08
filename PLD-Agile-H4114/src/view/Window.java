@@ -93,8 +93,8 @@ public class Window extends JFrame {
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
         messageFrame.setSize(windowWidth,60);
         messageFrame.setLocation(0,windowHeight-100);
-        mapView.setLocation(buttonWidth, 0);
-        roadmapView.setLocation(mapView.getViewWidth() + buttonWidth,0);
+        mapView.setLocation(BUTTON_WIDTH, 0);
+        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
     }
 
     /**
