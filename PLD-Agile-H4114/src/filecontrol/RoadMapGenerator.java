@@ -3,6 +3,8 @@ import model.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class RoadMapGenerator {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select file path and name");
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT File","txt"));
-        //fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File","xml"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File","xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
 
 
@@ -42,11 +44,19 @@ public class RoadMapGenerator {
             }else {
                 System.out.println("Save as file: " + newFile.getAbsolutePath());
                 try {
-                    FileWriter fw = new FileWriter(newFile);
-                    writeRoadmapTxt(fw,cityMap);
-                    fw.close();
+
+                    if(newFile.getName().endsWith(".txt")){
+                        FileWriter fw = new FileWriter(newFile);
+                        writeRoadmapTxt(fw,cityMap);
+                        fw.close();
+                    }else{
+                        writeRoadmapXml(cityMap, newFile);
+                    }
+
                 } catch (IOException e) {
                     System.out.println(e);
+                }catch(Exception ex){
+                    System.out.println(ex);
                 }
 
             }
@@ -57,6 +67,7 @@ public class RoadMapGenerator {
         }
 
     }
+
 
     public static void writeRoadmapTxt( FileWriter fw, CityMap cityMap) throws IOException {
 
@@ -139,7 +150,11 @@ public class RoadMapGenerator {
 
         }
 
+    }
 
+
+    public static void writeRoadmapXml(CityMap cityMap, File file) throws XMLException, ParserConfigurationException, TransformerException {
+        XMLSerializer.save(cityMap, file);
     }
 
 }
