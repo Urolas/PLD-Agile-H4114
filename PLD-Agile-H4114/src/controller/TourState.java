@@ -33,7 +33,7 @@ public class TourState implements State {
     }
 
     public void generateRoadmap(Controller c, Window w) throws IOException {
-        c.getCitymap().generateRoadmap();
+        GenerateRoadmap.generateRoadmap(c.getCitymap());
         c.setCurrentState(c.tourState);
     }
 }
