@@ -100,13 +100,6 @@ public class MapView extends JPanel implements Observer {
         repaint();
     }
 
-//    public double yToLat(int mouseY){
-//        return mouseY/scaleHeight + originLat;
-//    }
-//    public double xToLong(int mouseX){
-//        return mouseX/scaleWidth + originLong;
-//    }
-
     public void dragMap(int mouseX, int mouseY){
         System.out.println((mouseX - mouseClickedX)/scaleWidth);
         if  ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX)/scaleWidth) &&
