@@ -1,6 +1,7 @@
 package model;
 
 
+import java.util.Objects;
 
 /**
  * @author 4IF-4114
@@ -51,11 +52,12 @@ public class PointOfInterest {
         if(!this.intersection.equals(((PointOfInterest) obj).intersection)){
             return false;
         }
-        if(Integer.compare(this.duration,((PointOfInterest) obj).duration)!=0){
+        if(!Objects.equals(this.duration, ((PointOfInterest) obj).duration)){
             return false;
         }
         return true;
     }
+
 
     @Override
     public String toString() {
