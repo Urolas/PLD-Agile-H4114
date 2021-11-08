@@ -1,15 +1,12 @@
 
 import model.*;
 import org.junit.*;
-import org.junit.experimental.categories.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import xml.XMLException;
-import xml.XMLFileOpener;
+import filecontrol.XMLException;
 
-import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

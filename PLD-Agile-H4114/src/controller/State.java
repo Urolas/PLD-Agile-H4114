@@ -2,7 +2,7 @@ package controller;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
-import xml.XMLException;
+import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

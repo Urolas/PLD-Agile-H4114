@@ -1,4 +1,4 @@
-package controller;
+package filecontrol;
 import model.*;
 
 import javax.swing.*;
@@ -8,9 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class GenerateRoadmap {
+public class RoadMapGenerator {
 
-    public GenerateRoadmap(CityMap citymap){
+    public RoadMapGenerator(CityMap citymap){
     }
 
     public static void generateRoadmap(CityMap cityMap) {
@@ -63,7 +63,7 @@ public class GenerateRoadmap {
         boolean start = true;
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
         List<Path> pathList = cityMap.getTour().getPaths();
-        int arrivalTime = cityMap.getDistribution().getDepot().getDepartureTime().toSecondOfDay(); ;
+        int arrivalTime = cityMap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
 
         for (int poiNum = 0; poiNum < pointList.size(); poiNum++) {
             PointOfInterest poi = pointList.get(poiNum);

@@ -4,8 +4,9 @@ package controller;
 import org.xml.sax.SAXException;
 import view.MapView;
 import view.Window;
-import xml.XMLDeserializer;
-import xml.XMLException;
+import filecontrol.RoadMapGenerator;
+import filecontrol.XMLDeserializer;
+import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class TourState implements State {
     }
 
     public void generateRoadmap(Controller c, Window w) throws IOException {
-        GenerateRoadmap.generateRoadmap(c.getCitymap());
+        RoadMapGenerator.generateRoadmap(c.getCitymap());
         c.setCurrentState(c.tourState);
     }
 }
