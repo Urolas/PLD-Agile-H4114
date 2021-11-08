@@ -43,7 +43,7 @@ public class GenerateRoadmap {
                 System.out.println("Save as file: " + newFile.getAbsolutePath());
                 try {
                     FileWriter fw = new FileWriter(newFile);
-                    writeRoadmap(fw, newFile.getName(), cityMap);
+                    writeRoadmapTxt(fw,cityMap);
                     fw.close();
                 } catch (IOException e) {
                     System.out.println(e);
@@ -58,7 +58,7 @@ public class GenerateRoadmap {
 
     }
 
-    public static void writeRoadmap( FileWriter fw, String fileName, CityMap cityMap) throws IOException {
+    public static void writeRoadmapTxt( FileWriter fw, CityMap cityMap) throws IOException {
 
         boolean start = true;
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
