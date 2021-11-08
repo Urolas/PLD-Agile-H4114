@@ -29,9 +29,6 @@ public class ButtonListener implements ActionListener {
             case Window.LOAD_DISTRIBUTION: controller.loadDistribution(); break;
             case Window.UNDO: controller.undo(); break;
             case Window.REDO: controller.redo(); break;
-
-            case Window.GENERATE_ROADMAP: controller.generateRoadmap(); break;
-
             case Window.COMPUTE_TOUR: controller.computeTour();break;
             case Window.MODIFY: controller.modifyDistribution();break;
             case Window.REMOVE: controller.removePointOfInterest();break;

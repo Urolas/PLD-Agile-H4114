@@ -21,16 +21,11 @@ public class Window extends JFrame {
     protected static final String REMOVE = "Remove";
     protected static final String REDO = "Redo";
     protected static final String UNDO = "Undo";
-
-    protected static final String GENERATE_ROADMAP = "Generate roadmap";
-
     protected static final String ZOOM_IN = "+";
     protected static final String ZOOM_OUT = "-";
     protected static final String RECENTER = "=";
 
-
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, MODIFY, REMOVE,UNDO,REDO};
-
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
     private JLabel messageFrame;

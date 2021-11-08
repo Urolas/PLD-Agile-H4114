@@ -77,16 +77,14 @@ public class RoadmapView extends JPanel implements Observer {
 
         this.start = true;
         int i = 0;
-        this.arrivalTime = this.distribution.getDepot().getDepartureTime().toSecondOfDay();
+        this.arrivalTime = 0;
 
         this.roadmap.removeAll();
 
         if (this.tour.getPointOfInterests().size() == 0) { // Load distribution
 
             Set<Request> requestList = this.distribution.getRequests();
-            if(requestList.size() != 0 ) {
-                addRequestToRoadmap(requestList);
-            }
+            addRequestToRoadmap(requestList);
 
         }
         else { //Compute Tour
@@ -110,27 +108,9 @@ public class RoadmapView extends JPanel implements Observer {
 
     public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
 
-
         JPanel panel = new JPanel(new GridLayout(0, 1));
-        int number = 0;
-
-        JPanel firstPanel = new JPanel();
-        firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-        firstPanel.setBackground(Color.WHITE);
-        firstPanel.setBorder(BorderFactory.createTitledBorder("Starting point"));
-
-        int hours = arrivalTime / 3600;
-        int minutes = (arrivalTime % 3600) / 60;
-        int seconds = arrivalTime % 60;
-
-        firstPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-        firstPanel.add(new JLabel("    Latitude: "+ this.distribution.getDepot().getIntersection().getLatitude()));
-        firstPanel.add(new JLabel("    Longitude: "+ this.distribution.getDepot().getIntersection().getLongitude()));
-
-        panel.add(firstPanel);
-
+        int number = 1;
         for (Request request : requestList) {
-            number++;
             System.out.println(request);
 
             JPanel subPanel1 = new JPanel();
@@ -150,7 +130,7 @@ public class RoadmapView extends JPanel implements Observer {
 
             panel.add(subPanel1);
             panel.add(subPanel2);
-
+            number++;
         }
         this.roadmap.add(panel,BorderLayout.NORTH);
 
@@ -158,12 +138,10 @@ public class RoadmapView extends JPanel implements Observer {
 
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
-
         JPanel panel = new JPanel(new GridLayout(0, 1));
-        List<Path> pathList = this.tour.getPaths();
 
-        for (int poiNum = 0; poiNum < pointList.size(); poiNum++) {
-            PointOfInterest poi = pointList.get(poiNum);
+        for (PointOfInterest poi : pointList ) {
+            System.out.println(poi.toString());
 
             JPanel subPanel = new JPanel();
             subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
@@ -172,6 +150,7 @@ public class RoadmapView extends JPanel implements Observer {
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 if (this.start) {
                     subPanel.setBorder(BorderFactory.createTitledBorder("START"));
+                    this.start = false;
                 } else {
                     subPanel.setBorder(BorderFactory.createTitledBorder("END"));
                 }
@@ -183,37 +162,14 @@ public class RoadmapView extends JPanel implements Observer {
                 }
             }
 
-            int durationRoad=0;
-
-
-            if(poiNum<pointList.size()-1) {
-                Path path = (Path) (pathList.get(poiNum));
-                durationRoad = (int) (path.getLength()/15000. * 3600.);
-            }
-
             arrivalTime += poi.getDuration();
-            int hours = arrivalTime / 3600;
-            int minutes = (arrivalTime % 3600) / 60;
-            int seconds = arrivalTime % 60;
-
 
             subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
             subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
             subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
-            if(this.start){
-                subPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-            }else {
-                subPanel.add(new JLabel("    Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-            }
+            subPanel.add(new JLabel("    Arrival Time: " + arrivalTime + " seconds"));
 
-            if(this.start){
-                this.start = false;
-            }
-
-
-            arrivalTime +=durationRoad;
             panel.add(subPanel);
-
 
         }
         this.roadmap.add(panel,BorderLayout.NORTH);

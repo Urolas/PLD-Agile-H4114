@@ -27,11 +27,11 @@ public class Intersection {
     @Override
     public boolean equals(Object o){
         //Meme class
-        if (!o.getClass().equals(this.getClass())){
+        if (o.getClass() != this.getClass()) {
             return false;
         }
         //Meme id
-        if(!this.id.equals(((Intersection) o).id)){
+        if(this.id != ((Intersection) o).id){
             return false;
         }
         //Meme latitude

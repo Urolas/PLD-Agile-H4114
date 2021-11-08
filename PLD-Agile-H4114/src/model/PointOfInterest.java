@@ -1,9 +1,10 @@
 package model;
 
 
+import observer.Observable;
+
 import java.awt.*;
 import observer.Observable;
-import java.util.Objects;
 
 /**
  * @author 4IF-4114
@@ -65,12 +66,11 @@ public class PointOfInterest extends Observable {
         if(!this.intersection.equals(((PointOfInterest) obj).intersection)){
             return false;
         }
-        if(!Objects.equals(this.duration, ((PointOfInterest) obj).duration)){
+        if(Integer.compare(this.duration,((PointOfInterest) obj).duration)!=0){
             return false;
         }
         return true;
     }
-
 
     @Override
     public String toString() {
