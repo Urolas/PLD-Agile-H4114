@@ -28,7 +28,6 @@ public class Distribution extends Observable {
         this.requestColors.add("#FF717E");
         this.requestColors.add("#FFDE00");
         this.requestColors.add("#006666");
-        this.requestColors.add("#FFFFFF");
 
     }
 
