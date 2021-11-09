@@ -42,7 +42,7 @@ public class MouseListener extends MouseAdapter {
                 controller.leftClick(intersection,pointOfInterest);
                 break;
             case MouseEvent.BUTTON3:
-//                controller.rightClick();
+                controller.rightClick();
                 break;
             default:
         }

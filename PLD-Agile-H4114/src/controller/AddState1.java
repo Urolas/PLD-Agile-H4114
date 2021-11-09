@@ -22,6 +22,11 @@ public class AddState1 implements State {
         }
     }
 
+    @Override
+    public void rightClick(Controller c){
+        c.setCurrentState(c.tourState);
+    }
+
     protected void entryAction(Window w) {
         w.displayMessage("Placez le pickupPoint");
     }
