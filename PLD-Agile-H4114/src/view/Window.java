@@ -120,6 +120,8 @@ public class Window extends JFrame {
         return mapView;
     }
 
+    public RoadmapView getRoadmapView() { return roadmapView; }
+
     public void parsingError(String message) {
         final JPanel panel = new JPanel();
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);

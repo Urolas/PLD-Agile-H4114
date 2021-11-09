@@ -31,6 +31,8 @@ public class MapView extends JPanel implements Observer {
     private final int VIEW_HEIGHT = 800;
     private final int VIEW_WIDTH = 800;
     private final int POINT_SIZE = 15;
+    private final int HIGHLIGHT_POINT_SIZE = 20;
+    private final int SECONDARY_POINT_SIZE = 17;
     private double scaleZoom = 1;
     private double mapWidth;
     private double mapHeight;
@@ -214,6 +216,45 @@ public class MapView extends JPanel implements Observer {
                 displayRequest(q,outline);
             }
         }
+        if(cityMap.secondaryhighlight!=null & cityMap.primaryhighlight!=null){
+            displayHighlights(cityMap.primaryhighlight,cityMap.secondaryhighlight);
+
+        }
+
+
+    }
+
+    private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
+
+        int x1 = convertLongitudeToPixel(p1.getIntersection().getLongitude());
+        int y1 = convertLatitudeToPixel(p1.getIntersection().getLatitude());
+        Color Color1 = p1.getColor();
+        int x2 = convertLongitudeToPixel(p2.getIntersection().getLongitude());
+        int y2 = convertLatitudeToPixel(p2.getIntersection().getLatitude());
+        Color Color2 = p2.getColor();
+        if (p1 instanceof PickupAddress) {
+            g.setColor(Color1);
+            g.fillOval(x1 - HIGHLIGHT_POINT_SIZE/2, y1 - HIGHLIGHT_POINT_SIZE/2, HIGHLIGHT_POINT_SIZE , HIGHLIGHT_POINT_SIZE );
+            g.setColor(Color.yellow);
+            g2.setStroke(new BasicStroke(2));
+            g2.drawOval(x1 - HIGHLIGHT_POINT_SIZE/2, y1 - HIGHLIGHT_POINT_SIZE/2, HIGHLIGHT_POINT_SIZE , HIGHLIGHT_POINT_SIZE);
+            g.setColor(Color2);
+            g.fillPolygon(new int[]{x2-SECONDARY_POINT_SIZE/2, x2 + SECONDARY_POINT_SIZE/2, x2 }, new int[]{y2-SECONDARY_POINT_SIZE/2, y2-SECONDARY_POINT_SIZE/2, y2 + SECONDARY_POINT_SIZE/2}, 3);
+            g.setColor(Color.yellow);
+            g2.setStroke(new BasicStroke(2));
+            g.drawPolygon(new int[]{x2-SECONDARY_POINT_SIZE/2, x2 + SECONDARY_POINT_SIZE/2, x2 }, new int[]{y2-SECONDARY_POINT_SIZE/2, y2-SECONDARY_POINT_SIZE/2, y2 + SECONDARY_POINT_SIZE/2}, 3);
+        } else {
+            g.setColor(Color2);
+            g.fillOval(x2 - SECONDARY_POINT_SIZE/2, y2 - SECONDARY_POINT_SIZE/2, SECONDARY_POINT_SIZE , SECONDARY_POINT_SIZE );
+            g.setColor(Color.yellow);
+            g2.setStroke(new BasicStroke(2));
+            g2.drawOval(x2 - SECONDARY_POINT_SIZE/2, y2 - SECONDARY_POINT_SIZE/2, SECONDARY_POINT_SIZE , SECONDARY_POINT_SIZE );
+            g.setColor(Color1);
+            g.fillPolygon(new int[]{x1-HIGHLIGHT_POINT_SIZE/2, x1 + HIGHLIGHT_POINT_SIZE/2, x1}, new int[]{y1-HIGHLIGHT_POINT_SIZE/2, y1-HIGHLIGHT_POINT_SIZE/2, y1 + HIGHLIGHT_POINT_SIZE/2}, 3);
+            g.setColor(Color.yellow);
+            g2.setStroke(new BasicStroke(2));
+            g.drawPolygon(new int[]{x1-HIGHLIGHT_POINT_SIZE/2, x1 + HIGHLIGHT_POINT_SIZE/2, x1}, new int[]{y1-HIGHLIGHT_POINT_SIZE/2, y1-HIGHLIGHT_POINT_SIZE/2, y1 + HIGHLIGHT_POINT_SIZE/2}, 3);
+        }
     }
 
     /**
@@ -280,10 +321,10 @@ public class MapView extends JPanel implements Observer {
         g2.setStroke(new BasicStroke(2));
         g2.drawOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
         g.setColor(q.color);
-        g.fillPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
+        g.fillPolygon(new int[] {x2-POINT_SIZE/2, x2+POINT_SIZE/2, x2}, new int[] {y2-POINT_SIZE/2, y2-POINT_SIZE/2, y2+POINT_SIZE/2}, 3);
         g.setColor(outline);
         g2.setStroke(new BasicStroke(2));
-        g.drawPolygon(new int[] {x2, x2+POINT_SIZE, x2+POINT_SIZE/2}, new int[] {y2, y2, y2+POINT_SIZE}, 3);
+        g.drawPolygon(new int[] {x2-POINT_SIZE/2, x2+POINT_SIZE/2, x2}, new int[] {y2-POINT_SIZE/2, y2-POINT_SIZE/2, y2+POINT_SIZE/2}, 3);
 
     }
 
@@ -319,4 +360,6 @@ public class MapView extends JPanel implements Observer {
         }
         return null;
     }
+
+
 }

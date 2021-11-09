@@ -23,6 +23,9 @@ public class CityMap extends Observable {
     public Tour tour;
     private Double width, height, nordPoint, westPoint;
     private HashMap<String, List<AbstractMap.Entry<String, Double>>> adjacencyList;
+    public PointOfInterest primaryhighlight;
+    public PointOfInterest secondaryhighlight;
+
 
     @Override
     public String toString() {
@@ -406,5 +409,10 @@ public class CityMap extends Observable {
     }
 
 
+    public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
+        this.primaryhighlight=highlightpoint;
+        this.secondaryhighlight=secondaryPoint;
+        notifyObservers();
+    }
 }
 

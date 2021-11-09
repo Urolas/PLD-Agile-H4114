@@ -52,7 +52,7 @@ public class TourState implements State {
     public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
         if (poi != null)
             try{
-                c.highlightState.entryAction(poi);
+                c.highlightState.entryAction(poi,cityMap,w);
                 c.setCurrentState(c.highlightState);
 
             } catch (Exception e){

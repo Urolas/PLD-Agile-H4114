@@ -220,6 +220,4 @@ public class RoadmapView extends JPanel implements Observer {
 
 
     }
-
-
 }
