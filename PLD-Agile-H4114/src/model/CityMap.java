@@ -226,7 +226,7 @@ public class CityMap extends Observable {
         boolean pickupinserted = false;
         boolean deliveryinserted = false;
 
-        for (int i = 0; i < newpoints.size(); i++) {
+        for (int i = 0; (i < newpoints.size() && !deliveryinserted); i++) {
             if (newpoints.get(i) == preP) {
                 newpoints.add(i + 1, poiP);
                 AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(preP, poiP);
