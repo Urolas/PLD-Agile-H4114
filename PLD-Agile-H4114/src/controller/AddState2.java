@@ -26,6 +26,10 @@ public class AddState2 implements State {
 
 
     }
+    @Override
+    public void rightClick(Controller c){
+        c.setCurrentState(c.tourState);
+    }
 
     protected void entryAction(Intersection i) {
         this.i1 = i;

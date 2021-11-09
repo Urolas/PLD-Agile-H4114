@@ -69,7 +69,7 @@ public class Controller {
     public void loadCityMap() {
         try {
             this.currentState.loadMap(this, window);
-        } catch (XMLException e) {
+        }catch(XMLException e){
             cityMap.reset();
             this.currentState = this.initialState;
             currentState.enableButtons(window, listOfCommands);
@@ -79,10 +79,10 @@ public class Controller {
         }
     }
 
-    public void loadDistribution() {
-        try {
-            this.currentState.loadDistribution(this, window);
-        } catch (XMLException e) {
+    public void loadDistribution(){
+        try{
+            this.currentState.loadDistribution(this,window);
+        }catch(XMLException e){
             cityMap.getDistribution().reset();
             cityMap.getTour().resetTour();
             this.currentState = this.citymapState;
@@ -171,7 +171,6 @@ public class Controller {
      * @param p = coordinates of the click in the citymap
      */
     public void leftClick(Intersection intersection, PointOfInterest pointOfInterest) {
-        System.out.println(this.currentState);
         currentState.leftClick(this, window, cityMap, listOfCommands, intersection, pointOfInterest);
     }
 
@@ -181,5 +180,9 @@ public class Controller {
 
     public void enableButtons() {
         currentState.enableButtons(window, listOfCommands);
+    }
+  
+    public void rightClick() {
+        currentState.rightClick(this);
     }
 }
