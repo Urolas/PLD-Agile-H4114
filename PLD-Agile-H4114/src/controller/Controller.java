@@ -40,10 +40,13 @@ public class Controller {
         this.listOfCommands = new ListOfCommands();
         this.currentState = initialState;
         this.window = new Window(cityMap, this);
+        currentState.enableButtons(window, listOfCommands);
     }
 
     protected void setCurrentState(State state) {
         this.currentState = state;
+        currentState.enableButtons(window, listOfCommands);
+        System.out.println();
     }
 
     /**
@@ -51,6 +54,7 @@ public class Controller {
      */
     public void undo() {
         currentState.undo(listOfCommands);
+        currentState.enableButtons(window, listOfCommands);
     }
 
     /**
@@ -58,28 +62,31 @@ public class Controller {
      */
     public void redo() {
         currentState.redo(listOfCommands);
+        currentState.enableButtons(window, listOfCommands);
     }
 
 
     public void loadCityMap() {
         try {
             this.currentState.loadMap(this, window);
-        } catch (XMLException e) {
+        }catch(XMLException e){
             cityMap.reset();
             this.currentState = this.initialState;
+            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void loadDistribution() {
-        try {
-            this.currentState.loadDistribution(this, window);
-        } catch (XMLException e) {
+    public void loadDistribution(){
+        try{
+            this.currentState.loadDistribution(this,window);
+        }catch(XMLException e){
             cityMap.getDistribution().reset();
             cityMap.getTour().resetTour();
             this.currentState = this.citymapState;
+            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -164,11 +171,18 @@ public class Controller {
      * @param p = coordinates of the click in the citymap
      */
     public void leftClick(Intersection intersection, PointOfInterest pointOfInterest) {
-        System.out.println(this.currentState);
         currentState.leftClick(this, window, cityMap, listOfCommands, intersection, pointOfInterest);
     }
 
     public Window getWindow() {
         return window;
+    }
+
+    public void enableButtons() {
+        currentState.enableButtons(window, listOfCommands);
+    }
+  
+    public void rightClick() {
+        currentState.rightClick(this);
     }
 }

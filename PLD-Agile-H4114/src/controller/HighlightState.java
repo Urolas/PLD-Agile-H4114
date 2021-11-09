@@ -48,5 +48,13 @@ public class HighlightState implements State {
 
     }
 
-
+    public void enableButtons(Window window, ListOfCommands loc) {
+        window.enableButton("Load a city map", true);
+        window.enableButton("Load a distribution", true);
+        window.enableButton("Compute a tour", false);
+        window.enableButton("Modify the distribution", true);
+        window.enableButton("Remove", true);
+        window.enableButton("Redo", false);
+        window.enableButton("Undo", false);
+    }
 }

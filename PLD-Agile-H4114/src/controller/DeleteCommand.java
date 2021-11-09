@@ -2,6 +2,7 @@ package controller;
 
 
 import model.*;
+import view.Window;
 
 /**
  * @author 4IF-4114

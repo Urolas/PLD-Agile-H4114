@@ -17,15 +17,17 @@ import java.util.List;
 public class RoadmapView extends JPanel implements Observer {
 
     private CityMap cityMap;
-    private final int VIEW_HEIGHT = 770;
+    private final int VIEW_HEIGHT = 760;
+
     private final int VIEW_WIDTH = 300;
-    private final JButton addButton = new JButton("Add");
-    private final JButton delButton = new JButton("Remove");
+    private JButton addButton;
+    private JButton delButton;
     private final int BUTTON_HEIGHT = 30;
     private final int BUTTON_WIDTH = 100;
     private JPanel roadmap;
     private boolean start = true;
     private int arrivalTime;
+    private GridBagConstraints gc;
 
     /**
      * Default constructor
@@ -38,29 +40,26 @@ public class RoadmapView extends JPanel implements Observer {
         this.cityMap = citymap;
         this.cityMap.addObserver(this); // this observes tour
 
-        this.setBorder(BorderFactory.createTitledBorder("Roadmap"));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.WHITE);
         this.setSize(VIEW_WIDTH, VIEW_HEIGHT);
 
-        this.roadmap = new JPanel(new BorderLayout());
-        this.roadmap.setBackground(Color.LIGHT_GRAY);
+        GridBagLayout grid = new GridBagLayout();
+        gc = new GridBagConstraints();
+        gc.anchor = GridBagConstraints.NORTH;
+
+        this.roadmap = new JPanel(grid);
+        this.roadmap.setBackground(Color.WHITE);
         JScrollPane scrollPanel = new JScrollPane(this.roadmap,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanel.getVerticalScrollBar().setUnitIncrement(30);
         this.add(scrollPanel);
         scrollPanel.setBackground(Color.BLACK);
         scrollPanel.setSize(0, VIEW_HEIGHT - this.BUTTON_HEIGHT);
 
-        JPanel buttonPanel = new JPanel();
-        this.add(buttonPanel);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.BLUE);
-        buttonPanel.add(this.addButton);
-        buttonPanel.add(this.delButton);
-
         this.add(scrollPanel);
-        this.add(buttonPanel);
+
 
         window.getContentPane().add(this);
     }
@@ -106,79 +105,102 @@ public class RoadmapView extends JPanel implements Observer {
     }
 
     public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
-
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
         int number = 0;
 
         JPanel firstPanel = new JPanel();
-        firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-        firstPanel.setBackground(Color.WHITE);
-        firstPanel.setBorder(BorderFactory.createTitledBorder("Starting point"));
+        firstPanel.setLayout(null);
+        firstPanel.setPreferredSize(new Dimension(250,80));
+        firstPanel.setBackground(new Color(196,215,254));
 
         int hours = arrivalTime / 3600;
         int minutes = (arrivalTime % 3600) / 60;
         int seconds = arrivalTime % 60;
 
-        firstPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-        firstPanel.add(new JLabel("    Latitude: "+ this.cityMap.distribution.getDepot().getIntersection().getLatitude()));
-        firstPanel.add(new JLabel("    Longitude: "+ this.cityMap.distribution.getDepot().getIntersection().getLongitude()));
 
-        panel.add(firstPanel);
+        JLabel title = new JLabel("Starting Point");
+        title.setBounds(25,15,150,20);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+        JLabel depTime = new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        depTime.setBounds(25,35,200,20);
+        depTime.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+        firstPanel.add(title);
+        firstPanel.add(depTime);
+
+        gc.gridx = 0;
+        gc.weighty = 0;
+        int posCard = 0;
+        gc.gridy = posCard++;
+        gc.insets = new Insets(5,0,5,0);
+
+        roadmap.add(firstPanel,gc);
 
         for (Request request : requestList) {
             number++;
             System.out.println(request);
 
             JPanel subPanel1 = new JPanel();
-            subPanel1.setLayout(new BoxLayout(subPanel1, BoxLayout.Y_AXIS));
-            subPanel1.setBackground(Color.WHITE);
-            subPanel1.setBorder(BorderFactory.createTitledBorder("Pickup Point #"+ number ));
+            subPanel1.setLayout(null);
+            subPanel1.setPreferredSize(new Dimension(250,80));
+            subPanel1.setBackground(new Color(196,215,254));
 
-            JPanel subPanel2 = new JPanel();
-            subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
-            subPanel2.setBackground(Color.WHITE);
-            subPanel2.setBorder(BorderFactory.createTitledBorder("Delivery Point #"+ number ));
+            JLabel title1 = new JLabel("Pickup Point "+ number );
+            title1.setBounds(25,15,150,20);
+            title1.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-            subPanel1.add(new JLabel("    Latitude: " + request.getPickup().getIntersection().getLatitude()));
-            subPanel1.add(new JLabel("    Longitude: " + request.getPickup().getIntersection().getLongitude()));
-            subPanel2.add(new JLabel("    Latitude: " + request.getDelivery().getIntersection().getLatitude()));
-            subPanel2.add(new JLabel("    Longitude: " + request.getDelivery().getIntersection().getLongitude()));
+            JLabel title2 = new JLabel("Delivery Point "+ number );
+            title2.setBounds(25,45,150,20);
+            title2.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            subPanel1.add(title2);
+            subPanel1.add(title1);
 
-            panel.add(subPanel1);
-            panel.add(subPanel2);
+            gc.gridx = 0;
+            gc.weighty = 0;
+            if (number == requestList.size()){
+                gc.weighty = 1;
+            }
+            gc.gridy = posCard++;
+            roadmap.add(subPanel1,gc);
 
         }
-        this.roadmap.add(panel,BorderLayout.NORTH);
-
     }
 
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
 
-        JPanel panel = new JPanel(new GridLayout(0, 1));
         List<Path> pathList = this.cityMap.tour.getPaths();
-
+        gc.gridy = 0;
+        gc.gridx = 0;
+        gc.insets = new Insets(5,0,5,0);
         for (int poiNum = 0; poiNum < pointList.size(); poiNum++) {
             PointOfInterest poi = pointList.get(poiNum);
 
             JPanel subPanel = new JPanel();
-            subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-            subPanel.setBackground(Color.WHITE);
-
+            subPanel.setLayout(null);
+            subPanel.setPreferredSize(new Dimension(260,100));
+            subPanel.setBackground(new Color(196,215,254));
+            JLabel titleLabel = new JLabel();
+            titleLabel.setBounds(20,20,250,20);
+            titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 if (this.start) {
-                    subPanel.setBorder(BorderFactory.createTitledBorder("START"));
+                    titleLabel.setText("START");
+
                 } else {
-                    subPanel.setBorder(BorderFactory.createTitledBorder("END"));
+                    titleLabel.setText("END");
                 }
             } else {
                 if (poi instanceof DeliveryAddress) {
-                    subPanel.setBorder(BorderFactory.createTitledBorder("Delivery Point #" + poi.getIdPointOfInterest()));
+                    titleLabel.setText("Delivery Point " + ((poi.getIdPointOfInterest()-2)/2+1));
+
                 } else if (poi instanceof PickupAddress) {
-                    subPanel.setBorder(BorderFactory.createTitledBorder("Pickup Point #" + poi.getIdPointOfInterest()));
+                    titleLabel.setText("Pickup Point " + ((poi.getIdPointOfInterest()-1)/2+1));
                 }
             }
+            
+            subPanel.add(titleLabel);
+            int durationRoad=0;
 
             if(poiNum<pointList.size() && !start) {
                 Path path = (Path) (pathList.get(poiNum-1));
@@ -201,16 +223,32 @@ public class RoadmapView extends JPanel implements Observer {
             }
             int departureTime = arrivalTime+poi.getDuration();
 
-            subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
-            subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
             if(this.start){
-                subPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-            }else if(poiNum!=pointList.size()-1){
-                subPanel.add(new JLabel("    Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-                subPanel.add(new JLabel("    Duration: " + String.format("%02dmin%02dsec", (poi.getDuration() % 3600) / 60, poi.getDuration() % 60)));
-                subPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", departureTime / 3600, (departureTime % 3600)/60, departureTime % 60)));
+                JLabel departureTimeLabel = new JLabel("Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
+                departureTimeLabel.setBounds(20,40,250,20);
+                departureTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                subPanel.add(departureTimeLabel);
+            }else if(poiNum!=pointList.size()-1) {
+                JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
+                arrivalTimeLabel.setBounds(20,40,250,20);
+                arrivalTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                subPanel.add(arrivalTimeLabel);
+              
+                JLabel durLabel = new JLabel("Duration: " + String.format("%02dmin%02dsec", (poi.getDuration() % 3600) / 60, poi.getDuration() % 60));
+                durLabel.setBounds(20,60,200,20);
+                durLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                subPanel.add(durLabel);
+              
+                JLabel departureTimeLabel = new JLabel("Departure Time: " + String.format("%02d:%02d:%02d", departureTime / 3600, (departureTime % 3600)/60, departureTime % 60));
+                departureTimeLabel.setBounds(20,80,250,20);
+                departureTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                subPanel.add(departureTimeLabel);
             }else{
-                subPanel.add(new JLabel("    Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
+                JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
+                arrivalTimeLabel.setBounds(20,40,250,20);
+                arrivalTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                subPanel.add(arrivalTimeLabel);
+
             }
 
             arrivalTime += poi.getDuration();
@@ -219,12 +257,9 @@ public class RoadmapView extends JPanel implements Observer {
                 this.start = false;
             }
 
-            panel.add(subPanel);
-
-
+            arrivalTime +=durationRoad;
+            roadmap.add(subPanel,gc);
+            gc.gridy ++;
         }
-        this.roadmap.add(panel,BorderLayout.NORTH);
-
-
     }
 }

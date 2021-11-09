@@ -67,4 +67,9 @@ public interface State {
      * @param p the coordinates of the mouse
      */
     public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection,PointOfInterest pointOfInterest) {};
+
+
+    public default void enableButtons(Window window, ListOfCommands loc) {};
+
+    public default void rightClick(Controller controller) {};
 }
