@@ -3,9 +3,12 @@ package view;
 import controller.Controller;
 import model.CityMap;
 
+import java.awt.*;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.Insets;
 import java.util.ArrayList;
+import javax.swing.border.Border;
 import javax.swing.*;
 
 /**
@@ -43,8 +46,8 @@ public class Window extends JFrame {
     private MouseListener mouseListener;
     private KeyboardListener keyboardListener;
 
-    private final int buttonHeight = 40;
-    private final int buttonWidth = 150;
+    private final int BUTTON_HEIGHT = 60;
+    private final int BUTTON_WIDTH = 200;
 
     /**
      * Default constructor
@@ -57,6 +60,12 @@ public class Window extends JFrame {
         getContentPane().add(messageFrame);
 
         mapView = new MapView(cityMap, this);
+
+        JLabel jl = new JLabel("Delivelo");
+        jl.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        jl.setBounds(20,20,180,30);
+        getContentPane().add(jl);
+
         createButtons(controller);
         roadmapView = new RoadmapView(cityMap, this);
         mouseListener = new MouseListener(controller, mapView, this);
@@ -67,6 +76,8 @@ public class Window extends JFrame {
 
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        getContentPane().setBackground(Color.WHITE);
         setWindowSize();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -74,14 +85,16 @@ public class Window extends JFrame {
     }
 
     private void setWindowSize() {
-        int allButtonHeight = buttonHeight * buttonTexts.length;
-        int windowHeight = Math.max(mapView.getViewHeight(),allButtonHeight);
-        int windowWidth = mapView.getViewWidth() + buttonWidth + roadmapView.getViewWidth();
+        int allBUTTON_HEIGHT = BUTTON_HEIGHT * buttonTexts.length;
+        int windowHeight = Math.max(mapView.getViewHeight(),allBUTTON_HEIGHT);
+        int windowWidth = mapView.getViewWidth() + BUTTON_WIDTH + roadmapView.getViewWidth() + 15;
         setSize(windowWidth, windowHeight);
-        messageFrame.setSize(windowWidth,60);
+        mapView.setLocation(BUTTON_WIDTH, 0);
+        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
+        messageFrame.setSize(200,60);
         messageFrame.setLocation(0,windowHeight-100);
-        mapView.setLocation(buttonWidth, 0);
-        roadmapView.setLocation(mapView.getViewWidth() + buttonWidth,0);
+        mapView.setLocation(BUTTON_WIDTH, 0);
+        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
     }
 
     /**
@@ -91,22 +104,29 @@ public class Window extends JFrame {
     private void createButtons(Controller controller){
         buttonListener = new ButtonListener(controller);
         buttons = new ArrayList<JButton>();
-        for (String text : buttonTexts){
-            JButton button = new JButton(text);
+        for ( int i=0; i<buttonTexts.length; i++ ) {
+            JButton button = new JButton(buttonTexts[i]);
             buttons.add(button);
-            button.setSize(buttonWidth,buttonHeight);
-            button.setLocation(0,(buttons.size()-1)*buttonHeight);
-            button.setFocusable(false);
-            button.setFocusPainted(false);
+//            button.setBorderPainted(false);
+            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setForeground(Color.BLACK);
+            button.setBackground(new Color(91, 138, 231));
+            button.setBounds(10,150+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
+//            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
-
             getContentPane().add(button);
+
         }
         for ( int i=0; i<buttonTextsZoom.length; i++ ){
             JButton button = new JButton(buttonTextsZoom[i]);
             buttons.add(button);
-            button.setSize(50,50);
-            button.setLocation( mapView.getViewWidth() - 190 + i * 60, mapView.getViewHeight() - 100);
+            button.setSize(30,30);
+            button.setMargin(new Insets(0,0,5,0));
+            button.setBorderPainted(false);
+            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setBackground(Color.WHITE);
+            button.setOpaque(true);
+            button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
             button.setFocusable(false);
             button.setFocusPainted(false);
             button.addActionListener(buttonListener);

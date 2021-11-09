@@ -44,10 +44,12 @@ public class Tour extends Observable {
 
     public void setPaths(List<Path> paths) {
         this.paths = paths;
+
     }
 
     public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
         this.pointOfInterests = pointOfInterests;
+
     }
 
     public void setTotalLength(Double totalLength) {

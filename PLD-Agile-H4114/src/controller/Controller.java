@@ -64,7 +64,7 @@ public class Controller {
     public void loadCityMap() {
         try {
             this.currentState.loadMap(this, window);
-        } catch (XMLException e) {
+        }catch(XMLException e){
             cityMap.reset();
             this.currentState = this.initialState;
             window.parsingError(e.getMessage());
@@ -73,10 +73,10 @@ public class Controller {
         }
     }
 
-    public void loadDistribution() {
-        try {
-            this.currentState.loadDistribution(this, window);
-        } catch (XMLException e) {
+    public void loadDistribution(){
+        try{
+            this.currentState.loadDistribution(this,window);
+        }catch(XMLException e){
             cityMap.getDistribution().reset();
             cityMap.getTour().resetTour();
             this.currentState = this.citymapState;
