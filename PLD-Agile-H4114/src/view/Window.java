@@ -52,7 +52,6 @@ public class Window extends JFrame {
     /**
      * Default constructor
      */
-
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
         messageFrame = new JLabel();
@@ -144,8 +143,22 @@ public class Window extends JFrame {
         final JPanel panel = new JPanel();
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     public void displayMessage(String m) {
         messageFrame.setText(m);
     }
 
+    public void enableButton(String buttonLabel, boolean bool) {
+        int i = 0;
+        for (String text : buttonTexts) {
+            if (text.equals(buttonLabel)) {
+                this.buttons.get(i).setEnabled(bool);
+            }
+            i += 1;
+        }
+    }
+
+    public String[] getButtonTexts() {
+        return buttonTexts;
+    }
 }
