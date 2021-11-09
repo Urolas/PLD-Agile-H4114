@@ -91,7 +91,7 @@ public class Window extends JFrame {
         setSize(windowWidth, windowHeight);
         mapView.setLocation(BUTTON_WIDTH, 0);
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
-        messageFrame.setSize(windowWidth,60);
+        messageFrame.setSize(200,60);
         messageFrame.setLocation(0,windowHeight-100);
         mapView.setLocation(BUTTON_WIDTH, 0);
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
@@ -111,7 +111,7 @@ public class Window extends JFrame {
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             button.setForeground(Color.BLACK);
             button.setBackground(new Color(91, 138, 231));
-            button.setBounds(10,200+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
+            button.setBounds(10,150+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
 //            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
             getContentPane().add(button);
