@@ -29,7 +29,7 @@
 <segment destination="811509" length="0.248" name="Chemin de l'église" origin="8115013"/>
 <segment destination="8115013" length="1.689" name="Impasse des géants" origin="811503"/>
 <segment destination="8115013" length="0.548" name="Chemin de l'église" origin="811502"/>
-<segment destination="811502" length="1.121" name="Allée des saucisses" origin="8115010"/>
+<segment destination="811502" length="1.212" name="Allée des saucisses" origin="8115010"/>
 <segment destination="811502" length="4.321" name="Chemin de l'église" origin="811500"/>
 <segment destination="811501" length="3.142" name="Rue des souris" origin="811500"/>
 <segment destination="8115010" length="4.562" name="Rue des bains" origin="811501"/>
@@ -46,6 +46,6 @@
 <segment destination="8115013" length="0.248" name="Chemin de l'église" origin="811509"/>
 <segment destination="811503" length="1.689" name="Impasse des géants" origin="8115013"/>
 <segment destination="811502" length="0.548" name="Chemin de l'église" origin="8115013"/>
-<segment destination="8115010" length="1.121" name="Allée des saucisses" origin="811502"/>
+<segment destination="8115010" length="1.212" name="Allée des saucisses" origin="811502"/>
 <segment destination="811500" length="4.321" name="Chemin de l'église" origin="811502"/>
 </map>
