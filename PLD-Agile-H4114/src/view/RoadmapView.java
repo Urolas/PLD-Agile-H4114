@@ -18,7 +18,7 @@ public class RoadmapView extends JPanel implements Observer {
 
     private Tour tour;
     private Distribution distribution;
-    private final int VIEW_HEIGHT = 760;
+    private final int VIEW_HEIGHT = 700;
     private final int VIEW_WIDTH = 300;
     private JButton addButton;
     private JButton delButton;

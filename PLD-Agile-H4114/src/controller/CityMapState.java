@@ -30,9 +30,7 @@ public class CityMapState implements State {
     }
 
     public void keyStroke(MapView mapView, int keyCode){
-
         mapView.moveMapView(keyCode);
-
     }
 
 

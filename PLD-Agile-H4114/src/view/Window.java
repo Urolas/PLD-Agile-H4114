@@ -30,6 +30,7 @@ public class Window extends JFrame {
     protected static final String ZOOM_IN = "+";
     protected static final String ZOOM_OUT = "-";
     protected static final String RECENTER = "=";
+    protected static final String ADD_DURATION = "Add duration";
 
 
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, MODIFY, REMOVE,UNDO,REDO};
@@ -37,6 +38,7 @@ public class Window extends JFrame {
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
     private JLabel messageFrame;
+    private JTextField durationJText;
 
     private MapView mapView;
     private RoadmapView roadmapView;
@@ -57,7 +59,11 @@ public class Window extends JFrame {
         setLayout(null);
         messageFrame = new JLabel();
         messageFrame.setBorder(BorderFactory.createTitledBorder("Messages..."));
+        durationJText = new JTextField(50);
+
+
         getContentPane().add(messageFrame);
+        getContentPane().add(durationJText);
 
         mapView = new MapView(cityMap, this);
 
@@ -93,6 +99,8 @@ public class Window extends JFrame {
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
         messageFrame.setSize(200,60);
         messageFrame.setLocation(0,windowHeight-100);
+        durationJText.setBounds(windowWidth-290,windowHeight-85,150,30);
+
         mapView.setLocation(BUTTON_WIDTH, 0);
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
     }
@@ -132,14 +140,20 @@ public class Window extends JFrame {
             button.addActionListener(buttonListener);
             mapView.add(button);
         }
-        System.out.println(buttons.size());
+        JButton buttonDuration = new JButton(ADD_DURATION);
+        buttons.add(buttonDuration);
+        buttonDuration.setBounds(mapView.getViewWidth() + BUTTON_WIDTH + 185, mapView.getViewHeight() - 85 , 100, 30);
 
+        getContentPane().add(buttonDuration);
     }
 
     public MapView getMapView() {
         return mapView;
     }
 
+    public String getDuration() {
+        return durationJText.getText();
+    }
     public void parsingError(String message) {
         final JPanel panel = new JPanel();
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);

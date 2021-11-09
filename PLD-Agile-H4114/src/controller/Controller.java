@@ -46,6 +46,15 @@ public class Controller {
         this.currentState = state;
     }
 
+    public void addDuration(){
+        String strDuration = this.window.getDuration();
+        try {
+            int duration = Integer.parseInt(strDuration);
+        }
+        catch (NumberFormatException e) {
+            window.displayMessage("value entered not a number");
+        }
+    };
     /**
      * Method called by window after a click on the button "Undo"
      */

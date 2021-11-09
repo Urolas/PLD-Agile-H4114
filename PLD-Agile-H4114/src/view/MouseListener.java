@@ -70,8 +70,6 @@ public class MouseListener extends MouseAdapter {
     public void mouseWheelMoved(MouseWheelEvent e){
         int scrollDirection = e.getWheelRotation();
         MouseEvent ev = SwingUtilities.convertMouseEvent(window, e, mapView);
-        System.out.println("MouseWheelMoved");
-
         int mouseX = ev.getX();
         int mouseY = ev.getY();
         if (scrollDirection > 0){

@@ -34,23 +34,8 @@ public class DistributionState implements State {
         c.setCurrentState(c.citymapState);
     }
 
-
-
     public void keyStroke(MapView mapView, int keyCode){
-
-        if (keyCode == 37){
-            System.out.println("Touche appuyée gauche");
-        }
-        if (keyCode == 38){
-            System.out.println("Touche appuyée haut");
-        }
-        if (keyCode == 39){
-            System.out.println("Touche appuyée droite");
-        }
-        if (keyCode == 40){
-            System.out.println("Touche appuyée bas");
-        }
-
+        mapView.moveMapView(keyCode);
     }
 
 }

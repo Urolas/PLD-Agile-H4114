@@ -45,7 +45,7 @@ public class TourState implements State {
 
     @Override
     public void keyStroke(MapView mapView, int keyCode) {
-
+        mapView.moveMapView(keyCode);
     }
 
     @Override
