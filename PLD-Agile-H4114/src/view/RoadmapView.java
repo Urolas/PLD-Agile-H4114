@@ -225,12 +225,12 @@ public class RoadmapView extends JPanel implements Observer {
                 arrivalTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 subPanel.add(arrivalTimeLabel);
               
-                JLabel durLabel = new JLabel("Duration: " + String.format("%02dmin%02dsec", (poi.getDuration() % 3600) / 60, poi.getDuration() % 60)));
+                JLabel durLabel = new JLabel("Duration: " + String.format("%02dmin%02dsec", (poi.getDuration() % 3600) / 60, poi.getDuration() % 60));
                 durLabel.setBounds(20,60,200,20);
                 durLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 subPanel.add(durLabel);
               
-                JLabel departureTimeLabel = new JLabel("Departure Time: " + String.format("%02d:%02d:%02d", departureTime / 3600, (departureTime % 3600)/60, departureTime % 60)));
+                JLabel departureTimeLabel = new JLabel("Departure Time: " + String.format("%02d:%02d:%02d", departureTime / 3600, (departureTime % 3600)/60, departureTime % 60));
                 departureTimeLabel.setBounds(20,80,250,20);
                 departureTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 subPanel.add(departureTimeLabel);
