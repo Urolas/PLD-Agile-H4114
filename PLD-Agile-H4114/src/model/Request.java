@@ -20,7 +20,9 @@ public class Request {
     public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress,Color c){
         this.color = c;
         this.pickup=pickupAddress;
+        this.pickup.color=c;
         this.delivery=deliveryAddress;
+        this.delivery.color=c;
     }
 
     public DeliveryAddress getDelivery() {

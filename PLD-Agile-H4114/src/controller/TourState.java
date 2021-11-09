@@ -2,6 +2,7 @@ package controller;
 
 
 import model.CityMap;
+import model.DepotAddress;
 import model.Intersection;
 import model.PointOfInterest;
 import org.xml.sax.SAXException;
@@ -52,10 +53,11 @@ public class TourState implements State {
     }
 
     @Override
-    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i, PointOfInterest poi) {
-        if (poi != null)
-            try {
-                c.highlightState.entryAction(poi);
+    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
+        if (poi != null && !(poi instanceof DepotAddress))
+            try{
+                c.highlightState.entryAction(poi,cityMap,w);
+
                 c.setCurrentState(c.highlightState);
             } catch (Exception e) {
                 System.out.println(e);

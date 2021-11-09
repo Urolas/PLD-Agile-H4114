@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class RoadmapView extends JPanel implements Observer {
 
-    private Tour tour;
-    private Distribution distribution;
+    private CityMap cityMap;
     private final int VIEW_HEIGHT = 760;
+
     private final int VIEW_WIDTH = 300;
     private JButton addButton;
     private JButton delButton;
@@ -37,10 +37,8 @@ public class RoadmapView extends JPanel implements Observer {
     public RoadmapView(CityMap citymap, Window window) {
         super();
 
-        this.tour = citymap.getTour();
-        this.tour.addObserver(this); // this observes tour
-        this.distribution = citymap.getDistribution();
-        this.distribution.addObserver(this); // this observes distribution
+        this.cityMap = citymap;
+        this.cityMap.addObserver(this); // this observes tour
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(Color.WHITE);
@@ -69,19 +67,19 @@ public class RoadmapView extends JPanel implements Observer {
 
     public void update(Observable observed, Object object) {
         System.out.println("Roadmap/update");
-        System.out.println(this.tour.getPointOfInterests().size());
-        System.out.println(this.tour.getPaths().size());
-        System.out.println(this.distribution.getRequests().size());
+        System.out.println(this.cityMap.tour.getPointOfInterests().size());
+        System.out.println(this.cityMap.tour.getPaths().size());
+        System.out.println(this.cityMap.distribution.getRequests().size());
 
         this.start = true;
         int i = 0;
-        this.arrivalTime = this.distribution.getDepot().getDepartureTime().toSecondOfDay();
+        this.arrivalTime = this.cityMap.distribution.getDepot().getDepartureTime().toSecondOfDay();
 
         this.roadmap.removeAll();
 
-        if (this.tour.getPointOfInterests().size() == 0) { // Load distribution
+        if (this.cityMap.tour.getPointOfInterests().size() == 0) { // Load distribution
 
-            Set<Request> requestList = this.distribution.getRequests();
+            Set<Request> requestList = this.cityMap.distribution.getRequests();
             if(requestList.size() != 0 ) {
                 addRequestToRoadmap(requestList);
             }
@@ -89,7 +87,7 @@ public class RoadmapView extends JPanel implements Observer {
         }
         else { //Compute Tour
 
-            List<PointOfInterest> pointList = this.tour.getPointOfInterests();
+            List<PointOfInterest> pointList = this.cityMap.tour.getPointOfInterests();
             addPointOfInterestToRoadMap(pointList);
 
         }
@@ -117,6 +115,7 @@ public class RoadmapView extends JPanel implements Observer {
         int hours = arrivalTime / 3600;
         int minutes = (arrivalTime % 3600) / 60;
         int seconds = arrivalTime % 60;
+
 
         JLabel title = new JLabel("Starting Point");
         title.setBounds(25,15,150,20);
@@ -169,7 +168,8 @@ public class RoadmapView extends JPanel implements Observer {
 
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
-        List<Path> pathList = this.tour.getPaths();
+
+        List<Path> pathList = this.cityMap.tour.getPaths();
         gc.gridy = 0;
         gc.gridx = 0;
         gc.insets = new Insets(5,0,5,0);
@@ -211,7 +211,16 @@ public class RoadmapView extends JPanel implements Observer {
             int hours = arrivalTime / 3600;
             int minutes = (arrivalTime % 3600) / 60;
             int seconds = arrivalTime % 60;
+            if(cityMap.primaryHighlight==poi){
+                subPanel.setBackground(Color.red);
 
+            } else if (cityMap.secondaryHighlight==poi){
+                subPanel.setBackground(Color.pink);
+
+            } else{
+                subPanel.setBackground(poi.getColor());
+
+            }
             int departureTime = arrivalTime+poi.getDuration();
 
             if(this.start){
@@ -253,6 +262,4 @@ public class RoadmapView extends JPanel implements Observer {
             gc.gridy ++;
         }
     }
-
-
 }

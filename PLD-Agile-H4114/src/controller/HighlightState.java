@@ -1,15 +1,13 @@
 package controller;
 
-import model.CityMap;
-import model.Intersection;
-import model.PointOfInterest;
-import model.Tour;
+import model.*;
 import view.Window;
 
 import java.awt.*;
 
 public class HighlightState implements State {
     private PointOfInterest highlightpoint;
+    private PointOfInterest secondaryPoint;
 
     @Override
     public void removePointOfInterest(Controller c, Window w, CityMap map, ListOfCommands listOfCommands) {
@@ -19,23 +17,35 @@ public class HighlightState implements State {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        map.setHighlighted(null,null);
         c.setCurrentState(c.tourState);
 
     }
     @Override
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
-        if (poi == null) {
+
+        if (poi != null  && !(poi instanceof DepotAddress)) {
+
+            c.highlightState.entryAction(poi,map,window);
+            c.setCurrentState(c.highlightState);
+        } else {
+            map.setHighlighted(null,null);
 
             c.setCurrentState(c.tourState);
-        } else {
-            c.highlightState.entryAction(poi);
-            c.setCurrentState(c.highlightState);
         }
     }
 
-    protected void entryAction(PointOfInterest poi) {
+    protected void entryAction(PointOfInterest poi,CityMap cityMap,Window window) {
         this.highlightpoint=poi;
+        if(this.highlightpoint instanceof PickupAddress){
+            this.secondaryPoint=cityMap.distribution.getDelivery((PickupAddress) highlightpoint);
+        } else {
+            this.secondaryPoint=cityMap.distribution.getPickup((DeliveryAddress) highlightpoint);
+        }
+        cityMap.setHighlighted(highlightpoint,secondaryPoint);
+
+
     }
 
     public void enableButtons(Window window, ListOfCommands loc) {
