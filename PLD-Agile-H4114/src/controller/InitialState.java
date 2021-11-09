@@ -33,5 +33,6 @@ public class InitialState implements State {
         window.enableButton("Remove", false);
         window.enableButton("Redo", false);
         window.enableButton("Undo", false);
+        window.enableButton("Generate roadmap", false);
     }
 }

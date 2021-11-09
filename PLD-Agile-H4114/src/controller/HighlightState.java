@@ -56,5 +56,6 @@ public class HighlightState implements State {
         window.enableButton("Remove", true);
         window.enableButton("Redo", false);
         window.enableButton("Undo", false);
+        window.enableButton("Generate roadmap", false);
     }
 }

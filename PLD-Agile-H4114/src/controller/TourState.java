@@ -85,6 +85,7 @@ public class TourState implements State {
         window.enableButton("Compute a tour", false);
         window.enableButton("Modify the distribution", true);
         window.enableButton("Remove", false);
+        window.enableButton("Generate roadmap", true);
         if (loc.getCurrentIndex() >= 0) {
             window.enableButton("Undo", true);
         } else {
