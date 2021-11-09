@@ -24,7 +24,6 @@ public class TSPDoubleInsertion implements TSP {
         while(pickupCandidate.size()>0){
             minWeightedInsertionCost();
         }
-        System.err.println("Double Insertion Cost = "+calculateCost() +"\nTime = "+(System.currentTimeMillis()-startTime));
 
     }
 

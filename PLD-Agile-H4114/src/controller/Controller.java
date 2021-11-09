@@ -40,10 +40,13 @@ public class Controller {
         this.listOfCommands = new ListOfCommands();
         this.currentState = initialState;
         this.window = new Window(cityMap, this);
+        currentState.enableButtons(window, listOfCommands);
     }
 
     protected void setCurrentState(State state) {
         this.currentState = state;
+        currentState.enableButtons(window, listOfCommands);
+        System.out.println();
     }
 
     public void addDuration(){
@@ -60,6 +63,7 @@ public class Controller {
      */
     public void undo() {
         currentState.undo(listOfCommands);
+        currentState.enableButtons(window, listOfCommands);
     }
 
     /**
@@ -67,6 +71,7 @@ public class Controller {
      */
     public void redo() {
         currentState.redo(listOfCommands);
+        currentState.enableButtons(window, listOfCommands);
     }
 
 
@@ -76,6 +81,7 @@ public class Controller {
         }catch(XMLException e){
             cityMap.reset();
             this.currentState = this.initialState;
+            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -89,6 +95,7 @@ public class Controller {
             cityMap.getDistribution().reset();
             cityMap.getTour().resetTour();
             this.currentState = this.citymapState;
+            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -180,6 +187,10 @@ public class Controller {
         return window;
     }
 
+    public void enableButtons() {
+        currentState.enableButtons(window, listOfCommands);
+    }
+  
     public void rightClick() {
         currentState.rightClick(this);
     }

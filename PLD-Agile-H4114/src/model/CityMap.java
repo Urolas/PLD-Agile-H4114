@@ -1,17 +1,12 @@
 package model;
 
-import tsp.TSP1;
+import observer.Observable;
+import tsp.TSP;
 import tsp.TSPDoubleInsertion;
 import view.MapView;
-import observer.Observable;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
-
-import tsp.TSP;
-import tsp.TSPplaceholder;
 
 /**
  * @author 4IF-4114
@@ -23,6 +18,9 @@ public class CityMap extends Observable {
     public Tour tour;
     private Double width, height, nordPoint, westPoint;
     private HashMap<String, List<AbstractMap.Entry<String, Double>>> adjacencyList;
+    public PointOfInterest primaryHighlight;
+    public PointOfInterest secondaryHighlight;
+
 
     @Override
     public String toString() {
@@ -187,10 +185,10 @@ public class CityMap extends Observable {
         this.tour.resetTour();
         this.intersections.clear();
         this.roads.clear();
-        this.width=0.0;
-        this.height=0.0;
-        this.nordPoint=0.0;
-        this.westPoint=0.0;
+        this.width = 0.0;
+        this.height = 0.0;
+        this.nordPoint = 0.0;
+        this.westPoint = 0.0;
         this.adjacencyList = new HashMap<>();
         notifyObservers();
     }
@@ -221,7 +219,6 @@ public class CityMap extends Observable {
             System.out.println("File already exists.");
         }*/
     }
-
 
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
@@ -272,7 +269,7 @@ public class CityMap extends Observable {
 
     }
 
-    public void removeRequest(PickupAddress paddress,DeliveryAddress daddress) {
+    public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
 
 
         this.distribution.removeRequest(paddress, daddress);
@@ -286,9 +283,9 @@ public class CityMap extends Observable {
                 newpath = computePath(newpoints.get(i - 1), newpoints.get(i + 1));
                 Path path = new Path(dijkstraToRoads(newpath), newpath.getKey());
                 newpoints.remove(i);
-                newpaths.remove(i -1);
-                newpaths.remove(i-1);
-                newpaths.add(i-1, path);
+                newpaths.remove(i - 1);
+                newpaths.remove(i - 1);
+                newpaths.add(i - 1, path);
             }
         }
 
@@ -299,22 +296,23 @@ public class CityMap extends Observable {
 
 
     }
+
     public void changePosition(PointOfInterest poi, int i) {
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
-        newpoints.add(i,poi);
-        for (int j =  newpoints.size()-2; j >=1; j--) {
+        newpoints.add(i, poi);
+        for (int j = newpoints.size() - 2; j >= 1; j--) {
 
-                AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j ));
-                AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(newpoints.get(j ), newpoints.get(j + 1));
-                Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
-                Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
+            AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j));
+            AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(newpoints.get(j), newpoints.get(j + 1));
+            Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
+            Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
 
-                newpaths.remove(j -1);
-                newpaths.remove(j-1);
-                newpaths.add(j-1, pathlasttop);
-                newpaths.add(j-1, pathptonext);
+            newpaths.remove(j - 1);
+            newpaths.remove(j - 1);
+            newpaths.add(j - 1, pathlasttop);
+            newpaths.add(j - 1, pathptonext);
 
         }
         tour.setPointOfInterests(newpoints);
@@ -406,5 +404,10 @@ public class CityMap extends Observable {
     }
 
 
+    public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
+        this.primaryHighlight=highlightpoint;
+        this.secondaryHighlight=secondaryPoint;
+        notifyObservers();
+    }
 }
 

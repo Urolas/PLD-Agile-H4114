@@ -2,6 +2,7 @@ package controller;
 
 
 import model.CityMap;
+import model.DepotAddress;
 import model.Intersection;
 import model.PointOfInterest;
 import org.xml.sax.SAXException;
@@ -23,7 +24,8 @@ public class TourState implements State {
     /**
      * Default constructor
      */
-    public TourState() {}
+    public TourState() {
+    }
 
     @Override
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
@@ -38,10 +40,12 @@ public class TourState implements State {
     }
 
     @Override
-    public void modifyDistribution(Controller c){
+    public void modifyDistribution(Controller c) {
         c.addState1.entryAction(c.getWindow());
         c.setCurrentState(c.addState1);
-    };
+    }
+
+    ;
 
     @Override
     public void keyStroke(MapView mapView, int keyCode) {
@@ -50,17 +54,18 @@ public class TourState implements State {
 
     @Override
     public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
-        if (poi != null)
+        if (poi != null && !(poi instanceof DepotAddress))
             try{
-                c.highlightState.entryAction(poi);
-                c.setCurrentState(c.highlightState);
+                c.highlightState.entryAction(poi,cityMap,w);
 
-            } catch (Exception e){
+                c.setCurrentState(c.highlightState);
+            } catch (Exception e) {
                 System.out.println(e);
             }
     }
+
     @Override
-    public void undo(ListOfCommands listOfCdes){
+    public void undo(ListOfCommands listOfCdes) {
         listOfCdes.undo();
     }
 
@@ -68,9 +73,29 @@ public class TourState implements State {
     public void redo(ListOfCommands listOfCdes) {
         listOfCdes.redo();
     }
+
     public void generateRoadmap(Controller c, Window w) throws IOException {
         RoadMapGenerator.generateRoadmap(c.getCitymap());
         c.setCurrentState(c.tourState);
-
     }
+
+    public void enableButtons(Window window, ListOfCommands loc) {
+        window.enableButton("Load a city map", true);
+        window.enableButton("Load a distribution", true);
+        window.enableButton("Compute a tour", false);
+        window.enableButton("Modify the distribution", true);
+        window.enableButton("Remove", false);
+        window.enableButton("Generate roadmap", true);
+        if (loc.getCurrentIndex() >= 0) {
+            window.enableButton("Undo", true);
+        } else {
+            window.enableButton("Undo", false);
+        }
+        if (loc.getCurrentIndex() < loc.getList().size() - 1) {
+            window.enableButton("Redo", true);
+        } else {
+            window.enableButton("Redo", false);
+        }
+    }
+
 }

@@ -38,4 +38,15 @@ public class DistributionState implements State {
         mapView.moveMapView(keyCode);
     }
 
+    public  void enableButtons(Window window, ListOfCommands loc) {
+        window.enableButton("Load a city map", true);
+        window.enableButton("Load a distribution", true);
+        window.enableButton("Compute a tour", true);
+        window.enableButton("Modify the distribution", false);
+        window.enableButton("Remove", false);
+        window.enableButton("Redo", false);
+        window.enableButton("Undo", false);
+        window.enableButton("Generate roadmap", false);
+    }
+
 }

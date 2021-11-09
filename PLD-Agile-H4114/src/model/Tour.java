@@ -83,6 +83,8 @@ public class Tour extends Observable {
 
     }
 
-
+    public Double getTotalLength() {
+        return totalLength;
+    }
 }
 
