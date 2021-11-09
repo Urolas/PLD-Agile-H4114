@@ -183,35 +183,36 @@ public class RoadmapView extends JPanel implements Observer {
                 }
             }
 
-            int durationRoad=0;
+            if(poiNum<pointList.size() && !start) {
+                Path path = (Path) (pathList.get(poiNum-1));
+                arrivalTime += (int)(path.getLength() / 15000. * 3600.);
 
-
-            if(poiNum<pointList.size()-1) {
-                Path path = (Path) (pathList.get(poiNum));
-                durationRoad = (int) (path.getLength()/15000. * 3600.);
             }
 
-            arrivalTime += poi.getDuration();
             int hours = arrivalTime / 3600;
             int minutes = (arrivalTime % 3600) / 60;
             int seconds = arrivalTime % 60;
 
+            int departureTime = arrivalTime+poi.getDuration();
 
             subPanel.add(new JLabel("    Latitude: " + poi.getIntersection().getLatitude()));
             subPanel.add(new JLabel("    Longitude: " + poi.getIntersection().getLongitude()));
-            subPanel.add(new JLabel("    Duration: " + poi.getDuration() + " seconds"));
             if(this.start){
                 subPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
-            }else {
+            }else if(poiNum!=pointList.size()-1){
+                subPanel.add(new JLabel("    Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
+                subPanel.add(new JLabel("    Duration: " + String.format("%02dmin%02dsec", (poi.getDuration() % 3600) / 60, poi.getDuration() % 60)));
+                subPanel.add(new JLabel("    Departure Time: " + String.format("%02d:%02d:%02d", departureTime / 3600, (departureTime % 3600)/60, departureTime % 60)));
+            }else{
                 subPanel.add(new JLabel("    Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)));
             }
+
+            arrivalTime += poi.getDuration();
 
             if(this.start){
                 this.start = false;
             }
 
-
-            arrivalTime +=durationRoad;
             panel.add(subPanel);
 
 

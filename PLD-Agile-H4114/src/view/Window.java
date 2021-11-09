@@ -29,7 +29,7 @@ public class Window extends JFrame {
     protected static final String RECENTER = "=";
 
 
-    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, MODIFY, REMOVE,UNDO,REDO};
+    private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, MODIFY, REMOVE,UNDO,REDO,GENERATE_ROADMAP};
 
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
