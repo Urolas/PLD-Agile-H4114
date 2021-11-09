@@ -186,6 +186,7 @@ public class RoadmapView extends JPanel implements Observer {
             if(poiNum<pointList.size() && !start) {
                 Path path = (Path) (pathList.get(poiNum-1));
                 arrivalTime += (int)(path.getLength() / 15000. * 3600.);
+
             }
 
             int hours = arrivalTime / 3600;

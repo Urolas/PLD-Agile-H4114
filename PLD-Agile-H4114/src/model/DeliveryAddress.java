@@ -1,6 +1,8 @@
 package model;
 
 
+import java.util.Objects;
+
 /**
  * @author 4IF-4114
  */
@@ -24,7 +26,7 @@ public class DeliveryAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(Integer.compare(this.duration,((DeliveryAddress) obj).duration)!=0){
+        if(!Objects.equals(this.duration, ((DeliveryAddress) obj).duration)){
             return false;
         }
         return true;
