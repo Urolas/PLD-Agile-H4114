@@ -173,11 +173,14 @@ public class Controller {
      * @param p = coordinates of the click in the citymap
      */
     public void leftClick(Intersection intersection, PointOfInterest pointOfInterest) {
-        System.out.println(this.currentState);
         currentState.leftClick(this, window, cityMap, listOfCommands, intersection, pointOfInterest);
     }
 
     public Window getWindow() {
         return window;
+    }
+
+    public void rightClick() {
+        currentState.rightClick(this);
     }
 }
