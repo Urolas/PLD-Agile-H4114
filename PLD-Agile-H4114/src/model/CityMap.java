@@ -216,7 +216,7 @@ public class CityMap extends Observable {
             System.out.println("File already exists.");
         }*/
     }
-    
+
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());

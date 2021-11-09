@@ -1,4 +1,5 @@
 import model.CityMap;
+import model.Path;
 import model.PointOfInterest;
 import model.Tour;
 import org.junit.BeforeClass;
@@ -83,6 +84,13 @@ public class ComputingTest {
 
         assertEquals("42,816",String.format("%.3f",t.getTotalLength()));
 
+        List<Path> paths = t.getPaths();
+
+        assertEquals("6,558",String.format("%.3f", paths.get(0).getLength()));
+        assertEquals("5,533",String.format("%.3f", paths.get(1).getLength()));
+        assertEquals("0,887",String.format("%.3f", paths.get(2).getLength()));
+        assertEquals("14,758",String.format("%.3f", paths.get(3).getLength()));
+        assertEquals("15,080",String.format("%.3f", paths.get(4).getLength()));
 
     }
 
