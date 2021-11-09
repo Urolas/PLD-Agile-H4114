@@ -20,7 +20,16 @@ public class CityMap extends Observable {
     private HashMap<String, List<AbstractMap.Entry<String, Double>>> adjacencyList;
     public PointOfInterest primaryHighlight;
     public PointOfInterest secondaryHighlight;
+    private Intersection poiToAdd;
 
+    public void setPoiToAdd(Intersection poiToAdd) {
+        this.poiToAdd = poiToAdd;
+        notifyObservers();
+    }
+
+    public Intersection getPoiToAdd() {
+        return poiToAdd;
+    }
 
     @Override
     public String toString() {

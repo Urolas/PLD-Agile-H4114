@@ -15,6 +15,7 @@ public class AddState3 implements State {
         if (i != null) {
             c.addState4.entryAction(this.i1, this.p1, i);
             c.setCurrentState(c.addState4);
+            map.setPoiToAdd(null);
             window.displayMessage("Apres quel point");
         } else {
             window.displayMessage("Erreur point mal placé : Placez le deliveryPoint");
@@ -30,5 +31,9 @@ public class AddState3 implements State {
     public void entryAction(Intersection i1, PointOfInterest p) {
         this.i1 = i1;
         this.p1 = p;
+    }
+
+    public void mouseMoved(Controller controller, Intersection intersection) {
+        controller.getCitymap().setPoiToAdd(intersection);
     }
 }

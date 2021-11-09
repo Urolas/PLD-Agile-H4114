@@ -225,7 +225,7 @@ public class MapView extends JPanel implements Observer {
         g2.setPaint(grad);
         g2.fillRect(760,0,50,800);
 
-
+        displayPoiToAdd();
     }
 
     private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
@@ -307,6 +307,7 @@ public class MapView extends JPanel implements Observer {
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
+
     public void displayPath(Path p,Color c){
         for (Road r : p.getRoads()){
             displayRoad(r,c,3,true);
@@ -368,5 +369,14 @@ public class MapView extends JPanel implements Observer {
         return null;
     }
 
-
+    public void displayPoiToAdd() {
+        if (cityMap.getPoiToAdd() != null) {
+            System.out.println("mouse moved intersection not null");
+            int x = convertLongitudeToPixel(cityMap.getPoiToAdd().getLongitude());
+            int y = convertLatitudeToPixel(cityMap.getPoiToAdd().getLatitude());
+            g.setColor(Color.RED);
+            g.drawLine(x-5, y, x+5, y);
+            g.drawLine(x, y-5, x, y+5);
+        }
+    }
 }

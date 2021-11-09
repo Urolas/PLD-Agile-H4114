@@ -15,6 +15,7 @@ public class AddState1 implements State {
 
             c.addState2.entryAction(i);
             c.setCurrentState(c.addState2);
+            map.setPoiToAdd(null);
             window.displayMessage("Apres quel point");
         } else {
             window.displayMessage("Erreur point mal placé : Placez le pickupPoint");
@@ -41,5 +42,9 @@ public class AddState1 implements State {
         window.enableButton("Undo", false);
         window.enableButton("Generate roadmap", false);
 
+    }
+
+    public void mouseMoved(Controller controller, Intersection intersection) {
+        controller.getCitymap().setPoiToAdd(intersection);
     }
 }
