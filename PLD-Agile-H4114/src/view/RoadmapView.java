@@ -189,10 +189,10 @@ public class RoadmapView extends JPanel implements Observer {
             int hours = arrivalTime / 3600;
             int minutes = (arrivalTime % 3600) / 60;
             int seconds = arrivalTime % 60;
-            if(cityMap.primaryhighlight==poi){
+            if(cityMap.primaryHighlight==poi){
                 subPanel.setBackground(Color.red);
 
-            } else if (cityMap.secondaryhighlight==poi){
+            } else if (cityMap.secondaryHighlight==poi){
                 subPanel.setBackground(Color.pink);
 
             } else{

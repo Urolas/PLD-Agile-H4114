@@ -24,12 +24,15 @@ public class HighlightState implements State {
     @Override
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
-        if (poi == null) {
-            map.setHighlighted(null,null);
-            c.setCurrentState(c.tourState);
-        } else {
+
+        if (poi != null  && !(poi instanceof DepotAddress)) {
+
             c.highlightState.entryAction(poi,map,window);
             c.setCurrentState(c.highlightState);
+        } else {
+            map.setHighlighted(null,null);
+
+            c.setCurrentState(c.tourState);
         }
     }
 

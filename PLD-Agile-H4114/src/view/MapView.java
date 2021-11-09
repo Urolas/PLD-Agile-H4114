@@ -216,8 +216,8 @@ public class MapView extends JPanel implements Observer {
                 displayRequest(q,outline);
             }
         }
-        if(cityMap.secondaryhighlight!=null & cityMap.primaryhighlight!=null){
-            displayHighlights(cityMap.primaryhighlight,cityMap.secondaryhighlight);
+        if(cityMap.secondaryHighlight!=null & cityMap.primaryHighlight!=null){
+            displayHighlights(cityMap.primaryHighlight,cityMap.secondaryHighlight);
 
         }
 
