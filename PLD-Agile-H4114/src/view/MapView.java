@@ -164,7 +164,6 @@ public class MapView extends JPanel implements Observer {
         scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
-
         repaint();
     }
 
