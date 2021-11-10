@@ -72,4 +72,6 @@ public interface State {
     public default void enableButtons(Window window, ListOfCommands loc) {};
 
     public default void rightClick(Controller controller) {};
+
+    public default void mouseMoved(Controller controller, Intersection intersection) {};
 }
