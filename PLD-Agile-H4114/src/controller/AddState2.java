@@ -28,6 +28,7 @@ public class AddState2 implements State {
     }
     @Override
     public void rightClick(Controller c){
+        c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
 

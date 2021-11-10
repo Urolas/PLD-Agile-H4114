@@ -15,6 +15,7 @@ public class AddState3 implements State {
         if (i != null) {
             c.addState4.entryAction(this.i1, this.p1, i);
             c.setCurrentState(c.addState4);
+            map.setSelected2(i);
             map.setPoiToAdd(null);
             window.displayMessage("Apres quel point");
         } else {
@@ -24,8 +25,10 @@ public class AddState3 implements State {
 
 
     }
+
     @Override
     public void rightClick(Controller c){
+        c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
     public void entryAction(Intersection i1, PointOfInterest p) {
