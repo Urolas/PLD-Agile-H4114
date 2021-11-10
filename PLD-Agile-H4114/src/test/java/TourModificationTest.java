@@ -179,4 +179,53 @@ public class TourModificationTest {
 
     }
 
+    @Test
+    public void changePositionTest(){
+        PointOfInterest poi = cm.getTour().getPointOfInterests().get(3);
+        cm.changePosition(poi,1);
+
+        List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
+        assertEquals(6,listPOI.size());
+        assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
+        assertEquals((Integer) 3,listPOI.get(1).getIdPointOfInterest());
+        assertEquals((Integer) 1,listPOI.get(2).getIdPointOfInterest());
+        assertEquals((Integer) 2,listPOI.get(3).getIdPointOfInterest());
+        assertEquals((Integer) 4,listPOI.get(4).getIdPointOfInterest());
+        assertEquals((Integer) 0,listPOI.get(5).getIdPointOfInterest());
+
+    }
+
+    @Test
+    public void changePositionNonExistingTest(){
+        List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
+        Intersection i1 = cm.getIntersections().get("811508");
+        PointOfInterest p1 = new PointOfInterest(i1,5);
+
+        cm.changePosition(p1,2);
+        assertEquals(6,listPOI.size());
+        assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
+        assertEquals((Integer) 1,listPOI.get(1).getIdPointOfInterest());
+        assertEquals((Integer) 2,listPOI.get(2).getIdPointOfInterest());
+        assertEquals((Integer) 3,listPOI.get(3).getIdPointOfInterest());
+        assertEquals((Integer) 4,listPOI.get(4).getIdPointOfInterest());
+        assertEquals((Integer) 0,listPOI.get(5).getIdPointOfInterest());
+
+
+    }
+
+    @Test
+    public void changePositionDeliveryBeforPickupTest(){
+        PointOfInterest poi = cm.getTour().getPointOfInterests().get(4);
+        cm.changePosition(poi,1);
+        List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
+
+
+        assertEquals(6,listPOI.size());
+        assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
+        assertEquals((Integer) 1,listPOI.get(1).getIdPointOfInterest());
+        assertEquals((Integer) 2,listPOI.get(2).getIdPointOfInterest());
+        assertEquals((Integer) 3,listPOI.get(3).getIdPointOfInterest());
+        assertEquals((Integer) 4,listPOI.get(4).getIdPointOfInterest());
+        assertEquals((Integer) 0,listPOI.get(5).getIdPointOfInterest());
+    }
 }
