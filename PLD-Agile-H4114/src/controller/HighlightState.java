@@ -1,9 +1,11 @@
 package controller;
 
+import filecontrol.RoadMapGenerator;
 import model.*;
 import view.Window;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class HighlightState implements State {
     private PointOfInterest highlightpoint;
@@ -48,14 +50,21 @@ public class HighlightState implements State {
 
     }
 
+    @Override
+    public void generateRoadmap(Controller c, Window w) throws IOException {
+        RoadMapGenerator.generateRoadmap(c.getCitymap());
+        c.setCurrentState(c.tourState);
+    }
+
     public void enableButtons(Window window, ListOfCommands loc) {
-        window.enableButton("Load a city map", true);
-        window.enableButton("Load a distribution", true);
+        window.enableButton("Load a city map", false);
+        window.enableButton("Load a distribution", false);
         window.enableButton("Compute a tour", false);
-        window.enableButton("Modify the distribution", true);
+        window.enableButton("Modify the distribution", false);
         window.enableButton("Remove", true);
         window.enableButton("Redo", false);
         window.enableButton("Undo", false);
-        window.enableButton("Generate roadmap", false);
+        window.enableButton("Generate roadmap", true);
+
     }
 }

@@ -16,6 +16,7 @@ import javax.swing.*;
  */
 public class Window extends JFrame {
 
+
     // Titles of window buttons
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
@@ -24,7 +25,8 @@ public class Window extends JFrame {
     protected static final String REMOVE = "Remove";
     protected static final String REDO = "Redo";
     protected static final String UNDO = "Undo";
-
+    public static final String UP = "up" ;
+    public static final String DOWN = "down" ;
     protected static final String GENERATE_ROADMAP = "Generate roadmap";
 
     protected static final String ZOOM_IN = "+";

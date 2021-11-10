@@ -262,12 +262,14 @@ public class RoadmapView extends JPanel implements Observer {
                 upButton.setBounds(200,25,30,30);
                 upButton.addActionListener(window.getButtonListener());
                 upButton.setMargin(new Insets(0,0,5,0));
+                upButton.setActionCommand("up"+poi.getIdPointOfInterest());
                 subPanel.add(upButton);
 
                 JButton downButton = new JButton("▼");
                 downButton.setBounds(200,60,30,30);
                 downButton.addActionListener(window.getButtonListener());
                 downButton.setMargin(new Insets(0,0,5,0));
+                downButton.setActionCommand("down"+poi.getIdPointOfInterest());
                 subPanel.add(downButton);
             }else{
                 JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));

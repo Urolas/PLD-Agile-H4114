@@ -45,7 +45,21 @@ public class TourState implements State {
         c.setCurrentState(c.addState1);
     }
 
-    ;
+    @Override
+    public void up(Integer id,ListOfCommands listOfCommands,Controller c){
+        try {
+            listOfCommands.add(new SwapCommand(c.getCitymap(),id,-1));
+
+        } catch (Exception ignored){}
+
+    }
+    @Override
+    public void down(Integer id,ListOfCommands listOfCommands,Controller c){
+        try {
+            listOfCommands.add(new SwapCommand(c.getCitymap(),id,1));
+        } catch (Exception ignored){}
+
+    }
 
     @Override
     public void keyStroke(MapView mapView, int keyCode) {
@@ -74,6 +88,7 @@ public class TourState implements State {
         listOfCdes.redo();
     }
 
+    @Override
     public void generateRoadmap(Controller c, Window w) throws IOException {
         RoadMapGenerator.generateRoadmap(c.getCitymap());
         c.setCurrentState(c.tourState);
