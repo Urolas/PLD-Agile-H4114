@@ -142,6 +142,7 @@ public class Window extends JFrame {
             mapView.add(button);
         }
         JButton buttonDuration = new JButton(ADD_DURATION);
+        buttonDuration.addActionListener(buttonListener);
         buttons.add(buttonDuration);
         buttonDuration.setBounds(mapView.getViewWidth() + BUTTON_WIDTH + 185, mapView.getViewHeight() - 85 , 100, 30);
 
