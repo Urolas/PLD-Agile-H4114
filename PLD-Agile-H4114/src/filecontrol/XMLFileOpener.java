@@ -1,3 +1,8 @@
+/**
+ * XMLFileOpener
+ * @author 4IF-4114
+ */
+
 package filecontrol;
 
 import javax.swing.*;
@@ -5,17 +10,26 @@ import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 /**
- * @author 4IF-4114
- */
+ * Allow the user to open a .xml file from their local storage
+ * */
 public class XMLFileOpener extends FileFilter {
 
     private static XMLFileOpener instance = null;
+
+    /**
+     * Constructor of XMLfileOpener
+     */
     private void XMLfileOpener(){}
     protected static XMLFileOpener getInstance(){
         if (instance == null) instance = new XMLFileOpener();
         return instance;
     }
 
+    /**
+     * Open a JFileChooser to allow the user to pick a .xml for the parsing
+     * @param read indicates if the selected file has the right format
+     * @return the selected File
+     */
     public File open(boolean read) throws XMLException{
         int returnVal;
         JFileChooser jFileChooserXML = new JFileChooser();
@@ -34,6 +48,11 @@ public class XMLFileOpener extends FileFilter {
     }
 
     @Override
+    /**
+     * Indicates if the selected file can be read or not
+     * @param File the selected File
+     * @return boolean value indicating if the selected file works
+     */
     public boolean accept(File f) {
         if (f == null) return false;
         if (f.isDirectory()) return true;
@@ -45,10 +64,19 @@ public class XMLFileOpener extends FileFilter {
 
 
     @Override
+    /**
+     * Show the description of an extension
+     * @return the description of a .XML file extension
+     */
     public String getDescription() {
         return "XML file";
     }
 
+    /**
+     * Send a boolean value indicating if the selected file works
+     * @param File the selected File
+     * @return the extension of the file
+     */
     private String getExtension(File f) {
         String filename = f.getName();
         int i = filename.lastIndexOf('.');

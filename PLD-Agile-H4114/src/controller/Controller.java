@@ -1,3 +1,8 @@
+/**
+ * Description of the class
+ * @author 4IF-4114
+ */
+
 package controller;
 
 import model.CityMap;
@@ -10,9 +15,6 @@ import filecontrol.XMLException;
 
 import java.io.IOException;
 
-/**
- * @author 4IF-4114
- */
 public class Controller {
     // Instances associated with each possible state of the controller
     protected final InitialState initialState = new InitialState();
