@@ -55,11 +55,10 @@ public class Distribution extends Observable {
         notifyObservers(i);
     }
 
-    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
-        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration, i);
-        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration, i + 1);
 
 
+
+    public void addRequest(PickupAddress pAddress, DeliveryAddress dAddress,Integer i) {
         Request r;
         if ((i - 1) / 2 < this.requestColors.size()) {
             r = new Request(pAddress, dAddress, Color.decode(this.requestColors.get((i - 1) / 2)));
@@ -70,8 +69,16 @@ public class Distribution extends Observable {
         }
         this.requests.add(r);
         notifyObservers(r);
-    }
 
+    }
+    public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
+        PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration, i);
+        DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration, i + 1);
+        addRequest(pAddress,dAddress,i);
+
+
+
+    }
     public void addObserver(MapView mapView) {
         super.addObserver(mapView);
     }
@@ -137,4 +144,5 @@ public class Distribution extends Observable {
         }
         return true;
     }
+
 }

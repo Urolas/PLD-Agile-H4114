@@ -13,6 +13,7 @@ public class AddCommand implements Command {
     private DeliveryAddress poiD;
     private PointOfInterest preP;
     private PointOfInterest preD;
+    private boolean authorized;
     /**
      * Default constructor
      */
@@ -24,6 +25,7 @@ public class AddCommand implements Command {
         this.preD=p2;
         this.poiP= new PickupAddress(i1,0,map.tour.getPointOfInterests().size());
         this.poiD= new DeliveryAddress(i2,0,map.tour.getPointOfInterests().size()+1);
+        this.authorized=true;
 
     }
 
@@ -31,17 +33,24 @@ public class AddCommand implements Command {
     /**
      * @return
      */
-    public void doCommand() throws Exception {
-        map.addRequest(poiP,preP,poiD,preD);
-        map.distribution.addRequest(poiP.getDuration(),poiD.getDuration(),poiP.getIntersection(),poiD.getIntersection(),poiP.getIdPointOfInterest());
+    public void doCommand() throws Exception{
+        try {
+            map.addRequest(poiP,preP,poiD,preD);
+            map.distribution.addRequest(poiP,poiD,poiP.getIdPointOfInterest());
+        } catch ( Exception e){
+            this.authorized=false;
+            throw  e;
+        }
     }
 
     /**
      * @return
      */
     public void undoCommand() {
-        map.removeRequest(poiP,poiD);
-        map.distribution.removeRequest(poiP,poiD);
+        if (authorized) {
+            map.removeRequest(poiP, poiD);
+            map.distribution.removeRequest(poiP, poiD);
+        }
     }
 
 }

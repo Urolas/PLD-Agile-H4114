@@ -47,7 +47,7 @@ public class DeleteCommand implements Command {
     public void undoCommand() {
         try {
             cityMap.addRequest(poiP, preP, poiD, preD);
-            cityMap.distribution.addRequest(poiP.getDuration(), poiD.getDuration(), poiP.getIntersection(), poiD.getIntersection(), poiP.getIdPointOfInterest());
+            cityMap.distribution.addRequest(poiP,poiD,poiP.getIdPointOfInterest());
 
         } catch ( Exception ignored){
             System.out.println(ignored);
