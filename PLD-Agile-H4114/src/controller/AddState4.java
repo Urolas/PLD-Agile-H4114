@@ -19,6 +19,7 @@ public class AddState4 implements State {
             } catch (Exception e) {
                 System.out.println(e);
             }
+            c.getCitymap().resetSelected();
             c.setCurrentState(c.tourState);
             window.displayMessage("");
         } else {
@@ -27,12 +28,11 @@ public class AddState4 implements State {
         }
 
     }
-
     @Override
-    public void rightClick(Controller c) {
+    public void rightClick(Controller c){
+        c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
-
     public void entryAction(Intersection i1, PointOfInterest p, Intersection i2) {
         this.i1 = i1;
         this.p1 = p;

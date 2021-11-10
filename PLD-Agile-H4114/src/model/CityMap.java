@@ -21,6 +21,9 @@ public class CityMap extends Observable {
     public PointOfInterest primaryHighlight;
     public PointOfInterest secondaryHighlight;
 
+    public Intersection i1Selected;
+    public Intersection i2Selected;
+
 
     @Override
     public String toString() {
@@ -408,6 +411,25 @@ public class CityMap extends Observable {
         this.primaryHighlight=highlightpoint;
         this.secondaryHighlight=secondaryPoint;
         notifyObservers();
+    }
+
+    public void resetSelected() {
+        this.i1Selected=null;
+        this.i2Selected=null;
+        notifyObservers();
+    }
+
+    public void setSelected1(Intersection i) {
+        this.i1Selected=i;
+        notifyObservers();
+
+    }
+
+    public void setSelected2(Intersection i) {
+        this.i2Selected=i;
+        notifyObservers();
+
+
     }
 }
 

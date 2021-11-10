@@ -225,7 +225,28 @@ public class MapView extends JPanel implements Observer {
         g2.setPaint(grad);
         g2.fillRect(760,0,50,800);
 
+        displaySelected(cityMap.i1Selected,cityMap.i2Selected);
 
+
+    }
+
+    private void displaySelected(Intersection i1Selected, Intersection i2Selected) {
+        if(i1Selected!=null){
+            int x1 = convertLongitudeToPixel(i1Selected.getLongitude());
+            int y1 = convertLatitudeToPixel(i1Selected.getLatitude());
+            g.setColor(Color.red);
+            g.drawLine(x1-5,y1,x1+5,y1);
+            g.drawLine(x1,y1-5,x1,y1+5);
+
+        } if(i2Selected!=null){
+            int x2 = convertLongitudeToPixel(i2Selected.getLongitude());
+            int y2 = convertLatitudeToPixel(i2Selected.getLatitude());
+            g.setColor(Color.red);
+            g.drawLine(x2-5,y2,x2+5,y2);
+            g.drawLine(x2,y2-5,x2,y2+5);
+
+
+        }
     }
 
     private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
