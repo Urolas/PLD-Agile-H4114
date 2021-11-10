@@ -233,14 +233,14 @@ public class MapView extends JPanel implements Observer {
         if(i1Selected!=null){
             int x1 = convertLongitudeToPixel(i1Selected.getLongitude());
             int y1 = convertLatitudeToPixel(i1Selected.getLatitude());
-            g.setColor(Color.red);
+            g.setColor(Color.black);
             g.drawLine(x1-5,y1,x1+5,y1);
             g.drawLine(x1,y1-5,x1,y1+5);
 
         } if(i2Selected!=null){
             int x2 = convertLongitudeToPixel(i2Selected.getLongitude());
             int y2 = convertLatitudeToPixel(i2Selected.getLatitude());
-            g.setColor(Color.red);
+            g.setColor(Color.black);
             g.drawLine(x2-5,y2,x2+5,y2);
             g.drawLine(x2,y2-5,x2,y2+5);
 
