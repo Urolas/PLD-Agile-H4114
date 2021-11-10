@@ -190,7 +190,7 @@ public class RoadmapView extends JPanel implements Observer {
             subPanel.add(colorPanel);
 
             JLabel titleLabel = new JLabel();
-            titleLabel.setBounds(30,20,250,20);
+            titleLabel.setBounds(40,20,250,20);
             titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 if (this.start) {

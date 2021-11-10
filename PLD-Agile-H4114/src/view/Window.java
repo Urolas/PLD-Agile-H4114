@@ -69,8 +69,8 @@ public class Window extends JFrame {
         mapView = new MapView(cityMap, this);
 
         JLabel jl = new JLabel("Delivelo");
-        jl.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        jl.setBounds(20,20,180,30);
+        jl.setFont(new Font("Segoe UI", Font.ITALIC, 30));
+        jl.setBounds(50,20,180,30);
         getContentPane().add(jl);
 
         createButtons(controller);
@@ -120,7 +120,7 @@ public class Window extends JFrame {
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             button.setForeground(Color.BLACK);
             button.setBackground(new Color(91, 138, 231));
-            button.setBounds(10,150+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
+            button.setBounds(10,100+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
 //            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
             getContentPane().add(button);
@@ -131,13 +131,9 @@ public class Window extends JFrame {
             buttons.add(button);
             button.setSize(30,30);
             button.setMargin(new Insets(0,0,5,0));
-            button.setBorderPainted(false);
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             button.setBackground(Color.WHITE);
-            button.setOpaque(true);
             button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
-            button.setFocusable(false);
-            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
             mapView.add(button);
         }
