@@ -8,12 +8,13 @@ import view.Window;
 import java.awt.Point;
 
 public class AddState1 implements State {
+    private Integer d1;
     @Override
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
         if (i != null) {
 
-            c.addState2.entryAction(i);
+            c.addState2.entryAction(i,this.d1);
             c.setCurrentState(c.addState2);
             window.displayMessage("Apres quel point");
         } else {
@@ -22,13 +23,22 @@ public class AddState1 implements State {
         }
     }
 
+
+
     @Override
     public void rightClick(Controller c){
         c.setCurrentState(c.tourState);
     }
 
     protected void entryAction(Window w) {
-        w.displayMessage("Placez le pickupPoint");
+        this.d1=300;
+        w.displayMessage("Placez le pickupPoint :\n renseignez une durée");
+    }
+
+    @Override
+    public void addDuration(Integer duration){
+        this.d1=duration;
+
     }
 
     public  void enableButtons(Window window, ListOfCommands loc) {

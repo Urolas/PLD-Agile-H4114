@@ -53,6 +53,7 @@ public class Controller {
         String strDuration = this.window.getDuration();
         try {
             int duration = Integer.parseInt(strDuration);
+            currentState.addDuration(duration);
         }
         catch (NumberFormatException e) {
             window.displayMessage("value entered not a number");

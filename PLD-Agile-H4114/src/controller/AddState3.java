@@ -10,10 +10,12 @@ import java.awt.*;
 public class AddState3 implements State {
     private Intersection i1;
     private PointOfInterest p1;
+    private Integer d1;
+    private Integer d2;
 
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
         if (i != null) {
-            c.addState4.entryAction(this.i1, this.p1, i);
+            c.addState4.entryAction(this.i1,this.d1, this.p1, i,this.d2);
             c.setCurrentState(c.addState4);
             window.displayMessage("Apres quel point");
         } else {
@@ -27,8 +29,16 @@ public class AddState3 implements State {
     public void rightClick(Controller c){
         c.setCurrentState(c.tourState);
     }
-    public void entryAction(Intersection i1, PointOfInterest p) {
+    public void entryAction(Intersection i1,Integer d, PointOfInterest p) {
         this.i1 = i1;
         this.p1 = p;
+        this.d1=d;
+        this.d2=300;
+    }
+
+    @Override
+    public void addDuration(Integer duration){
+        this.d2=duration;
+
     }
 }
