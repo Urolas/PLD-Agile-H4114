@@ -29,7 +29,8 @@ public class AddState3 implements State {
     public void rightClick(Controller c){
         c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
-    }    public void entryAction(Intersection i1, PointOfInterest p) {
+    }
+    public void entryAction(Intersection i1, PointOfInterest p) {
         this.i1 = i1;
         this.p1 = p;
     }
