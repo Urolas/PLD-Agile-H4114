@@ -23,7 +23,7 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Method called by the button listener each time a button is clicked
         // Forward the corresponding message to the controller
-
+        System.out.println("hey");
         switch (e.getActionCommand()){
             case Window.LOAD_CITY_MAP: controller.loadCityMap(); break;
             case Window.LOAD_DISTRIBUTION: controller.loadDistribution(); break;

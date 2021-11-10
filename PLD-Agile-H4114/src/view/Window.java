@@ -150,6 +150,10 @@ public class Window extends JFrame {
         return mapView;
     }
 
+    public ButtonListener getButtonListener() {
+        return buttonListener;
+    }
+
     public String getDuration() {
         return durationJText.getText();
     }

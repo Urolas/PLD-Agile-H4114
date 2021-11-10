@@ -31,6 +31,7 @@ public class RoadmapView extends JPanel implements Observer {
     private boolean start = true;
     private int arrivalTime;
     private GridBagConstraints gc;
+    private Window window;
 
     /**
      * Default constructor
@@ -39,7 +40,7 @@ public class RoadmapView extends JPanel implements Observer {
      */
     public RoadmapView(CityMap citymap, Window window) {
         super();
-
+        this.window = window;
         this.cityMap = citymap;
         this.cityMap.addObserver(this); // this observes tour
         this.cityMap.distribution.addObserver(this); // this observes tour
@@ -256,6 +257,18 @@ public class RoadmapView extends JPanel implements Observer {
                 departureTimeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 subPanel.add(departureTimeLabel);
                 gc.weighty = 0;
+
+                JButton upButton = new JButton("▲");
+                upButton.setBounds(200,25,30,30);
+                upButton.addActionListener(window.getButtonListener());
+                upButton.setMargin(new Insets(0,0,5,0));
+                subPanel.add(upButton);
+
+                JButton downButton = new JButton("▼");
+                downButton.setBounds(200,60,30,30);
+                downButton.addActionListener(window.getButtonListener());
+                downButton.setMargin(new Insets(0,0,5,0));
+                subPanel.add(downButton);
             }else{
                 JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
                 arrivalTimeLabel.setBounds(30,40,250,20);
@@ -263,6 +276,8 @@ public class RoadmapView extends JPanel implements Observer {
                 subPanel.add(arrivalTimeLabel);
                 gc.weighty = 1;
             }
+
+
 
             arrivalTime += poi.getDuration();
 
