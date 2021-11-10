@@ -185,4 +185,8 @@ public class Controller {
     public void rightClick() {
         currentState.rightClick(this);
     }
+
+    public void mouseMoved(Intersection intersection) {
+        currentState.mouseMoved(this, intersection);
+    }
 }

@@ -82,6 +82,10 @@ public class MouseListener extends MouseAdapter {
 
     }
 
-
-
+    @Override
+    public void mouseMoved(MouseEvent evt) {
+        MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
+        Intersection intersection = mapView.getClosestIntersection(e.getX(), e.getY());
+        controller.mouseMoved(intersection);
+    }
 }
