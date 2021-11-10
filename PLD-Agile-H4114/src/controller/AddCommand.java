@@ -23,8 +23,8 @@ public class AddCommand implements Command {
         this.map=map;
         this.preP=p1;
         this.preD=p2;
-        this.poiP= new PickupAddress(i1,0,map.tour.getPointOfInterests().size());
-        this.poiD= new DeliveryAddress(i2,0,map.tour.getPointOfInterests().size()+1);
+        this.poiP= new PickupAddress(i1,0,map.distribution.nbPointOfInterest);
+        this.poiD= new DeliveryAddress(i2,0,map.distribution.nbPointOfInterest+1);
         this.authorized=true;
 
     }

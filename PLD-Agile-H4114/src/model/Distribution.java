@@ -13,6 +13,7 @@ import observer.Observable;
  */
 public class Distribution extends Observable {
 
+    public Integer nbPointOfInterest;
     private DepotAddress depot;
     private Set<Request> requests;
     private List<String> requestColors = new ArrayList<>();
@@ -23,6 +24,7 @@ public class Distribution extends Observable {
     public Distribution() {
         this.requests = new HashSet<Request>();
         this.depot = new DepotAddress();
+        this.nbPointOfInterest=1;
         this.requestColors.add("#1FBED6");
         this.requestColors.add("#97C30A");
         this.requestColors.add("#FF717E");
@@ -59,6 +61,7 @@ public class Distribution extends Observable {
 
 
     public void addRequest(PickupAddress pAddress, DeliveryAddress dAddress,Integer i) {
+        this.nbPointOfInterest+=2;
         Request r;
         if ((i - 1) / 2 < this.requestColors.size()) {
             r = new Request(pAddress, dAddress, Color.decode(this.requestColors.get((i - 1) / 2)));
