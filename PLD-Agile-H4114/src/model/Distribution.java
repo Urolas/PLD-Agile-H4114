@@ -136,4 +136,16 @@ public class Distribution extends Observable {
         }
         return true;
     }
+
+    public PointOfInterest getPointOfIntersection(Integer idpoi) {
+        for (Request request: requests){
+            if (Objects.equals(idpoi, request.getDelivery().idPointOfInterest)){
+                return request.getDelivery();
+            }
+            if(Objects.equals(idpoi, request.getPickup().idPointOfInterest)){
+                return request.getPickup();
+            }
+        }
+        return null;
+    }
 }

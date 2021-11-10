@@ -23,24 +23,30 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Method called by the button listener each time a button is clicked
         // Forward the corresponding message to the controller
-        System.out.println("hey");
-        switch (e.getActionCommand()){
+
+        String actionCommand = e.getActionCommand();
+         if(actionCommand.startsWith(Window.UP)){
+            actionCommand=Window.UP;
+        } else if(actionCommand.startsWith(Window.DOWN)){
+             actionCommand=Window.DOWN;
+         }
+        switch (actionCommand){
             case Window.LOAD_CITY_MAP: controller.loadCityMap(); break;
             case Window.LOAD_DISTRIBUTION: controller.loadDistribution(); break;
             case Window.UNDO: controller.undo(); break;
             case Window.REDO: controller.redo(); break;
-
             case Window.GENERATE_ROADMAP: controller.generateRoadmap(); break;
-
             case Window.COMPUTE_TOUR: controller.computeTour();break;
             case Window.MODIFY: controller.modifyDistribution();break;
             case Window.REMOVE: controller.removePointOfInterest();break;
             case Window.ADD_DURATION: controller.addDuration();break;
-
             case Window.ZOOM_IN: controller.zoomIn();break;
             case Window.ZOOM_OUT: controller.zoomOut();break;
             case Window.RECENTER: controller.recenter();break;
-            // TODO
+            case Window.UP: controller.up(e.getActionCommand().substring(2));break;
+            case Window.DOWN: controller.down(e.getActionCommand().substring(4));break;
+
+
         }
     }
 
