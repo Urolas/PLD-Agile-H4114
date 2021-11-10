@@ -73,7 +73,7 @@ public class MouseListener extends MouseAdapter {
         int mouseX = ev.getX();
         int mouseY = ev.getY();
         if (scrollDirection > 0){
-            mapView.modifyZoom(1/1.2,mapView.getViewWidth()/2, mapView.getViewHeight()/2);
+            mapView.modifyZoom(1/1.2,mouseX, mouseY);
         } else if (scrollDirection < 0){
             mapView.modifyZoom(1.2, mouseX, mouseY);
         }

@@ -80,20 +80,23 @@ public class MapView extends JPanel implements Observer {
             greatRoadThickness = greatRoadThickness*zoom;
             mapWidth = mapWidth/zoom;
             mapHeight = mapHeight/zoom;
-            if (originLong - mapWidth/2 + centerX/scaleWidth < cityMap.getWestPoint()){
+            if (originLong - mapWidth*((double)centerX/VIEW_WIDTH) + centerX/scaleWidth < cityMap.getWestPoint()){
                 originLong = cityMap.getWestPoint();
-            }else if(originLong - mapWidth/2 + centerX/scaleWidth + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
+            }else if(originLong - mapWidth*((double)centerX/VIEW_WIDTH) + centerX/scaleWidth + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
                 originLong = cityMap.getWestPoint() + cityMap.getWidth() - mapWidth;
             }else{
-                originLong = originLong - mapWidth/2 + centerX/scaleWidth;
+                originLong = originLong - mapWidth*((double)centerX/VIEW_WIDTH) +
+                        centerX/scaleWidth;
+
             }
-            if (originLat + mapHeight/2 - centerY/scaleHeight > cityMap.getNordPoint()){
+            if (originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight > cityMap.getNordPoint()){
                 originLat = cityMap.getNordPoint();
-            }else if (originLat + mapHeight/2 - centerY/scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
+            }else if (originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
                 originLat = cityMap.getNordPoint() - cityMap.getHeight() + mapHeight;
             }else{
-                originLat = originLat + mapHeight/2 - centerY/scaleHeight;
+                originLat = originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight;
             }
+
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
