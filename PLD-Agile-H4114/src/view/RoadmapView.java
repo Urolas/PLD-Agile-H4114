@@ -88,14 +88,16 @@ public class RoadmapView extends JPanel implements Observer {
 
         this.ROADMAP.removeAll();
 
-        if (this.CITYMAP.tour.getPointOfInterests().size() == 0) { // Load distribution
+        //When the user just import the Distribution (List of request)
+        if (this.CITYMAP.tour.getPointOfInterests().size() == 0) {
 
             Set<Request> requestList = this.CITYMAP.distribution.getRequests();
             if (requestList.size() != 0) {
                 addRequestToRoadmap(requestList);
             }
 
-        } else { //Compute Tour
+        //After the tour is computed, add details to the roadmap and follow another order
+        } else {
 
             List<PointOfInterest> pointList = this.CITYMAP.tour.getPointOfInterests();
             addPointOfInterestToRoadMap(pointList);
@@ -117,15 +119,17 @@ public class RoadmapView extends JPanel implements Observer {
     public void addRequestToRoadmap(Set<Request> requestList) { //Add Request to roadmap in order
         int number = 0;
 
+        //Create the roadmap style panel
         JPanel firstPanel = new JPanel();
         firstPanel.setLayout(null);
         firstPanel.setPreferredSize(new Dimension(280 - HORIZONTAL_MARGIN * 2, 80));
 
-
+        //Convert the arrival time from seconds to hours:minutes:seconds
         int hours = arrivalTime / 3600;
         int minutes = (arrivalTime % 3600) / 60;
         int seconds = arrivalTime % 60;
 
+        //Set the font and size of each JLabel (text)
         JLabel title = new JLabel("Starting Point");
         title.setBounds(50, 15, 150, 20);
         title.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -139,7 +143,6 @@ public class RoadmapView extends JPanel implements Observer {
         firstPanel.add(colorPanel);
         colorPanel.setBackground(Color.BLACK);
 
-
         firstPanel.add(title);
         firstPanel.add(depTime);
 
@@ -151,12 +154,15 @@ public class RoadmapView extends JPanel implements Observer {
 
         ROADMAP.add(firstPanel, GC);
 
+        //Loop checking each request from the requestLit after the tour is computed
         for (Request request : requestList) {
             number++;
 
             JPanel subPanel1 = new JPanel();
             subPanel1.setLayout(null);
             subPanel1.setPreferredSize(new Dimension(280 - HORIZONTAL_MARGIN * 2, 80));
+
+            //Set the font and size of some JLabel
 
             JLabel title1 = new JLabel("Pickup Point " + number);
             title1.setBounds(50, 15, 150, 20);
@@ -185,7 +191,6 @@ public class RoadmapView extends JPanel implements Observer {
 
     /**
      * After computing a tour, add the points and their data to the roadmap, following their order from the path
-     *
      * @param pointList list of the points of interest
      */
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
@@ -194,6 +199,8 @@ public class RoadmapView extends JPanel implements Observer {
         GC.gridy = 0;
         GC.gridx = 0;
         GC.insets = new Insets(VERTICAL_MARGIN, 0, VERTICAL_MARGIN, 0);
+
+        //Loop to check every point of interest of the list
         for (int poiNum = 0; poiNum < pointList.size(); poiNum++) {
             PointOfInterest poi = pointList.get(poiNum);
 
@@ -208,38 +215,44 @@ public class RoadmapView extends JPanel implements Observer {
 
             titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
             titleLabel.setBounds(40, 10, 250, 20);
-            if (poi.getIdPointOfInterest() == 0) { // Depot
+            if (poi.getIdPointOfInterest() == 0) { // The point of interest is a depot
                 subPanel.setPreferredSize(new Dimension(280 - HORIZONTAL_MARGIN * 2, 60));
+
+                //If the point of interest is the start
                 if (this.start) {
                     titleLabel.setText("START (Depot Point)");
 
-
+                //If the point of interest is the end
                 } else {
                     titleLabel.setText("END (Depot Point)");
                 }
             } else {
                 subPanel.setPreferredSize(new Dimension(280 - HORIZONTAL_MARGIN * 2, 120));
 
+                //If the point of interest is a delivery address
                 if (poi instanceof DeliveryAddress) {
                     titleLabel.setText("Delivery Point " + ((poi.getIdPointOfInterest() - 2) / 2 + 1));
 
+                //If the point of interest is a pickup address
                 } else if (poi instanceof PickupAddress) {
                     titleLabel.setText("Pickup Point " + ((poi.getIdPointOfInterest() - 1) / 2 + 1));
                 }
             }
 
             subPanel.add(titleLabel);
-            int durationRoad = 0;
 
+            //Calculate the arrival time to each point by adding the path's duration
             if (poiNum < pointList.size() && !start) {
                 Path path = (pathList.get(poiNum - 1));
                 arrivalTime += (int) (path.getLength() / 15000. * 3600.);
-
             }
 
+            //Convert the arrival time (seconds) to hours:minutes:seconds
             int hours = arrivalTime / 3600;
             int minutes = (arrivalTime % 3600) / 60;
             int seconds = arrivalTime % 60;
+
+            //Set the style for each panel
             if (CITYMAP.primaryHighlight == poi) {
                 subPanel.setBackground(new Color(poi.getColor().getRed(), poi.getColor().getGreen(), poi.getColor().getBlue(), 200));
                 colorPanel.setBackground(poi.getColor());
@@ -252,8 +265,11 @@ public class RoadmapView extends JPanel implements Observer {
                 colorPanel.setBackground(poi.getColor());
 
             }
+
+            //Calculate the time to depart from the point
             int departureTime = arrivalTime + poi.getDuration();
 
+            //If the point of interest is the start
             if (this.start) {
                 JLabel departureTimeLabel = new JLabel("Departure Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
                 departureTimeLabel.setBounds(35, 30, 250, 20);
@@ -261,6 +277,8 @@ public class RoadmapView extends JPanel implements Observer {
                 subPanel.add(departureTimeLabel);
                 colorPanel.setBackground(Color.BLACK);
                 GC.weighty = 0;
+
+            //If the point of interest is the end
             } else if (poiNum != pointList.size() - 1) {
                 JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
                 arrivalTimeLabel.setBounds(35, 35, 250, 20);
@@ -291,6 +309,8 @@ public class RoadmapView extends JPanel implements Observer {
                 downButton.setMargin(new Insets(0, 0, 5, 0));
                 downButton.setActionCommand("down" + poi.getIdPointOfInterest());
                 subPanel.add(downButton);
+
+            //If the point of interest is a delivery point or a pickup point
             } else {
                 JLabel arrivalTimeLabel = new JLabel("Arrival Time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds));
                 arrivalTimeLabel.setBounds(35, 30, 250, 20);
@@ -300,13 +320,13 @@ public class RoadmapView extends JPanel implements Observer {
                 colorPanel.setBackground(Color.BLACK);
             }
 
-
+            //Add the duration of the current point for the arrival time of the next point
             arrivalTime += poi.getDuration();
             if (this.start) {
                 this.start = false;
             }
 
-            arrivalTime += durationRoad;
+
             ROADMAP.add(subPanel, GC);
 
             GC.gridy++;

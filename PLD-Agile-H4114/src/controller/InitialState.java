@@ -1,16 +1,20 @@
+/**
+ * InitialState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import org.xml.sax.SAXException;
-import view.Window;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
-
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import view.Window;
 
 
 /**
- * @author 4IF-4114
+ * Initial state of the application, where nothing is already loaded
  */
 public class InitialState implements State {
 
