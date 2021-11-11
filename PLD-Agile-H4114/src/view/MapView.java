@@ -204,7 +204,6 @@ public class MapView extends JPanel implements Observer {
             for (Path p : t.getPaths()) {
                 displayPath(p, outline);
             }
-
         }
 
         //display requests
@@ -212,26 +211,18 @@ public class MapView extends JPanel implements Observer {
         displayDepot();
 
         if (d.getRequests().size() != 0) {
-
-
             for (Request q : d.getRequests()) {
-
                 outline = q.color.darker().darker();
-
                 assert t != null;
-
                 displayRequest(q, outline);
             }
             if (CITYMAP.secondaryHighlight != null & CITYMAP.primaryHighlight != null) {
                 displayHighlights(CITYMAP.primaryHighlight, CITYMAP.secondaryHighlight);
 
             }
-
-
         }
 
         //display shadow on the edge of the view
-
         GradientPaint grad = new GradientPaint(0, 0, new Color(0, 0, 0, 50), 40, 0, new Color(0, 0, 0, 0), false);
         g2.setPaint(grad);
         g2.fillRect(0, 0, 50, 800);
@@ -245,7 +236,6 @@ public class MapView extends JPanel implements Observer {
         g2.setPaint(grad);
         g2.fillRect(0, 760, 800, 50);
         displaySelected(CITYMAP.i1Selected, CITYMAP.i2Selected);
-
 
         //display legend
         if (d.getDepot().getIdPointOfInterest() != -1) {
