@@ -6,14 +6,12 @@ import model.DepotAddress;
 import model.Intersection;
 import model.PointOfInterest;
 import org.xml.sax.SAXException;
-import view.MapView;
 import view.Window;
 import filecontrol.RoadMapGenerator;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -29,26 +27,26 @@ public class TourState implements State {
 
     @Override
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
+        XMLDeserializer.loadCityMap(c.getCityMap());
         w.getMapView().resetZoom();
         w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
+        c.setCurrentState(c.CITY_MAP_STATE);
         c.resetListOfCommands();
     }
 
     @Override
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCitymap());
+        XMLDeserializer.loadDistribution(c.getCityMap());
         w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.distributionState);
+        c.setCurrentState(c.DISTRIBUTION_STATE);
         c.resetListOfCommands();
 
     }
 
     @Override
     public void modifyDistribution(Controller c) {
-        c.addState1.entryAction(c.getWindow());
-        c.setCurrentState(c.addState1);
+        c.ADD_STATE_1.entryAction(c.getWindow());
+        c.setCurrentState(c.ADD_STATE_1);
         c.resetListOfCommands();
 
     }
@@ -56,7 +54,7 @@ public class TourState implements State {
     @Override
     public void up(Integer id, ListOfCommands listOfCommands, Controller c) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(), id, -1));
+            listOfCommands.add(new SwapCommand(c.getCityMap(), id, -1));
         } catch (Exception e) {
             c.getWindow().parsingError(e.getMessage());
         }
@@ -66,7 +64,7 @@ public class TourState implements State {
     @Override
     public void down(Integer id, ListOfCommands listOfCommands, Controller c) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(), id, 1));
+            listOfCommands.add(new SwapCommand(c.getCityMap(), id, 1));
         } catch (Exception e) {
             c.getWindow().parsingError(e.getMessage());
 
@@ -80,9 +78,9 @@ public class TourState implements State {
         if (poi != null && !(poi instanceof DepotAddress)) {
 
 
-            c.highlightState.entryAction(poi, cityMap, w);
+            c.HIGHLIGHT_STATE.entryAction(poi, cityMap);
 
-            c.setCurrentState(c.highlightState);
+            c.setCurrentState(c.HIGHLIGHT_STATE);
         }
     }
 
@@ -98,8 +96,8 @@ public class TourState implements State {
 
     @Override
     public void generateRoadmap(Controller c, Window w) throws IOException {
-        RoadMapGenerator.generateRoadmap(c.getCitymap());
-        c.setCurrentState(c.tourState);
+        RoadMapGenerator.generateRoadmap(c.getCityMap());
+        c.setCurrentState(c.TOUR_STATE);
     }
 
     public void enableButtons(Window window, ListOfCommands loc) {

@@ -26,18 +26,6 @@ public abstract class TemplateTSP implements TSP {
         branchAndBound(0, unvisited, visited, 0.0);
     }
 
-    public Integer getSolution(int i){
-        if (g != null && i>=0 && i<g.getNbVertices()+1)
-            return bestSol[i];
-        return -1;
-    }
-
-    public Double getSolutionCost(){
-        if (g != null)
-            return bestSolCost;
-        return -1.0;
-    }
-
     /**
      * Method that must be defined in TemplateTSP subclasses
      * @param currentVertex
@@ -47,14 +35,6 @@ public abstract class TemplateTSP implements TSP {
      */
     protected abstract int bound(Integer currentVertex, Collection<Integer> unvisited);
 
-    /**
-     * Method that must be defined in TemplateTSP subclasses
-     * @param currentVertex
-     * @param unvisited
-     * @param g
-     * @return an iterator for visiting all vertices in <code>unvisited</code> which are successors of <code>currentVertex</code>
-     */
-    protected abstract Iterator<Integer> iterator(Integer currentVertex, Collection<Integer> unvisited, GraphPointToPoint g);
 
     /**
      * Template method of a branch and bound algorithm for solving the TSP in <code>g</code>.
@@ -93,4 +73,24 @@ public abstract class TemplateTSP implements TSP {
         }
     }
 
+    /**
+     * Method that must be defined in TemplateTSP subclasses
+     * @param currentVertex
+     * @param unvisited
+     * @param g
+     * @return an iterator for visiting all vertices in <code>unvisited</code> which are successors of <code>currentVertex</code>
+     */
+    protected abstract Iterator<Integer> iterator(Integer currentVertex, Collection<Integer> unvisited, GraphPointToPoint g);
+
+    public Integer getSolution(int i){
+        if (g != null && i>=0 && i<g.getNbVertices()+1)
+            return bestSol[i];
+        return -1;
+    }
+
+    public Double getSolutionCost(){
+        if (g != null)
+            return bestSolCost;
+        return -1.0;
+    }
 }

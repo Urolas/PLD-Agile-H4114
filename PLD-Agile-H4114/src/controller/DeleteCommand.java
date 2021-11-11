@@ -2,55 +2,52 @@ package controller;
 
 
 import model.*;
-import view.Window;
 
 /**
  * @author 4IF-4114
  */
 public class DeleteCommand implements Command {
 
-    private CityMap cityMap;
-    private PointOfInterest poi;
-    private PickupAddress poiP;
-    private DeliveryAddress poiD;
-    private PointOfInterest preP;
-    private PointOfInterest preD;
+    private final CityMap CITY_MAP;
+    private final PointOfInterest POI;
+    private final PickupAddress POI_PICKUP;
+    private final DeliveryAddress POI_DELIVERY;
+    private final PointOfInterest PRE_PICKUP;
+    private final PointOfInterest PRE_DELIVERY;
 
     /**
      * Default constructor
      */
     public DeleteCommand(CityMap cityMap, PointOfInterest poi) {
-        this.cityMap = cityMap;
-        this.poi = poi;
+        this.CITY_MAP = cityMap;
+        this.POI = poi;
         if (poi instanceof PickupAddress) {
-            this.poiP = (PickupAddress) poi;
-            this.poiD = cityMap.distribution.getDelivery(poiP);
+            this.POI_PICKUP = (PickupAddress) poi;
+            this.POI_DELIVERY = cityMap.distribution.getDelivery(POI_PICKUP);
         } else {
-            this.poiD = (DeliveryAddress) poi;
-            this.poiP = cityMap.distribution.getPickup(poiD);
+            this.POI_DELIVERY = (DeliveryAddress) poi;
+            this.POI_PICKUP = cityMap.distribution.getPickup(POI_DELIVERY);
         }
-        this.preP = cityMap.tour.getPointBefore(poiP);
-        this.preD = cityMap.tour.getPointBefore(poiD);
+        this.PRE_PICKUP = cityMap.tour.getPointBefore(POI_PICKUP);
+        this.PRE_DELIVERY = cityMap.tour.getPointBefore(POI_DELIVERY);
     }
 
     /**
-     * @return
+     *
      */
     public void doCommand() {
-        if (!(poi instanceof DepotAddress))
-            cityMap.removeRequest(poiP, poiD);
+        if (!(POI instanceof DepotAddress))
+            CITY_MAP.removeRequest(POI_PICKUP, POI_DELIVERY);
     }
 
     /**
-     * @return
+     *
      */
     public void undoCommand() {
         try {
-            cityMap.addRequest(poiP, preP, poiD, preD);
-            cityMap.distribution.addRequest(poiP,poiD,poiP.getIdPointOfInterest());
-
-        } catch ( Exception ignored){
-
+            CITY_MAP.addRequest(POI_PICKUP, PRE_PICKUP, POI_DELIVERY, PRE_DELIVERY);
+            CITY_MAP.distribution.addRequest(POI_PICKUP, POI_DELIVERY, POI_PICKUP.getIdPointOfInterest());
+        } catch (Exception ignored) {
         }
     }
 

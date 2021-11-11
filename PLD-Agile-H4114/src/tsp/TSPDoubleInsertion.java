@@ -7,54 +7,14 @@ import java.util.*;
 public class TSPDoubleInsertion implements TSP {
     protected List<Integer> bestSol;  //de base que g en protected, le reste en private
     protected GraphPointToPoint g;
-    protected Double bestSolCost;
     protected Set<Integer> pickupCandidate;
     private int timeLimit;
     private long startTime;
 
-    @Override
-    public void searchSolution(int timeLimit, GraphPointToPoint g) {
-        if (timeLimit <= 0) return;
-        startTime = System.currentTimeMillis();
-        this.timeLimit = timeLimit;
-        this.g = g;
-        bestSol = new ArrayList(g.getNbVertices()+1);
-        pickupCandidate = g.getPickupSet();
-        initialize();
-        while(pickupCandidate.size()>0){
-            minWeightedInsertionCost();
-        }
-
-    }
-
-    @Override
-    public Integer getSolution(int i){
-        if (g != null && i>=0 && i<g.getNbVertices()+1)
-            return bestSol.get(i);
-        return -1;
-    }
-
-    @Override
-    public Double getSolutionCost(){
-        if (g != null)
-            return calculateCost();
-        return -1.0;
-    }
-
-    private Double calculateCost(){
-        return calculateCost(bestSol);
-    }
-
-    private Double calculateCost(List<Integer> listPoint){
-        Double cost=0.0;
-        for(int i=0;i<listPoint.size()-1;++i){
-            cost+=g.getCost(listPoint.get(i),listPoint.get(i+1));
-        }
-        return cost;
-    }
-
-    //Insert la premiere requete dans le tour
-    //La requete inserée est celle maximisant la distance par rapport au depot
+    /**
+     * Insert the first request in the tour
+     * The inserted request is the one maximizing the distance from the deposit
+     */
     public void initialize(){
         bestSol.add(0);
         double maxCost = 0.0;
@@ -73,10 +33,25 @@ public class TSPDoubleInsertion implements TSP {
         bestSol.add(g.getDelivery(maxId));
         pickupCandidate.remove(maxId);
         bestSol.add(0);
-
     }
 
-    // Insere la requete minimisant le cout d'insertion global
+    @Override
+    public void searchSolution(int timeLimit, GraphPointToPoint g) {
+        if (timeLimit <= 0) return;
+        startTime = System.currentTimeMillis();
+        this.timeLimit = timeLimit;
+        this.g = g;
+        bestSol = new ArrayList(g.getNbVertices()+1);
+        pickupCandidate = g.getPickupSet();
+        initialize();
+        while(pickupCandidate.size()>0){
+            minWeightedInsertionCost();
+        }
+    }
+
+    /**
+     * Insert the request minimizing the overall insertion cost
+     */
     public void minWeightedInsertionCost(){
         double minCost = Double.POSITIVE_INFINITY;
         int minId = -1;
@@ -85,9 +60,8 @@ public class TSPDoubleInsertion implements TSP {
         int idInsertionDelivery = -1;
         for(Integer pickupPoint : pickupCandidate){
 
-
             for(int k=0;k<bestSol.size()-1;++k){
-                double cost =   alpha*g.getCost(bestSol.get(k),pickupPoint)+g.getCost(pickupPoint,g.getDelivery(pickupPoint))
+                double cost = alpha*g.getCost(bestSol.get(k),pickupPoint)+g.getCost(pickupPoint,g.getDelivery(pickupPoint))
                         +(2-alpha)*g.getCost(g.getDelivery(pickupPoint),bestSol.get(k+1))-g.getCost(bestSol.get(k),bestSol.get(k+1));
                 if (cost<minCost){
                     minCost = cost;
@@ -97,10 +71,6 @@ public class TSPDoubleInsertion implements TSP {
                 }
             }
 
-
-
-
-            int secondMinId = -1;
             for(int k=0;k<bestSol.size()-2;++k){
 
                  for (int s=k+1;s<bestSol.size()-1;++s){
@@ -115,13 +85,22 @@ public class TSPDoubleInsertion implements TSP {
                      }
                  }
             }
-
         }
         bestSol.add(idInsertionPickup+1,minId);
         bestSol.add(idInsertionDelivery+1,g.getDelivery(minId));
         pickupCandidate.remove(minId);
+    }
 
+    private Double calculateCost(){
+        return calculateCost(bestSol);
+    }
 
+    private Double calculateCost(List<Integer> listPoint){
+        Double cost=0.0;
+        for(int i=0;i<listPoint.size()-1;++i){
+            cost+=g.getCost(listPoint.get(i),listPoint.get(i+1));
+        }
+        return cost;
     }
 
     @Override
@@ -129,5 +108,18 @@ public class TSPDoubleInsertion implements TSP {
         return bestSol.size();
     }
 
+    @Override
+    public Integer getSolution(int i){
+        if (g != null && i>=0 && i<g.getNbVertices()+1)
+            return bestSol.get(i);
+        return -1;
+    }
+
+    @Override
+    public Double getSolutionCost(){
+        if (g != null)
+            return calculateCost();
+        return -1.0;
+    }
 
 }

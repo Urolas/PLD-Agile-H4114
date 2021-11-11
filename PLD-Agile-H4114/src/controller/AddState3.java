@@ -22,8 +22,8 @@ public class AddState3 implements State {
                 window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
                 return;
             }
-            c.addState4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
-            c.setCurrentState(c.addState4);
+            c.ADD_STATE_4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
+            c.setCurrentState(c.ADD_STATE_4);
             map.setSelected2(i);
             map.setPOIToAdd(null);
             window.displayMessage("After which point ?\nSelect a point of interest on the map.");
@@ -39,8 +39,8 @@ public class AddState3 implements State {
 
     @Override
     public void rightClick(Controller c) {
-        c.getCitymap().resetSelected();
-        c.setCurrentState(c.tourState);
+        c.getCityMap().resetSelected();
+        c.setCurrentState(c.TOUR_STATE);
     }
 
     public void entryAction(Intersection i1, Integer d, PointOfInterest p, Window w) {
@@ -53,6 +53,6 @@ public class AddState3 implements State {
 
 
     public void mouseMoved(Controller controller, Intersection intersection) {
-        controller.getCitymap().setPOIToAdd(intersection);
+        controller.getCityMap().setPOIToAdd(intersection);
     }
 }
