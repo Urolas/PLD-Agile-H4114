@@ -6,7 +6,6 @@ package filecontrol;
 
 import model.*;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -25,10 +24,10 @@ public class TXTSerializer {
     /**
      * Write the roadmap on the empty .txt file
      * @param fw the FileWriter connected to the created file
-     * @param citymap the current Citymap with a computed tour
+     * @param cityMap the current Citymap with a computed tour
      * @throws IOException when path is not found
      */
-    public static void save(FileWriter fw, CityMap cityMap) throws IOException {
+    public static void save(FileWriter fw, CityMap cityMap) throws IOException { //TODO Commenter l'intérieur de la méthode
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
         List<Path> pathList = cityMap.getTour().getPaths();
         int arrivalTime = cityMap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
@@ -39,12 +38,10 @@ public class TXTSerializer {
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 if(poiNum==0) {
                     fw.write("[ Start point ]" + System.lineSeparator());
-
                 }else{
                     fw.write("[ to End point ]"+System.lineSeparator());
                 }
             }else {
-
                 if (poi instanceof DeliveryAddress) {
                     fw.write("[ to Delivery Point #" + ((poi.getIdPointOfInterest()-2)/2+1)+" ]"+System.lineSeparator());
                 } else if (poi instanceof PickupAddress) {
@@ -119,5 +116,4 @@ public class TXTSerializer {
 
         }
     }
-
 }
