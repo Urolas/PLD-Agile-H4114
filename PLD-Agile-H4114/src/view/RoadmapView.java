@@ -202,19 +202,19 @@ public class RoadmapView extends JPanel implements Observer {
             JLabel titleLabel = new JLabel();
 
             titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+            titleLabel.setBounds(40,10,250,20);
             if (poi.getIdPointOfInterest() == 0) { // Depot
                 subPanel.setPreferredSize(new Dimension(280-HORIZONTAL_MARGIN*2,60));
-                titleLabel.setBounds(100,10,250,20);
                 if (this.start) {
-                    titleLabel.setText("START");
+                    titleLabel.setText("START (Depot Point)");
 
 
                 } else {
-                    titleLabel.setText("END");
+                    titleLabel.setText("END (Depot Point)");
                 }
             } else {
                 subPanel.setPreferredSize(new Dimension(280-HORIZONTAL_MARGIN*2,120));
-                titleLabel.setBounds(40,10,250,20);
+
                 if (poi instanceof DeliveryAddress) {
                     titleLabel.setText("Delivery Point " + ((poi.getIdPointOfInterest()-2)/2+1));
 
