@@ -1,5 +1,5 @@
 /**
- * PointOfInterest
+ * Request
  * @author 4IF-4114
  */
 package model;
