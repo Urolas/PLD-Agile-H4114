@@ -50,6 +50,7 @@ public class AddCommand implements Command {
     /**
      * Do the command
      */
+    @Override
     public void doCommand() throws Exception {
         try {
             MAP.addRequest(POI_P, PRE_PICKUP, POI_D, PRE_DELIVERY);
@@ -63,6 +64,7 @@ public class AddCommand implements Command {
     /**
      * Undo the command
      */
+    @Override
     public void undoCommand() {
         if (authorized) {
             MAP.removeRequest(POI_P, POI_D);
