@@ -6,13 +6,13 @@ package view;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
 
-import model.*;
+import model.CityMap;
+import model.Distribution;
+import model.Tour;
 
 import observer.Observable;
 import observer.Observer;
@@ -176,6 +176,13 @@ public class MapView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        repaint();
+    }
+
+    /**
+     * Reset the zoom to display a new loaded map properly
+     */
+    public void resetZoom(){
         mapWidth = cityMap.getWidth();
         mapHeight = cityMap.getHeight();
         scaleZoom = 1;
@@ -317,8 +324,8 @@ public class MapView extends JPanel implements Observer {
 
     /**
      * Highlight the pickup and delivery points of a request on the map
-     * @param i1Selected the intersection of the pickup
-     * @param i2Selected the intersection of the delivery
+     * @param p1 the intersection of the pickup
+     * @param p2 the intersection of the delivery
      */
     private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
 
@@ -404,7 +411,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     /**
-     * Change the color of the roads from the computed path
+     * Draw the path between each point of interest
      * @param p the path is be colored
      * @param c the color of the path's roads
      */
@@ -440,7 +447,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     /**
-     * Add depot point on the map : draw a rectangle
+     * Add depot point on the map : draw a flag
      */
     public void displayDepot(){
         if (cityMap.getDistribution().getDepot().getIntersection() != null) {
