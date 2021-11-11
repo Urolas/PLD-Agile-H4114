@@ -30,7 +30,7 @@ public class AddState3 implements State {
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
             map.setPoiToAdd(null);
-            window.displayMessage("After which point \nSelect a point of interest");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
         } else {
             window.parsingError("Misplaced point error: Click on a valid intersection.");
 
