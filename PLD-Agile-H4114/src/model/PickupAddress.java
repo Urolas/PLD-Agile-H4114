@@ -1,5 +1,6 @@
 /**
  * PickupAddress
+ *
  * @author 4IF-4114
  */
 package model;
@@ -24,9 +25,9 @@ public class PickupAddress extends PointOfInterest {
      * @param pickupDuration the duration the deliveryman can stay on this point
      * @param id the id of the point of interest
      */
-    public PickupAddress(Intersection pIntersection, Integer pickupDuration,Integer id) {
-        super(pIntersection,id);
-        this.duration=pickupDuration;
+    public PickupAddress(Intersection pIntersection, Integer pickupDuration, Integer id) {
+        super(pIntersection, id);
+        this.duration = pickupDuration;
     }
 
     /**
@@ -35,7 +36,7 @@ public class PickupAddress extends PointOfInterest {
      */
     @Override
     public boolean equals(Object obj) {
-        if(!super.equals(obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
         return Objects.equals(this.duration, ((PickupAddress) obj).duration);

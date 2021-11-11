@@ -6,7 +6,6 @@
 package filecontrol;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +19,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import model.*;
-import org.xml.sax.SAXException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,6 +33,7 @@ public class XMLSerializer {
     private static Document document;
     private static XMLSerializer instance = null;
     private XMLSerializer(){}
+
     public static XMLSerializer getInstance(){
         if (instance == null)
             instance = new XMLSerializer();
@@ -42,34 +41,27 @@ public class XMLSerializer {
     }
 
     /**
-     * Open an XML file and write an XML description of the roadmap in it
-     * @param citymap the citymap with the tour to serialize
-     * @param xml the .xml File to write on
-     * @throws ParserConfigurationException when the parsing is null
-     * @throws TransformerFactoryConfigurationError when the data can not written into the Document
-     * @throws TransformerException when the path is wrong
-     * @throws ExceptionXML when the XML format is wrong
+     * Add an attribute to an element
+     * @param root the root of the Element
+     * @param name the name of the attribute
+     * @param value the value of the attribute
      */
-    public static void save(CityMap citymap, File xml) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, XMLException{
-        StreamResult result = new StreamResult(xml);
-        document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        document.appendChild(createRoadMap(citymap));
-        DOMSource source = new DOMSource(document);
-        Transformer xformer = TransformerFactory.newInstance().newTransformer();
-        xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        xformer.transform(source, result);
+    private static void createAttribute(Element root, String name, String value){
+        Attr attribut = document.createAttribute(name);
+        root.setAttributeNode(attribut);
+        attribut.setValue(value);
     }
 
     /**
      * Add the roadmap to the xml file
-     * @param citymap the citymap with the tour to serialize
+     * @param cityMap the citymap with the tour to serialize
      * @return the roadmap Element
      */
-    private static Element createRoadMap(CityMap citymap) {
+    private static Element createRoadMap(CityMap cityMap) {
         Element root = document.createElement("roadmap");
-        int arrivalTime = citymap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
-        List<PointOfInterest> pointList = citymap.getTour().getPointOfInterests();
-        List<Path> pathList = citymap.getTour().getPaths();
+        int arrivalTime = cityMap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
+        List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
+        List<Path> pathList = cityMap.getTour().getPaths();
 
         display(pointList.get(0), arrivalTime, true);
         root.appendChild(pointRoot);
@@ -111,23 +103,9 @@ public class XMLSerializer {
                 length = 0;
                 durationRoad = 0;
 
-
             }
         }
-
         return root;
-    }
-
-    /**
-     * Add an attribute to an element
-     * @param root the root of the Element
-     * @param name the name of the attribute
-     * @param value the value of the attribute
-     */
-    private static void createAttribute(Element root, String name, String value){
-        Attr attribut = document.createAttribute(name);
-        root.setAttributeNode(attribut);
-        attribut.setValue(value);
     }
 
     /**
@@ -180,5 +158,23 @@ public class XMLSerializer {
         createAttribute(roadRoot,"duration",String.format("%02d:%02d:%02d", 0 ,minutes, seconds));
     }
 
+    /**
+     * Open an XML file and write an XML description of the roadmap in it
+     * @param cityMap the citymap with the tour to serialize
+     * @param xml the .xml File to write on
+     * @throws ParserConfigurationException when the parsing is null
+     * @throws TransformerFactoryConfigurationError when the data can not written into the Document
+     * @throws TransformerException when the path is wrong
+     * @throws XMLException when the XML format is wrong
+     */
+    public static void save(CityMap cityMap, File xml) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, XMLException{
+        StreamResult result = new StreamResult(xml);
+        document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        document.appendChild(createRoadMap(cityMap));
+        DOMSource source = new DOMSource(document);
+        Transformer xformer = TransformerFactory.newInstance().newTransformer();
+        xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        xformer.transform(source, result);
+    }
 
 }

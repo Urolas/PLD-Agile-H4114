@@ -106,6 +106,7 @@ public class CityMap extends Observable {
 
     /**
      * Execute the dijktra algorithme and find the best path between two intersections
+     *
      * @param point1 the first point of interest
      * @param point2 the second point of interest we want to reach
      * @return the best path these two points and its length
@@ -208,6 +209,7 @@ public class CityMap extends Observable {
 
     /**
      * Add a new intersection to the CityMap
+     *
      * @param intersection the new intersection to be added
      */
     public void addIntersection(Intersection intersection) {
@@ -217,10 +219,11 @@ public class CityMap extends Observable {
 
     /**
      * Add a new road to the CityMap
-     * @param name the name of the road
+     *
+     * @param name   the name of the road
      * @param length the length of the road
-     * @param id1 the id of the origin (start point) of the road
-     * @param id2 the id of the destination ( end point) of the road
+     * @param id1    the id of the origin (start point) of the road
+     * @param id2    the id of the destination ( end point) of the road
      */
     public void addRoad(String name, Double length, String id1, String id2) {
         Intersection origin = this.INTERSECTIONS.get(id1);
@@ -235,6 +238,7 @@ public class CityMap extends Observable {
 
     /**
      * Add a new request to the CityMap
+     *
      * @param poiP the new pickup adress
      * @param preP the previous pickup point of interest
      * @param poiD the new delivery adress
@@ -322,6 +326,7 @@ public class CityMap extends Observable {
 
     /**
      * Remove a new request from the CityMap
+     *
      * @param pAddress pickup address of the request
      * @param dAddress delivery address of the request
      */
@@ -357,7 +362,8 @@ public class CityMap extends Observable {
 
     /**
      * Change the position of a point on the path
-     * @param poi the point of interest we want to relocate
+     *
+     * @param poi         the point of interest we want to relocate
      * @param newPosition the new location of this point
      */
     public void changePosition(PointOfInterest poi, int newPosition) {
@@ -399,6 +405,7 @@ public class CityMap extends Observable {
 
     /**
      * Convert the result of the Dijktra method into a list of road
+     *
      * @param path the optimal path for the computed tour
      * @return the list of road of the path
      */
@@ -416,8 +423,9 @@ public class CityMap extends Observable {
 
     /**
      * Update the adjacency list with the new roads
-     * @param id1 the id of the intersection indicating the start of the road
-     * @param id2 the id of the intersection indicating the end of the road
+     *
+     * @param id1    the id of the intersection indicating the start of the road
+     * @param id2    the id of the intersection indicating the end of the road
      * @param length the length of the road
      */
     public void completeAdjacencyList(String id1, String id2, Double length) {
@@ -428,6 +436,7 @@ public class CityMap extends Observable {
 
     /**
      * Empty the adjacency list
+     *
      * @param id1 the id of the intersection indicating the start of the path
      */
     public void initializeAdjacencyList(String id1) {
@@ -496,6 +505,7 @@ public class CityMap extends Observable {
 
     /**
      * Set a pair of points to be highlight
+     *
      * @param highlightPoint the pickup point to be highlight
      * @param secondaryPoint the delivery point to be highlight
      */
@@ -526,6 +536,7 @@ public class CityMap extends Observable {
 
     /**
      * set the intersection to be added on the map (this.poiToAdd)
+     *
      * @param poiToAdd Intersection of the new point
      */
     public void setPOIToAdd(Intersection poiToAdd) {
