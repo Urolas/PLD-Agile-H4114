@@ -66,6 +66,11 @@ public class Window extends JFrame {
      * @param controller the controller for every action performed
      */
     public Window(CityMap cityMap, Controller controller) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         setLayout(null);
         mapView = new MapView(cityMap, this);
         messageFrame = new JTextPane();
