@@ -39,7 +39,6 @@ public class ButtonListener implements ActionListener {
             case Window.COMPUTE_TOUR: controller.computeTour();break;
             case Window.MODIFY: controller.modifyDistribution();break;
             case Window.REMOVE: controller.removePointOfInterest();break;
-            case Window.ADD_DURATION: controller.addDuration();break;
             case Window.ZOOM_IN: controller.zoomIn();break;
             case Window.ZOOM_OUT: controller.zoomOut();break;
             case Window.RECENTER: controller.recenter();break;
