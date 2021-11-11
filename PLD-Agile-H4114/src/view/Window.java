@@ -134,7 +134,7 @@ public class Window extends JFrame {
             buttons.add(button);
             button.setSize(30,30);
             button.setMargin(new Insets(0,0,5,0));
-            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setFont(new Font("Segoe UI", Font.BOLD, 25));
             button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
             button.addActionListener(buttonListener);
             mapView.add(button);
