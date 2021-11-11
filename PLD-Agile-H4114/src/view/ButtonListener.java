@@ -24,12 +24,12 @@ public class ButtonListener implements ActionListener {
         this.controller = controller;
     }
 
-    @Override
     /**
      * Method called by the button listener each time a button is clicked
      * and forward the corresponding message to the controller
      * @param e the actionEvent indicating which button is clicked
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         String actionCommand = e.getActionCommand();

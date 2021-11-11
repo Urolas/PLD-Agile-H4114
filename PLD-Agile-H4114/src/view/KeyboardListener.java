@@ -25,11 +25,11 @@ public class KeyboardListener extends KeyAdapter {
         this.controller = controller;
     }
 
-    @Override
     /**
      * Method called by the keyboard listener each time a key is pressed
      * @param e the keyEvent indicating which key is pressed
      */
+    @Override
     public void keyPressed(KeyEvent e) {
         controller.keystroke(e.getKeyCode());
 

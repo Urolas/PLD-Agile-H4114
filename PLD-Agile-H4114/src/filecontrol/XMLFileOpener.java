@@ -47,12 +47,12 @@ public class XMLFileOpener extends FileFilter {
         return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
     }
 
-    @Override
     /**
      * Indicates if the selected file can be read or not
      * @param File the selected File
      * @return boolean value indicating if the selected file works
      */
+    @Override
     public boolean accept(File f) {
         if (f == null) return false;
         if (f.isDirectory()) return true;
@@ -62,12 +62,11 @@ public class XMLFileOpener extends FileFilter {
     }
 
 
-
-    @Override
     /**
      * Show the description of an extension
      * @return the description of a .XML file extension
      */
+    @Override
     public String getDescription() {
         return "XML file";
     }
