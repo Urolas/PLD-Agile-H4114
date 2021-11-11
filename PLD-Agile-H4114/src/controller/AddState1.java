@@ -30,7 +30,7 @@ public class AddState1 implements State {
             map.setPoiToAdd(null);
             window.displayMessage("After which point ?\nSelect a point of interest on the map.");
         } else {
-            window.displayMessage("Misplaced point error: Click on a valid intersection.");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
 
         }
     }
