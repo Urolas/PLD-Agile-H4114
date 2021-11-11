@@ -218,6 +218,8 @@ public class MapView extends JPanel implements Observer {
 
                 outline = q.color.darker().darker();
 
+                assert t != null;
+
                 displayRequest(q, outline);
             }
             if (CITYMAP.secondaryHighlight != null & CITYMAP.primaryHighlight != null) {
