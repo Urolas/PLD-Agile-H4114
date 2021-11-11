@@ -20,7 +20,7 @@ public class AddState1 implements State {
                 if(d1<0) throw new NumberFormatException();
             }
             catch (NumberFormatException e) {
-                window.displayMessage("Incorrect value\nPlease enter a positive number\nand place the point");
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
                 return;
             }
             c.addState2.entryAction(i,this.d1);
