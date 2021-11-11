@@ -1,3 +1,7 @@
+/**
+ * PointOfInterest
+ * @author 4IF-4114
+ */
 package model;
 
 
@@ -6,7 +10,7 @@ import observer.Observable;
 import java.util.Objects;
 
 /**
- * @author 4IF-4114
+ * A pickup address or a delivery address or a depot address
  */
 public class PointOfInterest extends Observable {
 
@@ -17,7 +21,7 @@ public class PointOfInterest extends Observable {
     private boolean isSelected;
 
     /**
-     * Default constructor
+     * Default constructor of PointOfInterest
      */
     public PointOfInterest() {
         this.duration=-1;
@@ -40,10 +44,10 @@ public class PointOfInterest extends Observable {
     }
 
     /**
-     * 
+     * Constructor of PointOfInterest
+     * @param i the intersection of the pointOfInterest
+     * @param idPoint the id of the point
      */
-
-
     public PointOfInterest(Intersection i,Integer idPoint) {
         this.idPointOfInterest=idPoint;
         this.intersection=i;
@@ -60,6 +64,10 @@ public class PointOfInterest extends Observable {
         return idPointOfInterest;
     }
 
+    /**
+     * Compares this point of interest with another object and check if they are equal
+     * @param obj the object to be compared with
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj.getClass()!=this.getClass()){
