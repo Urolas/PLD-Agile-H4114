@@ -11,8 +11,10 @@ public class TSPDoubleInsertion implements TSP {
     private int timeLimit;
     private long startTime;
 
-    //Insert la premiere requete dans le tour
-    //La requete inserée est celle maximisant la distance par rapport au depot
+    /**
+     * Insert the first request in the tour
+     * The inserted request is the one maximizing the distance from the deposit
+     */
     public void initialize(){
         bestSol.add(0);
         double maxCost = 0.0;
@@ -47,7 +49,9 @@ public class TSPDoubleInsertion implements TSP {
         }
     }
 
-    // Insere la requete minimisant le cout d'insertion global
+    /**
+     * Insert the request minimizing the overall insertion cost
+     */
     public void minWeightedInsertionCost(){
         double minCost = Double.POSITIVE_INFINITY;
         int minId = -1;
