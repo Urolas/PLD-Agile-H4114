@@ -1,3 +1,9 @@
+/**
+ * HighlightState
+ *
+ * @author 4IF-4114
+ */
+
 package controller;
 
 import filecontrol.RoadMapGenerator;
@@ -10,6 +16,9 @@ import view.Window;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
+/**
+ * Highlight state, entered the user select a point of interest
+ */
 public class HighlightState implements State {
     private PointOfInterest highlightpoint;
 

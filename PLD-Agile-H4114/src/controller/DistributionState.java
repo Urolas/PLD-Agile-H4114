@@ -1,3 +1,8 @@
+/**
+ * DistributionState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import org.xml.sax.SAXException;
@@ -9,7 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
- * @author 4IF-4114
+ * Distribution State, used when the distribution is loaded
  */
 public class DistributionState implements State {
 

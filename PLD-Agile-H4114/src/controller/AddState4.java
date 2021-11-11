@@ -1,3 +1,8 @@
+/**
+ * AddState4
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -5,6 +10,9 @@ import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
 
+/**
+ * AddState4, a state used when the user want to select the point of interest after which the new delivery point will be added
+ */
 public class AddState4 implements State {
     private Intersection i1;
     private Integer d1;

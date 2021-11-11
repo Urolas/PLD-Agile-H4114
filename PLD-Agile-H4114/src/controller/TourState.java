@@ -1,3 +1,8 @@
+/**
+ * TourState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 
@@ -15,7 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
- * @author 4IF-4114
+ * TourState state used when the tour is loaded
  */
 public class TourState implements State {
 

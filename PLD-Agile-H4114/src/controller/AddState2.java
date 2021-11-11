@@ -1,3 +1,8 @@
+/**
+ * AddState2
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -5,6 +10,9 @@ import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
 
+/**
+ * AddState2, a state used when the user want to select the point of interest after which the new pickup point will be added
+ */
 public class AddState2 implements State {
 
     private Intersection i1;

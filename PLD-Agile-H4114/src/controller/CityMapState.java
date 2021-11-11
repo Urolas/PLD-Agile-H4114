@@ -1,3 +1,8 @@
+/**
+ * CityMapState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import org.xml.sax.SAXException;
@@ -9,7 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
- * @author 4IF-4114
+ * CityMapState state used when the city map is loaded
  */
 public class CityMapState implements State {
 

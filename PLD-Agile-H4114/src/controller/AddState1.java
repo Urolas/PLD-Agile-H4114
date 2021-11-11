@@ -1,3 +1,8 @@
+/**
+ * AddState1
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -5,6 +10,9 @@ import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
 
+/**
+ * AddState1, a state used when the user want to add a pickup point
+ */
 public class AddState1 implements State {
     private Integer d1;
 

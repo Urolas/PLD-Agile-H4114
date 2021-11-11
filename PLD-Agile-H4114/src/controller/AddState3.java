@@ -1,3 +1,8 @@
+/**
+ * AddState3
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -5,6 +10,9 @@ import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
 
+/**
+ * AddState3, a state used when the user want to add a delivery point
+ */
 public class AddState3 implements State {
     private Intersection i1;
     private PointOfInterest p1;
