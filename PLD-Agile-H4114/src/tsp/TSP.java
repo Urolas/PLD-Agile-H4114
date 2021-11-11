@@ -5,8 +5,8 @@ public interface TSP {
      * Search for a shortest cost hamiltonian circuit in <code>g</code> within <code>timeLimit</code> milliseconds
      * (returns the best found tour whenever the time limit is reached)
      * Warning: The computed tour always start from vertex 0
-     * @param timeLimit
-     * @param g
+     * @param timeLimit the execution time limit of the TSP
+     * @param g the graph between every PointOfInterest
      */
     public void searchSolution(int timeLimit, GraphPointToPoint g);
 
