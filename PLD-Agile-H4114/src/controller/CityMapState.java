@@ -30,9 +30,18 @@ public class CityMapState implements State {
     }
 
     public void keyStroke(MapView mapView, int keyCode){
-
         mapView.moveMapView(keyCode);
+    }
 
+    public  void enableButtons(Window window, ListOfCommands loc) {
+        window.enableButton("Load a city map", true);
+        window.enableButton("Load a distribution", true);
+        window.enableButton("Compute a tour", false);
+        window.enableButton("Add request", false);
+        window.enableButton("Remove", false);
+        window.enableButton("Redo", false);
+        window.enableButton("Undo", false);
+        window.enableButton("Generate roadmap", false);
     }
 
 

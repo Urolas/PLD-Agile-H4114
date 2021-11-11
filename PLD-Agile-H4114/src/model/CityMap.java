@@ -18,6 +18,20 @@ public class CityMap extends Observable {
     public Tour tour;
     private Double width, height, nordPoint, westPoint;
     private HashMap<String, List<AbstractMap.Entry<String, Double>>> adjacencyList;
+    public PointOfInterest primaryHighlight;
+    public PointOfInterest secondaryHighlight;
+    private Intersection poiToAdd;
+    public Intersection i1Selected;
+    public Intersection i2Selected;
+
+    public void setPoiToAdd(Intersection poiToAdd) {
+        this.poiToAdd = poiToAdd;
+        notifyObservers();
+    }
+
+    public Intersection getPoiToAdd() {
+        return poiToAdd;
+    }
 
     @Override
     public String toString() {
@@ -223,7 +237,7 @@ public class CityMap extends Observable {
         boolean pickupinserted = false;
         boolean deliveryinserted = false;
 
-        for (int i = 0; i < newpoints.size(); i++) {
+        for (int i = 0; (i < newpoints.size() && !deliveryinserted); i++) {
             if (newpoints.get(i) == preP) {
                 newpoints.add(i + 1, poiP);
                 AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(preP, poiP);
@@ -299,17 +313,14 @@ public class CityMap extends Observable {
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
         newpoints.add(i, poi);
-        for (int j = newpoints.size() - 2; j >= 1; j--) {
+        for (int j = newpoints.size() - 1; j >= 1; j--) {
 
             AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j));
-            AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(newpoints.get(j), newpoints.get(j + 1));
+
             Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
-            Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
 
             newpaths.remove(j - 1);
-            newpaths.remove(j - 1);
             newpaths.add(j - 1, pathlasttop);
-            newpaths.add(j - 1, pathptonext);
 
         }
         tour.setPointOfInterests(newpoints);
@@ -401,5 +412,29 @@ public class CityMap extends Observable {
     }
 
 
+    public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
+        this.primaryHighlight=highlightpoint;
+        this.secondaryHighlight=secondaryPoint;
+        notifyObservers();
+    }
+
+    public void resetSelected() {
+        this.i1Selected=null;
+        this.i2Selected=null;
+        notifyObservers();
+    }
+
+    public void setSelected1(Intersection i) {
+        this.i1Selected=i;
+        notifyObservers();
+
+    }
+
+    public void setSelected2(Intersection i) {
+        this.i2Selected=i;
+        notifyObservers();
+
+
+    }
 }
 

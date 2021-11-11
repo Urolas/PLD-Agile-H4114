@@ -13,6 +13,7 @@ public class PointOfInterest extends Observable {
     protected Integer duration;
     protected Intersection intersection;
     protected Integer idPointOfInterest;
+    protected Color color;
     private boolean isSelected;
 
     /**
@@ -48,6 +49,8 @@ public class PointOfInterest extends Observable {
         this.intersection=i;
 
     }
+
+    public Color getColor() { return color; }
 
     public Integer getDuration() {
         return duration;

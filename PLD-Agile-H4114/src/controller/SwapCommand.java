@@ -21,12 +21,13 @@ public class SwapCommand implements Command {
      */
 
 
-    public SwapCommand(CityMap map, PointOfInterest poi, int sens) {
+    public SwapCommand(CityMap map, Integer idpoi, int sens) {
         this.map = map;
-        this.poi = poi;
+        this.poi = map.distribution.getPointOfIntersection(idpoi);
         this.sens = sens;
         this.position = map.tour.getPointOfInterests().indexOf(poi);
-        if (position == 0 || position == map.tour.getPointOfInterests().size() - 1 ||
+
+        if (position+sens == 0 || position+sens == map.tour.getPointOfInterests().size() - 1 ||
                 (poi instanceof PickupAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getDelivery((PickupAddress) poi)) ||
                 (poi instanceof DeliveryAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getPickup((DeliveryAddress) poi))) {
             authorized = false;

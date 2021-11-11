@@ -69,4 +69,12 @@ public class ListOfCommands {
         currentIndex = -1;
         list.clear();
     }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public LinkedList<Command> getList() {
+        return list;
+    }
 }

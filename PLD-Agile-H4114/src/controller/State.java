@@ -68,5 +68,14 @@ public interface State {
      */
     public default void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection intersection,PointOfInterest pointOfInterest) {};
 
-    public default void rightClick(Controller controller){}
+
+    public default void enableButtons(Window window, ListOfCommands loc) {};
+
+    public default void rightClick(Controller controller) {};
+
+    public default void up(Integer id,ListOfCommands listOfCommands,Controller c) {}
+
+    public default void down(Integer id,ListOfCommands listOfCommands,Controller c) {}
+
+    public default void mouseMoved(Controller controller, Intersection intersection) {};
 }

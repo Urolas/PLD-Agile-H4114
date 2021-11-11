@@ -8,13 +8,26 @@ import view.Window;
 import java.awt.Point;
 
 public class AddState1 implements State {
+    private Integer d1;
     @Override
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
+        String strDuration = window.getDuration();
 
+        try {
+            this.d1 = Integer.parseInt(strDuration);
+
+        }
+        catch (NumberFormatException e) {
+            window.displayMessage("value entered not a number");
+            return;
+        }
         if (i != null) {
 
-            c.addState2.entryAction(i);
+            c.addState2.entryAction(i,this.d1);
             c.setCurrentState(c.addState2);
+            map.setSelected1(i);
+
+            map.setPoiToAdd(null);
             window.displayMessage("Apres quel point");
         } else {
             window.displayMessage("Erreur point mal placé : Placez le pickupPoint");
@@ -22,13 +35,34 @@ public class AddState1 implements State {
         }
     }
 
+
+
     @Override
     public void rightClick(Controller c){
+        c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
 
     protected void entryAction(Window w) {
-        w.displayMessage("Placez le pickupPoint");
+        this.d1=300;
+        w.displayMessage("Placez le pickupPoint :\n renseignez une durée");
+        w.resetDurationInserted();
     }
 
+
+    public  void enableButtons(Window window, ListOfCommands loc) {
+        window.enableButton("Load a city map", true);
+        window.enableButton("Load a distribution", true);
+        window.enableButton("Compute a tour", false);
+        window.enableButton("Add request", false);
+        window.enableButton("Remove", false);
+        window.enableButton("Redo", false);
+        window.enableButton("Undo", false);
+        window.enableButton("Generate roadmap", false);
+
+    }
+
+    public void mouseMoved(Controller controller, Intersection intersection) {
+        controller.getCitymap().setPoiToAdd(intersection);
+    }
 }

@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -55,8 +56,13 @@ public class RoadMapGenerator {
             }
 
             if(newFile.exists()){
-                System.out.println("File already exist");
-            }else {
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to override existing file?", "Confirm",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
+                    filePath = JFileChooser.CANCEL_OPTION;
+                }
+            }
+            if(filePath == JFileChooser.APPROVE_OPTION) {
                 System.out.println("Save as file: " + newFile.getAbsolutePath());
                 try {
 
@@ -73,8 +79,8 @@ public class RoadMapGenerator {
                 }catch(Exception ex){
                     System.out.println(ex);
                 }
-
             }
+
         }else if(filePath == JFileChooser.CANCEL_OPTION){
             System.out.println("Operation cancelled");
         }else{
