@@ -46,7 +46,7 @@ public class TourState implements State {
     }
 
     @Override
-    public void modifyDistribution(Controller c) {
+    public void addRequest(Controller c) {
         c.ADD_STATE_1.entryAction(c.getWindow());
         c.setCurrentState(c.ADD_STATE_1);
         c.resetListOfCommands();

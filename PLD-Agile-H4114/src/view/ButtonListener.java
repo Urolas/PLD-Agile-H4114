@@ -45,7 +45,7 @@ public class ButtonListener implements ActionListener {
             case Window.REDO -> controller.redo();
             case Window.GENERATE_ROADMAP -> controller.generateRoadmap();
             case Window.COMPUTE_TOUR -> controller.computeTour();
-            case Window.MODIFY -> controller.modifyDistribution();
+            case Window.MODIFY -> controller.addRequest();
             case Window.REMOVE -> controller.removePointOfInterest();
             case Window.ZOOM_IN -> controller.zoomIn();
             case Window.ZOOM_OUT -> controller.zoomOut();
