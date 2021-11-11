@@ -70,7 +70,7 @@ public class Window extends JFrame {
         keyboardListener = new KeyboardListener(controller);
         messageFrame.setBorder(BorderFactory.createTitledBorder("Messages"));
         messageFrame.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        displayMessage("Please load a Citymap");
+        displayMessage("Please load a citymap.");
         messageFrame.setBounds(10,10,280,80);
         messageFrame.setEditable(false);
         StyledDocument docu = messageFrame.getStyledDocument();
