@@ -32,7 +32,7 @@ public class AddState3 implements State {
             map.setPoiToAdd(null);
             window.displayMessage("After which point \nSelect a point of interest");
         } else {
-            window.parsingError("Misplaced point error: Place the deliveryPoint");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
 
         }
 
