@@ -21,7 +21,7 @@ public class SwapCommand implements Command {
      */
 
 
-    public SwapCommand(CityMap map, Integer idpoi, int sens) {
+    public SwapCommand(CityMap map, Integer idpoi, int sens) throws Exception {
         this.map = map;
         this.poi = map.distribution.getPointOfIntersection(idpoi);
         this.sens = sens;
@@ -31,6 +31,7 @@ public class SwapCommand implements Command {
                 (poi instanceof PickupAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getDelivery((PickupAddress) poi)) ||
                 (poi instanceof DeliveryAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getPickup((DeliveryAddress) poi))) {
             authorized = false;
+            throw new Exception("Error : this action is impossible");
         } else {
             authorized = true;
         }

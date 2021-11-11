@@ -123,7 +123,6 @@ public class MapView extends JPanel implements Observer {
      * @param mouseY the end position Y of the mouse
      */
     public void dragMap(int mouseX, int mouseY){
-        System.out.println((mouseX - mouseClickedX)/scaleWidth);
         if  ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX)/scaleWidth) &&
                 (cityMap.getWestPoint() + cityMap.getWidth()>= originLongClicked - (mouseX - mouseClickedX)/scaleWidth  + mapWidth ))  {
             originLong = originLongClicked - (mouseX - mouseClickedX)/scaleWidth;
@@ -495,7 +494,6 @@ public class MapView extends JPanel implements Observer {
      */
     public void displayPoiToAdd() {
         if (cityMap.getPoiToAdd() != null) {
-            System.out.println("mouse moved intersection not null");
             int x = convertLongitudeToPixel(cityMap.getPoiToAdd().getLongitude());
             int y = convertLatitudeToPixel(cityMap.getPoiToAdd().getLatitude());
             g.setColor(Color.RED);
