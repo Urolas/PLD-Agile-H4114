@@ -118,14 +118,14 @@ public class HighlightState implements State {
     }
 
 
-    public void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands listOfCommands) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);
         window.enableButton("Add request", true);
         window.enableButton("Remove", true);
-        window.enableButton("Undo", loc.getCurrentIndex() >= 0);
-        window.enableButton("Redo", loc.getCurrentIndex() < loc.getList().size() - 1);
+        window.enableButton("Undo", listOfCommands.getCurrentIndex() >= 0);
+        window.enableButton("Redo", listOfCommands.getCurrentIndex() < listOfCommands.getList().size() - 1);
         window.enableButton("Generate roadmap", true);
 
     }

@@ -84,10 +84,6 @@ public class Controller {
         }
     }
 
-    public void keystroke(int keyCode) {
-        currentState.keyStroke(WINDOW.getMapView(), keyCode);
-    }
-
     public CityMap getCityMap() {
         return CITY_MAP;
     }

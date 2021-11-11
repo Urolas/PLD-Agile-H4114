@@ -19,21 +19,21 @@ public class CityMapState implements State {
     public CityMapState() {
     }
 
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCityMap());
-        w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.DISTRIBUTION_STATE);
+    public void loadDistribution(Controller controller, Window window) throws XMLException, ParserConfigurationException, IOException, SAXException {
+        XMLDeserializer.loadDistribution(controller.getCityMap());
+        window.displayMessage("Distribution loaded.\nA tour can be computed.");
+        controller.setCurrentState(controller.DISTRIBUTION_STATE);
     }
 
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCityMap());
-        w.getMapView().resetZoom();
-        w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.CITY_MAP_STATE);
+    public void loadMap(Controller controller, Window window) throws XMLException, ParserConfigurationException, IOException, SAXException {
+        XMLDeserializer.loadCityMap(controller.getCityMap());
+        window.getMapView().resetZoom();
+        window.displayMessage("Please load a distribution.");
+        controller.setCurrentState(controller.CITY_MAP_STATE);
     }
 
 
-    public void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands listOfCommands) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);

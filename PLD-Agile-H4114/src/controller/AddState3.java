@@ -11,7 +11,7 @@ public class AddState3 implements State {
     private Integer d1;
     private Integer d2;
 
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
+    public void leftClick(Controller controller, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
         String strDuration = window.getDuration();
 
         if (i != null) {
@@ -22,8 +22,8 @@ public class AddState3 implements State {
                 window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
                 return;
             }
-            c.ADD_STATE_4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
-            c.setCurrentState(c.ADD_STATE_4);
+            controller.ADD_STATE_4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
+            controller.setCurrentState(controller.ADD_STATE_4);
             map.setSelected2(i);
             map.setPOIToAdd(null);
             window.displayMessage("After which point ?\nSelect a point of interest on the map.");

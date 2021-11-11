@@ -11,12 +11,12 @@ public class AddState2 implements State {
     private Integer d1;
 
 
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands,
+    public void leftClick(Controller controller, Window window, CityMap map, ListOfCommands listOfCommands,
                           Intersection i, PointOfInterest poi) {
 
         if (poi != null) {
-            c.ADD_STATE_3.entryAction(this.i1,d1, poi,window);
-            c.setCurrentState(c.ADD_STATE_3);
+            controller.ADD_STATE_3.entryAction(this.i1,d1, poi,window);
+            controller.setCurrentState(controller.ADD_STATE_3);
 
             window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
             window.enableJtextField(true);
