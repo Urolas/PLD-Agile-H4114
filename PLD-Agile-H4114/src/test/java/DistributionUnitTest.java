@@ -44,13 +44,6 @@ public class DistributionUnitTest {
         assertNotNull(distribution.getRequests());
         assertNotNull(distribution.getDepot());
         assertNotNull(distribution.getRequests());
-        ArrayList<String> colors = new ArrayList<>();
-        colors.add("#1FBED6");
-        colors.add("#97C30A");
-        colors.add("#FF717E");
-        colors.add("#FFDE00");
-        colors.add("#006666");
-        assertEquals(colors, distribution.getColorList());
     }
 
     @Test

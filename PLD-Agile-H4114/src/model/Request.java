@@ -44,9 +44,6 @@ public class Request {
 
     @Override
     public boolean equals(Object o){
-        if(!this.color.equals(((Request) o).color)){
-            return false;
-        }
         if(!this.pickup.equals(((Request) o).pickup)){
             return false;
         }
