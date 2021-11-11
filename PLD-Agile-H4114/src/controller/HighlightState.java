@@ -45,7 +45,7 @@ public class HighlightState implements State {
     }
 
     @Override
-    public void modifyDistribution(Controller controller) {
+    public void addRequest(Controller controller) {
         controller.getCityMap().setHighlighted(null, null);
         controller.ADD_STATE_1.entryAction(controller.getWindow());
         controller.setCurrentState(controller.ADD_STATE_1);

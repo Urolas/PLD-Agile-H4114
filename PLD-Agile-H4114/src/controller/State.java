@@ -38,7 +38,7 @@ public interface State {
 
     default void computeTour(Controller controller, Window window){}
 
-    default void modifyDistribution(Controller controller){}
+    default void addRequest(Controller controller){}
 
     default void removePointOfInterest(Controller c, Window w, CityMap map, ListOfCommands listOfCommands){}
 
