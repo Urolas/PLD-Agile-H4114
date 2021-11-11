@@ -23,9 +23,10 @@ public class Request {
 
     /**
      * Constructor of Request
-     * @param pickupAddress the pickup address of the request
+     *
+     * @param pickupAddress   the pickup address of the request
      * @param deliveryAddress the delivery address of the request
-     * @param c the color of this request shown on the map
+     * @param c               the color of this request shown on the map
      */
     public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress, Color c) {
         this.color = c;
@@ -47,6 +48,7 @@ public class Request {
 
     /**
      * Compares this request with another object and check if they are equal
+     *
      * @param obj the object to be compared with
      */
     @Override
@@ -54,10 +56,8 @@ public class Request {
         if (obj.getClass() != this.getClass()) {
             return false;
         }
-        if (!this.color.equals(((Request) obj).color)) {
-            return false;
-        }
         if (!this.pickup.equals(((Request) obj).pickup)) {
+
             return false;
         }
         return this.delivery.equals(((Request) obj).delivery);
