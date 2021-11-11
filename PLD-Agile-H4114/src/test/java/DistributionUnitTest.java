@@ -50,7 +50,6 @@ public class DistributionUnitTest {
         colors.add("#FF717E");
         colors.add("#FFDE00");
         colors.add("#006666");
-        colors.add("#FFFFFF");
         assertEquals(colors, distribution.getColorList());
     }
 
