@@ -18,7 +18,7 @@ public class PointOfInterest extends Observable {
     protected Intersection intersection;
     protected Integer idPointOfInterest;
     protected Color color;
-    private boolean isSelected;
+
 
     /**
      * Default constructor of PointOfInterest
@@ -27,17 +27,8 @@ public class PointOfInterest extends Observable {
         this.duration=-1;
         this.intersection=new Intersection();
         this.idPointOfInterest=-1;
-        this.isSelected = false;
     }
 
-    public boolean getIsSelected(){
-        return isSelected;
-    }
-
-    public void setIsSelected(boolean b) {
-        isSelected = b;
-        notifyObservers(this);
-    }
 
     public Intersection getIntersection() {
         return intersection;
@@ -45,13 +36,12 @@ public class PointOfInterest extends Observable {
 
     /**
      * Constructor of PointOfInterest
-     * @param i the intersection of the pointOfInterest
+     * @param intersection the intersection of the pointOfInterest
      * @param idPoint the id of the point
      */
-    public PointOfInterest(Intersection i,Integer idPoint) {
+    public PointOfInterest(Intersection intersection,Integer idPoint) {
         this.idPointOfInterest=idPoint;
-        this.intersection=i;
-
+        this.intersection=intersection;
     }
 
     public Color getColor() { return color; }

@@ -10,9 +10,9 @@ import java.util.*;
  * The graph representing the map, having the each point as node and each road as branch
  */
 public class GraphPointToPoint {
-    private int nbVertices;
-    private HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> cost;
-    private HashMap<Integer,Integer> constraints;
+    private final int NBVERTICE;
+    private final HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> COST;
+    private final HashMap<Integer,Integer> CONSTRAINTS;
 
 
     /**
@@ -21,20 +21,20 @@ public class GraphPointToPoint {
      * @param constraints the constraints of the priority order of the points of interest
      */
     public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra, HashMap<Integer,Integer> constraints) {
-        this.nbVertices=resultsDijkstra.size();
-        this.constraints=constraints;
-        this.cost= new HashMap<>();
+        this.NBVERTICE =resultsDijkstra.size();
+        this.CONSTRAINTS =constraints;
+        this.COST = new HashMap<>();
         for(Map.Entry<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> entry : resultsDijkstra.entrySet()){
             HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>> currentEntry = new HashMap<>();
             for(Map.Entry<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>> entry2 : entry.getValue().entrySet()){
                 currentEntry.put(entry2.getKey().idPointOfInterest,entry2.getValue());
             }
-            cost.put(entry.getKey().idPointOfInterest,currentEntry);
+            COST.put(entry.getKey().idPointOfInterest,currentEntry);
         }
     }
 
     public int getNbVertices() {
-        return nbVertices;
+        return NBVERTICE;
     }
 
     /**
@@ -43,17 +43,17 @@ public class GraphPointToPoint {
      * @param i2 the id of the second node
      */
     public Double getCost(Integer i1, Integer i2) {
-        return this.cost.get(i1).get(i2).getKey();
+        return this.COST.get(i1).get(i2).getKey();
     }
 
     public Integer getDelivery(Integer pickup){
 
-        return constraints.get(pickup);
+        return CONSTRAINTS.get(pickup);
     }
 
     public Set<Integer> getPickupSet(){
 
-        return constraints.keySet();
+        return CONSTRAINTS.keySet();
     }
 
 }

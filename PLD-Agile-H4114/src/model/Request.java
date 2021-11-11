@@ -1,9 +1,13 @@
+/**
+ * Request
+ * @author 4IF-4114
+ */
 package model;
 
 import java.awt.*;
 
 /**
- * @author 4IF-4114
+ * A Request is composed of a pickup address and a delivery address
  */
 public class Request {
     public Color color;
@@ -11,12 +15,17 @@ public class Request {
     private DeliveryAddress delivery;
 
     /**
-     * Default constructor
+     * Default constructor of Request
      */
     public Request() {
     }
 
-
+    /**
+     * Constructor of Request
+     * @param pickupAddress the pickup address of the request
+     * @param deliveryAddress the delivery address of the request
+     * @param c the color of this request shown on the map
+     */
     public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress,Color c){
         this.color = c;
         this.pickup=pickupAddress;
@@ -42,6 +51,10 @@ public class Request {
                 '}';
     }
 
+    /**
+     * Compares this request with another object and check if they are equal
+     * @param obj the object to be compared with
+     */
     @Override
     public boolean equals(Object o){
         if(!this.color.equals(((Request) o).color)){

@@ -36,7 +36,7 @@ public class Intersection {
 
     /**
      * Compares this intersection with another object and check if they are equal
-     * @param obj the object to be compared with
+     * @param o the object to be compared with
      */
     @Override
     public boolean equals(Object o){
@@ -53,10 +53,7 @@ public class Intersection {
             return false;
         }
         //Meme longitude
-        if(Double.compare(this.longitude,((Intersection) o).longitude)!=0){
-            return false;
-        }
-        return true;
+        return Double.compare(this.longitude, ((Intersection) o).longitude) == 0;
     }
 
 

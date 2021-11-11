@@ -20,12 +20,12 @@ public class PickupAddress extends PointOfInterest {
 
     /**
      * Constructor of PickupAddress
-     * @param pintersection the intersection of the pickup address
+     * @param pIntersection the intersection of the pickup address
      * @param pickupDuration the duration the deliveryman can stay on this point
-     * @param i the id of the point of interest
+     * @param id the id of the point of interest
      */
-    public PickupAddress(Intersection pintersection, Integer pickupDuration,Integer i) {
-        super(pintersection,i);
+    public PickupAddress(Intersection pIntersection, Integer pickupDuration,Integer id) {
+        super(pIntersection,id);
         this.duration=pickupDuration;
     }
 
@@ -38,9 +38,6 @@ public class PickupAddress extends PointOfInterest {
         if(!super.equals(obj)) {
             return false;
         }
-        if(!Objects.equals(this.duration, ((PickupAddress) obj).duration)){
-            return false;
-        }
-        return true;
+        return Objects.equals(this.duration, ((PickupAddress) obj).duration);
     }
 }

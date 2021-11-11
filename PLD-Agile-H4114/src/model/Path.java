@@ -5,21 +5,16 @@
 package model;
 
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * An ordered list of road connecting two points of interest
  */
 public class Path {
 
-    /**
-     * Default constructor of Path
-     */
-    public Path() {
-    }
 
-    private List<Road> roads;
-    private Double length;
+    private final List<Road> ROADS;
+    private final Double LENGTH;
 
     /**
      * Constructor of Path
@@ -27,15 +22,15 @@ public class Path {
      * @param key the length of the path
      */
     public Path(List<Road> roadsEndToEnd, Double key) {
-        this.roads= roadsEndToEnd;
-        this.length=key;
+        this.ROADS = roadsEndToEnd;
+        this.LENGTH =key;
     }
 
     public List<Road> getRoads() {
-        return roads;
+        return ROADS;
     }
 
     public Double getLength() {
-        return length;
+        return LENGTH;
     }
 }
