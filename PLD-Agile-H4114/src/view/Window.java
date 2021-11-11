@@ -72,7 +72,7 @@ public class Window extends JFrame {
         keyboardListener = new KeyboardListener(controller);
         messageFrame.setBorder(BorderFactory.createTitledBorder("Messages"));
         messageFrame.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        displayMessage("Please load a Citymap");
+        displayMessage("Please load a citymap.");
         messageFrame.setBounds(10,10,280,80);
         messageFrame.setEditable(false);
         StyledDocument docu = messageFrame.getStyledDocument();
@@ -186,7 +186,6 @@ public class Window extends JFrame {
     public void resetDurationInserted() {
         durationJText.setText("300");
     }
-
     /**
      * Activate or desactivate the text field
      * @param bool
@@ -196,3 +195,4 @@ public class Window extends JFrame {
         this.durationJText.setVisible(bool);
     }
 }
+
