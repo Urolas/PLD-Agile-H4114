@@ -413,9 +413,10 @@ public class MapView extends JPanel implements Observer {
         int y2 = convertLatitudeToPixel(q.getDelivery().getIntersection().getLatitude());
 
         g.setColor(q.color);
+        g.fillOval(x1 - POINT_SIZE / 2, y1 - POINT_SIZE / 2, POINT_SIZE, POINT_SIZE);
         g.setColor(outline);
         g2.setStroke(new BasicStroke(3));
-        g2.drawOval(x1-POINT_SIZE/2, y1-POINT_SIZE/2, POINT_SIZE, POINT_SIZE);
+        g2.drawOval(x1 - POINT_SIZE / 2, y1 - POINT_SIZE / 2, POINT_SIZE, POINT_SIZE);
         g.setColor(q.color);
         g.fillPolygon(new int[]{x2 - POINT_SIZE / 2, x2 + POINT_SIZE / 2, x2}, new int[]{y2 - POINT_SIZE / 2, y2 - POINT_SIZE / 2, y2 + POINT_SIZE / 2}, 3);
         g.setColor(outline);
