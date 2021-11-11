@@ -21,7 +21,7 @@ public class AddState2 implements State {
             window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
 
         } else {
-            window.parsingError("No point error: After which point");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
 
