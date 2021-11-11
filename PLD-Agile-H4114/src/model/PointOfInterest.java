@@ -19,7 +19,6 @@ public class PointOfInterest extends Observable {
     protected Integer idPointOfInterest;
     protected Color color;
 
-
     /**
      * Default constructor of PointOfInterest
      */
@@ -27,11 +26,6 @@ public class PointOfInterest extends Observable {
         this.duration=-1;
         this.intersection=new Intersection();
         this.idPointOfInterest=-1;
-    }
-
-
-    public Intersection getIntersection() {
-        return intersection;
     }
 
     /**
@@ -44,15 +38,6 @@ public class PointOfInterest extends Observable {
         this.intersection=intersection;
     }
 
-    public Color getColor() { return color; }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public Integer getIdPointOfInterest() {
-        return idPointOfInterest;
-    }
 
     /**
      * Compares this point of interest with another object and check if they are equal
@@ -60,16 +45,13 @@ public class PointOfInterest extends Observable {
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj.getClass()!=this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         }
         if(!this.intersection.equals(((PointOfInterest) obj).intersection)){
             return false;
         }
-        if(!Objects.equals(this.duration, ((PointOfInterest) obj).duration)){
-            return false;
-        }
-        return true;
+        return Objects.equals(this.duration, ((PointOfInterest) obj).duration);
     }
 
 
@@ -81,4 +63,19 @@ public class PointOfInterest extends Observable {
                 ", idPointOfInterest=" + idPointOfInterest +
                 '}';
     }
+
+    public Color getColor() { return color; }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Integer getIdPointOfInterest() {
+        return idPointOfInterest;
+    }
+
+    public Intersection getIntersection() {
+        return intersection;
+    }
+
 }

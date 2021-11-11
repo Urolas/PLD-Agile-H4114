@@ -1,5 +1,6 @@
 /**
  * GraphPointToPoint
+ *
  * @author 4IF-4114
  */
 package model;
@@ -11,8 +12,8 @@ import java.util.*;
  */
 public class GraphPointToPoint {
     private final int NBVERTICE;
-    private final HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> COST;
-    private final HashMap<Integer,Integer> CONSTRAINTS;
+    private final HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double, List<String>>>> COST;
+    private final HashMap<Integer, Integer> CONSTRAINTS;
 
 
     /**
@@ -20,16 +21,16 @@ public class GraphPointToPoint {
      * @param resultsDijkstra the result returned from the Dijstra function
      * @param constraints the constraints of the priority order of the points of interest
      */
-    public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> resultsDijkstra, HashMap<Integer,Integer> constraints) {
-        this.NBVERTICE =resultsDijkstra.size();
-        this.CONSTRAINTS =constraints;
+    public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> resultsDijkstra, HashMap<Integer, Integer> constraints) {
+        this.NBVERTICE = resultsDijkstra.size();
+        this.CONSTRAINTS = constraints;
         this.COST = new HashMap<>();
-        for(Map.Entry<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>>> entry : resultsDijkstra.entrySet()){
-            HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>> currentEntry = new HashMap<>();
-            for(Map.Entry<PointOfInterest, AbstractMap.SimpleEntry<Double,List<String>>> entry2 : entry.getValue().entrySet()){
-                currentEntry.put(entry2.getKey().idPointOfInterest,entry2.getValue());
+        for (Map.Entry<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> entry : resultsDijkstra.entrySet()) {
+            HashMap<Integer, AbstractMap.SimpleEntry<Double, List<String>>> currentEntry = new HashMap<>();
+            for (Map.Entry<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>> entry2 : entry.getValue().entrySet()) {
+                currentEntry.put(entry2.getKey().idPointOfInterest, entry2.getValue());
             }
-            COST.put(entry.getKey().idPointOfInterest,currentEntry);
+            COST.put(entry.getKey().idPointOfInterest, currentEntry);
         }
     }
 
@@ -46,12 +47,12 @@ public class GraphPointToPoint {
         return this.COST.get(i1).get(i2).getKey();
     }
 
-    public Integer getDelivery(Integer pickup){
+    public Integer getDelivery(Integer pickup) {
 
         return CONSTRAINTS.get(pickup);
     }
 
-    public Set<Integer> getPickupSet(){
+    public Set<Integer> getPickupSet() {
 
         return CONSTRAINTS.keySet();
     }

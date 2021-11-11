@@ -51,7 +51,8 @@ public class Distribution extends Observable {
 
     /**
      * Add the depot point to the distribution
-     * @param i the intersection of the depot
+     *
+     * @param i             the intersection of the depot
      * @param departureTime the departure time of the depot
      */
     public void addDepot(Intersection i, String departureTime) {
@@ -63,9 +64,10 @@ public class Distribution extends Observable {
 
     /**
      * Add a request to the Distribution
+     *
      * @param pAddress the pickup address of the new request
      * @param dAddress the distribution address of the new request
-     * @param id the id of the request
+     * @param id       the id of the request
      */
     public void addRequest(PickupAddress pAddress, DeliveryAddress dAddress, Integer id) {
         this.nbPointOfInterest += 2;
@@ -83,11 +85,12 @@ public class Distribution extends Observable {
 
     /**
      * Add a request to the Distribution
-     * @param pickupDuration the duration the deliveryman can stay on the pickup point
+     *
+     * @param pickupDuration   the duration the deliveryman can stay on the pickup point
      * @param deliveryDuration the duration the deliveryman can stay on the delivery point
-     * @param pIntersection the intersection of the pickup point
-     * @param dIntersection the intersection of the delivery point
-     * @param id the id of the request
+     * @param pIntersection    the intersection of the pickup point
+     * @param dIntersection    the intersection of the delivery point
+     * @param id               the id of the request
      */
     public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pIntersection, Intersection dIntersection, Integer id) {
         PickupAddress pAddress = new PickupAddress(pIntersection, pickupDuration, id);
@@ -103,7 +106,8 @@ public class Distribution extends Observable {
 
     /**
      * Remove a request from the Distribution
-     * @param pickupAddress the pickupaddress to be deleted
+     *
+     * @param pickupAddress   the pickupaddress to be deleted
      * @param deliveryAddress the deliveryaddress to be deleted
      */
     public void removeRequest(PickupAddress pickupAddress, DeliveryAddress deliveryAddress) {
@@ -120,6 +124,7 @@ public class Distribution extends Observable {
 
     /**
      * return the Id of each point of interest, the first one is always the depot point
+     *
      * @return the list of all pointOfInterest
      */
     public List<PointOfInterest> GetAllPoints() {
@@ -146,6 +151,7 @@ public class Distribution extends Observable {
 
     /**
      * Find the delivery address of a pickup address
+     *
      * @param p the mentioned pickup address
      * @return the delivery address of the pickup
      */
@@ -161,6 +167,7 @@ public class Distribution extends Observable {
 
     /**
      * Find the pickup address of a delivery address
+     *
      * @param d the mentioned delivery address
      * @return the pickup address of the delivery
      */
@@ -176,6 +183,7 @@ public class Distribution extends Observable {
 
     /**
      * Check the constraints of the order of the points of interest
+     *
      * @return a list of pairs of id of point of interest, each pair being a pickupId and its deliveryId
      */
     public HashMap<Integer, Integer> GetConstraints() {
@@ -188,6 +196,7 @@ public class Distribution extends Observable {
 
     /**
      * Compares the distribution with another object and check if they are equal
+     *
      * @param o the object to be compared with
      */
     @Override
@@ -206,6 +215,7 @@ public class Distribution extends Observable {
 
     /**
      * Get a pointOfInterest from its id
+     *
      * @param idPoi the id of the point
      * @return the related point of interest
      */

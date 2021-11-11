@@ -1,5 +1,6 @@
 /**
  * Path
+ *
  * @author 4IF-4114
  */
 package model;
@@ -23,7 +24,7 @@ public class Path {
      */
     public Path(List<Road> roadsEndToEnd, Double key) {
         this.ROADS = roadsEndToEnd;
-        this.LENGTH =key;
+        this.LENGTH = key;
     }
 
     public List<Road> getRoads() {

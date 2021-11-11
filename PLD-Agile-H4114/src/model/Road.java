@@ -9,34 +9,15 @@ package model;
  */
 public class Road {
 
-    private Double length;
-    private String name;
+    private final Double length;
+    private final String name;
     private Intersection origin;
     private Intersection destination;
 
-    @Override
-    public String toString() {
-        return "Road{" +
-                "length=" + length +
-                ", name='" + name + '\'' +
-                ", origin=" + origin +
-                ", destination=" + destination +
-                '}';
-    }
 
-    public Intersection getOrigin() {
-        return origin;
-    }
 
-    public Intersection getDestination() {
-        return destination;
-    }
 
-    /**
-     * Default constructor of Road
-     */
-    public Road() {
-    }
+
 
     public String getName() {
         return name;
@@ -55,7 +36,7 @@ public class Road {
     /**
      * Update the road's information by adding the start Intersection and the end Intersection
      * @param myOrigin the origin, or the start intersection of the road
-     * @param myLength the destination, or the end intersection of the road
+     * @param myDestination the destination, or the end intersection of the road
      */
     public void addRoads(Intersection myOrigin,Intersection myDestination){
         this.origin=myOrigin;
@@ -88,7 +69,24 @@ public class Road {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Road{" +
+                "length=" + length +
+                ", name='" + name + '\'' +
+                ", origin=" + origin +
+                ", destination=" + destination +
+                '}';
+    }
     public Double getLength() {
         return length;
+    }
+
+    public Intersection getOrigin() {
+        return origin;
+    }
+
+    public Intersection getDestination() {
+        return destination;
     }
 }
