@@ -224,8 +224,30 @@ public class MapView extends JPanel implements Observer {
         grad = new GradientPaint( VIEW_WIDTH,0,new Color(0,0,0,50),VIEW_WIDTH-40,0,new Color(0,0,0,0),false);
         g2.setPaint(grad);
         g2.fillRect(760,0,50,800);
+        displaySelected(cityMap.i1Selected,cityMap.i2Selected);
 
 
+    }
+
+    private void displaySelected(Intersection i1Selected, Intersection i2Selected) {
+        if(i1Selected!=null){
+            int x1 = convertLongitudeToPixel(i1Selected.getLongitude());
+            int y1 = convertLatitudeToPixel(i1Selected.getLatitude());
+            g.setColor(Color.black);
+            g.drawLine(x1-5,y1,x1+5,y1);
+            g.drawLine(x1,y1-5,x1,y1+5);
+
+        } if(i2Selected!=null){
+            int x2 = convertLongitudeToPixel(i2Selected.getLongitude());
+            int y2 = convertLatitudeToPixel(i2Selected.getLatitude());
+            g.setColor(Color.black);
+            g.drawLine(x2-5,y2,x2+5,y2);
+            g.drawLine(x2,y2-5,x2,y2+5);
+
+
+        }
+
+        displayPoiToAdd();
     }
 
     private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
@@ -307,6 +329,7 @@ public class MapView extends JPanel implements Observer {
         g2.draw(new Line2D.Float(x1, y1, x2, y2));
 
     }
+
     public void displayPath(Path p,Color c){
         for (Road r : p.getRoads()){
             displayRoad(r,c,3,true);
@@ -368,5 +391,14 @@ public class MapView extends JPanel implements Observer {
         return null;
     }
 
-
+    public void displayPoiToAdd() {
+        if (cityMap.getPoiToAdd() != null) {
+            System.out.println("mouse moved intersection not null");
+            int x = convertLongitudeToPixel(cityMap.getPoiToAdd().getLongitude());
+            int y = convertLatitudeToPixel(cityMap.getPoiToAdd().getLatitude());
+            g.setColor(Color.RED);
+            g.drawLine(x-5, y, x+5, y);
+            g.drawLine(x, y-5, x, y+5);
+        }
+    }
 }
