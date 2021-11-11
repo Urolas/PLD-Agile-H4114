@@ -132,6 +132,7 @@ public class MapView extends JPanel implements Observer {
         if ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX) / scaleWidth)
                 && (cityMap.getWestPoint() + cityMap.getWidth() >= originLongClicked - (mouseX - mouseClickedX) / scaleWidth + mapWidth)) {
             originLong = originLongClicked - (mouseX - mouseClickedX) / scaleWidth;
+
         }
         if ((cityMap.getNordPoint() >= originLatClicked + (mouseY - mouseClickedY) / scaleHeight)
                 && (cityMap.getNordPoint() - cityMap.getHeight() <= originLatClicked + (mouseY - mouseClickedY) / scaleHeight - mapHeight)) {
@@ -490,5 +491,6 @@ public class MapView extends JPanel implements Observer {
     public void fixOrigin() {
         this.originLatClicked = originLat;
         this.originLongClicked = originLong;
+
     }
 }

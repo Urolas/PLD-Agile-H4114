@@ -7,11 +7,11 @@ import model.*;
  */
 public class AddCommand implements Command {
 
-    private CityMap map;
-    private PickupAddress poiP;
-    private DeliveryAddress poiD;
-    private PointOfInterest preP;
-    private PointOfInterest preD;
+    private final CityMap map;
+    private final PickupAddress poiP;
+    private final DeliveryAddress poiD;
+    private final PointOfInterest preP;
+    private final PointOfInterest preD;
     private boolean authorized;
 
     /**

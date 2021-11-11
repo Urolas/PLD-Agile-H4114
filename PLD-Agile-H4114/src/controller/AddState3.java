@@ -17,13 +17,12 @@ public class AddState3 implements State {
         try {
             this.d2 = Integer.parseInt(strDuration);
 
-        }
-        catch (NumberFormatException e) {
-            window.displayMessage("value entered not a number");
+        } catch (NumberFormatException e) {
+            window.parsingError("Wrong format value\n" + e.getMessage());
             return;
         }
         if (i != null) {
-            c.addState4.entryAction(this.i1,this.d1, this.p1, i,this.d2);
+            c.addState4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
             map.setPOIToAdd(null);
@@ -37,15 +36,16 @@ public class AddState3 implements State {
     }
 
     @Override
-    public void rightClick(Controller c){
+    public void rightClick(Controller c) {
         c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
-    public void entryAction(Intersection i1,Integer d, PointOfInterest p,Window w) {
+
+    public void entryAction(Intersection i1, Integer d, PointOfInterest p, Window w) {
         this.i1 = i1;
         this.p1 = p;
-        this.d1=d;
-        this.d2=300;
+        this.d1 = d;
+        this.d2 = 300;
         w.resetDurationInserted();
     }
 
