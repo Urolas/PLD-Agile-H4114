@@ -1,5 +1,6 @@
 /**
  * DepotAddress
+ *
  * @author 4IF-4114
  */
 package model;
@@ -12,7 +13,7 @@ import java.time.LocalTime;
 public class DepotAddress extends PointOfInterest {
 
 
-    private LocalTime  departureTime;
+    private final LocalTime departureTime;
 
     /**
      * Default constructor of DepotAddress
@@ -24,19 +25,19 @@ public class DepotAddress extends PointOfInterest {
 
     /**
      * Constructor of DepotAddress
-     * @param i the intersection of this depot address
+     * @param intersection the intersection of this depot address
      * @param departureTime the time to depart of the depot point
      */
-    public DepotAddress(Intersection i, String departureTime) {
-        super(i,0);
-        String[] fractureddepartureTime= departureTime.split(":");
-        for(int j=0;j<3;j++){
-            if (fractureddepartureTime[j].length()<2){
-                fractureddepartureTime[j]="0"+fractureddepartureTime[j];
+    public DepotAddress(Intersection intersection, String departureTime) {
+        super(intersection, 0);
+        String[] fracturedDepartureTime = departureTime.split(":");
+        for (int j = 0; j < 3; j++) {
+            if (fracturedDepartureTime[j].length() < 2) {
+                fracturedDepartureTime[j] = "0" + fracturedDepartureTime[j];
             }
         }
-        this.departureTime = LocalTime.parse(fractureddepartureTime[0]+":"+fractureddepartureTime[1]+":"+fractureddepartureTime[2]);
-        this.duration=0;
+        this.departureTime = LocalTime.parse(fracturedDepartureTime[0] + ":" + fracturedDepartureTime[1] + ":" + fracturedDepartureTime[2]);
+        this.duration = 0;
     }
 
     /**
@@ -45,13 +46,10 @@ public class DepotAddress extends PointOfInterest {
      */
     @Override
     public boolean equals(Object obj) {
-        if(!super.equals(obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
-        if(!this.departureTime.equals(((DepotAddress) obj).departureTime)){
-            return false;
-        }
-        return true;
+        return this.departureTime.equals(((DepotAddress) obj).departureTime);
     }
 
     public LocalTime getDepartureTime() {

@@ -441,7 +441,7 @@ public class CityMap extends Observable {
         return tour;
     }
 
-    public HashMap<String, Intersection> getINTERSECTIONS() {
+    public HashMap<String, Intersection> getIntersections() {
         return this.INTERSECTIONS;
     }
 
@@ -534,7 +534,7 @@ public class CityMap extends Observable {
     }
 
     public Intersection getPoiToAdd() {
-        return poiToAdd;      
+        return poiToAdd;
     }
 
     @Override

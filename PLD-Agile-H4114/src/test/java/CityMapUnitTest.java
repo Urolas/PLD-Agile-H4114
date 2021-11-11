@@ -39,7 +39,7 @@ public class CityMapUnitTest {
     @Test
     public void structNotNullTest(){
         assertNotNull(cm);
-        assertNotNull(cm.getINTERSECTIONS());
+        assertNotNull(cm.getIntersections());
         assertNotNull(cm.getROADS());
         assertNotNull(cm.getDistribution());
         assertNotNull(cm.getTour());
@@ -54,7 +54,7 @@ public class CityMapUnitTest {
     public void emptyAfterResetTest(){
         cm.reset();
         CityMap cm2 = new CityMap();
-        assertEquals(cm.getINTERSECTIONS(),cm2.getINTERSECTIONS());
+        assertEquals(cm.getIntersections(),cm2.getIntersections());
         assertEquals(cm.getROADS(),cm2.getROADS());
         assertTrue(cm.getDistribution().equals(cm2.getDistribution()));
         assertEquals(cm.getTour(),cm2.getTour());
@@ -67,7 +67,7 @@ public class CityMapUnitTest {
 
     @Test
     public void structNotEmptyTest() {
-        assertNotEquals(0,cm.getINTERSECTIONS().size());
+        assertNotEquals(0,cm.getIntersections().size());
         assertNotEquals(0,cm.getAdjacencyList().size());
         assertNotEquals(0, cm.getROADS().size());
     }
@@ -76,11 +76,11 @@ public class CityMapUnitTest {
     public void containsKeyTest() {
         //Verification de l'exitence de la clé
         Set<String> keySet= new HashSet<>();
-        assertEquals(14,cm.getINTERSECTIONS().size());
+        assertEquals(14,cm.getIntersections().size());
         for (int i = 0;i<14;i++){
             keySet.add("81150" + i);
         }
-        assertEquals(cm.getINTERSECTIONS().keySet(),keySet);
+        assertEquals(cm.getIntersections().keySet(),keySet);
     }
 
     @Test
