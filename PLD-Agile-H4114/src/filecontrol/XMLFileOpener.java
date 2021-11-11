@@ -5,7 +5,7 @@
 
 package filecontrol;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
@@ -23,6 +23,20 @@ public class XMLFileOpener extends FileFilter {
     protected static XMLFileOpener getInstance(){
         if (instance == null) instance = new XMLFileOpener();
         return instance;
+    }
+
+    /**
+     * Indicates if the selected file can be read or not
+     * @param f the selected File
+     * @return boolean value indicating if the selected file works
+     */
+    @Override
+    public boolean accept(File f) {
+        if (f == null) return false;
+        if (f.isDirectory()) return true;
+        String extension = getExtension(f);
+        if (extension == null) return false;
+        return extension.contentEquals("xml");
     }
 
     /**
@@ -46,22 +60,7 @@ public class XMLFileOpener extends FileFilter {
             throw new XMLException("Problem when opening file");
         return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
     }
-
-    /**
-     * Indicates if the selected file can be read or not
-     * @param File the selected File
-     * @return boolean value indicating if the selected file works
-     */
-    @Override
-    public boolean accept(File f) {
-        if (f == null) return false;
-        if (f.isDirectory()) return true;
-        String extension = getExtension(f);
-        if (extension == null) return false;
-        return extension.contentEquals("xml");
-    }
-
-
+    
     /**
      * Show the description of an extension
      * @return the description of a .XML file extension
@@ -73,7 +72,7 @@ public class XMLFileOpener extends FileFilter {
 
     /**
      * Send a boolean value indicating if the selected file works
-     * @param File the selected File
+     * @param f the selected File
      * @return the extension of the file
      */
     private String getExtension(File f) {
