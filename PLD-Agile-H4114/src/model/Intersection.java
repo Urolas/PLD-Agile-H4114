@@ -1,9 +1,11 @@
+/**
+ * Intersection
+ * @author 4IF-4114
+ */
 package model;
 
-
-
 /**
- * @author 4IF-4114
+ * An intersection is represented by its id, latitude and longtitude
  */
 public class Intersection {
 
@@ -11,19 +13,31 @@ public class Intersection {
     protected Double latitude;
     protected Double longitude;
 
-
+    /**
+     * Default constructor of an intersection
+     */
     public Intersection() {
         this.id="-1";
         this.longitude=0.0;
         this.latitude=0.0;
     }
 
+    /**
+     * Constructor of intersection
+     * @param myId the id of the intersection
+     * @param myLatitude the latitude of the intersection
+     * @param myLongitude the longitude of the intersection
+     */
     public Intersection(String myId,Double myLatitude,Double myLongitude){
         this.id = myId;
         this.latitude = myLatitude;
         this.longitude = myLongitude;
     }
 
+    /**
+     * Compares this intersection with another object and check if they are equal
+     * @param obj the object to be compared with
+     */
     @Override
     public boolean equals(Object o){
         //Meme class
@@ -44,8 +58,6 @@ public class Intersection {
         }
         return true;
     }
-
-
 
 
     @Override
