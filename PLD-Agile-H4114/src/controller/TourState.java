@@ -31,18 +31,23 @@ public class TourState implements State {
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
         c.setCurrentState(c.citymapState);
+        c.resetListOfCommands();
     }
 
     @Override
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
         c.setCurrentState(c.distributionState);
+        c.resetListOfCommands();
+
     }
 
     @Override
     public void modifyDistribution(Controller c) {
         c.addState1.entryAction(c.getWindow());
         c.setCurrentState(c.addState1);
+        c.resetListOfCommands();
+
     }
 
     @Override

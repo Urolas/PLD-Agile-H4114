@@ -201,4 +201,8 @@ public class Controller {
     public void mouseMoved(Intersection intersection) {
         currentState.mouseMoved(this, intersection);
     }
+
+    public void resetListOfCommands() {
+        this.listOfCommands.reset();
+    }
 }

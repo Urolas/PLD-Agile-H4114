@@ -34,6 +34,8 @@ public class HighlightState implements State {
 
         XMLDeserializer.loadCityMap(c.getCitymap());
         c.setCurrentState(c.citymapState);
+        c.resetListOfCommands();
+
 
 
     }
@@ -41,19 +43,19 @@ public class HighlightState implements State {
     @Override
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         c.getCitymap().setHighlighted(null,null);
-
         XMLDeserializer.loadDistribution(c.getCitymap());
-
         c.setCurrentState(c.distributionState);
+        c.resetListOfCommands();
+
     }
 
     @Override
     public void modifyDistribution(Controller c) {
         c.getCitymap().setHighlighted(null,null);
-
         c.addState1.entryAction(c.getWindow());
-
         c.setCurrentState(c.addState1);
+        c.resetListOfCommands();
+
     }
 
     @Override
