@@ -26,7 +26,7 @@ public class CityMap extends Observable {
     public Intersection i1Selected;
     public Intersection i2Selected;
 
-    public void setPoiToAdd(Intersection poiToAdd) {
+    public void setPOIToAdd(Intersection poiToAdd) {
         this.poiToAdd = poiToAdd;
         notifyObservers();
     }
