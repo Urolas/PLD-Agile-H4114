@@ -1,3 +1,7 @@
+/**
+ * MouseListener
+ * @author 4IF-4114
+ */
 package view;
 
 import java.awt.*;
@@ -11,7 +15,7 @@ import model.Intersection;
 import model.PointOfInterest;
 
 /**
- * @author 4IF-4114
+ * ActionListener for mouse-movement and clicks
  */
 public class MouseListener extends MouseAdapter {
 
@@ -21,7 +25,10 @@ public class MouseListener extends MouseAdapter {
     private Window window;
 
     /**
-     * Default constructor
+     * Constructor of MouseListener
+     * @param c the current controller that will receive messages
+     * @param mapView the clickable view of the map
+     * @param w the application Window
      */
     public MouseListener(Controller c, MapView mapView, Window w){
         this.controller = c;
@@ -29,6 +36,11 @@ public class MouseListener extends MouseAdapter {
         this.window = w;
     }
 
+
+    /**
+     * Perform an action when the mouse is click
+     * @param evt the mouse event from the window
+     */
     @Override
     public void mouseClicked(MouseEvent evt){
         MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
@@ -45,6 +57,10 @@ public class MouseListener extends MouseAdapter {
         }
     }
 
+    /**
+     * Perform an action when the mouse is pressed
+     * @param evt the mouse event from the window
+     */
     @Override
     public void mousePressed(MouseEvent evt) {
         MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
@@ -55,6 +71,10 @@ public class MouseListener extends MouseAdapter {
         }
     }
 
+    /**
+     * Perform an action when the mouse is dragged
+     * @param evt the mouse event from the window
+     */
     @Override
     public void mouseDragged(MouseEvent evt){
         MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);
@@ -63,6 +83,10 @@ public class MouseListener extends MouseAdapter {
         }
     }
 
+    /**
+     * Perform an action when the mousewheel is moved
+     * @param e the mousewheel event
+     */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e){
         int scrollDirection = e.getWheelRotation();
@@ -80,6 +104,10 @@ public class MouseListener extends MouseAdapter {
 
     }
 
+    /**
+     * Perform an action when the mouse is moved
+     * @param evt the mouse event from the window
+     */
     @Override
     public void mouseMoved(MouseEvent evt) {
         MouseEvent e = SwingUtilities.convertMouseEvent(window, evt, mapView);

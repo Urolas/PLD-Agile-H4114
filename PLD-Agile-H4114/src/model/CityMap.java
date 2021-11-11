@@ -8,6 +8,8 @@ import view.MapView;
 import java.io.IOException;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author 4IF-4114
  */
@@ -220,67 +222,91 @@ public class CityMap extends Observable {
         notifyObservers(road);
     }
 
-    public void generateRoadmap() throws IOException {
-        System.out.println("Generating Roadmap");
-
-        /*File myObj = new File("\\roadmapFilesnewFile.txt");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
-        } else {
-            System.out.println("File already exists.");
-        }*/
-    }
 
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
-        List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
-        List<Path> newpaths = new ArrayList<>(tour.getPaths());
-        boolean pickupinserted = false;
-        boolean deliveryinserted = false;
+        List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
+        List<Path> newPaths = new ArrayList<>(tour.getPaths());
+        boolean pickupInserted = false;
+        boolean deliveryInserted = false;
 
-        for (int i = 0; (i < newpoints.size() && !deliveryinserted); i++) {
-            if (newpoints.get(i) == preP) {
-                newpoints.add(i + 1, poiP);
-                AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(preP, poiP);
-                AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(poiP, newpoints.get(i + 2));
-                Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
-                Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
-                newpaths.remove(i);
-                newpaths.add(i, pathlasttop);
-                newpaths.add(i + 1, pathptonext);
-                pickupinserted = true;
-                if (preD.equals(preP)) {
-                    newpoints.add(i + 2, poiD);
-                    AbstractMap.SimpleEntry<Double, List<String>> newpathlasttod = computePath(poiP, poiD);
-                    AbstractMap.SimpleEntry<Double, List<String>> newpathdtonext = computePath(poiD, newpoints.get(i + 3));
-                    Path pathlasttod = new Path(dijkstraToRoads(newpathlasttod), newpathlasttod.getKey());
-                    Path pathdtonext = new Path(dijkstraToRoads(newpathdtonext), newpathdtonext.getKey());
-                    newpaths.remove(i + 1);
-                    newpaths.add(i + 1, pathlasttod);
-                    newpaths.add(i + 2, pathdtonext);
-                    deliveryinserted = true;
+        for (int i = 0; (i < newPoints.size() && !deliveryInserted); i++) {
+            if (newPoints.get(i) == preP) {
+                newPoints.add(i + 1, poiP);
+
+                AbstractMap.SimpleEntry<Double, List<String>> newPathLastToP = computePath(preP, poiP);
+                AbstractMap.SimpleEntry<Double, List<String>> newPathPToNext = computePath(poiP, newPoints.get(i + 2));
+
+                if(newPathLastToP.getKey()==Double.POSITIVE_INFINITY
+                        || newPathPToNext.getKey()==Double.POSITIVE_INFINITY){
+                    throw new Exception("Error: The point inserted is unreachable");
+
                 }
-            } else if (pickupinserted && newpoints.get(i) == preD) {
-                newpoints.add(i + 1, poiD);
-                AbstractMap.SimpleEntry<Double, List<String>> newpathlasttod = computePath(preD, poiD);
-                AbstractMap.SimpleEntry<Double, List<String>> newpathdtonext = computePath(poiD, newpoints.get(i + 2));
-                Path pathlasttod = new Path(dijkstraToRoads(newpathlasttod), newpathlasttod.getKey());
-                Path pathdtonext = new Path(dijkstraToRoads(newpathdtonext), newpathdtonext.getKey());
-                newpaths.remove(i);
-                newpaths.add(i, pathlasttod);
-                newpaths.add(i + 1, pathdtonext);
-                deliveryinserted = true;
+
+                Path pathLastToP = new Path(dijkstraToRoads(newPathLastToP), newPathLastToP.getKey());
+                Path pathPToNext = new Path(dijkstraToRoads(newPathPToNext), newPathPToNext.getKey());
+
+                newPaths.remove(i);
+                newPaths.add(i, pathLastToP);
+                newPaths.add(i + 1, pathPToNext);
+                pickupInserted = true;
+
+
+                if (preD.equals(preP)) {
+                    newPoints.add(i + 2, poiD);
+
+                    AbstractMap.SimpleEntry<Double, List<String>> newPathLastToD = computePath(poiP, poiD);
+                    AbstractMap.SimpleEntry<Double, List<String>> newPathDToNext = computePath(poiD, newPoints.get(i + 3));
+
+                    if(newPathLastToD.getKey()==Double.POSITIVE_INFINITY
+                            || newPathDToNext.getKey()==Double.POSITIVE_INFINITY){
+                        throw new Exception("Error: The point inserted is unreachable");
+
+                    }
+
+                    Path pathLastToD = new Path(dijkstraToRoads(newPathLastToD), newPathLastToD.getKey());
+                    Path pathDToNext = new Path(dijkstraToRoads(newPathDToNext), newPathDToNext.getKey());
+
+                    newPaths.remove(i + 1);
+                    newPaths.add(i + 1, pathLastToD);
+                    newPaths.add(i + 2, pathDToNext);
+                    deliveryInserted = true;
+                }
+            } else if (pickupInserted && newPoints.get(i) == preD) {
+                newPoints.add(i + 1, poiD);
+
+                AbstractMap.SimpleEntry<Double, List<String>> newPathLastToD = computePath(preD, poiD);
+                AbstractMap.SimpleEntry<Double, List<String>> newPathDToNext = computePath(poiD, newPoints.get(i + 2));
+
+                if(newPathLastToD.getKey()==Double.POSITIVE_INFINITY
+                        || newPathDToNext.getKey()==Double.POSITIVE_INFINITY){
+                    throw new Exception("Error: The point inserted is unreachable");
+
+                }
+
+                Path pathLastToD = new Path(dijkstraToRoads(newPathLastToD), newPathLastToD.getKey());
+                Path pathDToNext = new Path(dijkstraToRoads(newPathDToNext), newPathDToNext.getKey());
+
+                newPaths.remove(i);
+                newPaths.add(i, pathLastToD);
+                newPaths.add(i + 1, pathDToNext);
+                deliveryInserted = true;
             }
         }
-        if (!deliveryinserted) {
-            throw new Exception("Erreur : le delivery a été mis avant le pickup");
+        if (!deliveryInserted) {
+            throw new Exception("Error : The Delivery was put before the Pickup");
         }
-        tour.setPointOfInterests(newpoints);
-        tour.setPaths(newpaths);
+        tour.setPointOfInterests(newPoints);
+        tour.setPaths(newPaths);
         notifyObservers(tour);
 
     }
 
     public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
+
+
+        if (distribution.getDelivery(paddress) != daddress) {
+            return;
+        }
 
 
         this.distribution.removeRequest(paddress, daddress);
@@ -309,6 +335,21 @@ public class CityMap extends Observable {
     }
 
     public void changePosition(PointOfInterest poi, int i) {
+
+        if(poi.getClass()==DeliveryAddress.class){
+            int posPickup = this.tour.getPointOfInterests().indexOf(
+                                this.distribution.getPickup((DeliveryAddress) poi));
+            if(posPickup>=i){
+                return;
+            }
+        }else{
+            int posDelivery = this.tour.getPointOfInterests().indexOf(
+                    this.distribution.getDelivery((PickupAddress) poi));
+            if(posDelivery<=i){
+                return;
+            }
+        }
+
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
@@ -413,8 +454,8 @@ public class CityMap extends Observable {
 
 
     public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
-        this.primaryHighlight=highlightpoint;
-        this.secondaryHighlight=secondaryPoint;
+        this.primaryHighlight = highlightpoint;
+        this.secondaryHighlight = secondaryPoint;
         notifyObservers();
     }
 

@@ -1,3 +1,8 @@
+/**
+ * Description of the class
+ * @author 4IF-4114
+ */
+
 package controller;
 
 import model.CityMap;
@@ -10,9 +15,6 @@ import filecontrol.XMLException;
 
 import java.io.IOException;
 
-/**
- * @author 4IF-4114
- */
 public class Controller {
     // Instances associated with each possible state of the controller
     protected final InitialState initialState = new InitialState();
@@ -105,56 +107,34 @@ public class Controller {
     }
 
     public void computeTour() {
-        try {
             this.currentState.computeTour(this, window);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void modifyDistribution() {
-        try {
-            this.currentState.modifyDistribution(this);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        this.currentState.modifyDistribution(this);
     }
 
     public void removePointOfInterest() {
-        try {
-            this.currentState.removePointOfInterest(this, this.window, this.cityMap, this.listOfCommands);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+
+        this.currentState.removePointOfInterest(this, this.window, this.cityMap, this.listOfCommands);
+
     }
 
     public void zoomIn() {
-        try {
             window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth() / 2,
                     window.getMapView().getViewHeight() / 2);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void zoomOut() {
-        try {
-            window.getMapView().modifyZoom(1 / 1.5, window.getMapView().getViewWidth() / 2,
+        window.getMapView().modifyZoom(1 / 1.5, window.getMapView().getViewWidth() / 2,
                     window.getMapView().getViewHeight() / 2);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-        }
     }
 
     public void recenter() {
-        try {
-            window.getMapView().modifyZoom(1, window.getMapView().getViewWidth() / 2,
-                    window.getMapView().getViewHeight() / 2);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
 
-        }
+        window.getMapView().modifyZoom(1, window.getMapView().getViewWidth() / 2,
+                    window.getMapView().getViewHeight() / 2);
+
     }
 
     /**
@@ -179,10 +159,22 @@ public class Controller {
         currentState.rightClick(this);
     }
 
-    public void up(String id) {currentState.up(Integer.parseInt(id),this.listOfCommands,this);}
+    public void up(String id) {
+        currentState.up(Integer.parseInt(id),this.listOfCommands,this);
+        currentState.enableButtons(window, listOfCommands);
 
-    public void down(String id) {currentState.down(Integer.parseInt(id),this.listOfCommands,this);}
+    }
+
+    public void down(String id) {
+        currentState.down(Integer.parseInt(id),this.listOfCommands,this);
+        currentState.enableButtons(window, listOfCommands);
+
+    }
     public void mouseMoved(Intersection intersection) {
         currentState.mouseMoved(this, intersection);
+    }
+
+    public void resetListOfCommands() {
+        this.listOfCommands.reset();
     }
 }

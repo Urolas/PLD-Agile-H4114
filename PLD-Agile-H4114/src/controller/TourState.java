@@ -33,6 +33,7 @@ public class TourState implements State {
         w.getMapView().resetZoom();
         w.displayMessage("Please load a distribution.");
         c.setCurrentState(c.citymapState);
+        c.resetListOfCommands();
     }
 
     @Override
@@ -40,27 +41,36 @@ public class TourState implements State {
         XMLDeserializer.loadDistribution(c.getCitymap());
         w.displayMessage("Distribution loaded.\nA tour can be computed.");
         c.setCurrentState(c.distributionState);
+        c.resetListOfCommands();
+
     }
 
     @Override
     public void modifyDistribution(Controller c) {
         c.addState1.entryAction(c.getWindow());
         c.setCurrentState(c.addState1);
+        c.resetListOfCommands();
+
     }
 
     @Override
-    public void up(Integer id,ListOfCommands listOfCommands,Controller c){
+    public void up(Integer id, ListOfCommands listOfCommands, Controller c) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(),id,-1));
-
-        } catch (Exception ignored){}
+            listOfCommands.add(new SwapCommand(c.getCitymap(), id, -1));
+        } catch (Exception e) {
+            c.getWindow().parsingError(e.getMessage());
+        }
 
     }
+
     @Override
-    public void down(Integer id,ListOfCommands listOfCommands,Controller c){
+    public void down(Integer id, ListOfCommands listOfCommands, Controller c) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(),id,1));
-        } catch (Exception ignored){}
+            listOfCommands.add(new SwapCommand(c.getCitymap(), id, 1));
+        } catch (Exception e) {
+            c.getWindow().parsingError(e.getMessage());
+
+        }
 
     }
 
@@ -70,15 +80,14 @@ public class TourState implements State {
     }
 
     @Override
-    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i , PointOfInterest poi){
-        if (poi != null && !(poi instanceof DepotAddress))
-            try{
-                c.highlightState.entryAction(poi,cityMap,w);
+    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i, PointOfInterest poi) {
+        if (poi != null && !(poi instanceof DepotAddress)) {
 
-                c.setCurrentState(c.highlightState);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+
+            c.highlightState.entryAction(poi, cityMap, w);
+
+            c.setCurrentState(c.highlightState);
+        }
     }
 
     @Override

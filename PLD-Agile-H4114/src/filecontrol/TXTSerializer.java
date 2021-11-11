@@ -1,3 +1,7 @@
+/**
+ * TXTSerializer
+ * @author 4IF-4114
+ */
 package filecontrol;
 
 import model.*;
@@ -7,11 +11,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Write the roadmap into the created .txt file
+ * */
 public class TXTSerializer {
 
-    public TXTSerializer(CityMap citymap){
+    /**
+     * Constructor of TXTSerializer
+     */
+    public TXTSerializer(){
     }
 
+    /**
+     * Write the roadmap on the empty .txt file
+     * @param fw the FileWriter connected to the created file
+     * @param citymap the current Citymap with a computed tour
+     * @throws IOException when path is not found
+     */
     public static void save(FileWriter fw, CityMap cityMap) throws IOException {
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
         List<Path> pathList = cityMap.getTour().getPaths();
@@ -30,9 +46,9 @@ public class TXTSerializer {
             }else {
 
                 if (poi instanceof DeliveryAddress) {
-                    fw.write("[ to Delivery Point #" + poi.getIdPointOfInterest()+" ]"+System.lineSeparator());
+                    fw.write("[ to Delivery Point #" + ((poi.getIdPointOfInterest()-2)/2+1)+" ]"+System.lineSeparator());
                 } else if (poi instanceof PickupAddress) {
-                    fw.write("[ to Pickup Point #" + poi.getIdPointOfInterest()+" ]"+System.lineSeparator());
+                    fw.write("[ to Pickup Point #" + ((poi.getIdPointOfInterest()-1)/2+1)+" ]"+System.lineSeparator());
                 }
             }
 
