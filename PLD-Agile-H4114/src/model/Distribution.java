@@ -1,3 +1,7 @@
+/**
+ * Distribution
+ * @author 4IF-4114
+ */
 package model;
 
 import view.MapView;
@@ -9,7 +13,7 @@ import java.util.List;
 import observer.Observable;
 
 /**
- * @author 4IF-4114
+ * The Distribution containing the list of requests
  */
 public class Distribution extends Observable {
 
@@ -19,7 +23,7 @@ public class Distribution extends Observable {
     private List<String> requestColors = new ArrayList<>();
 
     /**
-     * Default constructor
+     * Constructor of Distribution
      */
     public Distribution() {
         this.requests = new HashSet<Request>();
@@ -32,9 +36,6 @@ public class Distribution extends Observable {
         this.requestColors.add("#51fcf6");
         this.requestColors.add("#b551fc");
         this.requestColors.add("#f651fc");
-
-
-
     }
 
     public DepotAddress getDepot() {
@@ -47,6 +48,9 @@ public class Distribution extends Observable {
 
     public List<String> getColorList(){return requestColors;}
 
+    /**
+     * Clear the Distribution data
+     */
     public void reset() {
 
         this.requests.clear();
@@ -54,6 +58,11 @@ public class Distribution extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Add the depot point to the distribution
+     * @param i the intersection of the depot
+     * @param departureTime the departure time of the depot
+     */
     public void addDepot(Intersection i, String departureTime) {
 
         this.depot = new DepotAddress(i, departureTime);
@@ -61,8 +70,12 @@ public class Distribution extends Observable {
     }
 
 
-
-
+    /**
+     * Add a request to the Distribution
+     * @param pAddress the pickup address of the new request
+     * @param dAddress the distribution address of the new request
+     * @param i the id of the request
+     */
     public void addRequest(PickupAddress pAddress, DeliveryAddress dAddress,Integer i) {
         this.nbPointOfInterest+=2;
         Request r;
@@ -75,21 +88,32 @@ public class Distribution extends Observable {
         }
         this.requests.add(r);
         notifyObservers(r);
-
     }
+
+    /**
+     * Add a request to the Distribution
+     * @param pickupDuration the duration the deliveryman can stay on the pickup point
+     * @param deliveryDuration the duration the deliveryman can stay on the delivery point
+     * @param pintersection the intersection of the pickup point
+     * @param dintersection the intersection of the delivery point
+     * @param i the id of the request
+     */
     public void addRequest(Integer pickupDuration, Integer deliveryDuration, Intersection pintersection, Intersection dintersection, Integer i) {
         PickupAddress pAddress = new PickupAddress(pintersection, pickupDuration, i);
         DeliveryAddress dAddress = new DeliveryAddress(dintersection, deliveryDuration, i + 1);
         addRequest(pAddress,dAddress,i);
-
-
-
     }
+
+
+
     public void addObserver(MapView mapView) {
         super.addObserver(mapView);
     }
 
-    //return the Id of each point of interest, the first one is always the depot point
+    /**
+     * return the Id of each point of interest, the first one is always the depot point
+     * @return the list of all pointOfInterest
+     */
     public List<PointOfInterest> GetAllPoints() {
         List<PointOfInterest> points = new ArrayList<>();
         points.add(this.depot);
@@ -99,6 +123,12 @@ public class Distribution extends Observable {
         }
         return points;
     }
+
+    /**
+     * Find the delivery address of a pickup address
+     * @param p the mentioned pickup address
+     * @return the delivery address of the pickup
+     */
     public DeliveryAddress getDelivery(PickupAddress p) {
         for (Request request : requests) {
             if (request.getPickup().equals(p)) {
@@ -108,6 +138,12 @@ public class Distribution extends Observable {
         return null;
 
     }
+
+    /**
+     * Find the pickup address of a delivery address
+     * @param d the mentioned delivery address
+     * @return the pickup address of the delivery
+     */
     public PickupAddress getPickup(DeliveryAddress d) {
         for (Request request : requests) {
             if (request.getDelivery().equals(d)) {
@@ -118,6 +154,10 @@ public class Distribution extends Observable {
 
     }
 
+    /**
+     * Check the constraints of the order of the points of interest
+     * @return a list of pairs of id of point of interest, each pair being a pickupId and its deliveryId
+     */
     public HashMap<Integer, Integer> GetConstraints() {
         HashMap<Integer, Integer> result = new HashMap<>();
         for (Request request : this.requests) {
@@ -126,6 +166,11 @@ public class Distribution extends Observable {
         return result;
     }
 
+    /**
+     * Remove a request from the Distribution
+     * @param pickupAddress the pickupaddress to be deleted
+     * @param deliveryAddress the deliveryaddress to be deleted
+     */
     public void removeRequest(PickupAddress pickupAddress, DeliveryAddress deliveryAddress) {
         Request requestToRemove = null;
         for (Request req : this.requests) {
@@ -137,6 +182,10 @@ public class Distribution extends Observable {
         requests.remove(requestToRemove);
     }
 
+    /**
+     * Compares the distribution with another object and check if they are equal
+     * @param obj the object to be compared with
+     */
     @Override
     public boolean equals(Object o) {
         if (o.getClass() != this.getClass()) {
@@ -151,6 +200,11 @@ public class Distribution extends Observable {
         return true;
     }
 
+    /**
+     * Get a pointOfInterest from its id
+     * @param idpoi the id of the point
+     * @return the related point of interest
+     */
     public PointOfInterest getPointOfIntersection(Integer idpoi) {
         for (Request request: requests){
             if (Objects.equals(idpoi, request.getDelivery().idPointOfInterest)){

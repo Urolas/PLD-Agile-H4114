@@ -8,73 +8,69 @@ import org.xml.sax.SAXException;
 import view.Window;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.IOException;
 
 public class HighlightState implements State {
     private PointOfInterest highlightpoint;
-    private PointOfInterest secondaryPoint;
 
     @Override
-    public void removePointOfInterest(Controller c, Window w, CityMap map, ListOfCommands listOfCommands) {
-
+    public void removePointOfInterest(Controller controller, Window window, CityMap map,
+                                      ListOfCommands listOfCommands) {
         try {
             listOfCommands.add(new DeleteCommand(map, this.highlightpoint));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        map.setHighlighted(null,null);
-        c.setCurrentState(c.tourState);
+        map.setHighlighted(null, null);
+        controller.setCurrentState(controller.TOUR_STATE);
+    }
+
+    @Override
+    public void loadMap(Controller controller, Window window) throws XMLException, ParserConfigurationException,
+            IOException, SAXException {
+        controller.getCityMap().setHighlighted(null, null);
+        XMLDeserializer.loadCityMap(controller.getCityMap());
+        controller.setCurrentState(controller.CITY_MAP_STATE);
+        controller.resetListOfCommands();
+    }
+
+    @Override
+    public void loadDistribution(Controller controller, Window window) throws XMLException,
+            ParserConfigurationException, IOException, SAXException {
+        controller.getCityMap().setHighlighted(null, null);
+        XMLDeserializer.loadDistribution(controller.getCityMap());
+        controller.setCurrentState(controller.DISTRIBUTION_STATE);
+        controller.resetListOfCommands();
 
     }
 
     @Override
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        c.getCitymap().setHighlighted(null,null);
-
-        XMLDeserializer.loadCityMap(c.getCitymap());
-        c.setCurrentState(c.citymapState);
-        c.resetListOfCommands();
-
-
+    public void modifyDistribution(Controller controller) {
+        controller.getCityMap().setHighlighted(null, null);
+        controller.ADD_STATE_1.entryAction(controller.getWindow());
+        controller.setCurrentState(controller.ADD_STATE_1);
+        controller.resetListOfCommands();
 
     }
 
     @Override
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        c.getCitymap().setHighlighted(null,null);
-        XMLDeserializer.loadDistribution(c.getCitymap());
-        c.setCurrentState(c.distributionState);
-        c.resetListOfCommands();
-
-    }
-
-    @Override
-    public void modifyDistribution(Controller c) {
-        c.getCitymap().setHighlighted(null,null);
-        c.addState1.entryAction(c.getWindow());
-        c.setCurrentState(c.addState1);
-        c.resetListOfCommands();
-
-    }
-
-    @Override
-    public void up(Integer id,ListOfCommands listOfCommands,Controller c){
+    public void up(Integer id, ListOfCommands listOfCommands, Controller controller) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(),id,-1));
+            listOfCommands.add(new SwapCommand(controller.getCityMap(), id, -1));
 
-        } catch (Exception e){
-            c.getWindow().parsingError(e.getMessage());
+        } catch (Exception e) {
+            controller.getWindow().parsingError(e.getMessage());
 
         }
 
     }
+
     @Override
-    public void down(Integer id,ListOfCommands listOfCommands,Controller c){
+    public void down(Integer id, ListOfCommands listOfCommands, Controller controller) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(),id,1));
-        } catch (Exception e){
-            c.getWindow().parsingError(e.getMessage());
+            listOfCommands.add(new SwapCommand(controller.getCityMap(), id, 1));
+        } catch (Exception e) {
+            controller.getWindow().parsingError(e.getMessage());
 
         }
 
@@ -82,47 +78,43 @@ public class HighlightState implements State {
 
 
     @Override
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
-
-
-        if (poi != null  && !(poi instanceof DepotAddress)) {
-
-            c.highlightState.entryAction(poi,map,window);
-            c.setCurrentState(c.highlightState);
+    public void leftClick(Controller controller, Window window, CityMap map, ListOfCommands listOfCommands,
+                          Intersection intersection, PointOfInterest poi) {
+        if (poi != null && !(poi instanceof DepotAddress)) {
+            controller.HIGHLIGHT_STATE.entryAction(poi, map);
+            controller.setCurrentState(controller.HIGHLIGHT_STATE);
         } else {
-            map.setHighlighted(null,null);
-
-            c.setCurrentState(c.tourState);
+            map.setHighlighted(null, null);
+            controller.setCurrentState(controller.TOUR_STATE);
         }
     }
 
-    protected void entryAction(PointOfInterest poi,CityMap cityMap,Window window) {
-        this.highlightpoint=poi;
-        if(this.highlightpoint instanceof PickupAddress){
-            this.secondaryPoint=cityMap.distribution.getDelivery((PickupAddress) highlightpoint);
+    protected void entryAction(PointOfInterest poi, CityMap cityMap) {
+        this.highlightpoint = poi;
+        PointOfInterest secondaryPoint;
+        if (this.highlightpoint instanceof PickupAddress) {
+            secondaryPoint = cityMap.distribution.getDelivery((PickupAddress) highlightpoint);
         } else {
-            this.secondaryPoint=cityMap.distribution.getPickup((DeliveryAddress) highlightpoint);
+            secondaryPoint = cityMap.distribution.getPickup((DeliveryAddress) highlightpoint);
         }
-        cityMap.setHighlighted(highlightpoint,secondaryPoint);
-
-
+        cityMap.setHighlighted(highlightpoint, secondaryPoint);
     }
 
     @Override
-    public void generateRoadmap(Controller c, Window w) throws IOException {
-        RoadMapGenerator.generateRoadmap(c.getCitymap());
-        c.getCitymap().setHighlighted(null,null);
-        c.setCurrentState(c.tourState);
+    public void generateRoadmap(Controller controller, Window window) {
+        RoadMapGenerator.generateRoadmap(controller.getCityMap());
+        controller.getCityMap().setHighlighted(null, null);
+        controller.setCurrentState(controller.TOUR_STATE);
     }
 
     @Override
-    public void undo(ListOfCommands listOfCdes) {
-        listOfCdes.undo();
+    public void undo(ListOfCommands listOfCommands) {
+        listOfCommands.undo();
     }
 
     @Override
-    public void redo(ListOfCommands listOfCdes) {
-        listOfCdes.redo();
+    public void redo(ListOfCommands listOfCommands) {
+        listOfCommands.redo();
     }
 
 
@@ -131,18 +123,9 @@ public class HighlightState implements State {
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);
         window.enableButton("Add request", true);
-
         window.enableButton("Remove", true);
-        if (loc.getCurrentIndex() >= 0) {
-            window.enableButton("Undo", true);
-        } else {
-            window.enableButton("Undo", false);
-        }
-        if (loc.getCurrentIndex() < loc.getList().size() - 1) {
-            window.enableButton("Redo", true);
-        } else {
-            window.enableButton("Redo", false);
-        }
+        window.enableButton("Undo", loc.getCurrentIndex() >= 0);
+        window.enableButton("Redo", loc.getCurrentIndex() < loc.getList().size() - 1);
         window.enableButton("Generate roadmap", true);
 
     }

@@ -1,8 +1,6 @@
 package controller;
 
-
 import org.xml.sax.SAXException;
-import view.MapView;
 import view.Window;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
@@ -20,26 +18,30 @@ public class DistributionState implements State {
      */
     public DistributionState() {
     }
+
     @Override
     public void computeTour(Controller controller, Window window) {
-        controller.getCitymap().computeTour();
+        controller.getCityMap().computeTour();
         window.displayMessage("");
+        controller.setCurrentState(controller.TOUR_STATE);
+    }
 
-        controller.setCurrentState(controller.tourState);
-    }
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCitymap());
+    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException,
+                                                                IOException, SAXException {
+        XMLDeserializer.loadDistribution(c.getCityMap());
         w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.distributionState);
+        c.setCurrentState(c.DISTRIBUTION_STATE);
     }
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
+
+    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException,
+                                                       IOException, SAXException {
+        XMLDeserializer.loadCityMap(c.getCityMap());
         w.getMapView().resetZoom();
         w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
+        c.setCurrentState(c.CITY_MAP_STATE);
     }
 
-    public  void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands loc) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", true);
