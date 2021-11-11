@@ -1,3 +1,7 @@
+/**
+ * RoadmapView
+ * @author 4IF-4114
+ */
 package view;
 
 import model.*;
@@ -12,7 +16,7 @@ import  java.util.*;
 import java.util.List;
 
 /**
- * @author 4IF-4114
+ * The roadmap view of the window, where the imported requests are shown
  */
 public class RoadmapView extends JPanel implements Observer {
 
@@ -34,9 +38,9 @@ public class RoadmapView extends JPanel implements Observer {
     private Window window;
 
     /**
-     * Default constructor
-     * @param tour
-     * @param window
+     * Constructor of the RoadmapView
+     * @param citymap the current citymap with the data
+     * @param window the application window
      */
     public RoadmapView(CityMap citymap, Window window) {
         super();
@@ -74,7 +78,11 @@ public class RoadmapView extends JPanel implements Observer {
         window.getContentPane().add(this);
     }
 
-
+    /**
+     * Updates the roadmap view (refresh the UI) (when the tour is computed for exemple)
+     * @param o the Observable to check if there's changes about the map/requests and update the related data
+     * @param arg the modified object
+     */
     public void update(Observable observed, Object object) {
 
         this.start = true;
@@ -110,6 +118,10 @@ public class RoadmapView extends JPanel implements Observer {
         return VIEW_WIDTH;
     }
 
+    /**
+     * After importing the requests .xml file, add the requests to the roadmap view
+     * @param requestList the list of the requests from the imported data
+     */
     public void addRequestToRoadmap(Set<Request> requestList){ //Add Request to roadmap in order
         int number = 0;
 
@@ -179,6 +191,10 @@ public class RoadmapView extends JPanel implements Observer {
         }
     }
 
+    /**
+     * After computing a tour, add the points and their data to the roadmap, following their order from the path
+     * @param pointList list of the points of interest
+     */
     public void addPointOfInterestToRoadMap(List<PointOfInterest> pointList) {
 
         List<Path> pathList = this.cityMap.tour.getPaths();

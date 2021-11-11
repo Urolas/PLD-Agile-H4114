@@ -1,3 +1,7 @@
+/**
+ * ButtonListener
+ * @author 4IF-4114
+ */
 package view;
 
 import java.awt.event.ActionEvent;
@@ -6,23 +10,27 @@ import java.awt.event.ActionListener;
 import controller.Controller;
 
 /**
- * @author 4IF-4114
+ * ActionListener for button-clicks
  */
 public class ButtonListener implements ActionListener {
 
     private Controller controller;
 
     /**
-     * Default constructor
+     * Constructor of ButtonListener
+     * @param controller the current controller which will receive the action message from the actionPerformed method
      */
     public ButtonListener(Controller controller){
         this.controller = controller;
     }
 
+    /**
+     * Method called by the button listener each time a button is clicked
+     * and forward the corresponding message to the controller
+     * @param e the actionEvent indicating which button is clicked
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Method called by the button listener each time a button is clicked
-        // Forward the corresponding message to the controller
 
         String actionCommand = e.getActionCommand();
          if(actionCommand.startsWith(Window.UP)){
@@ -44,7 +52,6 @@ public class ButtonListener implements ActionListener {
             case Window.RECENTER: controller.recenter();break;
             case Window.UP: controller.up(e.getActionCommand().substring(2));break;
             case Window.DOWN: controller.down(e.getActionCommand().substring(4));break;
-
 
         }
     }

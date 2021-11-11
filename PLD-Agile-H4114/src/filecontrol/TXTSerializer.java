@@ -1,3 +1,7 @@
+/**
+ * TXTSerializer
+ * @author 4IF-4114
+ */
 package filecontrol;
 
 import model.*;
@@ -7,11 +11,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Write the roadmap into the created .txt file
+ * */
 public class TXTSerializer {
 
-    public TXTSerializer(CityMap citymap){
+    /**
+     * Constructor of TXTSerializer
+     */
+    public TXTSerializer(){
     }
 
+    /**
+     * Write the roadmap on the empty .txt file
+     * @param fw the FileWriter connected to the created file
+     * @param citymap the current Citymap with a computed tour
+     * @throws IOException when path is not found
+     */
     public static void save(FileWriter fw, CityMap cityMap) throws IOException {
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
         List<Path> pathList = cityMap.getTour().getPaths();

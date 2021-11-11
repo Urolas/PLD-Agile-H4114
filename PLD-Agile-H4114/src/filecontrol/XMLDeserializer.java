@@ -1,3 +1,8 @@
+/**
+ * XMLDeserializer
+ * @author 4IF-4114
+ */
+
 package filecontrol;
 
 import java.io.File;
@@ -16,25 +21,23 @@ import model.CityMap;
 import model.Intersection;
 
 /**
- * @author 4IF-4114
- */
+ * Parse the selected .XML file (map or requests)
+ * */
 public class XMLDeserializer {
 
     /**
-     * Default constructor
+     * Constructor of XMLDeserializer
      */
     public XMLDeserializer() {
     }
 
     /**
-     * Open an XML file and create plan from this file
-     *
-     * @param cityMap
-     * @return
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
-     * @throws XMLException
+     * Open an XML file (map) and update the empty citymap
+     * @param cityMap an emptyCityMap
+     * @throws ParserConfigurationException when error in parsing
+     * @throws SAXException when a specific information in the .xml can not be found
+     * @throws IOException when the file does not exist
+     * @throws XMLException when the format is wrong
      */
     public static void loadCityMap(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
         File xml = XMLFileOpener.getInstance().open(true);
@@ -49,8 +52,12 @@ public class XMLDeserializer {
     }
 
     /**
-     * @param cityMap
-     * @return
+     * Open an XML file (requests) and update the cityMap with the newly created Distribution
+     * @param cityMap an emptyCityMap
+     * @throws ParserConfigurationException when error in parsing
+     * @throws SAXException when a specific information in the .xml can not be found
+     * @throws IOException when the file does not exist
+     * @throws XMLException when the format is wrong
      */
     public static void loadDistribution(CityMap cityMap) throws ParserConfigurationException, SAXException, IOException, XMLException {
         File xml = XMLFileOpener.getInstance().open(true);
@@ -65,9 +72,10 @@ public class XMLDeserializer {
     }
 
     /**
-     * @param rootDOMNode
-     * @param cityMap
-     * @return
+     * Parse the citymap with the data from the xml file
+     * @param rootDOMNode the root of the opened xml file
+     * @param cityMap the current cityMap
+     * @throws NumberFormatException when the format is wrong
      */
     private static void buildCityMapFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException {
 
@@ -115,8 +123,12 @@ public class XMLDeserializer {
     }
 
     /**
-     * Citymap mis en argument pour pouvoir recuperer les intersections, qu'on va ensuite ratacher aux points d'interet
-     * */
+     * Add the Distribution list to the citymap
+     * @param rootDOMNode the root of the opened xml file
+     * @param cityMap the current cityMap
+     * @throws NumberFormatException when the format is wrong
+     * @throws XMLException when the xml file does not have the right format
+     */
     private static void buildDistributionFromDOMXML(Element rootDOMNode, CityMap cityMap) throws NumberFormatException,XMLException {
 
         cityMap.distribution.reset();
@@ -148,17 +160,6 @@ public class XMLDeserializer {
 
 
     }
-
-
-
-
-
-    /**
-     * @param elt
-     * @return
-     */
-
-
 
 
 }

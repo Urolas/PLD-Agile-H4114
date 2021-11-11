@@ -1,3 +1,7 @@
+/**
+ * Window
+ * @author 4IF-4114
+ */
 package view;
 
 import controller.Controller;
@@ -15,7 +19,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 /**
- * @author 4IF-4114
+ * The current window of the application
  */
 public class Window extends JFrame {
 
@@ -57,9 +61,16 @@ public class Window extends JFrame {
     private final int BUTTON_WIDTH = 200;
 
     /**
-     * Default constructor
+     * Constructor of Window
+     * @param cityMap the current citymap
+     * @param controller the controller for every action performed
      */
     public Window(CityMap cityMap, Controller controller) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         setLayout(null);
         mapView = new MapView(cityMap, this);
         messageFrame = new JTextPane();
@@ -99,6 +110,9 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Adapt the size of every elements (buttons, map) to the size of the window
+     */
     private void setWindowSize() {
         int allBUTTON_HEIGHT = BUTTON_HEIGHT * buttonTexts.length;
         int windowHeight = Math.max(mapView.getViewHeight(),allBUTTON_HEIGHT);
@@ -114,7 +128,7 @@ public class Window extends JFrame {
 
     /**
      * Create buttons corresponding to buttonTexts, and the corresponding button listener
-     * @param controller
+     * @param controller the current controller for performed actions
      */
     private void createButtons(Controller controller){
         buttonListener = new ButtonListener(controller);
@@ -149,6 +163,10 @@ public class Window extends JFrame {
         return buttonListener;
     }
 
+    /**
+     * Convert the Jtext duration to a string and empty it
+     * @return the converted duration as a string
+     */
     public String getDuration() {
         String result = durationJText.getText();
         durationJText.setText("");
@@ -157,6 +175,10 @@ public class Window extends JFrame {
     }
     public RoadmapView getRoadmapView() { return roadmapView; }
 
+    /**
+     * show the error on the JOptionPane
+     * @param message the error message
+     */
     public void parsingError(String message) {
         final JPanel panel = new JPanel();
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -166,6 +188,11 @@ public class Window extends JFrame {
         messageFrame.setText(m);
     }
 
+    /**
+     * Disable/Enable a button if it should be clickable or not (wrong/right state)
+     * @param buttonLabel the name of the button
+     * @param bool change the status of a button
+     */
     public void enableButton(String buttonLabel, boolean bool) {
         int i = 0;
         for (String text : buttonTexts) {

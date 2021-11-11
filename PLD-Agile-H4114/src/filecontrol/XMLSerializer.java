@@ -1,3 +1,8 @@
+/**
+ * XMLSerializer
+ * @author 4IF-4114
+ */
+
 package filecontrol;
 
 import java.io.File;
@@ -20,6 +25,9 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Write the roadmap into the created .xml file
+ * */
 public class XMLSerializer {
 
     private static Element pointRoot;
@@ -35,11 +43,12 @@ public class XMLSerializer {
 
     /**
      * Open an XML file and write an XML description of the roadmap in it
-     * @param plan the plan to serialise
-     * @throws ParserConfigurationException
-     * @throws TransformerFactoryConfigurationError
-     * @throws TransformerException
-     * @throws ExceptionXML
+     * @param citymap the citymap with the tour to serialize
+     * @param xml the .xml File to write on
+     * @throws ParserConfigurationException when the parsing is null
+     * @throws TransformerFactoryConfigurationError when the data can not written into the Document
+     * @throws TransformerException when the path is wrong
+     * @throws ExceptionXML when the XML format is wrong
      */
     public static void save(CityMap citymap, File xml) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, XMLException{
         StreamResult result = new StreamResult(xml);
@@ -51,7 +60,11 @@ public class XMLSerializer {
         xformer.transform(source, result);
     }
 
-
+    /**
+     * Add the roadmap to the xml file
+     * @param citymap the citymap with the tour to serialize
+     * @return the roadmap Element
+     */
     private static Element createRoadMap(CityMap citymap) {
         Element root = document.createElement("roadmap");
         int arrivalTime = citymap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
@@ -105,12 +118,24 @@ public class XMLSerializer {
         return root;
     }
 
+    /**
+     * Add an attribute to an element
+     * @param root the root of the Element
+     * @param name the name of the attribute
+     * @param value the value of the attribute
+     */
     private static void createAttribute(Element root, String name, String value){
         Attr attribut = document.createAttribute(name);
         root.setAttributeNode(attribut);
         attribut.setValue(value);
     }
 
+    /**
+     * Add a point of interest to the roadmap
+     * @param p the point of interest we want to add
+     * @param arrivalTime the arrivalTime to this point
+     * @param start True if it's the starting depot point, else, False
+     */
     public static void display(PointOfInterest p, int arrivalTime, boolean start) {
         pointRoot = document.createElement("pointOfInterest");
         String type="";
@@ -141,6 +166,11 @@ public class XMLSerializer {
 
     }
 
+    /**
+     * Add a road to the point of interest to show the path from the last point to this point
+     * @param r the road to add
+     * @param durationRoad the duration on this road
+     */
     public static void display(Road r, int durationRoad){
         roadRoot = document.createElement("road");
         createAttribute(roadRoot,"name",r.getName());
