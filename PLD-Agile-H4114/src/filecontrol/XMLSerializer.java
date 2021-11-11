@@ -58,32 +58,39 @@ public class XMLSerializer {
      * @return the roadmap Element
      */
     private static Element createRoadMap(CityMap cityMap) {
+
+        //Set the document as the root of the element roadmap
         Element root = document.createElement("roadmap");
+
+        //Get the informations from the Citymap
         int arrivalTime = cityMap.getDistribution().getDepot().getDepartureTime().toSecondOfDay();
         List<PointOfInterest> pointList = cityMap.getTour().getPointOfInterests();
         List<Path> pathList = cityMap.getTour().getPaths();
 
+        //Create a roadmap element
         display(pointList.get(0), arrivalTime, true);
         root.appendChild(pointRoot);
 
-
+        //Loop checking each point of interest from the list
         for (int poiNum = 1; poiNum < pointList.size(); poiNum++) {
 
+            //Get the information about the point of interest and its path from the id
             PointOfInterest poi = pointList.get(poiNum);
             Path path = (Path) (pathList.get(poiNum-1));
-            arrivalTime += (int)(path.getLength() / 15000. * 3600.);
+            arrivalTime += (int)(path.getLength() / 15000. * 3600.); // Add the path's duration on the arrivalTime
 
+            //Create the element point of interest
             display(poi, arrivalTime, false);
             root.appendChild(pointRoot);
 
-            arrivalTime += poi.getDuration();
+            arrivalTime += poi.getDuration(); //Add the point's duration on the arrivalTime
 
             double length = 0;
             String name;
             int nbIntersection = 0;
             int durationRoad = 0;
 
-
+            //Loop checking each road of the path
             for (int j = 0; j < path.getRoads().size(); ++j) {
 
                 Road road = path.getRoads().get(j);
@@ -97,6 +104,7 @@ public class XMLSerializer {
 
                 Road mergedRoad = new Road(name,length);
 
+                //Create the element road inside the point of interest
                 display(mergedRoad,durationRoad);
                 pointRoot.appendChild(roadRoot);
 
@@ -115,6 +123,9 @@ public class XMLSerializer {
      * @param start True if it's the starting depot point, else, False
      */
     public static void display(PointOfInterest p, int arrivalTime, boolean start) {
+
+        //Add a point of interest's information as attributes
+
         pointRoot = document.createElement("pointOfInterest");
         String type="";
         if (p instanceof DeliveryAddress) {
@@ -131,6 +142,7 @@ public class XMLSerializer {
         createAttribute(pointRoot,"latitude",Double.toString(p.getIntersection().getLatitude()));
         createAttribute(pointRoot,"longitude",Double.toString(p.getIntersection().getLongitude()));
 
+        //Convert the time (seconds) into hours:minutes:seconds
         int hours = arrivalTime / 3600;
         int minutes = (arrivalTime % 3600) / 60;
         int seconds = arrivalTime % 60;
@@ -150,6 +162,8 @@ public class XMLSerializer {
      * @param durationRoad the duration on this road
      */
     public static void display(Road r, int durationRoad){
+
+        //Add a road's information as attributes
         roadRoot = document.createElement("road");
         createAttribute(roadRoot,"name",r.getName());
         createAttribute(roadRoot,"length",Double.toString(r.getLength()));
@@ -168,6 +182,8 @@ public class XMLSerializer {
      * @throws XMLException when the XML format is wrong
      */
     public static void save(CityMap cityMap, File xml) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, XMLException{
+
+        //Save the information to the empty .xml file with a XML format
         StreamResult result = new StreamResult(xml);
         document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         document.appendChild(createRoadMap(cityMap));

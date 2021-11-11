@@ -1,9 +1,15 @@
+/**
+ * AddCommand
+ *
+ * @author 4IF-4114
+ */
+
 package controller;
 
 import model.*;
 
 /**
- * @author 4IF-4114
+ * The Command adding points of interest to the distribution
  */
 public class AddCommand implements Command {
 
@@ -15,7 +21,15 @@ public class AddCommand implements Command {
     private boolean authorized;
 
     /**
-     * Default constructor
+     * Constructor of AddCommand
+     *
+     * @param i1  the intersection where the new Pickup will be placed
+     * @param i2  the intersection where the new Delivery will be placed
+     * @param d1  the duration of the new Pickup
+     * @param d2  the duration of the new Delivery
+     * @param p1  the point before the new Pickup
+     * @param p2  the point before the new Delivery
+     * @param map the citymap
      */
     public AddCommand(CityMap map,
                       Intersection i1, Integer d1, PointOfInterest p1,
@@ -34,7 +48,7 @@ public class AddCommand implements Command {
 
 
     /**
-     *
+     * Do the command
      */
     public void doCommand() throws Exception {
         try {
@@ -47,7 +61,7 @@ public class AddCommand implements Command {
     }
 
     /**
-     *
+     * Undo the command
      */
     public void undoCommand() {
         if (authorized) {
