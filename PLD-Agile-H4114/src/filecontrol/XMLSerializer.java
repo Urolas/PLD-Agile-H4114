@@ -141,13 +141,15 @@ public class XMLSerializer {
         String type="";
         if (p instanceof DeliveryAddress) {
             type="delivery";
+            createAttribute(pointRoot,"id", Integer.toString((p.getIdPointOfInterest()-2)/2+1));
         }else if(p instanceof PickupAddress){
             type="pickup";
+            createAttribute(pointRoot,"id", Integer.toString((p.getIdPointOfInterest()-1)/2+1));
         }else{
             type="depot";
+            createAttribute(pointRoot,"id", Integer.toString(p.getIdPointOfInterest()));
         }
         createAttribute(pointRoot,"type",type);
-        createAttribute(pointRoot,"id", Integer.toString(p.getIdPointOfInterest()));
         createAttribute(pointRoot,"latitude",Double.toString(p.getIntersection().getLatitude()));
         createAttribute(pointRoot,"longitude",Double.toString(p.getIntersection().getLongitude()));
 
