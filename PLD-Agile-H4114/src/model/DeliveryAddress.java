@@ -1,5 +1,6 @@
 /**
  * DeliveryAddress
+ *
  * @author 4IF-4114
  */
 package model;
@@ -20,14 +21,14 @@ public class DeliveryAddress extends PointOfInterest {
 
     /**
      * Constructor of DeliveryAddress
-     * @param dintersection the intersection of this delivery address
+     * @param dIntersection the intersection of this delivery address
      * @param deliveryDuration the duration the deliveryman can stay on this address
-     * @param i the id of the point
+     * @param id the id of the point
      */
-    public DeliveryAddress(Intersection dintersection, Integer deliveryDuration,Integer i) {
-        super(dintersection,i);
+    public DeliveryAddress(Intersection dIntersection, Integer deliveryDuration, Integer id) {
+        super(dIntersection, id);
 
-        this.duration=deliveryDuration;
+        this.duration = deliveryDuration;
     }
 
     /**
@@ -36,12 +37,9 @@ public class DeliveryAddress extends PointOfInterest {
      */
     @Override
     public boolean equals(Object obj) {
-        if(!super.equals(obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
-        if(!Objects.equals(this.duration, ((DeliveryAddress) obj).duration)){
-            return false;
-        }
-        return true;
+        return Objects.equals(this.duration, ((DeliveryAddress) obj).duration);
     }
 }

@@ -156,7 +156,7 @@ public class XMLDeserializerForTests {
         cityMap.tour.resetTour();
         Element depot = (Element) rootDOMNode.getElementsByTagName("depot").item(0);
         String address =depot.getAttribute("address");
-        Intersection intersec =cityMap.getINTERSECTIONS().get(address);
+        Intersection intersec =cityMap.getIntersections().get(address);
         if ( intersec==null){
             throw new XMLException("Wrong File used : depot point is not valid");
         }
@@ -167,8 +167,8 @@ public class XMLDeserializerForTests {
 
             String pickupAddress =elt.getAttribute("pickupAddress");
             String deliveryAddress =elt.getAttribute("deliveryAddress");
-            Intersection intersecPickup =cityMap.getINTERSECTIONS().get(pickupAddress);
-            Intersection intersecDelivery =cityMap.getINTERSECTIONS().get(deliveryAddress);
+            Intersection intersecPickup =cityMap.getIntersections().get(pickupAddress);
+            Intersection intersecDelivery =cityMap.getIntersections().get(deliveryAddress);
             if ( intersecPickup==null || intersecDelivery==null){
                 throw new XMLException("Wrong File used : request is not valid");
             }

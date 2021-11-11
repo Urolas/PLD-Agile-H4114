@@ -195,11 +195,11 @@ public class MapView extends JPanel implements Observer {
         }
 
         //display paths
-        Color outline = Color.BLACK;
+        Color outline = Color.black;
         Tour t = CITYMAP.getTour();
         if (t != null) {
             if (t.getPaths().size() != 0) {
-                outline = new Color(69, 73, 74);
+                outline = new Color(200, 0, 0);
             }
             for (Path p : t.getPaths()) {
                 displayPath(p, outline);
@@ -215,9 +215,9 @@ public class MapView extends JPanel implements Observer {
 
 
             for (Request q : d.getRequests()) {
-                if (t.getPaths().size() == 0) {
-                    outline = q.color.darker().darker();
-                }
+
+                outline = q.color.darker().darker();
+
                 displayRequest(q, outline);
             }
             if (CITYMAP.secondaryHighlight != null & CITYMAP.primaryHighlight != null) {
@@ -467,7 +467,7 @@ public class MapView extends JPanel implements Observer {
      * @return the closest Intersection to our point
      */
     public Intersection getClosestIntersection(int x, int y) {
-        for (Intersection i : this.CITYMAP.getINTERSECTIONS().values()) {
+        for (Intersection i : this.CITYMAP.getIntersections().values()) {
             int xPoi = convertLongitudeToPixel(i.getLongitude());
             int yPoi = convertLatitudeToPixel(i.getLatitude());
             if (x <= xPoi + POINT_SIZE / 2 && x >= xPoi - POINT_SIZE / 2 &&

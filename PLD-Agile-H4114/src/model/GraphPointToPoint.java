@@ -10,9 +10,9 @@ import java.util.*;
  * The graph representing the map, having the each point as node and each road as branch
  */
 public class GraphPointToPoint {
-    private int nbVertices;
-    private HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> cost;
-    private HashMap<Integer,Integer> constraints;
+    private final int nbVertices;
+    private final HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double,List<String>>>> cost;
+    private final HashMap<Integer,Integer> constraints;
 
 
     /**
