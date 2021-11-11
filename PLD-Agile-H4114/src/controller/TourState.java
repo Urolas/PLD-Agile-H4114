@@ -98,7 +98,7 @@ public class TourState implements State {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);
-        window.enableButton("Modify the distribution", true);
+        window.enableButton("Add request", true);
         window.enableButton("Remove", false);
         window.enableButton("Generate roadmap", true);
         if (loc.getCurrentIndex() >= 0) {

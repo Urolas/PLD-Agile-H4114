@@ -60,7 +60,7 @@ public class HighlightState implements State {
         window.enableButton("Load a city map", false);
         window.enableButton("Load a distribution", false);
         window.enableButton("Compute a tour", false);
-        window.enableButton("Modify the distribution", false);
+        window.enableButton("Add request", false);
         window.enableButton("Remove", true);
         window.enableButton("Redo", false);
         window.enableButton("Undo", false);

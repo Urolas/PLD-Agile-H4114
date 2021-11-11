@@ -37,7 +37,7 @@ public class CityMapState implements State {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);
-        window.enableButton("Modify the distribution", false);
+        window.enableButton("Add request", false);
         window.enableButton("Remove", false);
         window.enableButton("Redo", false);
         window.enableButton("Undo", false);

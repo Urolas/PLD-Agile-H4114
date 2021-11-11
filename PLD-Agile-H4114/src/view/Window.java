@@ -24,7 +24,7 @@ public class Window extends JFrame {
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
-    protected static final String MODIFY = "Modify the distribution";
+    protected static final String MODIFY = "Add request";
     protected static final String REMOVE = "Remove";
     protected static final String REDO = "Redo";
     protected static final String UNDO = "Undo";
@@ -179,7 +179,7 @@ public class Window extends JFrame {
         }
     }
 
-    public String[] getButtonTexts() {
+    public String[] getButtonTests() {
         return buttonTexts;
     }
 }
