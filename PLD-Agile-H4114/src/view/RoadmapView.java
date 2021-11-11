@@ -76,10 +76,6 @@ public class RoadmapView extends JPanel implements Observer {
 
 
     public void update(Observable observed, Object object) {
-        System.out.println("Roadmap/update");
-        System.out.println(this.cityMap.tour.getPointOfInterests().size());
-        System.out.println(this.cityMap.tour.getPaths().size());
-        System.out.println(this.cityMap.distribution.getRequests().size());
 
         this.start = true;
         int i = 0;

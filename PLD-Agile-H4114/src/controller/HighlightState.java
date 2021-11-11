@@ -63,14 +63,20 @@ public class HighlightState implements State {
         try {
             listOfCommands.add(new SwapCommand(c.getCitymap(),id,-1));
 
-        } catch (Exception ignored){}
+        } catch (Exception e){
+            c.getWindow().parsingError(e.getMessage());
+
+        }
 
     }
     @Override
     public void down(Integer id,ListOfCommands listOfCommands,Controller c){
         try {
             listOfCommands.add(new SwapCommand(c.getCitymap(),id,1));
-        } catch (Exception ignored){}
+        } catch (Exception e){
+            c.getWindow().parsingError(e.getMessage());
+
+        }
 
     }
 

@@ -222,16 +222,6 @@ public class CityMap extends Observable {
         notifyObservers(road);
     }
 
-    public void generateRoadmap() throws IOException {
-        System.out.println("Generating Roadmap");
-
-        /*File myObj = new File("\\roadmapFilesnewFile.txt");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
-        } else {
-            System.out.println("File already exists.");
-        }*/
-    }
 
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
         List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
@@ -303,7 +293,7 @@ public class CityMap extends Observable {
             }
         }
         if (!deliveryInserted) {
-            throw new Exception("Erreur : le delivery a été mis avant le pickup");
+            throw new Exception("Error : The Delivery was put before the Pickup");
         }
         tour.setPointOfInterests(newPoints);
         tour.setPaths(newPaths);
