@@ -41,6 +41,7 @@ public class TourModificationTest {
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(4));
+            cm.distribution.addRequest(p1,p2,p1.getIdPointOfInterest());
         }catch (Exception e){
             fail();
         }
@@ -69,6 +70,7 @@ public class TourModificationTest {
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(3));
+            cm.distribution.addRequest(p1,p2,p1.getIdPointOfInterest());
         }catch (Exception e){
             fail();
         }
@@ -139,11 +141,14 @@ public class TourModificationTest {
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(4));
+            cm.distribution.addRequest(p1,p2,p1.getIdPointOfInterest());
         }catch (Exception e){
             fail();
         }
+
         listPOI = cm.getTour().getPointOfInterests();
         cm.removeRequest((PickupAddress) listPOI.get(4),(DeliveryAddress) listPOI.get(6));
+        listPOI = cm.getTour().getPointOfInterests();
 
         assertEquals(6,listPOI.size());
         assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
@@ -209,6 +214,7 @@ public class TourModificationTest {
     @Test
     public void changePositionDeliveryBeforePickupTest(){
         PointOfInterest poi = cm.getTour().getPointOfInterests().get(4);
+
         cm.changePosition(poi,3);
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
