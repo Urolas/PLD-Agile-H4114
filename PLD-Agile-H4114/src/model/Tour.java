@@ -5,8 +5,6 @@
 package model;
 
 import observer.Observable;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,6 @@ public class Tour extends Observable {
     private List<Path> paths;
     private List<PointOfInterest> pointOfInterests;
     private Double totalLength;
-
     /**
      * Default constructor of Tour
      */
@@ -25,7 +22,6 @@ public class Tour extends Observable {
         paths = new ArrayList<>();
         pointOfInterests = new ArrayList<>();
     }
-
     /**
      * Empty the tour
      */
@@ -35,58 +31,22 @@ public class Tour extends Observable {
         this.notifyObservers();
     }
 
-    public List<Path> getPaths() {
-        return paths;
-    }
-
-    public List<PointOfInterest> getPointOfInterests() {
-        return pointOfInterests;
-    }
-
-    /**
-     * Default constructor of Tour
-     * @param paths the list of path if the tour
-     * @param shortestTour the list of point of interest to obtain the shortest tour
-     * @param solutionCost the cost or the length of the tour
-     */
-    public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
-        this.paths = paths;
-        this.pointOfInterests = shortestTour;
-        this.totalLength = solutionCost;
-        this.notifyObservers();
-    }
-
-    public void setPaths(List<Path> paths) {
-        this.paths = paths;
-
-    }
-
-    public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
-        this.pointOfInterests = pointOfInterests;
-
-    }
-
-    public void setTotalLength(Double totalLength) {
-        this.totalLength = totalLength;
-        this.notifyObservers(totalLength);
-    }
-
     /**
      * Compares this tour with another object and check if they are equal
      * @param obj the object to be compared with
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object obj) {
         //Same class
-        if (!o.getClass().equals(Tour.class)) {
+        if (!obj.getClass().equals(Tour.class)) {
             return false;
         }
         //Same path
-        if (!this.paths.equals(((Tour) o).paths)) {
+        if (!this.paths.equals(((Tour) obj).paths)) {
             return false;
         }
         //Same pointOfInterests
-        if (!this.pointOfInterests.equals(((Tour) o).pointOfInterests)) {
+        if (!this.pointOfInterests.equals(((Tour) obj).pointOfInterests)) {
             return false;
         }
         return true;
@@ -106,6 +66,21 @@ public class Tour extends Observable {
 
     public Double getTotalLength() {
         return totalLength;
+    }
+
+    public List<Path> getPaths() {return paths;}
+
+    public List<PointOfInterest> getPointOfInterests() {return pointOfInterests;}
+
+    public void setPaths(List<Path> paths) {this.paths = paths;}
+
+    public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
+        this.pointOfInterests = pointOfInterests;
+    }
+
+    public void setTotalLength(Double totalLength) {
+        this.totalLength = totalLength;
+        this.notifyObservers(totalLength);
     }
 }
 
