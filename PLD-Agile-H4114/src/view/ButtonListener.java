@@ -30,7 +30,6 @@ public class ButtonListener implements ActionListener {
         } else if(actionCommand.startsWith(Window.DOWN)){
              actionCommand=Window.DOWN;
          }
-        System.out.println(e.getActionCommand());
         switch (actionCommand){
             case Window.LOAD_CITY_MAP: controller.loadCityMap(); break;
             case Window.LOAD_DISTRIBUTION: controller.loadDistribution(); break;

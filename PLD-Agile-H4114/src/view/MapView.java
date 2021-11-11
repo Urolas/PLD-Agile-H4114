@@ -209,9 +209,10 @@ public class MapView extends JPanel implements Observer {
 
         }
         Distribution d = cityMap.getDistribution();
+        displayDepot();
+
         if (d.getRequests().size()!=0) {
 
-            displayDepot();
             for (Request q : d.getRequests()){
                 if (t.getPaths().size() == 0){
                     outline = q.color.darker().darker();
