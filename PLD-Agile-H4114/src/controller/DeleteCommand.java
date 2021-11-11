@@ -1,10 +1,14 @@
+/**
+ * DeleteCommand
+ *
+ * @author 4IF-4114
+ */
 package controller;
-
 
 import model.*;
 
 /**
- * @author 4IF-4114
+ * The Command removing points of interest from the distribution
  */
 public class DeleteCommand implements Command {
 
@@ -16,7 +20,10 @@ public class DeleteCommand implements Command {
     private final PointOfInterest PRE_DELIVERY;
 
     /**
-     * Default constructor
+     * Constructor of DeleteCommand
+     *
+     * @param cityMap the citymap
+     * @param poi     Point of interest to delete
      */
     public DeleteCommand(CityMap cityMap, PointOfInterest poi) {
         this.CITY_MAP = cityMap;
@@ -33,16 +40,18 @@ public class DeleteCommand implements Command {
     }
 
     /**
-     *
+     * do the command
      */
+    @Override
     public void doCommand() {
         if (!(POI instanceof DepotAddress))
             CITY_MAP.removeRequest(POI_PICKUP, POI_DELIVERY);
     }
 
     /**
-     *
+     *undo the command
      */
+    @Override
     public void undoCommand() {
         try {
             CITY_MAP.addRequest(POI_PICKUP, PRE_PICKUP, POI_DELIVERY, PRE_DELIVERY);
