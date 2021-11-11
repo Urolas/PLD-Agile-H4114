@@ -6,7 +6,7 @@ import model.CityMap;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
-public class main {
+public class Delivelo {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
         CityMap cityMap = new CityMap();

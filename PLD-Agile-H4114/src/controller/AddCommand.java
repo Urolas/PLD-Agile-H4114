@@ -34,7 +34,7 @@ public class AddCommand implements Command {
 
 
     /**
-     * @return
+     *
      */
     public void doCommand() throws Exception {
         try {
@@ -47,7 +47,7 @@ public class AddCommand implements Command {
     }
 
     /**
-     * @return
+     *
      */
     public void undoCommand() {
         if (authorized) {

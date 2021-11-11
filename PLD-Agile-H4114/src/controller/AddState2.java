@@ -15,15 +15,15 @@ public class AddState2 implements State {
                           Intersection i, PointOfInterest poi) {
 
         if (poi != null) {
-            c.addState3.entryAction(this.i1, d1, poi, window);
+            c.addState3.entryAction(this.i1,d1, poi,window);
             c.setCurrentState(c.addState3);
-            window.displayMessage("Choose the delivery duration and\nchoose the delivery point position on the map.");
 
+            window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
+            window.enableJtextField(true);
         } else {
-            window.parsingError("No point choosen error : Click on a valid point.");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
-
 
     }
 

@@ -14,21 +14,23 @@ public class AddState3 implements State {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
         String strDuration = window.getDuration();
 
-        try {
-            this.d2 = Integer.parseInt(strDuration);
-
-        } catch (NumberFormatException e) {
-            window.parsingError("Wrong format value\n" + e.getMessage());
-            return;
-        }
         if (i != null) {
+            try {
+                this.d2 = Integer.parseInt(strDuration);
+                if (d2 < 0) throw new NumberFormatException();
+            } catch (NumberFormatException e) {
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
+                return;
+            }
             c.addState4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
             map.setPOIToAdd(null);
-            window.displayMessage("Apres quel point");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
+            window.enableJtextField(false);
+
         } else {
-            window.displayMessage("Erreur point mal placé : Placez le deliveryPoint");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
 
         }
 
