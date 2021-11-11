@@ -1,11 +1,22 @@
+/**
+ * ListOfCommands
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import java.util.LinkedList;
 
+/**
+ * The List of command contain all the commands executed by the user
+ */
 public class ListOfCommands {
     private final LinkedList<Command> LIST;
     private int currentIndex;
 
+    /**
+     * Default Constructor
+     * */
     public ListOfCommands() {
         currentIndex = -1;
         LIST = new LinkedList<>();
