@@ -29,7 +29,7 @@ public class DistributionState implements State {
     }
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
-        w.displayMessage("Distribution Loaded.\nA Tour can be computed.");
+        w.displayMessage("Distribution loaded.\nA tour can be computed.");
         c.setCurrentState(c.distributionState);
     }
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
