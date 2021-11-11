@@ -9,7 +9,7 @@ public class AddState1 implements State {
     private Integer d1;
 
     @Override
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
+    public void leftClick(Controller controller, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
         if (i != null) {
             String strDuration = window.getDuration();
@@ -21,8 +21,8 @@ public class AddState1 implements State {
                 window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point.");
                 return;
             }
-            c.ADD_STATE_2.entryAction(i, this.d1);
-            c.setCurrentState(c.ADD_STATE_2);
+            controller.ADD_STATE_2.entryAction(i, this.d1);
+            controller.setCurrentState(controller.ADD_STATE_2);
             map.setSelected1(i);
 
             map.setPOIToAdd(null);
@@ -53,7 +53,7 @@ public class AddState1 implements State {
     }
 
 
-    public void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands listOfCommands) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);

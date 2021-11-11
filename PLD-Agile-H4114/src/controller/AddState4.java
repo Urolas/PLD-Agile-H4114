@@ -12,15 +12,15 @@ public class AddState4 implements State {
     private Intersection i2;
     private Integer d2;
 
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
+    public void leftClick(Controller controller, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
         if (poi != null) {
             try {
                 listOfCommands.add(new AddCommand(map, this.i1,this.d1, this.p1, this.i2,this.d2, poi));
             } catch (Exception e) {
                 window.parsingError(e.getMessage());
             }
-            c.getCityMap().resetSelected();
-            c.setCurrentState(c.TOUR_STATE);
+            controller.getCityMap().resetSelected();
+            controller.setCurrentState(controller.TOUR_STATE);
             window.enableJtextField(false);
             window.displayMessage("");
         } else {

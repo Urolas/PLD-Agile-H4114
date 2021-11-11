@@ -199,7 +199,7 @@ public class MapView extends JPanel implements Observer {
         Tour t = CITYMAP.getTour();
         if (t != null) {
             if (t.getPaths().size() != 0) {
-                outline = new Color(200, 0, 0);
+                outline = new Color(69, 73, 74);
             }
             for (Path p : t.getPaths()) {
                 displayPath(p, outline);
