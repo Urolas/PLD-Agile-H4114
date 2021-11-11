@@ -30,9 +30,9 @@ public class TXTSerializer {
             }else {
 
                 if (poi instanceof DeliveryAddress) {
-                    fw.write("[ to Delivery Point #" + poi.getIdPointOfInterest()+" ]"+System.lineSeparator());
+                    fw.write("[ to Delivery Point #" + ((poi.getIdPointOfInterest()-2)/2+1)+" ]"+System.lineSeparator());
                 } else if (poi instanceof PickupAddress) {
-                    fw.write("[ to Pickup Point #" + poi.getIdPointOfInterest()+" ]"+System.lineSeparator());
+                    fw.write("[ to Pickup Point #" + ((poi.getIdPointOfInterest()-1)/2+1)+" ]"+System.lineSeparator());
                 }
             }
 
