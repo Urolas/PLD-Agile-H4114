@@ -5,8 +5,6 @@ import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
 
-import java.awt.*;
-
 public class AddState3 implements State {
     private Intersection i1;
     private PointOfInterest p1;
@@ -28,7 +26,7 @@ public class AddState3 implements State {
             c.addState4.entryAction(this.i1,this.d1, this.p1, i,this.d2);
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
-            map.setPoiToAdd(null);
+            map.setPOIToAdd(null);
             window.displayMessage("Apres quel point");
         } else {
             window.displayMessage("Erreur point mal placé : Placez le deliveryPoint");
@@ -53,6 +51,6 @@ public class AddState3 implements State {
 
 
     public void mouseMoved(Controller controller, Intersection intersection) {
-        controller.getCitymap().setPoiToAdd(intersection);
+        controller.getCitymap().setPOIToAdd(intersection);
     }
 }
