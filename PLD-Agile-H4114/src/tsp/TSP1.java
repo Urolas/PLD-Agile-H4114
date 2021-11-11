@@ -13,7 +13,7 @@ public class TSP1 extends TemplateTSP {
 
     @Override
     protected Iterator<Integer> iterator(Integer currentVertex, Collection<Integer> unvisited, GraphPointToPoint g) {
-        return new SeqIter(unvisited, currentVertex, g);
+        return new SeqIter(unvisited);
     }
 
     @Override
