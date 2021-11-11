@@ -316,6 +316,21 @@ public class CityMap extends Observable {
     }
 
     public void changePosition(PointOfInterest poi, int i) {
+
+        if(poi.getClass()==DeliveryAddress.class){
+            int posPickup = this.tour.getPointOfInterests().indexOf(
+                                this.distribution.getPickup((DeliveryAddress) poi));
+            if(posPickup>=i){
+                return;
+            }
+        }else{
+            int posDelivery = this.tour.getPointOfInterests().indexOf(
+                    this.distribution.getDelivery((PickupAddress) poi));
+            if(posDelivery<=i){
+                return;
+            }
+        }
+
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
