@@ -23,9 +23,10 @@ public class AddState4 implements State {
             }
             c.getCitymap().resetSelected();
             c.setCurrentState(c.tourState);
+            window.enableJtextField(false);
             window.displayMessage("");
         } else {
-            window.displayMessage("Erreur aucun point : Apres quel point");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
 

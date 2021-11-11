@@ -75,12 +75,15 @@ public class Window extends JFrame {
         mapView = new MapView(cityMap, this);
         messageFrame = new JTextPane();
         durationJText = new JTextField(50);
+        durationJText.setEnabled(false);
+        durationJText.setVisible(false);
         roadmapView = new RoadmapView(cityMap, this);
         helpPanel = new JPanel(null);
         mouseListener = new MouseListener(controller, mapView, this);
         keyboardListener = new KeyboardListener(controller);
         messageFrame.setBorder(BorderFactory.createTitledBorder("Messages"));
-        messageFrame.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        messageFrame.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        displayMessage("Please load a citymap.");
         messageFrame.setBounds(10,10,280,80);
         messageFrame.setEditable(false);
         StyledDocument docu = messageFrame.getStyledDocument();
@@ -121,7 +124,7 @@ public class Window extends JFrame {
         mapView.setLocation(BUTTON_WIDTH, 0);
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,160);
         helpPanel.setBounds(mapView.getViewWidth() + BUTTON_WIDTH, 0,300 ,160);
-        durationJText.setBounds(20,110,150,30);
+        durationJText.setBounds(75,110,150,30);
 
         mapView.setLocation(BUTTON_WIDTH, 0);
     }
@@ -148,7 +151,7 @@ public class Window extends JFrame {
             buttons.add(button);
             button.setSize(30,30);
             button.setMargin(new Insets(0,0,5,0));
-            button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            button.setFont(new Font("Segoe UI", Font.BOLD, 25));
             button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
             button.addActionListener(buttonListener);
             mapView.add(button);
@@ -210,4 +213,13 @@ public class Window extends JFrame {
     public void resetDurationInserted() {
         durationJText.setText("300");
     }
+    /**
+     * Activate or desactivate the text field
+     * @param bool
+     */
+    public void enableJtextField(boolean bool){
+        this.durationJText.setEnabled(bool);
+        this.durationJText.setVisible(bool);
+    }
 }
+

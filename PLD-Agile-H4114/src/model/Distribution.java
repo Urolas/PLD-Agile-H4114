@@ -25,11 +25,15 @@ public class Distribution extends Observable {
         this.requests = new HashSet<Request>();
         this.depot = new DepotAddress();
         this.nbPointOfInterest=1;
-        this.requestColors.add("#1FBED6");
-        this.requestColors.add("#97C30A");
-        this.requestColors.add("#FF717E");
-        this.requestColors.add("#FFDE00");
-        this.requestColors.add("#006666");
+        this.requestColors.add("#5186fc");
+        this.requestColors.add("#fc5151");
+        this.requestColors.add("#fca451");
+        this.requestColors.add("#87fc51");
+        this.requestColors.add("#51fcf6");
+        this.requestColors.add("#b551fc");
+        this.requestColors.add("#f651fc");
+
+
 
     }
 

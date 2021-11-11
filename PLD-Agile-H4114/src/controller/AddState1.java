@@ -9,27 +9,30 @@ public class AddState1 implements State {
     private Integer d1;
 
     @Override
-    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands,
-                          Intersection i, PointOfInterest poi) {
-
-        String strDuration = window.getDuration();
-
-        try {
-            this.d1 = Integer.parseInt(strDuration);
-        } catch (NumberFormatException e) {
-            window.parsingError("Wrong format value\n" + e.getMessage());
-            return;
-        }
+    public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
         if (i != null) {
+            String strDuration = window.getDuration();
+
+            try {
+                this.d1 = Integer.parseInt(strDuration);
+                if (d1 < 0) throw new NumberFormatException();
+            } catch (NumberFormatException e) {
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point.");
+                return;
+            }
             c.addState2.entryAction(i, this.d1);
             c.setCurrentState(c.addState2);
             map.setSelected1(i);
 
             map.setPOIToAdd(null);
-            window.displayMessage("After which point of interest ?");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
+            window.enableJtextField(false);
+
         } else {
-            window.parsingError("Wrong point placement error : Click on a valid intersection");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
+
+
         }
     }
 
@@ -42,7 +45,10 @@ public class AddState1 implements State {
 
     protected void entryAction(Window w) {
         this.d1 = 300;
-        w.displayMessage("Choose the pickup duration and\nchoose the pickup point position on the map.");
+
+        w.displayMessage("Choose the pickup duration in sec and\nchoose the pickup point position on the map.");
+        w.enableJtextField(true);
+
         w.resetDurationInserted();
     }
 
