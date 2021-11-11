@@ -22,11 +22,13 @@ public class CityMapState implements State {
 
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
+        w.displayMessage("Distribution Loaded \n A Tour can be computed");
         c.setCurrentState(c.distributionState);
     }
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
         w.getMapView().resetZoom();
+        w.displayMessage("Please load a Distribution");
         c.setCurrentState(c.citymapState);
     }
 

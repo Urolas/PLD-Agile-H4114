@@ -23,15 +23,19 @@ public class DistributionState implements State {
     @Override
     public void computeTour(Controller controller, Window window) {
         controller.getCitymap().computeTour();
+        window.displayMessage("");
+
         controller.setCurrentState(controller.tourState);
     }
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
+        w.displayMessage("Distribution Loaded \n A Tour can be computed");
         c.setCurrentState(c.distributionState);
     }
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
         w.getMapView().resetZoom();
+        w.displayMessage("Please load a Distribution");
         c.setCurrentState(c.citymapState);
     }
 

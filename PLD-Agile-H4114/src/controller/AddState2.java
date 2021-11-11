@@ -18,10 +18,10 @@ public class AddState2 implements State {
 
             c.addState3.entryAction(this.i1,d1, poi,window);
             c.setCurrentState(c.addState3);
-            window.displayMessage("Placez le deliveryPoint : \nrenseignez une durée");
+            window.displayMessage("Place the DeliveryPoint : \nenter a duration (in sec)");
 
         } else {
-            window.displayMessage("Erreur aucun point : Apres quel point");
+            window.displayMessage("No point error: After which point");
 
         }
 
