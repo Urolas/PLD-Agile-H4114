@@ -63,7 +63,6 @@ public class RoadMapGenerator {
                 }
             }
             if(filePath == JFileChooser.APPROVE_OPTION) {
-                System.out.println("Save as file: " + newFile.getAbsolutePath());
                 try {
 
                     if(newFile.getName().endsWith(".txt")){
