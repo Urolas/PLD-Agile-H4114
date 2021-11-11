@@ -54,6 +54,7 @@ public class CityMap extends Observable {
         List<PointOfInterest> points = this.distribution.GetAllPoints();
         HashMap<Integer, Integer> constraints = this.distribution.GetConstraints();
         HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> ResultsDijkstra = new HashMap<>();
+
         //Call dijkstra from each point of interest to every other points of interest
         for (PointOfInterest source : points) {
             HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>> distanceToOtherPoints = new HashMap<>();
@@ -64,24 +65,26 @@ public class CityMap extends Observable {
             }
             ResultsDijkstra.put(source, distanceToOtherPoints);
         }
+
         //create a graph for the TSP
         GraphPointToPoint TSPgraph = new GraphPointToPoint(ResultsDijkstra, constraints);
         HashMap<Integer, PointOfInterest> matchingTable = new HashMap<>();
         for (PointOfInterest point : points) {
             matchingTable.put(point.idPointOfInterest, point);
         }
+
         //call the TSP
         TSP tsp = new TSPDoubleInsertion();
         tsp.searchSolution(10000, TSPgraph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));
+
         //translate the result from the TSP into a usable data
         for (int i = 1; i < tsp.getBestSolLength(); i++) {
             shortestTour.add(matchingTable.get(tsp.getSolution(i)));
         }
         AbstractMap.SimpleEntry<String, String> pairIdIntersection;
         List<Path> paths = new LinkedList<>();
-
 
         // create paths: from a point of interest to a point of interest
         for (int i = 1; i < shortestTour.size(); i++) {
@@ -247,24 +250,30 @@ public class CityMap extends Observable {
      */
 
     public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
+        /*initialize variable*/
         List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newPaths = new ArrayList<>(tour.getPaths());
         boolean pickupInserted = false;
         boolean deliveryInserted = false;
 
-        for (int i = 0; (i < newPoints.size() && !deliveryInserted); i++) {
-            if (newPoints.get(i) == preP) {
-                newPoints.add(i + 1, poiP);
 
+        for (int i = 0; (i < newPoints.size() && !deliveryInserted); i++) {
+            /*if the ith point is the predecessor of the pickup*/
+            if (newPoints.get(i) == preP) {
+
+                /*we add the pickup, and compute the new paths*/
+                newPoints.add(i + 1, poiP);
                 AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToP = computePath(preP, poiP);
                 AbstractMap.SimpleEntry<Double, List<String>> newPathFromPToNext = computePath(poiP, newPoints.get(i + 2));
 
+                /*Verification that the path exist*/
                 if (newPathFromLastToP.getKey() == Double.POSITIVE_INFINITY
                         || newPathFromPToNext.getKey() == Double.POSITIVE_INFINITY) {
                     throw new Exception("Error: The point inserted is unreachable");
 
                 }
 
+                /*Update the paths*/
                 Path pathLastToP = new Path(dijkstraToRoads(newPathFromLastToP), newPathFromLastToP.getKey());
                 Path pathPToNext = new Path(dijkstraToRoads(newPathFromPToNext), newPathFromPToNext.getKey());
 
@@ -273,8 +282,10 @@ public class CityMap extends Observable {
                 newPaths.add(i + 1, pathPToNext);
                 pickupInserted = true;
 
-
+                /*if the delivery and the pickup are adjacent (preD == predP)*/
                 if (preD.equals(preP)) {
+                    /*Do the same thing for the delivery*/
+
                     newPoints.add(i + 2, poiD);
 
                     AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToD = computePath(poiP, poiD);
@@ -294,7 +305,11 @@ public class CityMap extends Observable {
                     newPaths.add(i + 2, pathDToNext);
                     deliveryInserted = true;
                 }
+
+                /*when we find the delivery point insertion position*/
             } else if (pickupInserted && newPoints.get(i) == preD) {
+                /*Do the same thing for the delivery*/
+
                 newPoints.add(i + 1, poiD);
 
                 AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToD = computePath(preD, poiD);
@@ -367,7 +382,7 @@ public class CityMap extends Observable {
      * @param newPosition the new location of this point
      */
     public void changePosition(PointOfInterest poi, int newPosition) {
-
+        /*Check if we do not put the pickup after the delivery*/
         if (poi.getClass() == DeliveryAddress.class) {
             int posPickup = this.tour.getPointOfInterests().indexOf(
                     this.distribution.getPickup((DeliveryAddress) poi));
@@ -382,6 +397,7 @@ public class CityMap extends Observable {
             }
         }
 
+        /*Change the order of the points*/
         List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newPaths = new ArrayList<>(tour.getPaths());
         newPoints.remove(poi);
