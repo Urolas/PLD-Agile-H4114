@@ -1,3 +1,7 @@
+/**
+ * CityMap
+ * @author 4IF-4114
+ */
 package model;
 
 import observer.Observable;
@@ -11,7 +15,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author 4IF-4114
+ * The citymap of the application, stocking most of the application's data (map and requests)
  */
 public class CityMap extends Observable {
     private HashMap<AbstractMap.SimpleEntry<String, String>, Road> roads;
@@ -26,6 +30,10 @@ public class CityMap extends Observable {
     public Intersection i1Selected;
     public Intersection i2Selected;
 
+    /**
+     * set the intersection to be added on the map (this.poiToAdd)
+     * @param poiToAdd Intersection of the new point
+     */
     public void setPOIToAdd(Intersection poiToAdd) {
         this.poiToAdd = poiToAdd;
         notifyObservers();
@@ -44,7 +52,7 @@ public class CityMap extends Observable {
 
 
     /**
-     * Default constructor
+     * Constructor of CityMap
      */
     public CityMap() {
         this.intersections = new HashMap<String, Intersection>();
@@ -60,13 +68,15 @@ public class CityMap extends Observable {
 
     }
 
-    //compute les meilleurs chemins entre chaque points d'interet, appelle le TSP pour trouver le meilleurs tour, créé le tour
+    /**
+     * Compute the best path between each point of interest, call the TSP to find the besttour, and create a tour
+     */
     public void computeTour() {
-        //recuperaton des points d'interets
+        //Get every points of interest from the Distribution
         List<PointOfInterest> points = this.distribution.GetAllPoints();
         HashMap<Integer, Integer> constraints = this.distribution.GetConstraints();
         HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> ResultsDijkstra = new HashMap<>();
-        //appel du dijkstra pour chaque point d'intert vers chaque point d'interet
+        //Call dijkstra from each point of interest to every other points of interest
         for (PointOfInterest source : points) {
             HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>> distanceToOtherPoints = new HashMap<>();
             for (PointOfInterest target : points) {
@@ -76,19 +86,19 @@ public class CityMap extends Observable {
             }
             ResultsDijkstra.put(source, distanceToOtherPoints);
         }
-        //creation du graph pour le TSP
+        //create a graph for the TSP
         GraphPointToPoint graph = new GraphPointToPoint(ResultsDijkstra, constraints);
         HashMap<Integer, PointOfInterest> correspondanceTable = new HashMap<>();
         for (PointOfInterest point : points) {
             correspondanceTable.put(point.idPointOfInterest, point);
         }
-        //appel du TSP
+        //call the TSP
         TSP tsp = new TSPDoubleInsertion();
         tsp.searchSolution(10000, graph);
         List<PointOfInterest> shortestTour = new LinkedList<>();
         shortestTour.add(points.get(0));
         List<String> shortestPath = new LinkedList<>();
-        //traduction du resultat du TSP en données utilisables
+        //translate the result from the TSP into a usable data
         for (int i = 1; i < tsp.getBestSolLength(); i++) {
             shortestTour.add(correspondanceTable.get(tsp.getSolution(i)));
             shortestPath.addAll(ResultsDijkstra.get(shortestTour.get(i - 1)).get(shortestTour.get(i)).getValue());
@@ -97,7 +107,7 @@ public class CityMap extends Observable {
         List<Path> paths = new LinkedList<>();
 
 
-        // creation des paths : allant de de point d'interet a point d'interet
+        // create paths: from a point of interest to a point of interest
         for (int i = 1; i < shortestTour.size(); i++) {
             List<Road> roadsEndToEnd = new ArrayList<>();
             List<String> intersectionsBetweenPoints = ResultsDijkstra.get(shortestTour.get(i - 1)).get(shortestTour.get(i)).getValue();
@@ -118,62 +128,75 @@ public class CityMap extends Observable {
 
     }
 
-    //computePath execute l'algorithme de dijkstra et cherche le meilleur chemin entre deux intersections, il renvoit le chemin et sa longueur
+    /**
+     * Execute the dijktra algorithme and find the best path between two intersections
+     * @point1 the first point of interest
+     * @point2 the second point of interest we want to reach
+     * @return the best path these two points and its length
+     */
     public AbstractMap.SimpleEntry<Double, List<String>> computePath(PointOfInterest point1, PointOfInterest point2) {
 
-        //Recuperation des id des intersections
+        //Get the id of each intersection
         String idDepart = point1.intersection.id;
         String idArrivee = point2.intersection.id;
 
-        //Toutes les intersections non visitee
+        //Every intersections we didn't visit yet
         HashSet<String> unvisited = new HashSet<>(this.intersections.keySet());
 
-        //Permet d'avoir le chemin obtimal depuis le noeud de depart
+        //Find the optimal path from the first node
         HashMap<String, List<String>> chemin = new HashMap<>();
         for (String key : this.intersections.keySet()) {
             chemin.put(key, new LinkedList<>());
         }
 
-        //distance de toutes les intersections mises à inf sauf idDepart qui est à 0
+        //Set the length of every intersections as infinity except for startId as 0
         HashMap<String, Double> distance = new HashMap<>();
         for (String key : this.intersections.keySet()) {
             distance.put(key, Double.POSITIVE_INFINITY);
         }
         distance.put(idDepart, 0.0);
 
-        //Comparator permettant la comparaison de la longeur entre deux intersections
+        /**
+         * A class used as a comparator for the priority queue
+         */
         class dijkstraDistComparator implements Comparator<String> {
+            /**
+             * Compare the length between two intersections
+             * @param id1 first length
+             * @param id2 second length
+             * @return the difference between the two lengths
+             */
             public int compare(String id1, String id2) {
                 return (int) Math.signum(distance.get(id1) - distance.get(id2));
             }
         }
 
-        //Declaration de la priority queue
+        //Declare the priority queue
         PriorityQueue<String> pq = new PriorityQueue<>(this.intersections.size(), new dijkstraDistComparator());
 
-        //Initialisation de l'algorithme
+        //Initialise the algorithme
         pq.add(idDepart);
         String currentNode;
 
-        //Tant qu'il reste des noeuds a parcourir
+        //While there's at least an unvisited node
         while (!pq.isEmpty()) {
-            //On recupere le noeud avec la distance minimal atteignable
+            //Get a reachable node with the minimal length
             currentNode = pq.poll();
 
-            //Si ce noeud est notre destination, on break
+            //If the node is our destination, break the loop
             if (currentNode.equals(idArrivee)) {
                 break;
             }
 
-            //On parcours tous les noeuds adjacents de currentNode
+            //Visit every neighbor of the currentNode
             for (Map.Entry<String, Double> e : this.adjacencyList.get(currentNode)) {
-                //Si il ne sont pas visitees
+                //If the node isn't visited yet
                 if (unvisited.contains(e.getKey())) {
 
-                    //Si la distance s'ameliore
+                    //If the length improves
                     if (distance.get(currentNode) + e.getValue() < distance.get(e.getKey())) {
 
-                        //On update la distance, le chemin et on l'ajoute a la PQ
+                        //Update the length and the path and add it to the priority queue
                         distance.put(e.getKey(), distance.get(currentNode) + e.getValue());
                         pq.add(e.getKey());
                         List<String> listTemp = new LinkedList<>(chemin.get(currentNode));
@@ -181,10 +204,9 @@ public class CityMap extends Observable {
                         chemin.put(e.getKey(), listTemp);
 
                     }
-
                 }
             }
-            //On marque currentNode visitee
+            //Mark the currentedNode as visited
             unvisited.remove(currentNode);
         }
 
@@ -192,7 +214,9 @@ public class CityMap extends Observable {
         return new AbstractMap.SimpleEntry<>(distance.get(idArrivee), chemin.get(idArrivee));
     }
 
-
+    /**
+     * Reset the Citymap when the user import a new map
+     */
     public void reset() {
         this.distribution.reset();
         this.tour.resetTour();
@@ -206,11 +230,22 @@ public class CityMap extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Add a new intersection to the CityMap
+     * @param intersection the new intersection to be added
+     */
     public void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.id, intersection);
         notifyObservers(intersection);
     }
 
+    /**
+     * Add a new road to the CityMap
+     * @param name the name of the road
+     * @param length the length of the road
+     * @param id1 the id of the origin (start point) of the road
+     * @param id2 the id of the destination ( end point) of the road
+     */
     public void addRoad(String name, Double length, String id1, String id2) {
         Intersection origin = this.intersections.get(id1);
         Intersection destination = this.intersections.get(id2);
@@ -222,17 +257,14 @@ public class CityMap extends Observable {
         notifyObservers(road);
     }
 
-    public void generateRoadmap() throws IOException {
-        System.out.println("Generating Roadmap");
-
-        /*File myObj = new File("\\roadmapFilesnewFile.txt");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
-        } else {
-            System.out.println("File already exists.");
-        }*/
-    }
-
+    /**
+     * Add a new request to the CityMap
+     * @param poiP the new pickup adress
+     * @param preP the previous pickup point of interest
+     * @param poiD the new delivery adress
+     * @param preD the previous delivery point of interest
+     * @throws Exception if the delivery is added before a pickup
+     */
     public void addRequest(PickupAddress poiP, PointOfInterest preP, DeliveryAddress poiD, PointOfInterest preD) throws Exception {
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
@@ -274,7 +306,7 @@ public class CityMap extends Observable {
             }
         }
         if (!deliveryinserted) {
-            throw new Exception("Erreur : le delivery a été mis avant le pickup");
+            throw new Exception("Error : the delivery is located before the pickup");
         }
         tour.setPointOfInterests(newpoints);
         tour.setPaths(newpaths);
@@ -282,6 +314,11 @@ public class CityMap extends Observable {
 
     }
 
+    /**
+     * Remove a new request from the CityMap
+     * @param paddress pickup address of the request
+     * @param daddress delivery address of the request
+     */
     public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
 
 
@@ -315,6 +352,11 @@ public class CityMap extends Observable {
 
     }
 
+    /**
+     * Change the position of a point on the path
+     * @param poi the point of interest we want to relocate
+     * @param i the new location of this point
+     */
     public void changePosition(PointOfInterest poi, int i) {
 
         if(poi.getClass()==DeliveryAddress.class){
@@ -352,6 +394,11 @@ public class CityMap extends Observable {
 
     }
 
+    /**
+     * Convert the result of the Dijktra method into a list of road
+     * @param path the optimal path for the computed tour
+     * @return the list of road of the path
+     */
     public List<Road> dijkstraToRoads(AbstractMap.SimpleEntry<Double, List<String>> path) {
         List<String> intersectionsBetweenPoints = path.getValue();
         List<Road> roadsEndToEnd = new ArrayList<>();
@@ -364,12 +411,22 @@ public class CityMap extends Observable {
         return roadsEndToEnd;
     }
 
+    /**
+     * Update the adjacency list with the new roads
+     * @param id1 the id of the intersection indicating the start of the road
+     * @param id2 the id of the intersection indicating the end of the road
+     * @param length the length of the road
+     */
     public void completeAdjacencyList(String id1, String id2, Double length) {
 
         this.adjacencyList.get(id1).add(new AbstractMap.SimpleEntry<>(id2, length));
 
     }
 
+    /**
+     * Empty the adjacency list
+     * @param id1 the id of the intersection indicating the start of the path
+     */
     public void initializeAdjacencyList(String id1) {
 
         List<AbstractMap.Entry<String, Double>> targets = new ArrayList<>();
@@ -434,12 +491,17 @@ public class CityMap extends Observable {
     }
 
 
+    /**
+     * Set a pair of points to be highlight
+     * @param highlightpoint the pickup point to be highlight
+     * @param secondaryPoint the delivery point to be highlight
+     */
     public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
         this.primaryHighlight = highlightpoint;
         this.secondaryHighlight = secondaryPoint;
         notifyObservers();
     }
-
+    
     public void resetSelected() {
         this.i1Selected=null;
         this.i2Selected=null;
