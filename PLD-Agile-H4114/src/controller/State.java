@@ -73,5 +73,9 @@ public interface State {
 
     public default void rightClick(Controller controller) {};
 
+    public default void up(Integer id,ListOfCommands listOfCommands,Controller c) {}
+
+    public default void down(Integer id,ListOfCommands listOfCommands,Controller c) {}
+
     public default void mouseMoved(Controller controller, Intersection intersection) {};
 }

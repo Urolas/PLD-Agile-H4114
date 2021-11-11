@@ -320,17 +320,14 @@ public class CityMap extends Observable {
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
         newpoints.add(i, poi);
-        for (int j = newpoints.size() - 2; j >= 1; j--) {
+        for (int j = newpoints.size() - 1; j >= 1; j--) {
 
             AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j));
-            AbstractMap.SimpleEntry<Double, List<String>> newpathptonext = computePath(newpoints.get(j), newpoints.get(j + 1));
+
             Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
-            Path pathptonext = new Path(dijkstraToRoads(newpathptonext), newpathptonext.getKey());
 
             newpaths.remove(j - 1);
-            newpaths.remove(j - 1);
             newpaths.add(j - 1, pathlasttop);
-            newpaths.add(j - 1, pathptonext);
 
         }
         tour.setPointOfInterests(newpoints);
