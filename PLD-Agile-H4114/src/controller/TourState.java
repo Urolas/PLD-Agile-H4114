@@ -112,5 +112,4 @@ public class TourState implements State {
             window.enableButton("Redo", false);
         }
     }
-
 }

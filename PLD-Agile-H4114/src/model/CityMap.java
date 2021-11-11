@@ -20,7 +20,18 @@ public class CityMap extends Observable {
     private HashMap<String, List<AbstractMap.Entry<String, Double>>> adjacencyList;
     public PointOfInterest primaryHighlight;
     public PointOfInterest secondaryHighlight;
+    private Intersection poiToAdd;
+    public Intersection i1Selected;
+    public Intersection i2Selected;
 
+    public void setPoiToAdd(Intersection poiToAdd) {
+        this.poiToAdd = poiToAdd;
+        notifyObservers();
+    }
+
+    public Intersection getPoiToAdd() {
+        return poiToAdd;
+    }
 
     @Override
     public String toString() {
@@ -226,7 +237,7 @@ public class CityMap extends Observable {
         boolean pickupinserted = false;
         boolean deliveryinserted = false;
 
-        for (int i = 0; i < newpoints.size(); i++) {
+        for (int i = 0; (i < newpoints.size() && !deliveryinserted); i++) {
             if (newpoints.get(i) == preP) {
                 newpoints.add(i + 1, poiP);
                 AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(preP, poiP);
@@ -408,6 +419,25 @@ public class CityMap extends Observable {
         this.primaryHighlight=highlightpoint;
         this.secondaryHighlight=secondaryPoint;
         notifyObservers();
+    }
+
+    public void resetSelected() {
+        this.i1Selected=null;
+        this.i2Selected=null;
+        notifyObservers();
+    }
+
+    public void setSelected1(Intersection i) {
+        this.i1Selected=i;
+        notifyObservers();
+
+    }
+
+    public void setSelected2(Intersection i) {
+        this.i2Selected=i;
+        notifyObservers();
+
+
     }
 }
 

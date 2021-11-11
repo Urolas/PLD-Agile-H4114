@@ -199,4 +199,7 @@ public class Controller {
     public void up(String id) {currentState.up(Integer.parseInt(id),this.listOfCommands,this);}
 
     public void down(String id) {currentState.down(Integer.parseInt(id),this.listOfCommands,this);}
+    public void mouseMoved(Intersection intersection) {
+        currentState.mouseMoved(this, intersection);
+    }
 }
