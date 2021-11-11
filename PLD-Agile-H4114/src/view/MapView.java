@@ -1,3 +1,7 @@
+/**
+ * MapView
+ * @author 4IF-4114
+ */
 package view;
 
 import java.awt.*;
@@ -14,7 +18,7 @@ import observer.Observable;
 import observer.Observer;
 
 /**
- * @author 4IF-4114
+ * The map view of the window, where the imported map is shown
  */
 public class MapView extends JPanel implements Observer {
     private Graphics g;
@@ -41,7 +45,9 @@ public class MapView extends JPanel implements Observer {
     private int counterInter;
 
     /**
-     * Default constructor
+     * Constructor of MapView
+     * @param cityMap the map and its element(points) to be shown
+     * @param window the current application window
      */
     public MapView(CityMap cityMap, Window window) {
         super();
@@ -64,6 +70,12 @@ public class MapView extends JPanel implements Observer {
         window.getContentPane().add(this);
     }
 
+    /**
+     * Manage the map during a zoom in or zoom out
+     * @param zoom the value of the zoom
+     * @param centerX the X position of the map's center
+     * @param centerY the Y position of the map's center
+     */
     public void modifyZoom(double zoom, int centerX, int centerY){
         if (zoom == 1 || (scaleZoom * zoom < 0.95)){
             scaleZoom = 1;
@@ -105,6 +117,11 @@ public class MapView extends JPanel implements Observer {
 
     }
 
+    /**
+     * Move the map when the mouse is dragged ( when zoom-in)
+     * @param mouseX the end position X of the mouse
+     * @param mouseY the end position Y of the mouse
+     */
     public void dragMap(int mouseX, int mouseY){
         System.out.println((mouseX - mouseClickedX)/scaleWidth);
         if  ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX)/scaleWidth) &&
@@ -119,7 +136,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     /**
-     *  Method called when the users uses directional keys to move in a zoomed map
+     * Method called when the users uses directional keys to move in a zoomed map
      * @param keyCode the code of the pressed key
      */
     public void moveMapView(int keyCode){
@@ -153,6 +170,11 @@ public class MapView extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * Updates the map view (refresh the UI)
+     * @param o the Observable to check if there's changes about the map/requests and update the related data
+     * @param arg the modified object
+     */
     @Override
     public void update(Observable o, Object arg) {
         mapWidth = cityMap.getWidth();
@@ -188,6 +210,10 @@ public class MapView extends JPanel implements Observer {
         this.originLongClicked = originLong;
     }
 
+    /**
+     * Draw the map on the view
+     * @param g Graphics to paint elements on the map
+     */
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -264,6 +290,11 @@ public class MapView extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Display the points the user just added ( new request ) on the map
+     * @param i1Selected the intersection of the new pickup
+     * @param i2Selected the intersection of the new delivery
+     */
     private void displaySelected(Intersection i1Selected, Intersection i2Selected) {
         if(i1Selected!=null){
             int x1 = convertLongitudeToPixel(i1Selected.getLongitude());
@@ -285,6 +316,11 @@ public class MapView extends JPanel implements Observer {
         displayPoiToAdd();
     }
 
+    /**
+     * Highlight the pickup and delivery points of a request on the map
+     * @param i1Selected the intersection of the pickup
+     * @param i2Selected the intersection of the delivery
+     */
     private void displayHighlights(PointOfInterest p1, PointOfInterest p2) {
 
         int x1 = convertLongitudeToPixel(p1.getIntersection().getLongitude());
@@ -319,10 +355,6 @@ public class MapView extends JPanel implements Observer {
 
     }
 
-    /**
-     *  Method called by
-     * @param r
-     */
     public int convertLongitudeToPixel(double longitude) {
         return (int)((longitude - originLong) * scaleWidth);
     }
@@ -331,9 +363,16 @@ public class MapView extends JPanel implements Observer {
         return - (int) ((latitude - originLat) * scaleHeight);
     }
 
+    /**
+     * Draw the roads on the map
+     * @param r the road to be drawn
+     * @param c the color of the road
+     * @param thickness the thickness of the road
+     * @param displayTour boolean if the tour is computed or not
+     */
     public void displayRoad(Road r, Color c , double thickness, boolean displayTour){
         int x1 = convertLongitudeToPixel(r.getOrigin().getLongitude());
-        int y1 = convertLatitudeToPixel(r.getOrigin().getLatitude()); /* Le repère de latitude est inversé */
+        int y1 = convertLatitudeToPixel(r.getOrigin().getLatitude()); /* the latitude is reversed*/
         int x2 = convertLongitudeToPixel(r.getDestination().getLongitude());
         int y2 = convertLatitudeToPixel(r.getDestination().getLatitude());
         if (!displayTour){
@@ -365,12 +404,22 @@ public class MapView extends JPanel implements Observer {
 
     }
 
+    /**
+     * Change the color of the roads from the computed path
+     * @param p the path is be colored
+     * @param c the color of the path's roads
+     */
     public void displayPath(Path p,Color c){
         for (Road r : p.getRoads()){
             displayRoad(r,c,3,true);
         }
     }
 
+    /**
+     * Add requests on the map : draw forms depending on the type of the point
+     * @param q the request to be added on the map
+     * @param outline the color of the pair of points (a request)
+     */
     public void displayRequest(Request q,Color outline){
         int x1 = convertLongitudeToPixel(q.getPickup().getIntersection().getLongitude());
         int y1 = convertLatitudeToPixel(q.getPickup().getIntersection().getLatitude());
@@ -391,6 +440,9 @@ public class MapView extends JPanel implements Observer {
 
     }
 
+    /**
+     * Add depot point on the map : draw a rectangle
+     */
     public void displayDepot(){
         if (cityMap.getDistribution().getDepot().getIntersection() != null) {
             int x = convertLongitudeToPixel(cityMap.getDistribution().getDepot().getIntersection().getLongitude());
@@ -402,6 +454,12 @@ public class MapView extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Search the closest PointOfInterest to the clicked position on the map
+     * @param x the x position of our point
+     * @param y the y position of our point
+     * @return the closest PointOfInterest to our point
+     */
     public PointOfInterest getClosestPointOfInterest(int x, int y) {
         for (PointOfInterest poi : this.cityMap.getTour().getPointOfInterests()) {
             int xPoi = convertLongitudeToPixel(poi.getIntersection().getLongitude());
@@ -414,6 +472,12 @@ public class MapView extends JPanel implements Observer {
         return null;
     }
 
+    /**
+     * Search the closest Intersection to the clicked position on the map
+     * @param x the x position of our point
+     * @param y the y position of our point
+     * @return the closest Intersection to our point
+     */
     public Intersection getClosestIntersection(int x, int y) {
         for (Intersection i : this.cityMap.getIntersections().values()) {
             int xPoi = convertLongitudeToPixel(i.getLongitude());
@@ -426,6 +490,9 @@ public class MapView extends JPanel implements Observer {
         return null;
     }
 
+    /**
+     * Display a red cross following the mouse while the user try to add a new point
+     */
     public void displayPoiToAdd() {
         if (cityMap.getPoiToAdd() != null) {
             System.out.println("mouse moved intersection not null");
