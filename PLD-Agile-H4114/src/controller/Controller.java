@@ -48,7 +48,6 @@ public class Controller {
     protected void setCurrentState(State state) {
         this.currentState = state;
         currentState.enableButtons(window, listOfCommands);
-
     }
 
 
@@ -73,9 +72,6 @@ public class Controller {
         try {
             this.currentState.loadMap(this, window);
         }catch(XMLException e){
-            cityMap.reset();
-            this.currentState = this.initialState;
-            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -86,10 +82,6 @@ public class Controller {
         try{
             this.currentState.loadDistribution(this,window);
         }catch(XMLException e){
-            cityMap.getDistribution().reset();
-            cityMap.getTour().resetTour();
-            this.currentState = this.citymapState;
-            currentState.enableButtons(window, listOfCommands);
             window.parsingError(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());

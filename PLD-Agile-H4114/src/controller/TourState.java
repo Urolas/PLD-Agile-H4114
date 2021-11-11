@@ -30,6 +30,8 @@ public class TourState implements State {
     @Override
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
+        w.getMapView().resetZoom();
+        w.displayMessage("Please load a distribution.");
         c.setCurrentState(c.citymapState);
         c.resetListOfCommands();
     }
@@ -37,6 +39,7 @@ public class TourState implements State {
     @Override
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadDistribution(c.getCitymap());
+        w.displayMessage("Distribution loaded.\nA tour can be computed.");
         c.setCurrentState(c.distributionState);
         c.resetListOfCommands();
 

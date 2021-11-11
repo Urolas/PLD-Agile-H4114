@@ -15,16 +15,15 @@ public class AddState2 implements State {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
 
         if (poi != null) {
-
             c.addState3.entryAction(this.i1,d1, poi,window);
             c.setCurrentState(c.addState3);
-            window.displayMessage("Placez le deliveryPoint : \nrenseignez une durée");
 
+            window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
+            window.enableJtextField(true);
         } else {
-            window.displayMessage("Erreur aucun point : Apres quel point");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
-
 
     }
     @Override

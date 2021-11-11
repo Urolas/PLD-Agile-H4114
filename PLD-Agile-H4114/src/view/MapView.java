@@ -176,6 +176,10 @@ public class MapView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        repaint();
+    }
+
+    public void resetZoom(){
         mapWidth = cityMap.getWidth();
         mapHeight = cityMap.getHeight();
         scaleZoom = 1;
@@ -185,7 +189,6 @@ public class MapView extends JPanel implements Observer {
         scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
-        repaint();
     }
 
     public int getViewHeight() {
@@ -239,9 +242,7 @@ public class MapView extends JPanel implements Observer {
         if (d.getRequests().size()!=0) {
 
             for (Request q : d.getRequests()){
-                if (t.getPaths().size() == 0){
-                    outline = q.color.darker().darker();
-                }
+                outline = q.color.darker().darker();
                 displayRequest(q,outline);
             }
             if(cityMap.secondaryHighlight!=null & cityMap.primaryHighlight!=null){

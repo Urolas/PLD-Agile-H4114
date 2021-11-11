@@ -48,7 +48,6 @@ public class MouseListener extends MouseAdapter {
             case MouseEvent.BUTTON1:
                 Intersection intersection = mapView.getClosestIntersection(e.getX(), e.getY());
                 PointOfInterest pointOfInterest = mapView.getClosestPointOfInterest(e.getX(),e.getY());
-
                 controller.leftClick(intersection,pointOfInterest);
                 break;
             case MouseEvent.BUTTON3:
