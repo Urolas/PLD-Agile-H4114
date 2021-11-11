@@ -2,14 +2,11 @@
 import model.*;
 import org.junit.*;
 
-import static org.junit.Assert.*;
-
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 public class DistributionUnitTest {
     public static CityMap cm;
@@ -153,5 +150,37 @@ public class DistributionUnitTest {
             }
         }
 
+    }
+
+    @Test
+    public void getDeliveryFromPickupTest(){
+        for(Request r : distribution.getRequests()){
+            PickupAddress p = r.getPickup();
+            assertEquals(r.getDelivery(),distribution.getDelivery(p));
+        }
+    }
+
+    @Test
+    public void getDeliveryFromNonExistingPickupTest(){
+        Intersection i = cm.getIntersections().get("8115011");
+        PickupAddress p = new PickupAddress(i,120,6);
+
+        assertNull(distribution.getDelivery(p));
+    }
+
+    @Test
+    public void getPickupFromDeliveryTest(){
+        for(Request r : distribution.getRequests()){
+            DeliveryAddress d = r.getDelivery();
+            assertEquals(r.getPickup(),distribution.getPickup(d));
+        }
+    }
+
+    @Test
+    public void getPickupFromNonExistingDeliveryTest(){
+        Intersection i = cm.getIntersections().get("8115011");
+        DeliveryAddress d = new DeliveryAddress(i,120,6);
+
+        assertNull(distribution.getPickup(d));
     }
 }
