@@ -1,5 +1,6 @@
 /**
  * CityMap
+ *
  * @author 4IF-4114
  */
 package model;
@@ -8,8 +9,8 @@ import observer.Observable;
 import tsp.TSP;
 import tsp.TSPDoubleInsertion;
 import view.MapView;
-import java.util.*;
 
+import java.util.*;
 
 
 /**
@@ -119,9 +120,9 @@ public class CityMap extends Observable {
         HashSet<String> unvisited = new HashSet<>(this.INTERSECTIONS.keySet());
 
         //Find the optimal path from the first node
-        HashMap<String, List<String>> chemin = new HashMap<>();
+        HashMap<String, List<String>> path = new HashMap<>();
         for (String key : this.INTERSECTIONS.keySet()) {
-            chemin.put(key, new LinkedList<>());
+            path.put(key, new LinkedList<>());
         }
 
         //Set the length of every intersections as infinity except for startId as 0
@@ -134,7 +135,7 @@ public class CityMap extends Observable {
         /**
          * A class used as a comparator for the priority queue
          */
-        class dijkstraDistComparator implements Comparator<String> {
+        class dijkstraDistanceComparator implements Comparator<String> {
             /**
              * Compare the length between two intersections
              * @param id1 first length
@@ -147,16 +148,16 @@ public class CityMap extends Observable {
         }
 
         //Declare the priority queue
-        PriorityQueue<String> pq = new PriorityQueue<>(this.INTERSECTIONS.size(), new dijkstraDistComparator());
+        PriorityQueue<String> priorityQueue = new PriorityQueue<>(this.INTERSECTIONS.size(), new dijkstraDistanceComparator());
 
         //Initialise the algorithme
-        pq.add(idStart);
+        priorityQueue.add(idStart);
         String currentNode;
 
         //While there's at least an unvisited node
-        while (!pq.isEmpty()) {
+        while (!priorityQueue.isEmpty()) {
             //Get a reachable node with the minimal length
-            currentNode = pq.poll();
+            currentNode = priorityQueue.poll();
 
             //If the node is our destination, break the loop
             if (currentNode.equals(idArrival)) {
@@ -173,10 +174,10 @@ public class CityMap extends Observable {
 
                         //Update the length and the path and add it to the priority queue
                         distance.put(e.getKey(), distance.get(currentNode) + e.getValue());
-                        pq.add(e.getKey());
-                        List<String> listTemp = new LinkedList<>(chemin.get(currentNode));
+                        priorityQueue.add(e.getKey());
+                        List<String> listTemp = new LinkedList<>(path.get(currentNode));
                         listTemp.add(currentNode);
-                        chemin.put(e.getKey(), listTemp);
+                        path.put(e.getKey(), listTemp);
 
                     }
                 }
@@ -185,8 +186,8 @@ public class CityMap extends Observable {
             unvisited.remove(currentNode);
         }
 
-        chemin.get(idArrival).add(idArrival);
-        return new AbstractMap.SimpleEntry<>(distance.get(idArrival), chemin.get(idArrival));
+        path.get(idArrival).add(idArrival);
+        return new AbstractMap.SimpleEntry<>(distance.get(idArrival), path.get(idArrival));
     }
 
     /**
@@ -251,17 +252,17 @@ public class CityMap extends Observable {
             if (newPoints.get(i) == preP) {
                 newPoints.add(i + 1, poiP);
 
-                AbstractMap.SimpleEntry<Double, List<String>> newPathLastToP = computePath(preP, poiP);
-                AbstractMap.SimpleEntry<Double, List<String>> newPathPToNext = computePath(poiP, newPoints.get(i + 2));
+                AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToP = computePath(preP, poiP);
+                AbstractMap.SimpleEntry<Double, List<String>> newPathFromPToNext = computePath(poiP, newPoints.get(i + 2));
 
-                if(newPathLastToP.getKey()==Double.POSITIVE_INFINITY
-                        || newPathPToNext.getKey()==Double.POSITIVE_INFINITY){
+                if (newPathFromLastToP.getKey() == Double.POSITIVE_INFINITY
+                        || newPathFromPToNext.getKey() == Double.POSITIVE_INFINITY) {
                     throw new Exception("Error: The point inserted is unreachable");
 
                 }
 
-                Path pathLastToP = new Path(dijkstraToRoads(newPathLastToP), newPathLastToP.getKey());
-                Path pathPToNext = new Path(dijkstraToRoads(newPathPToNext), newPathPToNext.getKey());
+                Path pathLastToP = new Path(dijkstraToRoads(newPathFromLastToP), newPathFromLastToP.getKey());
+                Path pathPToNext = new Path(dijkstraToRoads(newPathFromPToNext), newPathFromPToNext.getKey());
 
                 newPaths.remove(i);
                 newPaths.add(i, pathLastToP);
@@ -272,17 +273,17 @@ public class CityMap extends Observable {
                 if (preD.equals(preP)) {
                     newPoints.add(i + 2, poiD);
 
-                    AbstractMap.SimpleEntry<Double, List<String>> newPathLastToD = computePath(poiP, poiD);
-                    AbstractMap.SimpleEntry<Double, List<String>> newPathDToNext = computePath(poiD, newPoints.get(i + 3));
+                    AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToD = computePath(poiP, poiD);
+                    AbstractMap.SimpleEntry<Double, List<String>> newPathFromDToNext = computePath(poiD, newPoints.get(i + 3));
 
-                    if(newPathLastToD.getKey()==Double.POSITIVE_INFINITY
-                            || newPathDToNext.getKey()==Double.POSITIVE_INFINITY){
+                    if (newPathFromLastToD.getKey() == Double.POSITIVE_INFINITY
+                            || newPathFromDToNext.getKey() == Double.POSITIVE_INFINITY) {
                         throw new Exception("Error: The point inserted is unreachable");
 
                     }
 
-                    Path pathLastToD = new Path(dijkstraToRoads(newPathLastToD), newPathLastToD.getKey());
-                    Path pathDToNext = new Path(dijkstraToRoads(newPathDToNext), newPathDToNext.getKey());
+                    Path pathLastToD = new Path(dijkstraToRoads(newPathFromLastToD), newPathFromLastToD.getKey());
+                    Path pathDToNext = new Path(dijkstraToRoads(newPathFromDToNext), newPathFromDToNext.getKey());
 
                     newPaths.remove(i + 1);
                     newPaths.add(i + 1, pathLastToD);
@@ -292,17 +293,17 @@ public class CityMap extends Observable {
             } else if (pickupInserted && newPoints.get(i) == preD) {
                 newPoints.add(i + 1, poiD);
 
-                AbstractMap.SimpleEntry<Double, List<String>> newPathLastToD = computePath(preD, poiD);
-                AbstractMap.SimpleEntry<Double, List<String>> newPathDToNext = computePath(poiD, newPoints.get(i + 2));
+                AbstractMap.SimpleEntry<Double, List<String>> newPathFromLastToD = computePath(preD, poiD);
+                AbstractMap.SimpleEntry<Double, List<String>> newPathFromDToNext = computePath(poiD, newPoints.get(i + 2));
 
-                if(newPathLastToD.getKey()==Double.POSITIVE_INFINITY
-                        || newPathDToNext.getKey()==Double.POSITIVE_INFINITY){
+                if (newPathFromLastToD.getKey() == Double.POSITIVE_INFINITY
+                        || newPathFromDToNext.getKey() == Double.POSITIVE_INFINITY) {
                     throw new Exception("Error: The point inserted is unreachable");
 
                 }
 
-                Path pathLastToD = new Path(dijkstraToRoads(newPathLastToD), newPathLastToD.getKey());
-                Path pathDToNext = new Path(dijkstraToRoads(newPathDToNext), newPathDToNext.getKey());
+                Path pathLastToD = new Path(dijkstraToRoads(newPathFromLastToD), newPathFromLastToD.getKey());
+                Path pathDToNext = new Path(dijkstraToRoads(newPathFromDToNext), newPathFromDToNext.getKey());
 
                 newPaths.remove(i);
                 newPaths.add(i, pathLastToD);
@@ -321,36 +322,33 @@ public class CityMap extends Observable {
 
     /**
      * Remove a new request from the CityMap
-     * @param paddress pickup address of the request
-     * @param daddress delivery address of the request
+     * @param pAddress pickup address of the request
+     * @param dAddress delivery address of the request
      */
-    public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
+    public void removeRequest(PickupAddress pAddress, DeliveryAddress dAddress) {
 
-
-        if (distribution.getDelivery(paddress) != daddress) {
+        if (distribution.getDelivery(pAddress) != dAddress) {
             return;
         }
+        this.distribution.removeRequest(pAddress, dAddress);
 
+        List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
+        List<Path> newPaths = new ArrayList<>(tour.getPaths());
 
-        this.distribution.removeRequest(paddress, daddress);
-
-        List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
-        List<Path> newpaths = new ArrayList<>(tour.getPaths());
-
-        for (int i = newpoints.size() - 1; i >= 0; i--) {
-            if (newpoints.get(i) == paddress || newpoints.get(i) == daddress) {
+        for (int i = newPoints.size() - 1; i >= 0; i--) {
+            if (newPoints.get(i) == pAddress || newPoints.get(i) == dAddress) {
                 AbstractMap.SimpleEntry<Double, List<String>> newpath;
-                newpath = computePath(newpoints.get(i - 1), newpoints.get(i + 1));
+                newpath = computePath(newPoints.get(i - 1), newPoints.get(i + 1));
                 Path path = new Path(dijkstraToRoads(newpath), newpath.getKey());
-                newpoints.remove(i);
-                newpaths.remove(i - 1);
-                newpaths.remove(i - 1);
-                newpaths.add(i - 1, path);
+                newPoints.remove(i);
+                newPaths.remove(i - 1);
+                newPaths.remove(i - 1);
+                newPaths.add(i - 1, path);
             }
         }
 
-        tour.setPointOfInterests(newpoints);
-        tour.setPaths(newpaths);
+        tour.setPointOfInterests(newPoints);
+        tour.setPaths(newPaths);
 
         notifyObservers(tour);
 
@@ -360,40 +358,40 @@ public class CityMap extends Observable {
     /**
      * Change the position of a point on the path
      * @param poi the point of interest we want to relocate
-     * @param i the new location of this point
+     * @param newPosition the new location of this point
      */
-    public void changePosition(PointOfInterest poi, int i) {
+    public void changePosition(PointOfInterest poi, int newPosition) {
 
-        if(poi.getClass()==DeliveryAddress.class){
+        if (poi.getClass() == DeliveryAddress.class) {
             int posPickup = this.tour.getPointOfInterests().indexOf(
-                                this.distribution.getPickup((DeliveryAddress) poi));
-            if(posPickup>=i){
+                    this.distribution.getPickup((DeliveryAddress) poi));
+            if (posPickup >= newPosition) {
                 return;
             }
-        }else{
+        } else {
             int posDelivery = this.tour.getPointOfInterests().indexOf(
                     this.distribution.getDelivery((PickupAddress) poi));
-            if(posDelivery<=i){
+            if (posDelivery <= newPosition) {
                 return;
             }
         }
 
-        List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
-        List<Path> newpaths = new ArrayList<>(tour.getPaths());
-        newpoints.remove(poi);
-        newpoints.add(i, poi);
-        for (int j = newpoints.size() - 1; j >= 1; j--) {
+        List<PointOfInterest> newPoints = new ArrayList<>(tour.getPointOfInterests());
+        List<Path> newPaths = new ArrayList<>(tour.getPaths());
+        newPoints.remove(poi);
+        newPoints.add(newPosition, poi);
+        for (int j = newPoints.size() - 1; j >= 1; j--) {
 
-            AbstractMap.SimpleEntry<Double, List<String>> newpathlasttop = computePath(newpoints.get(j - 1), newpoints.get(j));
+            AbstractMap.SimpleEntry<Double, List<String>> newpPathFromLastToP = computePath(newPoints.get(j - 1), newPoints.get(j));
 
-            Path pathlasttop = new Path(dijkstraToRoads(newpathlasttop), newpathlasttop.getKey());
+            Path pathlasttop = new Path(dijkstraToRoads(newpPathFromLastToP), newpPathFromLastToP.getKey());
 
-            newpaths.remove(j - 1);
-            newpaths.add(j - 1, pathlasttop);
+            newPaths.remove(j - 1);
+            newPaths.add(j - 1, pathlasttop);
 
         }
-        tour.setPointOfInterests(newpoints);
-        tour.setPaths(newpaths);
+        tour.setPointOfInterests(newPoints);
+        tour.setPaths(newPaths);
 
         notifyObservers(tour);
 
@@ -498,33 +496,34 @@ public class CityMap extends Observable {
 
     /**
      * Set a pair of points to be highlight
-     * @param highlightpoint the pickup point to be highlight
+     * @param highlightPoint the pickup point to be highlight
      * @param secondaryPoint the delivery point to be highlight
      */
-    public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
-        this.primaryHighlight = highlightpoint;
+    public void setHighlighted(PointOfInterest highlightPoint, PointOfInterest secondaryPoint) {
+        this.primaryHighlight = highlightPoint;
         this.secondaryHighlight = secondaryPoint;
         notifyObservers();
     }
-    
+
     public void resetSelected() {
-        this.i1Selected=null;
-        this.i2Selected=null;
+        this.i1Selected = null;
+        this.i2Selected = null;
         notifyObservers();
     }
 
     public void setSelected1(Intersection i) {
-        this.i1Selected=i;
+        this.i1Selected = i;
         notifyObservers();
 
     }
 
     public void setSelected2(Intersection i) {
-        this.i2Selected=i;
+        this.i2Selected = i;
         notifyObservers();
 
 
     }
+
     /**
      * set the intersection to be added on the map (this.poiToAdd)
      * @param poiToAdd Intersection of the new point
@@ -535,7 +534,7 @@ public class CityMap extends Observable {
     }
 
     public Intersection getPoiToAdd() {
-        return poiToAdd;
+        return poiToAdd;      
     }
 
     @Override
