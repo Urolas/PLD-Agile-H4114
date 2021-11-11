@@ -21,10 +21,10 @@ public class InitialState implements State {
     }
 
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
+        XMLDeserializer.loadCityMap(c.getCityMap());
         w.getMapView().resetZoom();
         w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
+        c.setCurrentState(c.CITY_MAP_STATE);
     }
 
     public void enableButtons(Window window, ListOfCommands loc) {

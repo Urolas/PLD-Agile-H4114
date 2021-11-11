@@ -1,8 +1,3 @@
-/**
- * Description of the class
- * @author 4IF-4114
- */
-
 package controller;
 
 import model.CityMap;
@@ -11,26 +6,23 @@ import model.Intersection;
 import model.PointOfInterest;
 
 import view.Window;
-import filecontrol.XMLException;
-
-import java.io.IOException;
 
 public class Controller {
     // Instances associated with each possible state of the controller
-    protected final InitialState initialState = new InitialState();
-    protected final CityMapState citymapState = new CityMapState();
-    protected final DistributionState distributionState = new DistributionState();
-    protected final TourState tourState = new TourState();
-    protected final AddState1 addState1 = new AddState1();
-    protected final AddState2 addState2 = new AddState2();
-    protected final AddState3 addState3 = new AddState3();
-    protected final AddState4 addState4 = new AddState4();
-    protected final HighlightState highlightState = new HighlightState();
+    protected final InitialState INITIAL_STATE = new InitialState();
+    protected final CityMapState CITY_MAP_STATE = new CityMapState();
+    protected final DistributionState DISTRIBUTION_STATE = new DistributionState();
+    protected final TourState TOUR_STATE = new TourState();
+    protected final AddState1 ADD_STATE_1 = new AddState1();
+    protected final AddState2 ADD_STATE_2 = new AddState2();
+    protected final AddState3 ADD_STATE_3 = new AddState3();
+    protected final AddState4 ADD_STATE_4 = new AddState4();
+    protected final HighlightState HIGHLIGHT_STATE = new HighlightState();
 
 
-    private CityMap cityMap;
-    private Window window;
-    private ListOfCommands listOfCommands;
+    private final CityMap CITY_MAP;
+    private final Window WINDOW;
+    private final ListOfCommands LIST_OF_COMMANDS;
     private State currentState;
 
     /**
@@ -38,16 +30,16 @@ public class Controller {
      */
 
     public Controller(CityMap city) {
-        this.cityMap = city;
-        this.listOfCommands = new ListOfCommands();
-        this.currentState = initialState;
-        this.window = new Window(cityMap, this);
-        currentState.enableButtons(window, listOfCommands);
+        this.CITY_MAP = city;
+        this.LIST_OF_COMMANDS = new ListOfCommands();
+        this.currentState = INITIAL_STATE;
+        this.WINDOW = new Window(CITY_MAP, this);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
     }
 
     protected void setCurrentState(State state) {
         this.currentState = state;
-        currentState.enableButtons(window, listOfCommands);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
     }
 
 
@@ -55,59 +47,53 @@ public class Controller {
      * Method called by window after a click on the button "Undo"
      */
     public void undo() {
-        currentState.undo(listOfCommands);
-        currentState.enableButtons(window, listOfCommands);
+        currentState.undo(LIST_OF_COMMANDS);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
     }
 
     /**
      * Method called by window after a click on the button "Redo"
      */
     public void redo() {
-        currentState.redo(listOfCommands);
-        currentState.enableButtons(window, listOfCommands);
+        currentState.redo(LIST_OF_COMMANDS);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
     }
 
 
     public void loadCityMap() {
         try {
-            this.currentState.loadMap(this, window);
-        }catch(XMLException e){
-            window.parsingError(e.getMessage());
+            this.currentState.loadMap(this, WINDOW);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            WINDOW.parsingError(e.getMessage());
         }
     }
 
-    public void loadDistribution(){
-        try{
-            this.currentState.loadDistribution(this,window);
-        }catch(XMLException e){
-            window.parsingError(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void generateRoadmap(){
+    public void loadDistribution() {
         try {
-            this.currentState.generateRoadmap(this, window);
-        }catch( IOException e){
-            System.out.println(e.getMessage());
+            this.currentState.loadDistribution(this, WINDOW);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            WINDOW.parsingError(e.getMessage());
+        }
+    }
+
+    public void generateRoadmap() {
+        try {
+            this.currentState.generateRoadmap(this, WINDOW);
+        } catch (Exception e) {
+            WINDOW.parsingError(e.getMessage());
         }
     }
 
     public void keystroke(int keyCode) {
-        currentState.keyStroke(window.getMapView(), keyCode);
+        currentState.keyStroke(WINDOW.getMapView(), keyCode);
     }
 
-    public CityMap getCitymap() {
-        return cityMap;
+    public CityMap getCityMap() {
+        return CITY_MAP;
     }
 
     public void computeTour() {
-            this.currentState.computeTour(this, window);
+        this.currentState.computeTour(this, WINDOW);
     }
 
     public void modifyDistribution() {
@@ -115,66 +101,53 @@ public class Controller {
     }
 
     public void removePointOfInterest() {
-
-        this.currentState.removePointOfInterest(this, this.window, this.cityMap, this.listOfCommands);
-
+        this.currentState.removePointOfInterest(this, this.WINDOW, this.CITY_MAP, this.LIST_OF_COMMANDS);
     }
 
     public void zoomIn() {
-            window.getMapView().modifyZoom(1.5, window.getMapView().getViewWidth() / 2,
-                    window.getMapView().getViewHeight() / 2);
+        WINDOW.getMapView().modifyZoom(1.5, WINDOW.getMapView().getViewWidth() / 2,
+                                       WINDOW.getMapView().getViewHeight() / 2);
     }
 
     public void zoomOut() {
-        window.getMapView().modifyZoom(1 / 1.5, window.getMapView().getViewWidth() / 2,
-                    window.getMapView().getViewHeight() / 2);
+        WINDOW.getMapView().modifyZoom(1.0 / 1.5, WINDOW.getMapView().getViewWidth() / 2,
+                                       WINDOW.getMapView().getViewHeight() / 2);
     }
 
     public void recenter() {
-
-        window.getMapView().modifyZoom(1, window.getMapView().getViewWidth() / 2,
-                    window.getMapView().getViewHeight() / 2);
-
+        WINDOW.getMapView().modifyZoom(1.0, WINDOW.getMapView().getViewWidth() / 2,
+                                       WINDOW.getMapView().getViewHeight() / 2);
     }
 
-    /**
-     * Method called by window after a left click on a point of the graphical view
-     * Precondition : p != null
-     *
-     * @param p = coordinates of the click in the citymap
-     */
     public void leftClick(Intersection intersection, PointOfInterest pointOfInterest) {
-        currentState.leftClick(this, window, cityMap, listOfCommands, intersection, pointOfInterest);
+        currentState.leftClick(this, WINDOW, CITY_MAP, LIST_OF_COMMANDS, intersection, pointOfInterest);
     }
 
     public Window getWindow() {
-        return window;
+        return WINDOW;
     }
 
-    public void enableButtons() {
-        currentState.enableButtons(window, listOfCommands);
-    }
-  
     public void rightClick() {
         currentState.rightClick(this);
     }
 
     public void up(String id) {
-        currentState.up(Integer.parseInt(id),this.listOfCommands,this);
-        currentState.enableButtons(window, listOfCommands);
+        currentState.up(Integer.parseInt(id), this.LIST_OF_COMMANDS, this);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
 
     }
 
     public void down(String id) {
-        currentState.down(Integer.parseInt(id),this.listOfCommands,this);
-        currentState.enableButtons(window, listOfCommands);
+        currentState.down(Integer.parseInt(id), this.LIST_OF_COMMANDS, this);
+        currentState.enableButtons(WINDOW, LIST_OF_COMMANDS);
 
     }
+
     public void mouseMoved(Intersection intersection) {
         currentState.mouseMoved(this, intersection);
     }
 
     public void resetListOfCommands() {
-        this.listOfCommands.reset();
+        this.LIST_OF_COMMANDS.reset();
     }
 }

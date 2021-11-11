@@ -1,17 +1,7 @@
 
 import model.*;
 import org.junit.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import filecontrol.XMLException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -49,13 +39,13 @@ public class CityMapUnitTest {
     @Test
     public void structNotNullTest(){
         assertNotNull(cm);
-        assertNotNull(cm.getIntersections());
-        assertNotNull(cm.getRoads());
+        assertNotNull(cm.getINTERSECTIONS());
+        assertNotNull(cm.getROADS());
         assertNotNull(cm.getDistribution());
         assertNotNull(cm.getTour());
         assertNotNull(cm.getWidth());
         assertNotNull(cm.getHeight());
-        assertNotNull(cm.getNordPoint());
+        assertNotNull(cm.getNorthPoint());
         assertNotNull(cm.getWestPoint());
         assertNotNull(cm.getAdjacencyList());
     }
@@ -64,33 +54,33 @@ public class CityMapUnitTest {
     public void emptyAfterResetTest(){
         cm.reset();
         CityMap cm2 = new CityMap();
-        assertEquals(cm.getIntersections(),cm2.getIntersections());
-        assertEquals(cm.getRoads(),cm2.getRoads());
+        assertEquals(cm.getINTERSECTIONS(),cm2.getINTERSECTIONS());
+        assertEquals(cm.getROADS(),cm2.getROADS());
         assertTrue(cm.getDistribution().equals(cm2.getDistribution()));
         assertEquals(cm.getTour(),cm2.getTour());
         assertEquals(cm.getWidth(),cm2.getWidth());
         assertEquals(cm.getHeight(),cm2.getHeight());
-        assertEquals(cm.getNordPoint(),cm2.getNordPoint());
+        assertEquals(cm.getNorthPoint(),cm2.getNorthPoint());
         assertEquals(cm.getWestPoint(),cm2.getWestPoint());
         assertEquals(cm.getAdjacencyList(),cm2.getAdjacencyList());
     }
 
     @Test
     public void structNotEmptyTest() {
-        assertNotEquals(0,cm.getIntersections().size());
+        assertNotEquals(0,cm.getINTERSECTIONS().size());
         assertNotEquals(0,cm.getAdjacencyList().size());
-        assertNotEquals(0, cm.getRoads().size());
+        assertNotEquals(0, cm.getROADS().size());
     }
 
     @Test
     public void containsKeyTest() {
         //Verification de l'exitence de la clé
         Set<String> keySet= new HashSet<>();
-        assertEquals(14,cm.getIntersections().size());
+        assertEquals(14,cm.getINTERSECTIONS().size());
         for (int i = 0;i<14;i++){
             keySet.add("81150" + i);
         }
-        assertEquals(cm.getIntersections().keySet(),keySet);
+        assertEquals(cm.getINTERSECTIONS().keySet(),keySet);
     }
 
     @Test
@@ -105,17 +95,17 @@ public class CityMapUnitTest {
 
     @Test
     public void nordWestPointsTest(){
-        assertEquals(String.format("%.3f",46.110),String.format("%.3f",cm.getNordPoint()));
+        assertEquals(String.format("%.3f",46.110),String.format("%.3f",cm.getNorthPoint()));
         assertEquals(String.format("%.3f",109.523),String.format("%.3f",cm.getWestPoint()));
     }
 
     @Test
     public void containsRoadTest(){
-        assertEquals(34,cm.getRoads().size());
-        for(AbstractMap.SimpleEntry<String,String> keyValue : cm.getRoads().keySet()){
-            assertEquals(roadsExpectedSet.get(keyValue),cm.getRoads().get(keyValue));
+        assertEquals(34,cm.getROADS().size());
+        for(AbstractMap.SimpleEntry<String,String> keyValue : cm.getROADS().keySet()){
+            assertEquals(roadsExpectedSet.get(keyValue),cm.getROADS().get(keyValue));
         }
-        assertEquals(roadsExpectedSet,cm.getRoads());
+        assertEquals(roadsExpectedSet,cm.getROADS());
     }
 
     @Test

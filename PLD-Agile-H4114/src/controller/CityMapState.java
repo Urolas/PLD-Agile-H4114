@@ -2,7 +2,6 @@ package controller;
 
 import org.xml.sax.SAXException;
 import view.Window;
-import view.MapView;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
 
@@ -21,19 +20,20 @@ public class CityMapState implements State {
     }
 
     public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCitymap());
+        XMLDeserializer.loadDistribution(c.getCityMap());
         w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.distributionState);
+        c.setCurrentState(c.DISTRIBUTION_STATE);
     }
+
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
+        XMLDeserializer.loadCityMap(c.getCityMap());
         w.getMapView().resetZoom();
         w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
+        c.setCurrentState(c.CITY_MAP_STATE);
     }
 
 
-    public  void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands loc) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);

@@ -15,8 +15,8 @@ public class AddState2 implements State {
                           Intersection i, PointOfInterest poi) {
 
         if (poi != null) {
-            c.addState3.entryAction(this.i1,d1, poi,window);
-            c.setCurrentState(c.addState3);
+            c.ADD_STATE_3.entryAction(this.i1,d1, poi,window);
+            c.setCurrentState(c.ADD_STATE_3);
 
             window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
             window.enableJtextField(true);
@@ -29,8 +29,8 @@ public class AddState2 implements State {
 
     @Override
     public void rightClick(Controller c) {
-        c.getCitymap().resetSelected();
-        c.setCurrentState(c.tourState);
+        c.getCityMap().resetSelected();
+        c.setCurrentState(c.TOUR_STATE);
     }
 
     protected void entryAction(Intersection i, Integer d) {
