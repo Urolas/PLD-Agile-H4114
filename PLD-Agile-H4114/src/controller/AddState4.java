@@ -25,7 +25,7 @@ public class AddState4 implements State {
             c.setCurrentState(c.tourState);
             window.displayMessage("");
         } else {
-            window.displayMessage("No point error: After which point");
+            window.displayMessage("No point error: Click on a valid point.");
 
         }
 
