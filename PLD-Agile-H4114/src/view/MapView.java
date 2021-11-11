@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.util.AbstractMap;
 import java.util.Map;
 import javax.swing.JPanel;
+
 import model.*;
 
 import observer.Observable;
@@ -153,6 +154,9 @@ public class MapView extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * Reset the zoom to display a new loaded map properly
+     */
     public void resetZoom(){
         mapWidth = CITYMAP.getWidth();
         mapHeight = CITYMAP.getHeight();
@@ -292,7 +296,6 @@ public class MapView extends JPanel implements Observer {
 
     /**
      * Highlight the pickup and delivery points of a request on the map
-     *
      * @param p1 the intersection of the pickup
      * @param p2 the intersection of the delivery
      */
@@ -387,8 +390,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     /**
-     * Change the color of the roads from the computed path
-     *
+     * Draw the path between each point of interest
      * @param p the path is be colored
      * @param c the color of the path's roads
      */
@@ -425,7 +427,7 @@ public class MapView extends JPanel implements Observer {
     }
 
     /**
-     * Add depot point on the map : draw a rectangle
+     * Add depot point on the map : draw a flag
      */
     public void displayDepot() {
         if (CITYMAP.getDistribution().getDepot().getIntersection() != null) {
