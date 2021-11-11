@@ -1,3 +1,8 @@
+/**
+ * Controller
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -18,7 +23,6 @@ public class Controller {
     protected final AddState3 ADD_STATE_3 = new AddState3();
     protected final AddState4 ADD_STATE_4 = new AddState4();
     protected final HighlightState HIGHLIGHT_STATE = new HighlightState();
-
 
     private final CityMap CITY_MAP;
     private final Window WINDOW;

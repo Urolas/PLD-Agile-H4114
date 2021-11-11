@@ -30,7 +30,7 @@ public class CityMap extends Observable {
     private final HashMap<String, Intersection> INTERSECTIONS;
 
     /**
-     * Constructor of CityMap
+     * Default constructor
      */
     public CityMap() {
         this.INTERSECTIONS = new HashMap<>();
