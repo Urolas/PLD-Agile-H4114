@@ -11,7 +11,7 @@ import java.util.*;
  * The graph representing the map, having the each point as node and each road as branch
  */
 public class GraphPointToPoint {
-    private final int NBVERTICE;
+    private final int NB_VERTICE;
     private final HashMap<Integer, HashMap<Integer, AbstractMap.SimpleEntry<Double, List<String>>>> COST;
     private final HashMap<Integer, Integer> CONSTRAINTS;
 
@@ -22,7 +22,7 @@ public class GraphPointToPoint {
      * @param constraints the constraints of the priority order of the points of interest
      */
     public GraphPointToPoint(HashMap<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> resultsDijkstra, HashMap<Integer, Integer> constraints) {
-        this.NBVERTICE = resultsDijkstra.size();
+        this.NB_VERTICE = resultsDijkstra.size();
         this.CONSTRAINTS = constraints;
         this.COST = new HashMap<>();
         for (Map.Entry<PointOfInterest, HashMap<PointOfInterest, AbstractMap.SimpleEntry<Double, List<String>>>> entry : resultsDijkstra.entrySet()) {
@@ -35,7 +35,7 @@ public class GraphPointToPoint {
     }
 
     public int getNbVertices() {
-        return NBVERTICE;
+        return NB_VERTICE;
     }
 
     /**
