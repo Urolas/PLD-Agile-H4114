@@ -34,10 +34,6 @@ public class DistributionState implements State {
         c.setCurrentState(c.citymapState);
     }
 
-    public void keyStroke(MapView mapView, int keyCode){
-        mapView.moveMapView(keyCode);
-    }
-
     public  void enableButtons(Window window, ListOfCommands loc) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
