@@ -64,6 +64,8 @@ public class Window extends JFrame {
         mapView = new MapView(cityMap, this);
         messageFrame = new JTextPane();
         durationJText = new JTextField(50);
+        durationJText.setEnabled(false);
+        durationJText.setVisible(false);
         roadmapView = new RoadmapView(cityMap, this);
         helpPanel = new JPanel(null);
         mouseListener = new MouseListener(controller, mapView, this);
@@ -108,7 +110,7 @@ public class Window extends JFrame {
         mapView.setLocation(BUTTON_WIDTH, 0);
         roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,160);
         helpPanel.setBounds(mapView.getViewWidth() + BUTTON_WIDTH, 0,300 ,160);
-        durationJText.setBounds(20,110,150,30);
+        durationJText.setBounds(75,110,150,30);
 
         mapView.setLocation(BUTTON_WIDTH, 0);
     }
@@ -183,5 +185,14 @@ public class Window extends JFrame {
 
     public void resetDurationInserted() {
         durationJText.setText("300");
+    }
+
+    /**
+     * Activate or desactivate the text field
+     * @param bool
+     */
+    public void enableJtextField(boolean bool){
+        this.durationJText.setEnabled(bool);
+        this.durationJText.setVisible(bool);
     }
 }

@@ -29,6 +29,7 @@ public class AddState1 implements State {
 
             map.setPoiToAdd(null);
             window.displayMessage("After which point \nSelect a point of interest");
+            window.enableJtextField(false);
         } else {
             window.displayMessage("Misplaced point error: Place the pickupPoint");
 
@@ -46,6 +47,7 @@ public class AddState1 implements State {
     protected void entryAction(Window w) {
         this.d1=300;
         w.displayMessage("Place the PickupPoint :\n enter a duration (in sec)");
+        w.enableJtextField(true);
         w.resetDurationInserted();
     }
 

@@ -31,6 +31,7 @@ public class AddState3 implements State {
             map.setSelected2(i);
             map.setPoiToAdd(null);
             window.displayMessage("After which point \nSelect a point of interest");
+            window.enableJtextField(false);
         } else {
             window.displayMessage("Misplaced point error: Place the deliveryPoint");
 
