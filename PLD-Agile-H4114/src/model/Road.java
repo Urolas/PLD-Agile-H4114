@@ -71,11 +71,11 @@ public class Road {
         if (obj.getClass() != Road.class) {
             return false;
         }
-        //Meme path
+        //Same path
         if (Double.compare(this.length,((Road) obj).length)!=0) {
             return false;
         }
-        //Meme pointOfInterests
+        //Same pointOfInterests
         if (this.name!=((Road) obj).name) {
             return false;
         }
