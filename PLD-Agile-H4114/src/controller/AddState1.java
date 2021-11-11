@@ -20,7 +20,7 @@ public class AddState1 implements State {
                 if(d1<0) throw new NumberFormatException();
             }
             catch (NumberFormatException e) {
-                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point.");
                 return;
             }
             c.addState2.entryAction(i,this.d1);
@@ -28,9 +28,9 @@ public class AddState1 implements State {
             map.setSelected1(i);
 
             map.setPoiToAdd(null);
-            window.displayMessage("After which point \nSelect a point of interest");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
         } else {
-            window.displayMessage("Misplaced point error: Place the pickupPoint");
+            window.displayMessage("Misplaced point error: Click on a valid intersection.");
 
         }
     }
@@ -45,7 +45,7 @@ public class AddState1 implements State {
 
     protected void entryAction(Window w) {
         this.d1=300;
-        w.displayMessage("Place the PickupPoint :\n enter a duration (in sec)");
+        w.displayMessage("Choose the pickup duration in sec and\nchoose the pickup point position on the map.");
         w.resetDurationInserted();
     }
 
