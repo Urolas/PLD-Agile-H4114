@@ -187,10 +187,22 @@ public class Controller {
         currentState.rightClick(this);
     }
 
-    public void up(String id) {currentState.up(Integer.parseInt(id),this.listOfCommands,this);}
+    public void up(String id) {
+        currentState.up(Integer.parseInt(id),this.listOfCommands,this);
+        currentState.enableButtons(window, listOfCommands);
 
-    public void down(String id) {currentState.down(Integer.parseInt(id),this.listOfCommands,this);}
+    }
+
+    public void down(String id) {
+        currentState.down(Integer.parseInt(id),this.listOfCommands,this);
+        currentState.enableButtons(window, listOfCommands);
+
+    }
     public void mouseMoved(Intersection intersection) {
         currentState.mouseMoved(this, intersection);
+    }
+
+    public void resetListOfCommands() {
+        this.listOfCommands.reset();
     }
 }

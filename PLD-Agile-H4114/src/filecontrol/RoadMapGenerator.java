@@ -35,9 +35,19 @@ public class RoadMapGenerator {
             File newFile = fileChooser.getSelectedFile();
 
             if(fileChooser.getFileFilter().getDescription()=="TXT File"){
-                newFile = new File(newFile.getAbsolutePath()+".txt");
+                if(!newFile.getAbsolutePath().endsWith(".txt")){
+                    newFile = new File(newFile.getAbsolutePath()+".txt");
+                }else{
+                    newFile = new File(newFile.getAbsolutePath());
+                }
+
             }else{
-                newFile = new File(newFile.getAbsolutePath()+".xml");
+                if(!newFile.getAbsolutePath().endsWith(".xml")){
+                    newFile = new File(newFile.getAbsolutePath()+".xml");
+                }else{
+                    newFile = new File(newFile.getAbsolutePath());
+                }
+
             }
 
             if(newFile.exists()){

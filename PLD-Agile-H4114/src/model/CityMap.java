@@ -8,6 +8,8 @@ import view.MapView;
 import java.io.IOException;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author 4IF-4114
  */
@@ -258,6 +260,7 @@ public class CityMap extends Observable {
                 newPaths.add(i + 1, pathPToNext);
                 pickupInserted = true;
 
+
                 if (preD.equals(preP)) {
                     newPoints.add(i + 2, poiD);
 
@@ -311,6 +314,11 @@ public class CityMap extends Observable {
     public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
 
 
+        if (distribution.getDelivery(paddress) != daddress) {
+            return;
+        }
+
+
         this.distribution.removeRequest(paddress, daddress);
 
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
@@ -337,6 +345,21 @@ public class CityMap extends Observable {
     }
 
     public void changePosition(PointOfInterest poi, int i) {
+
+        if(poi.getClass()==DeliveryAddress.class){
+            int posPickup = this.tour.getPointOfInterests().indexOf(
+                                this.distribution.getPickup((DeliveryAddress) poi));
+            if(posPickup>=i){
+                return;
+            }
+        }else{
+            int posDelivery = this.tour.getPointOfInterests().indexOf(
+                    this.distribution.getDelivery((PickupAddress) poi));
+            if(posDelivery<=i){
+                return;
+            }
+        }
+
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         newpoints.remove(poi);
@@ -441,8 +464,8 @@ public class CityMap extends Observable {
 
 
     public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
-        this.primaryHighlight=highlightpoint;
-        this.secondaryHighlight=secondaryPoint;
+        this.primaryHighlight = highlightpoint;
+        this.secondaryHighlight = secondaryPoint;
         notifyObservers();
     }
 
