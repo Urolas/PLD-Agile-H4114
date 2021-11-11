@@ -31,6 +31,7 @@ public class DistributionState implements State {
     }
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
+        w.getMapView().resetZoom();
         c.setCurrentState(c.citymapState);
     }
 

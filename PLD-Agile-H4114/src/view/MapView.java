@@ -106,7 +106,6 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void dragMap(int mouseX, int mouseY){
-        System.out.println((mouseX - mouseClickedX)/scaleWidth);
         if  ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX)/scaleWidth) &&
                 (cityMap.getWestPoint() + cityMap.getWidth()>= originLongClicked - (mouseX - mouseClickedX)/scaleWidth  + mapWidth ))  {
             originLong = originLongClicked - (mouseX - mouseClickedX)/scaleWidth;
@@ -155,6 +154,10 @@ public class MapView extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        repaint();
+    }
+
+    public void resetZoom(){
         mapWidth = cityMap.getWidth();
         mapHeight = cityMap.getHeight();
         scaleZoom = 1;
@@ -164,7 +167,6 @@ public class MapView extends JPanel implements Observer {
         scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
-        repaint();
     }
 
     public int getViewHeight() {

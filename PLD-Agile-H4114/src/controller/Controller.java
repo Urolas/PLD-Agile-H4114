@@ -46,7 +46,6 @@ public class Controller {
     protected void setCurrentState(State state) {
         this.currentState = state;
         currentState.enableButtons(window, listOfCommands);
-        System.out.println();
     }
 
 
