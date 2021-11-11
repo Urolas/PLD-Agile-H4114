@@ -34,37 +34,46 @@ public class RoadMapGenerator {
      * @param cityMap the current CityMap with a computed tour
      */
     public static void generateRoadmap(CityMap cityMap) {
-        JFrame saveFrame = new JFrame();
 
+        //Make a pop-up-panel JFileChooser to allow the user to choose where to save the file
+        JFrame saveFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Generate Roadmap");
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT File", "txt"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
-
-
         int filePath = fileChooser.showSaveDialog(saveFrame);
 
 
-        if (filePath == JFileChooser.APPROVE_OPTION) {
+        if (filePath == JFileChooser.APPROVE_OPTION) { //If the user click on the save button
+
+            //Get the path where to save the file
             File newFile = fileChooser.getSelectedFile();
 
+            //If the user choose to save the file as a TXT file (Filter)
             if (Objects.equals(fileChooser.getFileFilter().getDescription(), "TXT File")) {
+
+                //Add the extension .txt to the file name
                 if (!newFile.getAbsolutePath().endsWith(".txt")) {
                     newFile = new File(newFile.getAbsolutePath() + ".txt");
                 } else {
+                    //if the user try to overwrite a .txt file, do not add .txt to the file name
                     newFile = new File(newFile.getAbsolutePath());
                 }
 
-            } else {
+            } else { //If the user choose to save the file as a XML file (Filter)
+
+                //Add the extension .xml to the file name
                 if (!newFile.getAbsolutePath().endsWith(".xml")) {
                     newFile = new File(newFile.getAbsolutePath() + ".xml");
                 } else {
+                    //if the user try to overwrite a .xml file, do not add .txt to the file name
                     newFile = new File(newFile.getAbsolutePath());
                 }
 
             }
 
+            //If the file already exist, ask if the user wishes the overwrite the file
             if (newFile.exists()) {
                 int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to override existing file?", "Confirm",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -72,14 +81,20 @@ public class RoadMapGenerator {
                     filePath = JFileChooser.CANCEL_OPTION;
                 }
             }
+
+            //If the user choose to overwrite the file
             if (filePath == JFileChooser.APPROVE_OPTION) {
                 try {
 
+                    //If the overwritten file is a txt
                     if (newFile.getName().endsWith(".txt")) {
+
+                        //Write the file
                         FileWriter fw = new FileWriter(newFile);
                         writeRoadmapTxt(fw, cityMap);
                         fw.close();
-                    } else {
+
+                    } else { //if the file is a xml
                         writeRoadmapXml(cityMap, newFile);
                     }
 
@@ -88,8 +103,8 @@ public class RoadMapGenerator {
                 }
             }
 
-        } else if (filePath == JFileChooser.CANCEL_OPTION) {
-            System.out.println("Operation cancelled");
+
+        } else if (filePath == JFileChooser.CANCEL_OPTION) { // If the user click on the cancel button
         } else {
             System.out.println("Error");
         }
