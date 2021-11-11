@@ -85,7 +85,7 @@ public class MapView extends JPanel implements Observer {
             mapWidth = CITYMAP.getWidth();
             mapHeight = CITYMAP.getHeight();
             originLong = CITYMAP.getWestPoint();
-            originLat = CITYMAP.getNordPoint();
+            originLat = CITYMAP.getNorthPoint();
         } else if (!(zoom < 1 && scaleZoom <= 1) &&
                 !(zoom > 1 && scaleZoom >= 16)) {
             scaleZoom = scaleZoom * zoom;
@@ -106,11 +106,11 @@ public class MapView extends JPanel implements Observer {
 
             }
             if (originLat + mapHeight * ((double) centerY / VIEW_HEIGHT)
-                    - centerY / scaleHeight > CITYMAP.getNordPoint()) {
-                originLat = CITYMAP.getNordPoint();
+                    - centerY / scaleHeight > CITYMAP.getNorthPoint()) {
+                originLat = CITYMAP.getNorthPoint();
             } else if (originLat + mapHeight * ((double) centerY / VIEW_HEIGHT)
-                    - centerY / scaleHeight - mapHeight < CITYMAP.getNordPoint() - CITYMAP.getHeight()) {
-                originLat = CITYMAP.getNordPoint() - CITYMAP.getHeight() + mapHeight;
+                    - centerY / scaleHeight - mapHeight < CITYMAP.getNorthPoint() - CITYMAP.getHeight()) {
+                originLat = CITYMAP.getNorthPoint() - CITYMAP.getHeight() + mapHeight;
             } else {
                 originLat = originLat + mapHeight * ((double) centerY / VIEW_HEIGHT) - centerY / scaleHeight;
             }
@@ -135,8 +135,8 @@ public class MapView extends JPanel implements Observer {
             originLong = originLongClicked - (mouseX - mouseClickedX) / scaleWidth;
 
         }
-        if ((CITYMAP.getNordPoint() >= originLatClicked + (mouseY - mouseClickedY) / scaleHeight)
-                && (CITYMAP.getNordPoint() - CITYMAP.getHeight() <= originLatClicked + (mouseY - mouseClickedY) / scaleHeight - mapHeight)) {
+        if ((CITYMAP.getNorthPoint() >= originLatClicked + (mouseY - mouseClickedY) / scaleHeight)
+                && (CITYMAP.getNorthPoint() - CITYMAP.getHeight() <= originLatClicked + (mouseY - mouseClickedY) / scaleHeight - mapHeight)) {
             originLat = originLatClicked + (mouseY - mouseClickedY) / scaleHeight;
         }
         repaint();
@@ -166,7 +166,7 @@ public class MapView extends JPanel implements Observer {
         scaleWidth = VIEW_WIDTH / mapWidth * scaleZoom;
         scaleHeight = VIEW_HEIGHT / mapHeight * scaleZoom;
         originLong = CITYMAP.getWestPoint();
-        originLat = CITYMAP.getNordPoint();
+        originLat = CITYMAP.getNorthPoint();
     }
 
     public int convertLongitudeToPixel(double longitude) {
@@ -190,7 +190,7 @@ public class MapView extends JPanel implements Observer {
         this.g2 = (Graphics2D) g;
 
         //display roads
-        for (Map.Entry<AbstractMap.SimpleEntry<String, String>, Road> road : CITYMAP.getRoads().entrySet()) {
+        for (Map.Entry<AbstractMap.SimpleEntry<String, String>, Road> road : CITYMAP.getROADS().entrySet()) {
             displayRoad(road.getValue(), Color.white, 1, false);
         }
 
@@ -467,7 +467,7 @@ public class MapView extends JPanel implements Observer {
      * @return the closest Intersection to our point
      */
     public Intersection getClosestIntersection(int x, int y) {
-        for (Intersection i : this.CITYMAP.getIntersections().values()) {
+        for (Intersection i : this.CITYMAP.getINTERSECTIONS().values()) {
             int xPoi = convertLongitudeToPixel(i.getLongitude());
             int yPoi = convertLatitudeToPixel(i.getLatitude());
             if (x <= xPoi + POINT_SIZE / 2 && x >= xPoi - POINT_SIZE / 2 &&

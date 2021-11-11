@@ -161,7 +161,7 @@ public class DistributionUnitTest {
 
     @Test
     public void getDeliveryFromNonExistingPickupTest(){
-        Intersection i = cm.getIntersections().get("8115011");
+        Intersection i = cm.getINTERSECTIONS().get("8115011");
         PickupAddress p = new PickupAddress(i,120,6);
 
         assertNull(distribution.getDelivery(p));
@@ -177,7 +177,7 @@ public class DistributionUnitTest {
 
     @Test
     public void getPickupFromNonExistingDeliveryTest(){
-        Intersection i = cm.getIntersections().get("8115011");
+        Intersection i = cm.getINTERSECTIONS().get("8115011");
         DeliveryAddress d = new DeliveryAddress(i,120,6);
 
         assertNull(distribution.getPickup(d));
