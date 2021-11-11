@@ -8,6 +8,8 @@ import view.MapView;
 import java.io.IOException;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author 4IF-4114
  */
@@ -220,7 +222,7 @@ public class CityMap extends Observable {
         }*/
     }
 
-    public void addRequest(PointOfInterest poiP, PointOfInterest preP, PointOfInterest poiD, PointOfInterest preD) throws Exception {
+    public void addRequest(PickupAddress poiP, PointOfInterest preP, DeliveryAddress poiD, PointOfInterest preD) throws Exception {
         List<PointOfInterest> newpoints = new ArrayList<>(tour.getPointOfInterests());
         List<Path> newpaths = new ArrayList<>(tour.getPaths());
         boolean pickupinserted = false;
@@ -270,6 +272,11 @@ public class CityMap extends Observable {
     }
 
     public void removeRequest(PickupAddress paddress, DeliveryAddress daddress) {
+
+
+        if (distribution.getDelivery(paddress) != daddress) {
+            return;
+        }
 
 
         this.distribution.removeRequest(paddress, daddress);
@@ -405,8 +412,8 @@ public class CityMap extends Observable {
 
 
     public void setHighlighted(PointOfInterest highlightpoint, PointOfInterest secondaryPoint) {
-        this.primaryHighlight=highlightpoint;
-        this.secondaryHighlight=secondaryPoint;
+        this.primaryHighlight = highlightpoint;
+        this.secondaryHighlight = secondaryPoint;
         notifyObservers();
     }
 }

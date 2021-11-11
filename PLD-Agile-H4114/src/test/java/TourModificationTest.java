@@ -35,9 +35,9 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PointOfInterest p1 = new PointOfInterest(i1,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
         Intersection i2 = cm.getIntersections().get("811509");
-        PointOfInterest p2 = new PointOfInterest(i2,6);
+        DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(4));
@@ -63,9 +63,9 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PointOfInterest p1 = new PointOfInterest(i1,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
         Intersection i2 = cm.getIntersections().get("811509");
-        PointOfInterest p2 = new PointOfInterest(i2,6);
+        DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(3));
@@ -90,15 +90,14 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PointOfInterest p1 = new PointOfInterest(i1,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
         Intersection i2 = cm.getIntersections().get("811509");
-        PointOfInterest p2 = new PointOfInterest(i2,6);
+        DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
         assertThrows(Exception.class,() -> cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(5)));
         assertThrows(Exception.class,() -> cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(1)));
 
-        PointOfInterest p3 = new PointOfInterest(i2,5);
-        assertThrows(Exception.class,() -> cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(4)));
+
 
     }
 
@@ -123,8 +122,9 @@ public class TourModificationTest {
 
         listPOI = cm.getTour().getPointOfInterests();
 
-        assertEquals(1,listPOI.size());
+        assertEquals(2,listPOI.size());
         assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
+        assertEquals((Integer) 0,listPOI.get(1).getIdPointOfInterest());
 
     }
 
@@ -133,9 +133,9 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PointOfInterest p1 = new PointOfInterest(i1,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
         Intersection i2 = cm.getIntersections().get("811509");
-        PointOfInterest p2 = new PointOfInterest(i2,6);
+        DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
         try{
             cm.addRequest(p1,listPOI.get(3),p2, listPOI.get(4));
@@ -201,22 +201,15 @@ public class TourModificationTest {
         Intersection i1 = cm.getIntersections().get("811508");
         PointOfInterest p1 = new PointOfInterest(i1,5);
 
-        cm.changePosition(p1,2);
-        assertEquals(6,listPOI.size());
-        assertEquals((Integer) 0,listPOI.get(0).getIdPointOfInterest());
-        assertEquals((Integer) 1,listPOI.get(1).getIdPointOfInterest());
-        assertEquals((Integer) 2,listPOI.get(2).getIdPointOfInterest());
-        assertEquals((Integer) 3,listPOI.get(3).getIdPointOfInterest());
-        assertEquals((Integer) 4,listPOI.get(4).getIdPointOfInterest());
-        assertEquals((Integer) 0,listPOI.get(5).getIdPointOfInterest());
+        assertThrows(Exception.class, ()->cm.changePosition(p1,2));
 
 
     }
 
     @Test
-    public void changePositionDeliveryBeforPickupTest(){
+    public void changePositionDeliveryBeforePickupTest(){
         PointOfInterest poi = cm.getTour().getPointOfInterests().get(4);
-        cm.changePosition(poi,1);
+        cm.changePosition(poi,3);
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
 
