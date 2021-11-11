@@ -36,7 +36,7 @@ public class Intersection {
 
     /**
      * Compares this intersection with another object and check if they are equal
-     * @param obj the object to be compared with
+     * @param o the object to be compared with
      */
     @Override
     public boolean equals(Object o){
