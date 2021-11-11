@@ -19,13 +19,16 @@ public class AddCommand implements Command {
      */
 
 
-    public AddCommand(CityMap map, Intersection i1, PointOfInterest p1, Intersection i2, PointOfInterest p2) {
+    public AddCommand(CityMap map, Intersection i1,Integer d1, PointOfInterest p1, Intersection i2,Integer d2, PointOfInterest p2) {
         this.map=map;
         this.preP=p1;
         this.preD=p2;
-        this.poiP= new PickupAddress(i1,0,map.distribution.nbPointOfInterest);
-        this.poiD= new DeliveryAddress(i2,0,map.distribution.nbPointOfInterest+1);
+
+        this.poiP= new PickupAddress(i1,d1,map.tour.getPointOfInterests().size());
+        this.poiD= new DeliveryAddress(i2,d2,map.tour.getPointOfInterests().size()+1);
+
         this.authorized=true;
+
 
     }
 

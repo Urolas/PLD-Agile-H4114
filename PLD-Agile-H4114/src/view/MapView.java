@@ -56,7 +56,7 @@ public class MapView extends JPanel implements Observer {
         originLong = 0;
         originLat = 0;
         smallRoadThickness = 1;
-        greatRoadThickness = 2;
+        greatRoadThickness = 3;
         counterInter = 0;
         setLayout(null);
         setBackground(new Color(180,180,180));
@@ -65,10 +65,10 @@ public class MapView extends JPanel implements Observer {
     }
 
     public void modifyZoom(double zoom, int centerX, int centerY){
-        if (zoom == 1 || (scaleZoom * zoom < 1)){
+        if (zoom == 1 || (scaleZoom * zoom < 0.95)){
             scaleZoom = 1;
             smallRoadThickness = 1;
-            greatRoadThickness = 2;
+            greatRoadThickness = 3;
             mapWidth = cityMap.getWidth();
             mapHeight = cityMap.getHeight();
             originLong = cityMap.getWestPoint();
@@ -80,20 +80,23 @@ public class MapView extends JPanel implements Observer {
             greatRoadThickness = greatRoadThickness*zoom;
             mapWidth = mapWidth/zoom;
             mapHeight = mapHeight/zoom;
-            if (originLong - mapWidth/2 + centerX/scaleWidth < cityMap.getWestPoint()){
+            if (originLong - mapWidth*((double)centerX/VIEW_WIDTH) + centerX/scaleWidth < cityMap.getWestPoint()){
                 originLong = cityMap.getWestPoint();
-            }else if(originLong - mapWidth/2 + centerX/scaleWidth + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
+            }else if(originLong - mapWidth*((double)centerX/VIEW_WIDTH) + centerX/scaleWidth + mapWidth> cityMap.getWestPoint() + cityMap.getWidth()){
                 originLong = cityMap.getWestPoint() + cityMap.getWidth() - mapWidth;
             }else{
-                originLong = originLong - mapWidth/2 + centerX/scaleWidth;
+                originLong = originLong - mapWidth*((double)centerX/VIEW_WIDTH) +
+                        centerX/scaleWidth;
+
             }
-            if (originLat + mapHeight/2 - centerY/scaleHeight > cityMap.getNordPoint()){
+            if (originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight > cityMap.getNordPoint()){
                 originLat = cityMap.getNordPoint();
-            }else if (originLat + mapHeight/2 - centerY/scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
+            }else if (originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()){
                 originLat = cityMap.getNordPoint() - cityMap.getHeight() + mapHeight;
             }else{
-                originLat = originLat + mapHeight/2 - centerY/scaleHeight;
+                originLat = originLat + mapHeight*((double)centerY/VIEW_HEIGHT) - centerY/scaleHeight;
             }
+
         }
         scaleWidth = VIEW_WIDTH/cityMap.getWidth()*scaleZoom;
         scaleHeight = VIEW_HEIGHT/cityMap.getHeight()*scaleZoom;
@@ -156,12 +159,11 @@ public class MapView extends JPanel implements Observer {
         mapHeight = cityMap.getHeight();
         scaleZoom = 1;
         smallRoadThickness = 1;
-        greatRoadThickness = 2;
+        greatRoadThickness = 3;
         scaleWidth = VIEW_WIDTH/mapWidth*scaleZoom;
         scaleHeight = VIEW_HEIGHT/mapHeight*scaleZoom;
         originLong = cityMap.getWestPoint();
         originLat = cityMap.getNordPoint();
-
         repaint();
     }
 
@@ -207,26 +209,59 @@ public class MapView extends JPanel implements Observer {
 
         }
         Distribution d = cityMap.getDistribution();
+        displayDepot();
+
         if (d.getRequests().size()!=0) {
 
-            displayDepot();
             for (Request q : d.getRequests()){
+                if (t.getPaths().size() == 0){
+                    outline = q.color.darker().darker();
+                }
                 displayRequest(q,outline);
             }
-        }
-        if(cityMap.secondaryHighlight!=null & cityMap.primaryHighlight!=null){
-            displayHighlights(cityMap.primaryHighlight,cityMap.secondaryHighlight);
+            if(cityMap.secondaryHighlight!=null & cityMap.primaryHighlight!=null){
+                displayHighlights(cityMap.primaryHighlight,cityMap.secondaryHighlight);
+
+            }
+
 
         }
+
         GradientPaint grad = new GradientPaint(0,0,new Color(0,0,0,50),40,0,new Color(0,0,0,0),false);
         g2.setPaint(grad);
         g2.fillRect(0,0,50,800);
         grad = new GradientPaint( VIEW_WIDTH,0,new Color(0,0,0,50),VIEW_WIDTH-40,0,new Color(0,0,0,0),false);
         g2.setPaint(grad);
         g2.fillRect(760,0,50,800);
+        grad = new GradientPaint(0,0,new Color(0,0,0,50),0,40,new Color(0,0,0,0),false);
+        g2.setPaint(grad);
+        g2.fillRect(0,0,800,50);
+        grad = new GradientPaint( 0,VIEW_HEIGHT,new Color(0,0,0,50),0,VIEW_HEIGHT-40,new Color(0,0,0,0),false);
+        g2.setPaint(grad);
+        g2.fillRect(0,760,800,50);
         displaySelected(cityMap.i1Selected,cityMap.i2Selected);
 
+        if (d.getRequests().size()!=0) {
+            grad = new GradientPaint(0,30,new Color(0,0,0,50),0,60,new Color(0,0,0,0),false);
+            g2.setPaint(grad);
+            g2.fillRect(250,30,300,30);
 
+            g.setColor(Color.WHITE);
+            g2.fillRoundRect(250,-20,300,60,20,20);
+            int x = 260;
+            int y = 10;
+
+            g2.setStroke(new BasicStroke(3));
+            g.setColor(Color.BLACK);
+            g.drawOval(x,y , POINT_SIZE, POINT_SIZE);
+            g.drawString("Pickup point",x+25,y+10);
+            g.drawPolygon(new int[]{x+100, x+100+POINT_SIZE, x+100+POINT_SIZE/2},
+                    new int[]{y, y, y+POINT_SIZE}, 3);
+            g.drawString("Delivery point",x+125,y+10);
+            g.fillRect(x+200, y-2, POINT_SIZE+1, POINT_SIZE);
+            g.drawString("Depot point",x+225,y+10);
+            g2.draw(new Line2D.Float(x+202, y+10, x+202, y+20));
+        }
     }
 
     private void displaySelected(Intersection i1Selected, Intersection i2Selected) {
@@ -304,7 +339,7 @@ public class MapView extends JPanel implements Observer {
         if (!displayTour){
             if (r.getName().contains("Boulevard") || r.getName().contains("Avenue") || r.getName().contains("Cours") ){
                 thickness=greatRoadThickness;
-                c=Color.decode("#FFF889");
+                c=Color.decode("#ffd800");
             } else if (r.getName().contains("Impasse") ){
                 thickness=smallRoadThickness;
                 c=Color.WHITE;

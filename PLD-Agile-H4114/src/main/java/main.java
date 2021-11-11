@@ -11,7 +11,6 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws XMLException, ParserConfigurationException, IOException, SAXException {
-
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -19,13 +18,6 @@ public class main {
         }
         CityMap c=new CityMap();
         new Controller(c);
-        //XMLDeserializer.loadCityMap(c);
-        //XMLDeserializer.loadDistribution(c);
-        //c.computeTour();
-        System.out.println("Hello");
-
-
-
     }
 
     public static String returnString(){

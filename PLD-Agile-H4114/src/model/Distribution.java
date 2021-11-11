@@ -30,7 +30,6 @@ public class Distribution extends Observable {
         this.requestColors.add("#FF717E");
         this.requestColors.add("#FFDE00");
         this.requestColors.add("#006666");
-        this.requestColors.add("#FFFFFF");
 
     }
 
@@ -148,4 +147,15 @@ public class Distribution extends Observable {
         return true;
     }
 
+    public PointOfInterest getPointOfIntersection(Integer idpoi) {
+        for (Request request: requests){
+            if (Objects.equals(idpoi, request.getDelivery().idPointOfInterest)){
+                return request.getDelivery();
+            }
+            if(Objects.equals(idpoi, request.getPickup().idPointOfInterest)){
+                return request.getPickup();
+            }
+        }
+        return null;
+    }
 }

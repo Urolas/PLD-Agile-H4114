@@ -10,21 +10,26 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  * @author 4IF-4114
  */
 public class Window extends JFrame {
 
+
     // Titles of window buttons
     protected static final String LOAD_CITY_MAP = "Load a city map";
     protected static final String LOAD_DISTRIBUTION = "Load a distribution";
     protected static final String COMPUTE_TOUR = "Compute a tour";
-    protected static final String MODIFY = "Modify the distribution";
+    protected static final String MODIFY = "Add request";
     protected static final String REMOVE = "Remove";
     protected static final String REDO = "Redo";
     protected static final String UNDO = "Undo";
-
+    public static final String UP = "up" ;
+    public static final String DOWN = "down" ;
     protected static final String GENERATE_ROADMAP = "Generate roadmap";
 
     protected static final String ZOOM_IN = "+";
@@ -36,7 +41,9 @@ public class Window extends JFrame {
 
     private final String[] buttonTextsZoom = new String[]{ZOOM_IN,ZOOM_OUT,RECENTER};
 
-    private JLabel messageFrame;
+    private JTextPane messageFrame;
+    private JPanel helpPanel;
+    private JTextField durationJText;
 
     private MapView mapView;
     private RoadmapView roadmapView;
@@ -54,28 +61,37 @@ public class Window extends JFrame {
      */
     public Window(CityMap cityMap, Controller controller) {
         setLayout(null);
-        messageFrame = new JLabel();
-        messageFrame.setBorder(BorderFactory.createTitledBorder("Messages..."));
-        getContentPane().add(messageFrame);
-
         mapView = new MapView(cityMap, this);
+        messageFrame = new JTextPane();
+        durationJText = new JTextField(50);
+        roadmapView = new RoadmapView(cityMap, this);
+        helpPanel = new JPanel(null);
+        mouseListener = new MouseListener(controller, mapView, this);
+        keyboardListener = new KeyboardListener(controller);
+        messageFrame.setBorder(BorderFactory.createTitledBorder("Messages"));
+        messageFrame.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        messageFrame.setBounds(10,10,280,80);
+        messageFrame.setEditable(false);
+        StyledDocument docu = messageFrame.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        docu.setParagraphAttributes(0, docu.getLength(), center, false);
+
+        helpPanel.add(messageFrame);
+        helpPanel.add(durationJText);
+        getContentPane().add(helpPanel);
 
         JLabel jl = new JLabel("Delivelo");
-        jl.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        jl.setBounds(20,20,180,30);
+        jl.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+        jl.setBounds(50,20,180,30);
         getContentPane().add(jl);
 
         createButtons(controller);
-        roadmapView = new RoadmapView(cityMap, this);
-        mouseListener = new MouseListener(controller, mapView, this);
-        keyboardListener = new KeyboardListener(controller);
         addMouseListener((java.awt.event.MouseListener) mouseListener);
         addMouseWheelListener((MouseWheelListener) mouseListener);
         addMouseMotionListener((MouseMotionListener) mouseListener);
-
         addKeyListener(keyboardListener);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         getContentPane().setBackground(Color.WHITE);
         setWindowSize();
         setLocationRelativeTo(null);
@@ -89,11 +105,11 @@ public class Window extends JFrame {
         int windowWidth = mapView.getViewWidth() + BUTTON_WIDTH + roadmapView.getViewWidth() + 15;
         setSize(windowWidth, windowHeight);
         mapView.setLocation(BUTTON_WIDTH, 0);
-        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
-        messageFrame.setSize(200,60);
-        messageFrame.setLocation(0,windowHeight-100);
+        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,160);
+        helpPanel.setBounds(mapView.getViewWidth() + BUTTON_WIDTH, 0,300 ,160);
+        durationJText.setBounds(20,110,150,30);
+
         mapView.setLocation(BUTTON_WIDTH, 0);
-        roadmapView.setLocation(mapView.getViewWidth() + BUTTON_WIDTH,0);
     }
 
     /**
@@ -106,12 +122,9 @@ public class Window extends JFrame {
         for ( int i=0; i<buttonTexts.length; i++ ) {
             JButton button = new JButton(buttonTexts[i]);
             buttons.add(button);
-//            button.setBorderPainted(false);
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             button.setForeground(Color.BLACK);
-            button.setBackground(new Color(91, 138, 231));
-            button.setBounds(10,150+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
-//            button.setFocusPainted(false);
+            button.setBounds(10,100+(BUTTON_HEIGHT+10)*i,BUTTON_WIDTH-20,BUTTON_HEIGHT);
             button.addActionListener(buttonListener);
             getContentPane().add(button);
 
@@ -121,24 +134,27 @@ public class Window extends JFrame {
             buttons.add(button);
             button.setSize(30,30);
             button.setMargin(new Insets(0,0,5,0));
-            button.setBorderPainted(false);
             button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-            button.setBackground(Color.WHITE);
-            button.setOpaque(true);
             button.setLocation( mapView.getViewWidth() - 60, mapView.getViewHeight() - 170 + i * 40);
-            button.setFocusable(false);
-            button.setFocusPainted(false);
             button.addActionListener(buttonListener);
             mapView.add(button);
         }
-        System.out.println(buttons.size());
-
     }
 
     public MapView getMapView() {
         return mapView;
     }
 
+    public ButtonListener getButtonListener() {
+        return buttonListener;
+    }
+
+    public String getDuration() {
+        String result = durationJText.getText();
+        durationJText.setText("");
+        return result ;
+
+    }
     public RoadmapView getRoadmapView() { return roadmapView; }
 
     public void parsingError(String message) {
@@ -160,7 +176,11 @@ public class Window extends JFrame {
         }
     }
 
-    public String[] getButtonTexts() {
+    public String[] getButtonTests() {
         return buttonTexts;
+    }
+
+    public void resetDurationInserted() {
+        durationJText.setText("300");
     }
 }
