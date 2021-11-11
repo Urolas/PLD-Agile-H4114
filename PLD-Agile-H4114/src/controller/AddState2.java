@@ -17,10 +17,12 @@ public class AddState2 implements State {
         if (poi != null) {
             c.addState3.entryAction(this.i1,d1, poi,window);
             c.setCurrentState(c.addState3);
-            window.displayMessage("Place the DeliveryPoint : \nenter a duration (in sec)");
+
+            window.displayMessage("Choose the delivery duration in sec and\nchoose the delivery point position on the map.");
             window.enableJtextField(true);
         } else {
-            window.displayMessage("No point error: After which point");
+            window.parsingError("No point error: Click on a valid point.");
+
         }
 
     }

@@ -23,17 +23,18 @@ public class AddState3 implements State {
                 if(d2<0) throw new NumberFormatException();
             }
             catch (NumberFormatException e) {
-                window.displayMessage("Incorrect value\nPlease enter a positive number\nand place the point");
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
                 return;
             }
             c.addState4.entryAction(this.i1,this.d1, this.p1, i,this.d2);
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
             map.setPoiToAdd(null);
-            window.displayMessage("After which point \nSelect a point of interest");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
             window.enableJtextField(false);
+
         } else {
-            window.displayMessage("Misplaced point error: Place the deliveryPoint");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
 
         }
 

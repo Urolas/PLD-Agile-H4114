@@ -26,7 +26,7 @@ public class AddState4 implements State {
             window.enableJtextField(false);
             window.displayMessage("");
         } else {
-            window.displayMessage("No point error: After which point");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
 
