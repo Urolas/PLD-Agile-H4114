@@ -70,9 +70,11 @@ public class TXTSerializer {
                     int minutes = (durationRoad / 60);
                     int seconds = (durationRoad % 60);
                     if (minutes > 0) {
-                        fw.write(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"+System.lineSeparator());
+                        fw.write(" for " + minutes + "min" + seconds + "s (" + String.format("%,.0f", length)+ " m) "
+                                + nbIntersection + " intersections"+System.lineSeparator());
                     }else {
-                        fw.write(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection + " intersections"+System.lineSeparator());
+                        fw.write(" for " + seconds + "s (" + String.format("%,.0f", length)+ " m) " + nbIntersection
+                                + " intersections"+System.lineSeparator());
                     }
 
                     durationRoad = 0;
@@ -98,16 +100,22 @@ public class TXTSerializer {
                 fw.write(System.lineSeparator()+"    ARRIVAL:");
             }
 
-            fw.write(System.lineSeparator()+"    Latitude: " + poi.getIntersection().getLatitude()+System.lineSeparator());
+            fw.write(System.lineSeparator()+"    Latitude: " + poi.getIntersection().getLatitude()
+                        + System.lineSeparator());
             fw.write("    Longitude: " + poi.getIntersection().getLongitude()+System.lineSeparator());
             if(poiNum==0) {
-                fw.write("    Departure time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds) + System.lineSeparator());
+                fw.write("    Departure time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)
+                        + System.lineSeparator());
             }else if(poiNum!=pointList.size()-1){
-                fw.write("    Arrival time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds) + System.lineSeparator());
-                fw.write("    Duration: " + String.format("%02dmin%02dsec", (duration % 3600) / 60, duration % 60) +System.lineSeparator());
-                fw.write("    Departure time: " + String.format("%02d:%02d:%02d", hours2, minutes2, seconds2) + System.lineSeparator());
+                fw.write("    Arrival time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)
+                        + System.lineSeparator());
+                fw.write("    Duration: " + String.format("%02dmin%02dsec", (duration % 3600) / 60, duration % 60)
+                        +System.lineSeparator());
+                fw.write("    Departure time: " + String.format("%02d:%02d:%02d", hours2, minutes2, seconds2)
+                        + System.lineSeparator());
             }else{
-                fw.write("    Arrival time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds) + System.lineSeparator());
+                fw.write("    Arrival time: " + String.format("%02d:%02d:%02d", hours, minutes, seconds)
+                        + System.lineSeparator());
             }
 
             arrivalTime+=poi.getDuration();
