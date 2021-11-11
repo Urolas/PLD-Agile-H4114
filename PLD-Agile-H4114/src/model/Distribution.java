@@ -21,7 +21,7 @@ public class Distribution extends Observable {
     public Integer nbPointOfInterest;
     private DepotAddress depot;
     private final Set<Request> REQUESTS;
-    private final List<String> requestColors = new ArrayList<>();
+    private final List<String> REQUESTCOLORS = new ArrayList<>();
 
     /**
      * Constructor of Distribution
@@ -30,13 +30,13 @@ public class Distribution extends Observable {
         this.REQUESTS = new HashSet<>();
         this.depot = new DepotAddress();
         this.nbPointOfInterest = 1;
-        this.requestColors.add("#5186fc");
-        this.requestColors.add("#fc5151");
-        this.requestColors.add("#fca451");
-        this.requestColors.add("#87fc51");
-        this.requestColors.add("#51fcf6");
-        this.requestColors.add("#b551fc");
-        this.requestColors.add("#f651fc");
+        this.REQUESTCOLORS.add("#5186fc");
+        this.REQUESTCOLORS.add("#fc5151");
+        this.REQUESTCOLORS.add("#fca451");
+        this.REQUESTCOLORS.add("#87fc51");
+        this.REQUESTCOLORS.add("#51fcf6");
+        this.REQUESTCOLORS.add("#b551fc");
+        this.REQUESTCOLORS.add("#f651fc");
     }
 
     /**
@@ -70,8 +70,8 @@ public class Distribution extends Observable {
     public void addRequest(PickupAddress pAddress, DeliveryAddress dAddress, Integer id) {
         this.nbPointOfInterest += 2;
         Request r;
-        if ((id - 1) / 2 < this.requestColors.size()) {
-            r = new Request(pAddress, dAddress, Color.decode(this.requestColors.get((id - 1) / 2)));
+        if ((id - 1) / 2 < this.REQUESTCOLORS.size()) {
+            r = new Request(pAddress, dAddress, Color.decode(this.REQUESTCOLORS.get((id - 1) / 2)));
         } else {
 
             r = new Request(pAddress, dAddress, new Color((int) (Math.random() * 0x1000000)));
@@ -141,7 +141,7 @@ public class Distribution extends Observable {
     }
 
     public List<String> getColorList() {
-        return requestColors;
+        return REQUESTCOLORS;
     }
 
     /**
