@@ -35,7 +35,6 @@ public class Window extends JFrame {
     protected static final String ZOOM_IN = "+";
     protected static final String ZOOM_OUT = "-";
     protected static final String RECENTER = "=";
-    protected static final String ADD_DURATION = "Add duration";
 
 
     private final String[] buttonTexts = new String[]{LOAD_CITY_MAP, LOAD_DISTRIBUTION, COMPUTE_TOUR, MODIFY, REMOVE,UNDO,REDO,GENERATE_ROADMAP};
@@ -140,11 +139,6 @@ public class Window extends JFrame {
             button.addActionListener(buttonListener);
             mapView.add(button);
         }
-        JButton buttonDuration = new JButton(ADD_DURATION);
-        buttonDuration.addActionListener(buttonListener);
-        buttons.add(buttonDuration);
-        buttonDuration.setBounds(180,110, 100, 30);
-        helpPanel.add(buttonDuration);
     }
 
     public MapView getMapView() {
@@ -156,7 +150,10 @@ public class Window extends JFrame {
     }
 
     public String getDuration() {
-        return durationJText.getText();
+        String result = durationJText.getText();
+        durationJText.setText("");
+        return result ;
+
     }
     public RoadmapView getRoadmapView() { return roadmapView; }
 
@@ -181,5 +178,9 @@ public class Window extends JFrame {
 
     public String[] getButtonTexts() {
         return buttonTexts;
+    }
+
+    public void resetDurationInserted() {
+        durationJText.setText("300");
     }
 }

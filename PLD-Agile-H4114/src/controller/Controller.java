@@ -49,16 +49,7 @@ public class Controller {
         System.out.println();
     }
 
-    public void addDuration(){
-        String strDuration = this.window.getDuration();
-        try {
-            int duration = Integer.parseInt(strDuration);
-            currentState.addDuration(duration);
-        }
-        catch (NumberFormatException e) {
-            window.displayMessage("value entered not a number");
-        }
-    };
+
     /**
      * Method called by window after a click on the button "Undo"
      */

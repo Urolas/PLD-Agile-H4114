@@ -16,7 +16,7 @@ public class AddState2 implements State {
 
         if (poi != null) {
 
-            c.addState3.entryAction(this.i1,d1, poi);
+            c.addState3.entryAction(this.i1,d1, poi,window);
             c.setCurrentState(c.addState3);
             window.displayMessage("Placez le deliveryPoint : \nrenseignez une durée");
 

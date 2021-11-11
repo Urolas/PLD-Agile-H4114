@@ -77,6 +77,5 @@ public interface State {
 
     public default void down(Integer id,ListOfCommands listOfCommands,Controller c) {}
 
-    public default void addDuration(Integer duration){}
     public default void mouseMoved(Controller controller, Intersection intersection) {};
 }
