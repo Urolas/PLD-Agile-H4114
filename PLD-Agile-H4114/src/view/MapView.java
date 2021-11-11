@@ -22,18 +22,12 @@ import observer.Observer;
 public class MapView extends JPanel implements Observer {
     private Graphics g;
     private Graphics2D g2;
-    private final CityMap cityMap;
     private double scaleWidth;
     private double scaleHeight;
     private double originLat;
     private double originLong;
     private double originLatClicked;
     private double originLongClicked;
-    private final int VIEW_HEIGHT = 800;
-    private final int VIEW_WIDTH = 800;
-    private final int POINT_SIZE = 15;
-    private final int HIGHLIGHT_POINT_SIZE = 20;
-    private final int SECONDARY_POINT_SIZE = 17;
     private double scaleZoom = 1;
     private double mapWidth;
     private double mapHeight;
@@ -42,6 +36,12 @@ public class MapView extends JPanel implements Observer {
     private int mouseClickedX;
     private int mouseClickedY;
     private int counterInter;
+    private final CityMap CITYMAP;
+    private final int VIEW_HEIGHT = 800;
+    private final int VIEW_WIDTH = 800;
+    private final int POINT_SIZE = 15;
+    private final int HIGHLIGHT_POINT_SIZE = 20;
+    private final int SECONDARY_POINT_SIZE = 17;
 
     /**
      * Constructor of MapView
@@ -51,7 +51,7 @@ public class MapView extends JPanel implements Observer {
      */
     public MapView(CityMap cityMap, Window window) {
         super();
-        this.cityMap = cityMap;
+        this.CITYMAP = cityMap;
         cityMap.addObserver(this); // this observes cityMap
         cityMap.getDistribution().addObserver(this); // this observes distribution
         cityMap.getTour().addObserver(this);
@@ -82,10 +82,10 @@ public class MapView extends JPanel implements Observer {
             scaleZoom = 1;
             smallRoadThickness = 1;
             greatRoadThickness = 3;
-            mapWidth = cityMap.getWidth();
-            mapHeight = cityMap.getHeight();
-            originLong = cityMap.getWestPoint();
-            originLat = cityMap.getNordPoint();
+            mapWidth = CITYMAP.getWidth();
+            mapHeight = CITYMAP.getHeight();
+            originLong = CITYMAP.getWestPoint();
+            originLat = CITYMAP.getNordPoint();
         } else if (!(zoom < 1 && scaleZoom <= 1) &&
                 !(zoom > 1 && scaleZoom >= 16)) {
             scaleZoom = scaleZoom * zoom;
@@ -94,30 +94,30 @@ public class MapView extends JPanel implements Observer {
             mapWidth = mapWidth / zoom;
             mapHeight = mapHeight / zoom;
             if (originLong - mapWidth * ((double) centerX / VIEW_WIDTH)
-                    + centerX / scaleWidth < cityMap.getWestPoint()) {
-                originLong = cityMap.getWestPoint();
+                    + centerX / scaleWidth < CITYMAP.getWestPoint()) {
+                originLong = CITYMAP.getWestPoint();
             } else if (originLong - mapWidth * ((double) centerX / VIEW_WIDTH)
-                    + centerX / scaleWidth + mapWidth > cityMap.getWestPoint()
-                    + cityMap.getWidth()) {
-                originLong = cityMap.getWestPoint() + cityMap.getWidth() - mapWidth;
+                    + centerX / scaleWidth + mapWidth > CITYMAP.getWestPoint()
+                    + CITYMAP.getWidth()) {
+                originLong = CITYMAP.getWestPoint() + CITYMAP.getWidth() - mapWidth;
             } else {
                 originLong = originLong - mapWidth * ((double) centerX / VIEW_WIDTH) +
                         centerX / scaleWidth;
 
             }
             if (originLat + mapHeight * ((double) centerY / VIEW_HEIGHT)
-                    - centerY / scaleHeight > cityMap.getNordPoint()) {
-                originLat = cityMap.getNordPoint();
+                    - centerY / scaleHeight > CITYMAP.getNordPoint()) {
+                originLat = CITYMAP.getNordPoint();
             } else if (originLat + mapHeight * ((double) centerY / VIEW_HEIGHT)
-                    - centerY / scaleHeight - mapHeight < cityMap.getNordPoint() - cityMap.getHeight()) {
-                originLat = cityMap.getNordPoint() - cityMap.getHeight() + mapHeight;
+                    - centerY / scaleHeight - mapHeight < CITYMAP.getNordPoint() - CITYMAP.getHeight()) {
+                originLat = CITYMAP.getNordPoint() - CITYMAP.getHeight() + mapHeight;
             } else {
                 originLat = originLat + mapHeight * ((double) centerY / VIEW_HEIGHT) - centerY / scaleHeight;
             }
 
         }
-        scaleWidth = VIEW_WIDTH / cityMap.getWidth() * scaleZoom;
-        scaleHeight = VIEW_HEIGHT / cityMap.getHeight() * scaleZoom;
+        scaleWidth = VIEW_WIDTH / CITYMAP.getWidth() * scaleZoom;
+        scaleHeight = VIEW_HEIGHT / CITYMAP.getHeight() * scaleZoom;
 
         repaint();
 
@@ -130,13 +130,13 @@ public class MapView extends JPanel implements Observer {
      * @param mouseY the end position Y of the mouse
      */
     public void dragMap(int mouseX, int mouseY) {
-        if ((cityMap.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX) / scaleWidth)
-                && (cityMap.getWestPoint() + cityMap.getWidth() >= originLongClicked - (mouseX - mouseClickedX) / scaleWidth + mapWidth)) {
+        if ((CITYMAP.getWestPoint() <= originLongClicked - (mouseX - mouseClickedX) / scaleWidth)
+                && (CITYMAP.getWestPoint() + CITYMAP.getWidth() >= originLongClicked - (mouseX - mouseClickedX) / scaleWidth + mapWidth)) {
             originLong = originLongClicked - (mouseX - mouseClickedX) / scaleWidth;
 
         }
-        if ((cityMap.getNordPoint() >= originLatClicked + (mouseY - mouseClickedY) / scaleHeight)
-                && (cityMap.getNordPoint() - cityMap.getHeight() <= originLatClicked + (mouseY - mouseClickedY) / scaleHeight - mapHeight)) {
+        if ((CITYMAP.getNordPoint() >= originLatClicked + (mouseY - mouseClickedY) / scaleHeight)
+                && (CITYMAP.getNordPoint() - CITYMAP.getHeight() <= originLatClicked + (mouseY - mouseClickedY) / scaleHeight - mapHeight)) {
             originLat = originLatClicked + (mouseY - mouseClickedY) / scaleHeight;
         }
         repaint();
@@ -158,15 +158,15 @@ public class MapView extends JPanel implements Observer {
      * Reset the zoom to display a new loaded map properly
      */
     public void resetZoom(){
-        mapWidth = cityMap.getWidth();
-        mapHeight = cityMap.getHeight();
+        mapWidth = CITYMAP.getWidth();
+        mapHeight = CITYMAP.getHeight();
         scaleZoom = 1;
         smallRoadThickness = 1;
         greatRoadThickness = 3;
         scaleWidth = VIEW_WIDTH / mapWidth * scaleZoom;
         scaleHeight = VIEW_HEIGHT / mapHeight * scaleZoom;
-        originLong = cityMap.getWestPoint();
-        originLat = cityMap.getNordPoint();
+        originLong = CITYMAP.getWestPoint();
+        originLat = CITYMAP.getNordPoint();
     }
 
     public int convertLongitudeToPixel(double longitude) {
@@ -190,13 +190,13 @@ public class MapView extends JPanel implements Observer {
         this.g2 = (Graphics2D) g;
 
         //display roads
-        for (Map.Entry<AbstractMap.SimpleEntry<String, String>, Road> road : cityMap.getRoads().entrySet()) {
+        for (Map.Entry<AbstractMap.SimpleEntry<String, String>, Road> road : CITYMAP.getRoads().entrySet()) {
             displayRoad(road.getValue(), Color.white, 1, false);
         }
 
         //display paths
         Color outline = Color.BLACK;
-        Tour t = cityMap.getTour();
+        Tour t = CITYMAP.getTour();
         if (t != null) {
             if (t.getPaths().size() != 0) {
                 outline = new Color(200, 0, 0);
@@ -208,7 +208,7 @@ public class MapView extends JPanel implements Observer {
         }
 
         //display requests
-        Distribution d = cityMap.getDistribution();
+        Distribution d = CITYMAP.getDistribution();
         displayDepot();
 
         if (d.getRequests().size() != 0) {
@@ -220,8 +220,8 @@ public class MapView extends JPanel implements Observer {
                 }
                 displayRequest(q, outline);
             }
-            if (cityMap.secondaryHighlight != null & cityMap.primaryHighlight != null) {
-                displayHighlights(cityMap.primaryHighlight, cityMap.secondaryHighlight);
+            if (CITYMAP.secondaryHighlight != null & CITYMAP.primaryHighlight != null) {
+                displayHighlights(CITYMAP.primaryHighlight, CITYMAP.secondaryHighlight);
 
             }
 
@@ -242,7 +242,7 @@ public class MapView extends JPanel implements Observer {
         grad = new GradientPaint(0, VIEW_HEIGHT, new Color(0, 0, 0, 50), 0, VIEW_HEIGHT - 40, new Color(0, 0, 0, 0), false);
         g2.setPaint(grad);
         g2.fillRect(0, 760, 800, 50);
-        displaySelected(cityMap.i1Selected, cityMap.i2Selected);
+        displaySelected(CITYMAP.i1Selected, CITYMAP.i2Selected);
 
 
         //display legend
@@ -338,9 +338,9 @@ public class MapView extends JPanel implements Observer {
      * Display a red cross following the mouse while the user try to add a new point
      */
     public void displayPoiToAdd() {
-        if (cityMap.getPoiToAdd() != null) {
-            int x = convertLongitudeToPixel(cityMap.getPoiToAdd().getLongitude());
-            int y = convertLatitudeToPixel(cityMap.getPoiToAdd().getLatitude());
+        if (CITYMAP.getPoiToAdd() != null) {
+            int x = convertLongitudeToPixel(CITYMAP.getPoiToAdd().getLongitude());
+            int y = convertLatitudeToPixel(CITYMAP.getPoiToAdd().getLatitude());
             g.setColor(Color.RED);
             g.drawLine(x - 5, y, x + 5, y);
             g.drawLine(x, y - 5, x, y + 5);
@@ -430,9 +430,9 @@ public class MapView extends JPanel implements Observer {
      * Add depot point on the map : draw a flag
      */
     public void displayDepot() {
-        if (cityMap.getDistribution().getDepot().getIntersection() != null) {
-            int x = convertLongitudeToPixel(cityMap.getDistribution().getDepot().getIntersection().getLongitude());
-            int y = convertLatitudeToPixel(cityMap.getDistribution().getDepot().getIntersection().getLatitude());
+        if (CITYMAP.getDistribution().getDepot().getIntersection() != null) {
+            int x = convertLongitudeToPixel(CITYMAP.getDistribution().getDepot().getIntersection().getLongitude());
+            int y = convertLatitudeToPixel(CITYMAP.getDistribution().getDepot().getIntersection().getLatitude());
             g.setColor(Color.black);
             g.fillRect(x - 2, y - 25, POINT_SIZE + 1, POINT_SIZE);
             g2.setStroke(new BasicStroke(3));
@@ -448,7 +448,7 @@ public class MapView extends JPanel implements Observer {
      * @return the closest PointOfInterest to our point
      */
     public PointOfInterest getClosestPointOfInterest(int x, int y) {
-        for (PointOfInterest poi : this.cityMap.getTour().getPointOfInterests()) {
+        for (PointOfInterest poi : this.CITYMAP.getTour().getPointOfInterests()) {
             int xPoi = convertLongitudeToPixel(poi.getIntersection().getLongitude());
             int yPoi = convertLatitudeToPixel(poi.getIntersection().getLatitude());
             if (x <= xPoi + POINT_SIZE && x >= xPoi - POINT_SIZE && // check if point is inside the shape of the specific point of interest
@@ -467,7 +467,7 @@ public class MapView extends JPanel implements Observer {
      * @return the closest Intersection to our point
      */
     public Intersection getClosestIntersection(int x, int y) {
-        for (Intersection i : this.cityMap.getIntersections().values()) {
+        for (Intersection i : this.CITYMAP.getIntersections().values()) {
             int xPoi = convertLongitudeToPixel(i.getLongitude());
             int yPoi = convertLatitudeToPixel(i.getLatitude());
             if (x <= xPoi + POINT_SIZE / 2 && x >= xPoi - POINT_SIZE / 2 &&
