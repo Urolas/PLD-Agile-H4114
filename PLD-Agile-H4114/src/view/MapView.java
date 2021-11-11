@@ -271,6 +271,7 @@ public class MapView extends JPanel implements Observer {
 
     /**
      * Display the points the user just added ( new request ) on the map
+     *
      * @param i1Selected the intersection of the new pickup
      * @param i2Selected the intersection of the new delivery
      */
