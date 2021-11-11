@@ -216,9 +216,7 @@ public class MapView extends JPanel implements Observer {
         if (d.getRequests().size()!=0) {
 
             for (Request q : d.getRequests()){
-                if (t.getPaths().size() == 0){
-                    outline = q.color.darker().darker();
-                }
+                outline = q.color.darker().darker();
                 displayRequest(q,outline);
             }
             if(cityMap.secondaryHighlight!=null & cityMap.primaryHighlight!=null){
