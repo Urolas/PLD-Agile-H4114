@@ -21,9 +21,10 @@ public class DeliveryAddress extends PointOfInterest {
 
     /**
      * Constructor of DeliveryAddress
-     * @param dIntersection the intersection of this delivery address
+     *
+     * @param dIntersection    the intersection of this delivery address
      * @param deliveryDuration the duration the deliveryman can stay on this address
-     * @param id the id of the point
+     * @param id               the id of the point
      */
     public DeliveryAddress(Intersection dIntersection, Integer deliveryDuration, Integer id) {
         super(dIntersection, id);
@@ -33,6 +34,7 @@ public class DeliveryAddress extends PointOfInterest {
 
     /**
      * Compares this delivery address with another object and check if they are equal
+     *
      * @param obj the object to be compared with
      */
     @Override

@@ -25,7 +25,8 @@ public class DepotAddress extends PointOfInterest {
 
     /**
      * Constructor of DepotAddress
-     * @param intersection the intersection of this depot address
+     *
+     * @param intersection  the intersection of this depot address
      * @param departureTime the time to depart of the depot point
      */
     public DepotAddress(Intersection intersection, String departureTime) {
@@ -42,6 +43,7 @@ public class DepotAddress extends PointOfInterest {
 
     /**
      * Compares this depot address with another object and check if they are equal
+     *
      * @param obj the object to be compared with
      */
     @Override

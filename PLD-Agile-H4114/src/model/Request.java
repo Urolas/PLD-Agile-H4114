@@ -1,5 +1,6 @@
 /**
  * Request
+ *
  * @author 4IF-4114
  */
 package model;
@@ -26,21 +27,14 @@ public class Request {
      * @param deliveryAddress the delivery address of the request
      * @param c the color of this request shown on the map
      */
-    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress,Color c){
+    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress, Color c) {
         this.color = c;
-        this.pickup=pickupAddress;
-        this.pickup.color=c;
-        this.delivery=deliveryAddress;
-        this.delivery.color=c;
+        this.pickup = pickupAddress;
+        this.pickup.color = c;
+        this.delivery = deliveryAddress;
+        this.delivery.color = c;
     }
 
-    public DeliveryAddress getDelivery() {
-        return delivery;
-    }
-
-    public PickupAddress getPickup() {
-        return pickup;
-    }
 
     @Override
     public String toString() {
@@ -56,16 +50,24 @@ public class Request {
      * @param obj the object to be compared with
      */
     @Override
-    public boolean equals(Object o){
-        if(!this.color.equals(((Request) o).color)){
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) {
             return false;
         }
-        if(!this.pickup.equals(((Request) o).pickup)){
+        if (!this.color.equals(((Request) obj).color)) {
             return false;
         }
-        if(!this.delivery.equals(((Request) o).delivery)){
+        if (!this.pickup.equals(((Request) obj).pickup)) {
             return false;
         }
-        return true;
+        return this.delivery.equals(((Request) obj).delivery);
+    }
+
+    public DeliveryAddress getDelivery() {
+        return delivery;
+    }
+
+    public PickupAddress getPickup() {
+        return pickup;
     }
 }
