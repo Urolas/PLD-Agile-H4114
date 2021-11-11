@@ -22,6 +22,8 @@ public class InitialState implements State {
 
     public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
         XMLDeserializer.loadCityMap(c.getCitymap());
+        w.getMapView().resetZoom();
+        w.displayMessage("Please load a distribution.");
         c.setCurrentState(c.citymapState);
     }
 

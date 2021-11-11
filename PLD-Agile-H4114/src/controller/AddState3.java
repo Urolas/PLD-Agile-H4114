@@ -14,22 +14,23 @@ public class AddState3 implements State {
     public void leftClick(Controller c, Window window, CityMap map, ListOfCommands listOfCommands, Intersection i, PointOfInterest poi) {
         String strDuration = window.getDuration();
 
-        try {
-            this.d2 = Integer.parseInt(strDuration);
-
-        }
-        catch (NumberFormatException e) {
-            window.displayMessage("value entered not a number");
-            return;
-        }
         if (i != null) {
-            c.addState4.entryAction(this.i1,this.d1, this.p1, i,this.d2);
+            try {
+                this.d2 = Integer.parseInt(strDuration);
+                if (d2 < 0) throw new NumberFormatException();
+            } catch (NumberFormatException e) {
+                window.parsingError("Incorrect value\nPlease enter a positive number\nand place the point");
+                return;
+            }
+            c.addState4.entryAction(this.i1, this.d1, this.p1, i, this.d2);
             c.setCurrentState(c.addState4);
             map.setSelected2(i);
             map.setPOIToAdd(null);
-            window.displayMessage("Apres quel point");
+            window.displayMessage("After which point ?\nSelect a point of interest on the map.");
+            window.enableJtextField(false);
+
         } else {
-            window.displayMessage("Erreur point mal placé : Placez le deliveryPoint");
+            window.parsingError("Misplaced point error: Click on a valid intersection.");
 
         }
 
@@ -37,15 +38,16 @@ public class AddState3 implements State {
     }
 
     @Override
-    public void rightClick(Controller c){
+    public void rightClick(Controller c) {
         c.getCitymap().resetSelected();
         c.setCurrentState(c.tourState);
     }
-    public void entryAction(Intersection i1,Integer d, PointOfInterest p,Window w) {
+
+    public void entryAction(Intersection i1, Integer d, PointOfInterest p, Window w) {
         this.i1 = i1;
         this.p1 = p;
-        this.d1=d;
-        this.d2=300;
+        this.d1 = d;
+        this.d2 = 300;
         w.resetDurationInserted();
     }
 

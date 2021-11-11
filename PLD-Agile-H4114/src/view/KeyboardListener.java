@@ -1,5 +1,6 @@
 /**
  * KeyboardListener
+ *
  * @author 4IF-4114
  */
 package view;
@@ -15,13 +16,13 @@ import controller.Controller;
  */
 public class KeyboardListener extends KeyAdapter {
 
-    private Controller controller;
+    private final Controller controller;
 
     /**
      * Constructor of KeyboardListener
      * @param controller controller the current controller which will receive the keyCode message
      */
-    public KeyboardListener(Controller controller){
+    public KeyboardListener(Controller controller) {
         this.controller = controller;
     }
 

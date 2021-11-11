@@ -50,7 +50,7 @@ public class DeleteCommand implements Command {
             cityMap.distribution.addRequest(poiP,poiD,poiP.getIdPointOfInterest());
 
         } catch ( Exception ignored){
-            System.out.println(ignored);
+
         }
     }
 

@@ -19,13 +19,14 @@ public class AddState4 implements State {
             try {
                 listOfCommands.add(new AddCommand(map, this.i1,this.d1, this.p1, this.i2,this.d2, poi));
             } catch (Exception e) {
-                System.out.println(e);
+                window.parsingError(e.getMessage());
             }
             c.getCitymap().resetSelected();
             c.setCurrentState(c.tourState);
+            window.enableJtextField(false);
             window.displayMessage("");
         } else {
-            window.displayMessage("Erreur aucun point : Apres quel point");
+            window.parsingError("No point error: Click on a valid point.");
 
         }
 
