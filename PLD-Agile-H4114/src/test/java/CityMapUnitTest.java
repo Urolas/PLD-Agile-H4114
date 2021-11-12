@@ -94,7 +94,7 @@ public class CityMapUnitTest {
     }
 
     @Test
-    public void nordWestPointsTest(){
+    public void northWestPointsTest(){
         assertEquals(String.format("%.3f",46.110),String.format("%.3f",cm.getNorthPoint()));
         assertEquals(String.format("%.3f",109.523),String.format("%.3f",cm.getWestPoint()));
     }
