@@ -112,8 +112,8 @@ public class XMLDeserializer {
 
         cityMap.setHeight(maxLatitude - minLatitude);
         cityMap.setWidth(maxLongitude - minLongitude);
-        cityMap.setNorthPoint(maxLatitude);  /* La latitude indique un positionnement Nord-Sud */
-        cityMap.setWestPoint(minLongitude); /* La longitude indique un positionnement Ouest-Est */
+        cityMap.setNorthPoint(maxLatitude);
+        cityMap.setWestPoint(minLongitude);
 
         /*add the roads to the CityMap*/
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
