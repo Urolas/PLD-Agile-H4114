@@ -9,10 +9,10 @@ import model.CityMap;
 import model.Intersection;
 import model.PointOfInterest;
 import view.Window;
-
 /**
  * AddState1, a state used when the user want to add a pickup point
  */
+
 public class AddState1 implements State {
     private Integer d1;
 
@@ -48,6 +48,9 @@ public class AddState1 implements State {
     @Override
     public void rightClick(Controller c) {
         c.getCityMap().resetSelected();
+        c.getCityMap().setPOIToAdd(null);
+        c.getWindow().displayMessage("");
+        c.getWindow().enableJtextField(false);
         c.setCurrentState(c.TOUR_STATE);
     }
 

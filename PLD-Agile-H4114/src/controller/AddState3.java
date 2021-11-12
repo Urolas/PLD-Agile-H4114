@@ -48,6 +48,9 @@ public class AddState3 implements State {
     @Override
     public void rightClick(Controller c) {
         c.getCityMap().resetSelected();
+        c.getCityMap().setPOIToAdd(null);
+        c.getWindow().displayMessage("");
+        c.getWindow().enableJtextField(false);
         c.setCurrentState(c.TOUR_STATE);
     }
 
