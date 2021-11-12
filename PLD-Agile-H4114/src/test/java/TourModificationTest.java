@@ -3,11 +3,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.junit.*;
-
 import static org.junit.Assert.*;
 
-import java.awt.*;
 import java.util.List;
 
 public class TourModificationTest {
@@ -35,7 +32,7 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5);
         Intersection i2 = cm.getIntersections().get("811509");
         DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
@@ -64,7 +61,7 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5);
         Intersection i2 = cm.getIntersections().get("811509");
         DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
@@ -92,7 +89,7 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5);
         Intersection i2 = cm.getIntersections().get("811509");
         DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
@@ -135,7 +132,7 @@ public class TourModificationTest {
         List<PointOfInterest> listPOI = cm.getTour().getPointOfInterests();
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PickupAddress p1 = new PickupAddress(i1,120,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,120,5);
         Intersection i2 = cm.getIntersections().get("811509");
         DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 
@@ -176,7 +173,7 @@ public class TourModificationTest {
         assertEquals((Integer) 0,listPOI.get(5).getIdPointOfInterest());
 
         Intersection i1 = cm.getIntersections().get("811508");
-        PickupAddress p1 = new PickupAddress(i1,60,5); /*TODO : changer avec le compteur interne*/
+        PickupAddress p1 = new PickupAddress(i1,60,5);
         Intersection i2 = cm.getIntersections().get("811509");
         DeliveryAddress p2 = new DeliveryAddress(i2,120,6);
 

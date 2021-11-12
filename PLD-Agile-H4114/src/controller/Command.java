@@ -2,18 +2,18 @@ package controller;
 
 
 /**
- * 
+ *The command executed on the computed tour
  */
 public interface Command {
 
     /**
-     * @return
+     * do the command
      */
-    public void doCommand() throws Exception;
+    void doCommand() throws Exception;
 
     /**
-     * @return
+     *undo the command
      */
-    public void undoCommand();
+    void undoCommand();
 
 }

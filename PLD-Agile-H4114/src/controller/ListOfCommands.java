@@ -1,27 +1,39 @@
+/**
+ * ListOfCommands
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import java.util.LinkedList;
 
+/**
+ * The List of command contain all the commands executed by the user
+ */
 public class ListOfCommands {
-    private LinkedList<Command> list;
+    private final LinkedList<Command> LIST;
     private int currentIndex;
 
-    public ListOfCommands(){
+    /**
+     * Default Constructor
+     * */
+    public ListOfCommands() {
         currentIndex = -1;
-        list = new LinkedList<Command>();
+        LIST = new LinkedList<>();
     }
 
     /**
      * Add command c to this
+     *
      * @param c the command to add
      */
     public void add(Command c) throws Exception {
-        int i = currentIndex+1;
-        while(i<list.size()){
-            list.remove(i);
+        int i = currentIndex + 1;
+        while (i < LIST.size()) {
+            LIST.remove(i);
         }
         currentIndex++;
-        list.add(currentIndex, c);
+        LIST.add(currentIndex, c);
 
         c.doCommand();
     }
@@ -29,9 +41,9 @@ public class ListOfCommands {
     /**
      * Temporary remove the last added command (this command may be reinserted again with redo)
      */
-    public void undo(){
-        if (currentIndex >= 0){
-            Command cde = list.get(currentIndex);
+    public void undo() {
+        if (currentIndex >= 0) {
+            Command cde = LIST.get(currentIndex);
             currentIndex--;
             cde.undoCommand();
         }
@@ -40,10 +52,10 @@ public class ListOfCommands {
     /**
      * Permanently remove the last added command (this command cannot be reinserted again with redo)
      */
-    public void cancel(){
-        if (currentIndex >= 0){
-            Command cde = list.get(currentIndex);
-            list.remove(currentIndex);
+    public void cancel() {
+        if (currentIndex >= 0) {
+            Command cde = LIST.get(currentIndex);
+            LIST.remove(currentIndex);
             currentIndex--;
             cde.undoCommand();
         }
@@ -52,22 +64,23 @@ public class ListOfCommands {
     /**
      * Reinsert the last command removed by undo
      */
-    public void redo(){
-        if (currentIndex < list.size()-1){
+    public void redo() {
+        if (currentIndex < LIST.size() - 1) {
             currentIndex++;
-            Command cde = list.get(currentIndex);
+            Command cde = LIST.get(currentIndex);
             try {
                 cde.doCommand();
-            } catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
     }
 
     /**
      * Permanently remove all commands from the list
      */
-    public void reset(){
+    public void reset() {
         currentIndex = -1;
-        list.clear();
+        LIST.clear();
     }
 
     public int getCurrentIndex() {
@@ -75,6 +88,6 @@ public class ListOfCommands {
     }
 
     public LinkedList<Command> getList() {
-        return list;
+        return LIST;
     }
 }

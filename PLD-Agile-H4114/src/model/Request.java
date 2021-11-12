@@ -1,9 +1,14 @@
+/**
+ * Request
+ *
+ * @author 4IF-4114
+ */
 package model;
 
 import java.awt.*;
 
 /**
- * @author 4IF-4114
+ * A Request is composed of a pickup address and a delivery address
  */
 public class Request {
     public Color color;
@@ -11,27 +16,26 @@ public class Request {
     private DeliveryAddress delivery;
 
     /**
-     * Default constructor
+     * Default constructor of Request
      */
     public Request() {
     }
 
-
-    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress,Color c){
+    /**
+     * Constructor of Request
+     *
+     * @param pickupAddress   the pickup address of the request
+     * @param deliveryAddress the delivery address of the request
+     * @param c               the color of this request shown on the map
+     */
+    public Request(PickupAddress pickupAddress, DeliveryAddress deliveryAddress, Color c) {
         this.color = c;
-        this.pickup=pickupAddress;
-        this.pickup.color=c;
-        this.delivery=deliveryAddress;
-        this.delivery.color=c;
+        this.pickup = pickupAddress;
+        this.pickup.color = c;
+        this.delivery = deliveryAddress;
+        this.delivery.color = c;
     }
 
-    public DeliveryAddress getDelivery() {
-        return delivery;
-    }
-
-    public PickupAddress getPickup() {
-        return pickup;
-    }
 
     @Override
     public String toString() {
@@ -42,14 +46,28 @@ public class Request {
                 '}';
     }
 
+    /**
+     * Compares this request with another object and check if they are equal
+     *
+     * @param obj the object to be compared with
+     */
     @Override
-    public boolean equals(Object o){
-        if(!this.pickup.equals(((Request) o).pickup)){
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) {
             return false;
         }
-        if(!this.delivery.equals(((Request) o).delivery)){
+        if (!this.pickup.equals(((Request) obj).pickup)) {
+
             return false;
         }
-        return true;
+        return this.delivery.equals(((Request) obj).delivery);
+    }
+
+    public DeliveryAddress getDelivery() {
+        return delivery;
+    }
+
+    public PickupAddress getPickup() {
+        return pickup;
     }
 }

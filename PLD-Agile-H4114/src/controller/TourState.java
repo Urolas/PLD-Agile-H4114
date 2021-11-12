@@ -1,3 +1,8 @@
+/**
+ * TourState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 
@@ -6,18 +11,16 @@ import model.DepotAddress;
 import model.Intersection;
 import model.PointOfInterest;
 import org.xml.sax.SAXException;
-import view.MapView;
 import view.Window;
 import filecontrol.RoadMapGenerator;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.IOException;
 
 /**
- * @author 4IF-4114
+ * TourState state used when the tour is loaded
  */
 public class TourState implements State {
 
@@ -28,100 +31,85 @@ public class TourState implements State {
     }
 
     @Override
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
-        w.getMapView().resetZoom();
-        w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
-        c.resetListOfCommands();
+    public void loadMap(Controller controller, Window window) throws XMLException, ParserConfigurationException,
+            IOException, SAXException {
+        XMLDeserializer.loadCityMap(controller.getCityMap());
+        window.getMapView().resetZoom();
+        window.displayMessage("Please load a distribution.");
+        controller.setCurrentState(controller.CITY_MAP_STATE);
+        controller.resetListOfCommands();
     }
 
     @Override
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCitymap());
-        w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.distributionState);
-        c.resetListOfCommands();
-
-    }
-
-    @Override
-    public void modifyDistribution(Controller c) {
-        c.addState1.entryAction(c.getWindow());
-        c.setCurrentState(c.addState1);
-        c.resetListOfCommands();
+    public void loadDistribution(Controller controller, Window window) throws XMLException,
+            ParserConfigurationException, IOException, SAXException {
+        XMLDeserializer.loadDistribution(controller.getCityMap());
+        window.displayMessage("Distribution loaded.\nA tour can be computed.");
+        controller.setCurrentState(controller.DISTRIBUTION_STATE);
+        controller.resetListOfCommands();
 
     }
 
     @Override
-    public void up(Integer id, ListOfCommands listOfCommands, Controller c) {
+    public void addRequest(Controller c) {
+        c.ADD_STATE_1.entryAction(c.getWindow());
+        c.setCurrentState(c.ADD_STATE_1);
+        c.resetListOfCommands();
+
+    }
+
+    @Override
+    public void up(Integer id, ListOfCommands listOfCommands, Controller controller) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(), id, -1));
+            listOfCommands.add(new SwapCommand(controller.getCityMap(), id, -1));
         } catch (Exception e) {
-            c.getWindow().parsingError(e.getMessage());
+            controller.getWindow().parsingError(e.getMessage());
         }
 
     }
 
     @Override
-    public void down(Integer id, ListOfCommands listOfCommands, Controller c) {
+    public void down(Integer id, ListOfCommands listOfCommands, Controller controller) {
         try {
-            listOfCommands.add(new SwapCommand(c.getCitymap(), id, 1));
+            listOfCommands.add(new SwapCommand(controller.getCityMap(), id, 1));
         } catch (Exception e) {
-            c.getWindow().parsingError(e.getMessage());
-
+            controller.getWindow().parsingError(e.getMessage());
         }
-
     }
 
     @Override
-    public void keyStroke(MapView mapView, int keyCode) {
-        mapView.moveMapView(keyCode);
-    }
-
-    @Override
-    public void leftClick(Controller c, Window w, CityMap cityMap, ListOfCommands l, Intersection i, PointOfInterest poi) {
+    public void leftClick(Controller controller, Window window, CityMap cityMap, ListOfCommands listOfCommands,
+                          Intersection intersection, PointOfInterest poi) {
         if (poi != null && !(poi instanceof DepotAddress)) {
-
-
-            c.highlightState.entryAction(poi, cityMap, w);
-
-            c.setCurrentState(c.highlightState);
+            controller.HIGHLIGHT_STATE.entryAction(poi, cityMap);
+            controller.setCurrentState(controller.HIGHLIGHT_STATE);
         }
     }
 
     @Override
-    public void undo(ListOfCommands listOfCdes) {
-        listOfCdes.undo();
+    public void undo(ListOfCommands listOfCommands) {
+        listOfCommands.undo();
     }
 
     @Override
-    public void redo(ListOfCommands listOfCdes) {
-        listOfCdes.redo();
+    public void redo(ListOfCommands listOfCommands) {
+        listOfCommands.redo();
     }
 
     @Override
-    public void generateRoadmap(Controller c, Window w) throws IOException {
-        RoadMapGenerator.generateRoadmap(c.getCitymap());
-        c.setCurrentState(c.tourState);
+    public void generateRoadmap(Controller controller, Window window) {
+        RoadMapGenerator.generateRoadmap(controller.getCityMap());
+        controller.setCurrentState(controller.TOUR_STATE);
     }
 
-    public void enableButtons(Window window, ListOfCommands loc) {
+    public void enableButtons(Window window, ListOfCommands listOfCommands) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", false);
         window.enableButton("Add request", true);
         window.enableButton("Remove", false);
         window.enableButton("Generate roadmap", true);
-        if (loc.getCurrentIndex() >= 0) {
-            window.enableButton("Undo", true);
-        } else {
-            window.enableButton("Undo", false);
-        }
-        if (loc.getCurrentIndex() < loc.getList().size() - 1) {
-            window.enableButton("Redo", true);
-        } else {
-            window.enableButton("Redo", false);
-        }
+        window.enableButton("Undo", listOfCommands.getCurrentIndex() >= 0);
+        window.enableButton("Redo", listOfCommands.getCurrentIndex() < listOfCommands.getList().size() - 1);
     }
 }

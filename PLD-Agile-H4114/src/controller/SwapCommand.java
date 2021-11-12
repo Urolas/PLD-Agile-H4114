@@ -1,3 +1,8 @@
+/**
+ * SwapCommand
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
 import model.CityMap;
@@ -6,52 +11,58 @@ import model.PickupAddress;
 import model.PointOfInterest;
 
 /**
- * @author 4IF-4114
+ * The Command adding swaping the position of two points nearby
  */
 public class SwapCommand implements Command {
 
-    private CityMap map;
-    private int sens;
-    private int position;
-    private PointOfInterest poi;
-    private boolean authorized;
+    private final CityMap MAP;
+    private final int SENS;
+    private final int POSITION;
+    private final PointOfInterest POI;
+    private final boolean AUTHORIZED;
 
     /**
-     * Default constructor
+     * Constructor of SwapCommand
+     *
+     * @param map the citymap
+     * @param idPOI id of the point to move
+     * @param direction direction that the point needs to move to
+     * @throws Exception if the movement is impossible
      */
+    public SwapCommand(CityMap map, Integer idPOI, int direction) throws Exception {
+        this.MAP = map;
+        this.POI = map.distribution.getPointOfIntersection(idPOI);
+        this.SENS = direction;
+        this.POSITION = map.tour.getPointOfInterests().indexOf(POI);
 
-
-    public SwapCommand(CityMap map, Integer idpoi, int sens) throws Exception {
-        this.map = map;
-        this.poi = map.distribution.getPointOfIntersection(idpoi);
-        this.sens = sens;
-        this.position = map.tour.getPointOfInterests().indexOf(poi);
-
-        if (position+sens == 0 || position+sens == map.tour.getPointOfInterests().size() - 1 ||
-                (poi instanceof PickupAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getDelivery((PickupAddress) poi)) ||
-                (poi instanceof DeliveryAddress && map.tour.getPointOfInterests().get(position+sens)==map.distribution.getPickup((DeliveryAddress) poi))) {
-            authorized = false;
-            throw new Exception("Error : this action is impossible");
+        if (POSITION + direction == 0
+                || POSITION + direction == map.tour.getPointOfInterests().size() - 1
+                || (POI instanceof PickupAddress && map.tour.getPointOfInterests().get(POSITION + direction)
+                    == map.distribution.getDelivery((PickupAddress) POI))
+                || (POI instanceof DeliveryAddress && map.tour.getPointOfInterests().get(POSITION + direction)
+                    == map.distribution.getPickup((DeliveryAddress) POI))) {
+            this.AUTHORIZED = false;
+            throw new Exception("Error : this action is impossible.");
         } else {
-            authorized = true;
+            this.AUTHORIZED = true;
         }
     }
 
 
     /**
-     * @return
+     *do the command
      */
     public void doCommand() {
-        if (authorized)
-            map.changePosition(poi, position + sens);
+        if (AUTHORIZED)
+            MAP.changePosition(POI, POSITION + SENS);
     }
 
     /**
-     * @return
+     *undo the command
      */
     public void undoCommand() {
-        if (authorized)
-            map.changePosition(poi, position);
+        if (AUTHORIZED)
+            MAP.changePosition(POI, POSITION);
     }
 }
 

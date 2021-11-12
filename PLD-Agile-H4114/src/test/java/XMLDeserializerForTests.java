@@ -6,7 +6,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import filecontrol.XMLException;
-import filecontrol.XMLFileOpener;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -88,7 +87,7 @@ public class XMLDeserializerForTests {
         }
         cityMap.setHeight(maxLatitude-minLatitude);
         cityMap.setWidth(maxLongitude-minLongitude);
-        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setNorthPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
         cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {
@@ -137,7 +136,7 @@ public class XMLDeserializerForTests {
         }
         cityMap.setHeight(maxLatitude-minLatitude);
         cityMap.setWidth(maxLongitude-minLongitude);
-        cityMap.setNordPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
+        cityMap.setNorthPoint(maxLatitude);  // La latitude indique un positionnement Nord-Sud
         cityMap.setWestPoint(minLongitude); // La longitude indique un positionnement Ouest-Est
         NodeList roadList = rootDOMNode.getElementsByTagName("segment");
         for (int i = 0; i < roadList.getLength(); i++) {

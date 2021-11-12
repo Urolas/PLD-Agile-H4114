@@ -1,31 +1,45 @@
+/**
+ * AddCommand
+ *
+ * @author 4IF-4114
+ */
+
 package controller;
 
 import model.*;
 
 /**
- * @author 4IF-4114
+ * The Command adding points of interest to the distribution
  */
 public class AddCommand implements Command {
 
-    private CityMap map;
-    private PickupAddress poiP;
-    private DeliveryAddress poiD;
-    private PointOfInterest preP;
-    private PointOfInterest preD;
+    private final CityMap MAP;
+    private final PickupAddress POI_P;
+    private final DeliveryAddress POI_D;
+    private final PointOfInterest PRE_PICKUP;
+    private final PointOfInterest PRE_DELIVERY;
     private boolean authorized;
 
     /**
-     * Default constructor
+     * Constructor of AddCommand
+     *
+     * @param i1  the intersection where the new Pickup will be placed
+     * @param i2  the intersection where the new Delivery will be placed
+     * @param d1  the duration of the new Pickup
+     * @param d2  the duration of the new Delivery
+     * @param p1  the point before the new Pickup
+     * @param p2  the point before the new Delivery
+     * @param map the citymap
      */
     public AddCommand(CityMap map,
                       Intersection i1, Integer d1, PointOfInterest p1,
                       Intersection i2, Integer d2, PointOfInterest p2) {
-        this.map = map;
-        this.preP = p1;
-        this.preD = p2;
+        this.MAP = map;
+        this.PRE_PICKUP = p1;
+        this.PRE_DELIVERY = p2;
 
-        this.poiP = new PickupAddress(i1, d1, map.tour.getPointOfInterests().size());
-        this.poiD = new DeliveryAddress(i2, d2, map.tour.getPointOfInterests().size() + 1);
+        this.POI_P = new PickupAddress(i1, d1, map.tour.getPointOfInterests().size());
+        this.POI_D = new DeliveryAddress(i2, d2, map.tour.getPointOfInterests().size() + 1);
 
         this.authorized = true;
 
@@ -34,12 +48,13 @@ public class AddCommand implements Command {
 
 
     /**
-     * @return
+     * Do the command
      */
+    @Override
     public void doCommand() throws Exception {
         try {
-            map.addRequest(poiP, preP, poiD, preD);
-            map.distribution.addRequest(poiP, poiD, poiP.getIdPointOfInterest());
+            MAP.addRequest(POI_P, PRE_PICKUP, POI_D, PRE_DELIVERY);
+            MAP.distribution.addRequest(POI_P, POI_D, POI_P.getIdPointOfInterest());
         } catch (Exception e) {
             this.authorized = false;
             throw e;
@@ -47,12 +62,13 @@ public class AddCommand implements Command {
     }
 
     /**
-     * @return
+     * Undo the command
      */
+    @Override
     public void undoCommand() {
         if (authorized) {
-            map.removeRequest(poiP, poiD);
-            map.distribution.removeRequest(poiP, poiD);
+            MAP.removeRequest(POI_P, POI_D);
+            MAP.distribution.removeRequest(POI_P, POI_D);
         }
     }
 

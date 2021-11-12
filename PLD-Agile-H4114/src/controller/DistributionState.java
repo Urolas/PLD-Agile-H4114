@@ -1,8 +1,11 @@
+/**
+ * DistributionState
+ *
+ * @author 4IF-4114
+ */
 package controller;
 
-
 import org.xml.sax.SAXException;
-import view.MapView;
 import view.Window;
 import filecontrol.XMLDeserializer;
 import filecontrol.XMLException;
@@ -11,7 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
- * @author 4IF-4114
+ * Distribution State, used when the distribution is loaded
  */
 public class DistributionState implements State {
 
@@ -20,30 +23,30 @@ public class DistributionState implements State {
      */
     public DistributionState() {
     }
+
     @Override
     public void computeTour(Controller controller, Window window) {
-        controller.getCitymap().computeTour();
+        controller.getCityMap().computeTour();
         window.displayMessage("");
-
-        controller.setCurrentState(controller.tourState);
-    }
-    public void loadDistribution(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadDistribution(c.getCitymap());
-        w.displayMessage("Distribution loaded.\nA tour can be computed.");
-        c.setCurrentState(c.distributionState);
-    }
-    public void loadMap(Controller c, Window w) throws XMLException, ParserConfigurationException, IOException, SAXException {
-        XMLDeserializer.loadCityMap(c.getCitymap());
-        w.getMapView().resetZoom();
-        w.displayMessage("Please load a distribution.");
-        c.setCurrentState(c.citymapState);
+        controller.setCurrentState(controller.TOUR_STATE);
     }
 
-    public void keyStroke(MapView mapView, int keyCode){
-        mapView.moveMapView(keyCode);
+    public void loadDistribution(Controller controller, Window window) throws XMLException, ParserConfigurationException,
+                                                                IOException, SAXException {
+        XMLDeserializer.loadDistribution(controller.getCityMap());
+        window.displayMessage("Distribution loaded.\nA tour can be computed.");
+        controller.setCurrentState(controller.DISTRIBUTION_STATE);
     }
 
-    public  void enableButtons(Window window, ListOfCommands loc) {
+    public void loadMap(Controller controller, Window window) throws XMLException, ParserConfigurationException,
+                                                       IOException, SAXException {
+        XMLDeserializer.loadCityMap(controller.getCityMap());
+        window.getMapView().resetZoom();
+        window.displayMessage("Please load a distribution.");
+        controller.setCurrentState(controller.CITY_MAP_STATE);
+    }
+
+    public void enableButtons(Window window, ListOfCommands listOfCommands) {
         window.enableButton("Load a city map", true);
         window.enableButton("Load a distribution", true);
         window.enableButton("Compute a tour", true);

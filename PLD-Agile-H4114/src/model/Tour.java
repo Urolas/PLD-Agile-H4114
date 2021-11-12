@@ -1,75 +1,52 @@
+/**
+ * Tour
+ * @author 4IF-4114
+ */
 package model;
 
 import observer.Observable;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 4IF-4114
+ * Tour contains a list of path and point of interest, in order, representing the path after computing a tour
  */
 public class Tour extends Observable {
     private List<Path> paths;
     private List<PointOfInterest> pointOfInterests;
     private Double totalLength;
     /**
-     * Default constructor
+     * Default constructor of Tour
      */
     public Tour() {
         paths = new ArrayList<>();
         pointOfInterests = new ArrayList<>();
     }
-
+    /**
+     * Empty the tour
+     */
     public void resetTour(){
         paths = new ArrayList<>();
         pointOfInterests = new ArrayList<>();
         this.notifyObservers();
     }
 
-    public List<Path> getPaths() {
-        return paths;
-    }
-
-    public List<PointOfInterest> getPointOfInterests() {
-        return pointOfInterests;
-    }
-
-    public Tour(List<Path> paths, List<PointOfInterest> shortestTour, Double solutionCost) {
-        this.paths = paths;
-        this.pointOfInterests = shortestTour;
-        this.totalLength = solutionCost;
-        this.notifyObservers();
-    }
-
-    public void setPaths(List<Path> paths) {
-        this.paths = paths;
-
-    }
-
-    public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
-        this.pointOfInterests = pointOfInterests;
-
-    }
-
-    public void setTotalLength(Double totalLength) {
-        this.totalLength = totalLength;
-        this.notifyObservers(totalLength);
-    }
-
+    /**
+     * Compares this tour with another object and check if they are equal
+     * @param obj the object to be compared with
+     */
     @Override
-    //Methode d'egalité entre les Tours
-    public boolean equals(Object o) {
-        //Meme class
-        if (!o.getClass().equals(Tour.class)) {
+    public boolean equals(Object obj) {
+        //Same class
+        if (!obj.getClass().equals(Tour.class)) {
             return false;
         }
-        //Meme path
-        if (!this.paths.equals(((Tour) o).paths)) {
+        //Same path
+        if (!this.paths.equals(((Tour) obj).paths)) {
             return false;
         }
-        //Meme pointOfInterests
-        if (!this.pointOfInterests.equals(((Tour) o).pointOfInterests)) {
+        //Same pointOfInterests
+        if (!this.pointOfInterests.equals(((Tour) obj).pointOfInterests)) {
             return false;
         }
         return true;
@@ -77,7 +54,11 @@ public class Tour extends Observable {
 
     }
 
-
+    /**
+     * From the tour, find the point located just before the given point of interest
+     * @param pointOfInterest the given point of interest
+     * @return the point of interest located before the given point
+     */
     public PointOfInterest getPointBefore ( PointOfInterest pointOfInterest){
         return this.pointOfInterests.get(this.pointOfInterests.indexOf(pointOfInterest)-1);
 
@@ -85,6 +66,21 @@ public class Tour extends Observable {
 
     public Double getTotalLength() {
         return totalLength;
+    }
+
+    public List<Path> getPaths() {return paths;}
+
+    public List<PointOfInterest> getPointOfInterests() {return pointOfInterests;}
+
+    public void setPaths(List<Path> paths) {this.paths = paths;}
+
+    public void setPointOfInterests(List<PointOfInterest> pointOfInterests) {
+        this.pointOfInterests = pointOfInterests;
+    }
+
+    public void setTotalLength(Double totalLength) {
+        this.totalLength = totalLength;
+        this.notifyObservers(totalLength);
     }
 }
 
